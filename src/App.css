@@ -1,0 +1,32 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #333333;
+}
+
+.Header {
+    background: #666;
+    display: flex;
+    position: relative;
+    flex: 0 1
+}
+
+nav>a{
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
+
+nav>a.active{
+    background: white;
+    color: #03a9f4;
+}
+
+.Content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
