@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Ina-aniniversary-project/static/css/main.d8341880.chunk.css",
-    "main.js": "/Ina-aniniversary-project/static/js/main.d13208c7.chunk.js",
-    "main.js.map": "/Ina-aniniversary-project/static/js/main.d13208c7.chunk.js.map",
+    "main.js": "/Ina-aniniversary-project/static/js/main.3a1a395c.chunk.js",
+    "main.js.map": "/Ina-aniniversary-project/static/js/main.3a1a395c.chunk.js.map",
     "runtime-main.js": "/Ina-aniniversary-project/static/js/runtime-main.ed2b1afa.js",
     "runtime-main.js.map": "/Ina-aniniversary-project/static/js/runtime-main.ed2b1afa.js.map",
-    "static/js/2.85efe95e.chunk.js": "/Ina-aniniversary-project/static/js/2.85efe95e.chunk.js",
-    "static/js/2.85efe95e.chunk.js.map": "/Ina-aniniversary-project/static/js/2.85efe95e.chunk.js.map",
+    "static/js/2.cbc2ef2d.chunk.js": "/Ina-aniniversary-project/static/js/2.cbc2ef2d.chunk.js",
+    "static/js/2.cbc2ef2d.chunk.js.map": "/Ina-aniniversary-project/static/js/2.cbc2ef2d.chunk.js.map",
     "static/js/3.869e4961.chunk.js": "/Ina-aniniversary-project/static/js/3.869e4961.chunk.js",
     "static/js/3.869e4961.chunk.js.map": "/Ina-aniniversary-project/static/js/3.869e4961.chunk.js.map",
     "index.html": "/Ina-aniniversary-project/index.html",
     "static/css/main.d8341880.chunk.css.map": "/Ina-aniniversary-project/static/css/main.d8341880.chunk.css.map",
-    "static/js/2.85efe95e.chunk.js.LICENSE.txt": "/Ina-aniniversary-project/static/js/2.85efe95e.chunk.js.LICENSE.txt"
+    "static/js/2.cbc2ef2d.chunk.js.LICENSE.txt": "/Ina-aniniversary-project/static/js/2.cbc2ef2d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ed2b1afa.js",
-    "static/js/2.85efe95e.chunk.js",
+    "static/js/2.cbc2ef2d.chunk.js",
     "static/css/main.d8341880.chunk.css",
-    "static/js/main.d13208c7.chunk.js"
+    "static/js/main.3a1a395c.chunk.js"
   ]
 }
