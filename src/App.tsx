@@ -5,12 +5,13 @@ import {
   Switch,
   Route,
   NavLink,
+  HashRouter,
 } from "react-router-dom";
 import Timeline from "./components/Timeline/Timeline";
 import { Milestone } from "./components/Timeline/Milestone";
 
 const App = (): JSX.Element => (
-  <Router>
+  <HashRouter>
     <div className="App">
       <nav className="Header">
         <NavLink exact to="/">
@@ -34,7 +35,7 @@ const App = (): JSX.Element => (
         </Switch>
       </div>
     </div>
-  </Router>
+  </HashRouter>
 );
 
 const Home = () => (
