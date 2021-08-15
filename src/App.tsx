@@ -1,12 +1,6 @@
 import React from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-  HashRouter,
-} from "react-router-dom";
+import { Switch, Route, NavLink, HashRouter } from "react-router-dom";
 import Timeline from "./components/Timeline/Timeline";
 import { Milestone } from "./components/Timeline/Milestone";
 
