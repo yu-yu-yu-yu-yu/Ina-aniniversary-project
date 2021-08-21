@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: #333333;
+    background: var(--unnamed-color-f3edff);
 }
 
 .Header {
-    background: #666;
+    background: var(--inai-purple);
     display: flex;
     position: relative;
     flex: 0 1
@@ -30,3 +30,14 @@ nav>a.active{
     flex-direction: column;
     flex: 1;
 }
+
+:root {
+
+    /* Colors: */
+    --unnamed-color-ffda9a: #FFDA9A;
+    --unnamed-color-f3edff: #F3EDFF;
+    --inai-purple: #A198B3;
+    --ina-orange: #F8BF04;
+    --ika-purple: #564F68;
+    --ink-black: #000000;
+    }
