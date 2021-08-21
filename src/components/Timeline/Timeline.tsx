@@ -1,32 +1,35 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SeekerBar } from "./SeekerBar";
 import { Milestone } from "./Milestone";
 import styled from "styled-components";
 
-let progress = 0;
 const Timeline = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
   // const { events } = props;
-  const [current, setCurrent] = useState(0);
-  const isFirst = current === 0;
-  const isLast = current === milestones.length - 1;
+  const timelineRef = useRef(0);
+
+  const [cur, setCur] = useState(0);
+  const isFirst = cur === 0;
+  const isLast = cur === milestones.length - 1;
 
   const scrollStrength = 20;
   //Seeker progress for the milestones
 
   const trackScroll = (e: { deltaY: number }) => {
     const { deltaY: yOffset } = e;
-    console.log("call");
-    console.log(progress);
-    progress += (yOffset / 100) * scrollStrength;
-    progress = Math.max(0, progress);
-    progress = Math.min(progress, (milestones.length - 1) * 100);
-    if (Math.floor(progress / 100) !== current)
-      setCurrent(Math.floor(progress / 100));
+
+    timelineRef.current += (yOffset / 100) * scrollStrength;
+    timelineRef.current = Math.max(0, timelineRef.current);
+    timelineRef.current = Math.min(
+      timelineRef.current,
+      (milestones.length - 1) * 100
+    );
+    if (Math.floor(timelineRef.current / 100) !== cur)
+      setCur(Math.floor(timelineRef.current / 100));
   };
 
   const setIndex = (index: number) => {
-    progress = index * 100;
-    setCurrent(index);
+    timelineRef.current = index * 100;
+    setCur(index);
   };
 
   return (
@@ -34,23 +37,23 @@ const Timeline = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
       <TimelineContainer onWheel={trackScroll}>
         {!isFirst && (
           <Past
-            media={milestones[current - 1].media}
-            setActive={() => setIndex(current - 1)}
+            media={milestones[cur - 1].media}
+            setActive={() => setIndex(cur - 1)}
           />
         )}
-        <Present event={milestones[current]} />
+        <Present event={milestones[cur]} />
         {!isLast && (
           <Future
-            media={milestones[current + 1].media}
-            setActive={() => setIndex(current + 1)}
+            media={milestones[cur + 1].media}
+            setActive={() => setIndex(cur + 1)}
           />
         )}
       </TimelineContainer>
       <SeekerBar
         milestones={milestones}
-        curIndex={current}
+        curIndex={cur}
         setIndex={setIndex}
-        progress={progress}
+        progress={timelineRef.current}
       />
     </>
   );
