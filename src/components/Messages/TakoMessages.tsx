@@ -67,7 +67,9 @@ interface TakoMessagesProps {
     submissions: Submission[];
 }
 
-const TakoMessages = ({ submissions }: TakoMessagesProps): JSX.Element => {
+const TakoMessages = ({
+    submissions
+}: TakoMessagesProps): JSX.Element => {
     return (
         <Masonry
             options={{
@@ -87,10 +89,10 @@ const TakoMessages = ({ submissions }: TakoMessagesProps): JSX.Element => {
                                 {user != '' ? user : 'Anonymous Tako'}:
                             </BubbleHeader>
                             <hr />
-                                {image && (
-                                    //Using ina pfp as placeholder.
-                                    <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
-                                )}
+                            {image && (
+                                //Using ina pfp as placeholder.
+                                <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
+                            )}
                             <BubbleMessage>{message}</BubbleMessage>
                             {/* <TextBubbleBottom/> */}
                         </TextBubbleContainer>
