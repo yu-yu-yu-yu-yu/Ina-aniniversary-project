@@ -65,11 +65,19 @@ const BubbleImage = styled.img`
 
 interface TakoMessagesProps {
     submissions: Submission[];
+    isToggledOnlyImg: boolean;
+    isToggledTextOnly: boolean;
 }
 
-const TakoMessages = ({
-    submissions
-}: TakoMessagesProps): JSX.Element => {
+const TakoMessages = ({submissions, isToggledOnlyImg, isToggledTextOnly}: TakoMessagesProps): JSX.Element => {
+    
+    if(isToggledOnlyImg){
+        submissions = submissions.filter((sub) => {
+            return sub.image;
+        })
+    }
+
+    
     return (
         <Masonry
             options={{
@@ -89,11 +97,13 @@ const TakoMessages = ({
                                 {user != '' ? user : 'Anonymous Tako'}:
                             </BubbleHeader>
                             <hr />
-                            {image && (
+                            {!isToggledTextOnly && image && (
                                 //Using ina pfp as placeholder.
                                 <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
                             )}
-                            <BubbleMessage>{message}</BubbleMessage>
+                            {!isToggledOnlyImg && (
+                                <BubbleMessage>{message}</BubbleMessage>                                
+                            )}
                             {/* <TextBubbleBottom/> */}
                         </TextBubbleContainer>
                     </SubmissionContainer>
