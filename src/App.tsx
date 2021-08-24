@@ -3,6 +3,7 @@ import "./App.css";
 import { Switch, Route, NavLink, HashRouter } from "react-router-dom";
 import Timeline from "./components/Timeline/Timeline";
 import { Milestone } from "./components/Timeline/Milestone";
+import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
 
 const App = (): JSX.Element => (
   <HashRouter>
@@ -21,7 +22,7 @@ const App = (): JSX.Element => (
             <Home />
           </Route>
           <Route path="/messages">
-            <Messages />
+            <MessageBoardContainer  />
           </Route>
           <Route path="/timeline">
             <Timeline milestones={milestones} />
@@ -38,11 +39,11 @@ const Home = () => (
   </div>
 );
 
-const Messages = () => (
-  <div>
-    <h2>Messages</h2>
-  </div>
-);
+// const Messages = () => (
+//   <div>
+//     <h2>Messages</h2>
+//   </div>
+// );
 
 const milestones: Milestone[] = [
   {
