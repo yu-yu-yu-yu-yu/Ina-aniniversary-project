@@ -155,6 +155,7 @@ const MessageBoardContainer = (): JSX.Element => {
             </FiltersContainer>
             <InfiniteScroll
                 style={{ overflow: "hidden" }}
+                scrollThreshold={"100%"}
                 dataLength={data.length}
                 next={fetchMore}
                 hasMore={hasMore}
