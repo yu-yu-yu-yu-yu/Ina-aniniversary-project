@@ -51,7 +51,7 @@ const BubbleMessage = styled.div`
     overflow-wrap: break-word;
     color: var(--ika-purple);
     text-align: left;
-    font: normal normal 300 20px/25px Muli;
+    font: normal normal 300 20px/25px Mulish;
     letter-spacing: 0px;
     opacity: 1;
 `;
