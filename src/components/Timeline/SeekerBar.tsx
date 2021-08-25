@@ -32,7 +32,7 @@ export const SeekerBar = ({
   const nodeMapRef = useRef<RefObject<HTMLInputElement>[]>(
     milestones.map(() => createRef())
   );
-  console.log(nodeMapRef.current);
+
   return (
     <NodeContainer>
       {milestones.map(({ label }, index) => (

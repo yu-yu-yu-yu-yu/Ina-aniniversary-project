@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SeekerBar } from "./SeekerBar";
+import {throttle } from "lodash";
 import { Milestone } from "./Milestone";
 import styled from "styled-components";
 
@@ -14,17 +15,18 @@ const Timeline = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
   const scrollStrength = 20;
   //Seeker progress for the milestones
 
-  const trackScroll = (e: { deltaY: number }) => {
+  const trackScroll = (e: any) => {
     const { deltaY: yOffset } = e;
+    let scrollProgress = timelineRef.current;
 
-    timelineRef.current += (yOffset / 100) * scrollStrength;
-    timelineRef.current = Math.max(0, timelineRef.current);
-    timelineRef.current = Math.min(
-      timelineRef.current,
-      (milestones.length - 1) * 100
-    );
-    if (Math.floor(timelineRef.current / 100) !== cur)
-      setCur(Math.floor(timelineRef.current / 100));
+    scrollProgress += (yOffset / 100) * scrollStrength;
+    scrollProgress = Math.max(0, scrollProgress);
+    scrollProgress = Math.min(scrollProgress, (milestones.length - 1) * 100);
+
+    if (Math.floor(scrollProgress / 100) !== cur || !scrollProgress)
+      setCur(Math.floor(scrollProgress / 100));
+
+    timelineRef.current = scrollProgress;
   };
 
   const setIndex = (index: number) => {
@@ -32,9 +34,19 @@ const Timeline = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
     setCur(index);
   };
 
+  useEffect(() => {
+    const throttledScroll = throttle(trackScroll, 50);
+
+    window.addEventListener("mousewheel", throttledScroll);
+
+    return () => {
+      window.removeEventListener("mousewheel", throttledScroll);
+    };
+  }, []);
+
   return (
     <>
-      <TimelineContainer onWheel={trackScroll}>
+      <TimelineContainer>
         {!isFirst && (
           <Past
             media={milestones[cur - 1].media}
@@ -88,7 +100,6 @@ function Past({
 }
 
 const TimelineContainer = styled.div`
-  //height: 100%;
   display: flex;
   flex: 1;
   flex-direction: row;
