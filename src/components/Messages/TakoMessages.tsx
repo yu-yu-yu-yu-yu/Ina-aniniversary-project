@@ -7,6 +7,11 @@ import { TakoIcon } from "./TakoIcon";
 const SubmissionContainer = styled.div`
     margin :10px;
     width: 450px;
+    @media only screen and (max-width: 768px) {
+        margin-left: 0px;
+        width: 100%;
+    }
+
 `;
 
 const TextBubbleContainer = styled.div`
@@ -61,6 +66,9 @@ const BubbleImage = styled.img`
     border: 2px solid #A198B3;
     border-radius: 23px;
     opacity: 1;  
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 interface TakoMessagesProps {
@@ -82,7 +90,7 @@ const TakoMessages = ({submissions, isToggledOnlyImg, isToggledTextOnly}: TakoMe
         <Masonry
             options={{
                 gutter: 40,
-                columnWidth: 450,
+                columnWidth: 1,
                 fitWidth: true,
                 transitionDuration: 0,
             }}
