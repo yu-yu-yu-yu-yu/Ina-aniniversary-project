@@ -89,6 +89,13 @@ const TakoImgContainer = styled.div`
     display: flex;
 `;
 
+const IFrame = styled.iframe`
+border: 2px solid var(--inai-purple);
+border: 2px solid #A198B3;
+border-radius: 23px;
+opacity: 1;  
+`;
+
 interface TakoMessagesProps {
     submissions: Submission[];
     isToggledOnlyImg: boolean;
@@ -133,7 +140,8 @@ const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: Tako
 
                                 !image.includes("youtube")  
                                 ? <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
-                                : <iframe width="100%" height="315" src={image} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe> 
+                                : <IFrame width="100%" height="315" src={image} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen={true}></IFrame> 
+                                
                                 
 
 
