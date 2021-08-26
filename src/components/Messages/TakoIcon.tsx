@@ -5,9 +5,7 @@ const TakoImg = styled.img`
     width: 80px;
     filter: drop-shadow(2px 2px 1px darkgray);
     opacity: 1;
-    vertical-align: bottom;
 `;
-
 
 
 interface TakoIconProps {

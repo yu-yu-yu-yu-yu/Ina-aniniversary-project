@@ -42,15 +42,6 @@ const TextBubbleContainer = styled.div`
 //     // border-color: purple;
 // `;
 
-const BubbleHeader = styled.div`
-    display: inline;
-    color: var(--ina-orange);
-    text-align: left;
-    font: normal normal 600 37px/45px Montserrat;
-    letter-spacing: 0px;
-    opacity: 1;
-`;
-
 const BubbleMessage = styled.div`
     padding-top: 5px;
     overflow-wrap: break-word;
@@ -71,21 +62,48 @@ const BubbleImage = styled.img`
     }
 `;
 
+const BubbleHeader = styled.div`
+    color: var(--ina-orange);
+    text-align: left;
+
+    
+    font: normal normal 600 37px/45px Montserrat;
+
+    @media only screen and (max-width: 768px) {
+        font: normal normal 600 24px/30px Montserrat;    
+    }
+    
+    letter-spacing: 0px;
+    opacity: 1;
+    display: flex;
+    width: 100%;
+    align-items: center;
+`;
+
+const HeaderText = styled.div`
+    overflow-wrap: break-word;
+
+`;
+
+const TakoImgContainer = styled.div`
+    display: flex;
+`;
+
 interface TakoMessagesProps {
     submissions: Submission[];
     isToggledOnlyImg: boolean;
     isToggledTextOnly: boolean;
 }
 
-const TakoMessages = ({submissions, isToggledOnlyImg, isToggledTextOnly}: TakoMessagesProps): JSX.Element => {
-    
-    if(isToggledOnlyImg){
+const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: TakoMessagesProps): JSX.Element => {
+
+    if (isToggledOnlyImg) {
         submissions = submissions.filter((sub) => {
             return sub.image;
         })
     }
 
-    
+
     return (
         <Masonry
             options={{
@@ -101,16 +119,20 @@ const TakoMessages = ({submissions, isToggledOnlyImg, isToggledTextOnly}: TakoMe
                     <SubmissionContainer key={i}>
                         <TextBubbleContainer>
                             <BubbleHeader>
-                                <TakoIcon id={icon} />
+                                <TakoImgContainer>
+                                    <TakoIcon id={icon} />
+                                </TakoImgContainer>
+                                <HeaderText>
                                 {user != '' ? user : 'Anonymous Tako'}:
+                                </HeaderText>
                             </BubbleHeader>
-                            <hr />
+                            <hr/>
                             {!isToggledTextOnly && image && (
                                 //Using ina pfp as placeholder.
                                 <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
                             )}
                             {!isToggledOnlyImg && (
-                                <BubbleMessage>{message}</BubbleMessage>                                
+                                <BubbleMessage>{message}</BubbleMessage>
                             )}
                             {/* <TextBubbleBottom/> */}
                         </TextBubbleContainer>

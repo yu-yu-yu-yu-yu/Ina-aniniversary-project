@@ -19,6 +19,7 @@ const MessageBoard = styled.div`
 
 const FiltersContainer = styled.div`
     margin: auto;
+    margin-bottom: 35px;
 `;
 
 const Loader = styled.div`
