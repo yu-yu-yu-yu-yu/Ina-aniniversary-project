@@ -26,7 +26,6 @@ const Loader = styled.div`
     display: flex !important;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
 `;
 
 
@@ -157,7 +156,7 @@ const MessageBoardContainer = (): JSX.Element => {
             </FiltersContainer>
             <InfiniteScroll
                 style={{ overflow: "hidden" }}
-                scrollThreshold={"100%"}
+                scrollThreshold={"90%"}
                 dataLength={data.length}
                 next={fetchMore}
                 hasMore={hasMore}

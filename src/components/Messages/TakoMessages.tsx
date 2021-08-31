@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
 import { Submission } from "./Submission";
 import Masonry from "react-masonry-component";
@@ -103,6 +103,11 @@ interface TakoMessagesProps {
 }
 
 const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: TakoMessagesProps): JSX.Element => {
+
+
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    },[]);
 
     if (isToggledOnlyImg) {
         submissions = submissions.filter((sub) => {

@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import "./App.css";
 import { Switch, Route, NavLink, HashRouter } from "react-router-dom";
 import Timeline from "./components/Timeline/Timeline";
 import { Milestone } from "./components/Timeline/Milestone";
 import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
+import styled from "styled-components";
+import HomeContent from "./components/Main/HomeContent";
+
+const Footer = styled.footer`
+
+  background: #FBA147 0% 0% no-repeat padding-box;
+  opacity: 1;
+
+  
+
+  .footer-img{
+    
+    margin: auto;
+  }
+
+`;
 
 const App = (): JSX.Element => (
   <HashRouter>
     <div className="App">
-      <nav className="Header">
+      {/* <nav className="Header">
         <NavLink exact to="/">
           Home
         </NavLink>
         <NavLink to="/messages">Messages</NavLink>
         <NavLink to="/timeline">Timeline</NavLink>
-      </nav>
+      </nav> */}
 
       <div className="Content">
         <Switch>
@@ -22,7 +38,7 @@ const App = (): JSX.Element => (
             <Home />
           </Route>
           <Route path="/messages">
-            <MessageBoardContainer  />
+            <MessageBoardContainer />
           </Route>
           <Route path="/timeline">
             <Timeline milestones={milestones} />
@@ -30,12 +46,19 @@ const App = (): JSX.Element => (
         </Switch>
       </div>
     </div>
+    <Footer>
+      <img 
+        alt="mini-ina" 
+        className="footer-img"
+        src={`${process.env.PUBLIC_URL}/MiniIna.png`}
+      />
+    </Footer>
   </HashRouter>
 );
 
 const Home = () => (
   <div>
-    <h2>Home</h2>
+    <HomeContent></HomeContent>
   </div>
 );
 
