@@ -72,7 +72,7 @@ const BarContainer = styled.div`
 const ProgressBar = styled.div<{ progress: number }>`
   width: ${({ progress }) => progress}px;
   transition: width 0.25s linear;
-  background-color: #f29a31;
+  background-color: var(--ina-orange);
   height: 100%;
 `;
 

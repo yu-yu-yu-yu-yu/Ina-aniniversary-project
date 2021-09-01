@@ -15,7 +15,6 @@
 nav>a{
     display: inline-block;
     text-align: center;
-    padding: 10px;
     color: #fff;
 }
 
@@ -25,7 +24,6 @@ nav>a.active{
 }
 
 .Content {
-    padding: 1rem;
     display: flex;
     flex-direction: column;
     flex: 1;

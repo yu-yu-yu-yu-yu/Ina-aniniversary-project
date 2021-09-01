@@ -1,118 +1,78 @@
-import React, { useEffect, useRef, useState } from "react";
-import { SeekerBar } from "./SeekerBar";
-import {throttle } from "lodash";
-import { Milestone } from "./Milestone";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { ScrollList } from "./ScrollList";
+import Gallery from "./Gallery";
+import { Milestone } from "./Milestone";
+import { NavLink } from "react-router-dom";
+import { Article } from "./Article";
 
-const Timeline = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
-  // const { events } = props;
-  const timelineRef = useRef(0);
+const Container = styled.div`
+  flex-direction: column;
+  display: flex;
+  // background: transparent url(${process.env.PUBLIC_URL + "/pattern.png"}) 0 0
+  //   repeat;
+  background-size: 10%;
+  flex: 1;
+  color: var(--ika-purple);
+`;
 
-  const [cur, setCur] = useState(0);
-  const isFirst = cur === 0;
-  const isLast = cur === milestones.length - 1;
+const Navbar = styled.nav`
+  background: var(--inai-purple);
+  display: flex;
+  position: relative;
+  flex: 0 1;
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  font: normal normal normal 3em montserrat;
+  letter-spacing: 0;
+  justify-content: space-between;
+`;
 
-  const scrollStrength = 20;
-  //Seeker progress for the milestones
+const Content = styled.div`
+  flex: 1;
+  display: flex;
+`;
 
-  const trackScroll = (e: any) => {
-    const { deltaY: yOffset } = e;
-    let scrollProgress = timelineRef.current;
-
-    scrollProgress += (yOffset / 100) * scrollStrength;
-    scrollProgress = Math.max(0, scrollProgress);
-    scrollProgress = Math.min(scrollProgress, (milestones.length - 1) * 100);
-
-    if (Math.floor(scrollProgress / 100) !== cur || !scrollProgress)
-      setCur(Math.floor(scrollProgress / 100));
-
-    timelineRef.current = scrollProgress;
-  };
-
-  const setIndex = (index: number) => {
-    timelineRef.current = index * 100;
-    setCur(index);
-  };
-
-  useEffect(() => {
-    const throttledScroll = throttle(trackScroll, 50);
-
-    window.addEventListener("mousewheel", throttledScroll);
-
-    return () => {
-      window.removeEventListener("mousewheel", throttledScroll);
-    };
-  }, []);
-
-  return (
-    <>
-      <TimelineContainer>
-        {!isFirst && (
-          <Past
-            media={milestones[cur - 1].media}
-            setActive={() => setIndex(cur - 1)}
-          />
-        )}
-        <Present event={milestones[cur]} />
-        {!isLast && (
-          <Future
-            media={milestones[cur + 1].media}
-            setActive={() => setIndex(cur + 1)}
-          />
-        )}
-      </TimelineContainer>
-      <SeekerBar
-        milestones={milestones}
-        curIndex={cur}
-        setIndex={setIndex}
-        progress={timelineRef.current}
-      />
-    </>
-  );
+const flavorSwitch = (
+  flavour: string,
+  milestones: Milestone[]
+): JSX.Element => {
+  switch (flavour) {
+    case "article":
+      return <Article milestones={milestones} />;
+    case "gallery":
+      return <Gallery milestones={milestones} />;
+    case "list":
+    default:
+      return <ScrollList milestones={milestones} />;
+  }
 };
 
-function Present({ event }: { event: Milestone }) {
+export const Timeline = ({
+  milestones,
+}: {
+  milestones: Milestone[];
+}): JSX.Element => {
+  const [flavour, setFlavour] = useState("list");
+
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFlavour(event.target.value);
+  };
+
   return (
-    <MilestoneDisplay media={event.media}>
-      <span>{event.label}</span>
-    </MilestoneDisplay>
+    <Container>
+      <Navbar>
+        <NavLink exact to="/">
+          {`< Timeline`}
+        </NavLink>
+        <select value={flavour} onChange={handleSelect}>
+          <option value="article">Article</option>
+          <option value="gallery">Gallery</option>
+          <option value="list">List</option>
+        </select>
+      </Navbar>
+
+      <Content>{flavorSwitch(flavour, milestones)}</Content>
+    </Container>
   );
-}
-
-function Future({
-  media,
-  setActive,
-}: {
-  media: Milestone["media"];
-  setActive: () => void;
-}) {
-  return <MilestonePreview preview={media} onClick={setActive} />;
-}
-
-function Past({
-  media,
-  setActive,
-}: {
-  media: Milestone["media"];
-  setActive: () => void;
-}) {
-  return <MilestonePreview preview={media} onClick={setActive} />;
-}
-
-const TimelineContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
-
-const MilestoneDisplay = styled.div<{ media: Milestone["media"] }>`
-  background: url(${(props) => props.media}) center;
-
-  flex: 5;
-`;
-const MilestonePreview = styled.div<{ preview: Milestone["media"] }>`
-  background: url(${(props) => props.preview}) center;
-  flex: 1;
-`;
-
-export default Timeline;
+};
