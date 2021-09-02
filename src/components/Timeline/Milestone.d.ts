@@ -5,4 +5,5 @@ export interface Milestone {
   longText?: string;
   section: string;
   anchor?: string;
+  major?: boolean;
 }

@@ -10,7 +10,7 @@ import {
   Row,
   SectionButton,
   SectionContainer,
-} from "./ArticleStyles";
+} from "./styles/Article";
 
 const EventMedia = ({
   media,
@@ -93,10 +93,10 @@ const Separator = ({ img = "InaLogo.png" }: { img?: string }) => {
   );
 };
 
-const Header = ({ event: { anchor } }: { event: Milestone }) => {
+const Header = ({ event: { anchor, label } }: { event: Milestone }) => {
   return (
     <Row center>
-      <EventLabel>{anchor}</EventLabel>
+      <EventLabel>{anchor || label}</EventLabel>
     </Row>
   );
 };
@@ -125,9 +125,40 @@ const SectionSelection = ({
   );
 };
 
-const Anchorhold = () => {
+const Anchorhold = ({ milestones }: { milestones: Milestone[] }) => {
   const [collapsed, toggle] = useState(true);
   return null;
+};
+
+const ElementPicker = ({
+  milestones,
+}: {
+  milestones: Milestone[];
+}): JSX.Element => {
+  const mix = [LeftDescriptionEvent, RightDescriptionEvent];
+  let counter = 0;
+
+  return (
+    <>
+      {milestones.map((milestone, index) => {
+        if (milestone.major) {
+          if (!index) {
+            return <BigEvent key={milestone.label} event={milestone} />;
+          }
+          return (
+            <>
+              <Separator key={milestone.label} />
+              <BigEvent key={milestone.label} event={milestone} />
+            </>
+          );
+        }
+        const Element = mix[counter++ % mix.length];
+        // eslint-disable-next-line no-debugger
+        // debugger;
+        return <Element key={milestone.label} event={milestone} />;
+      })}
+    </>
+  );
 };
 
 export const Article = ({
@@ -141,22 +172,23 @@ export const Article = ({
 
   return (
     <Column>
-      <Anchorhold></Anchorhold>
+      <Anchorhold milestones={sections[selected]} />
       <SectionSelection
         sections={Object.keys(sections)}
         selected={selected}
         setSelected={setSelected}
       />
       <NewsPaperContainer>
-        <LeftDescriptionEvent event={event} />
-        <RightDescriptionEvent event={event} />
+        <ElementPicker milestones={sections[selected]} />
+        {/*<LeftDescriptionEvent event={event} />*/}
+        {/*<RightDescriptionEvent event={event} />*/}
 
-        <Separator />
-        <Header event={event} />
-        <Header event={event} />
-        <Header event={event} />
-        <BigEvent event={event} />
-        <Header event={event} />
+        {/*<Separator />*/}
+        {/*<Header event={event} />*/}
+        {/*<Header event={event} />*/}
+        {/*<Header event={event} />*/}
+        {/*<BigEvent event={event} />*/}
+        {/*<Header event={event} />*/}
       </NewsPaperContainer>
     </Column>
   );
