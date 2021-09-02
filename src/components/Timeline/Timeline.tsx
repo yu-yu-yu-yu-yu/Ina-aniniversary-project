@@ -53,7 +53,7 @@ export const Timeline = ({
 }: {
   milestones: Milestone[];
 }): JSX.Element => {
-  const [flavour, setFlavour] = useState("list");
+  const [flavour, setFlavour] = useState("article");
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFlavour(event.target.value);

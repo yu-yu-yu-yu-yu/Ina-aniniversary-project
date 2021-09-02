@@ -1,52 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Milestone } from "./Milestone";
-import styled from "styled-components";
-
-const Row = styled.div<{ big?: boolean }>`
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  height: ${({ big }) => (big ? "100%" : "initial")};
-  > *:first-child {
-    margin-right: 5em;
-  }
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`;
-
-const EventText = styled.p`
-  font-size: 1.25vw;
-  line-height: 2vw;
-  //margin: 0 2em;
-  text-align: justify;
-`;
-
-const EventLabel = styled.h1`
-  text-align: center;
-  padding: 0 2em;
-`;
-
-const EventMediaContainer = styled.div<{
-  media: Milestone["media"];
-}>`
-  background: url(${(props) => process.env.PUBLIC_URL + "/" + props.media})
-    center;
-  flex: 1;
-`;
-
-const NewsPaperContainer = styled.div`
-  //overflow: scroll;
-  > ${Row} {
-    padding: 2vw 5em;
-  }
-  img {
-    max-width: 100%;
-  }
-`;
+import { groupBy } from "lodash";
+import {
+  Column,
+  EventLabel,
+  EventMediaContainer,
+  EventText,
+  NewsPaperContainer,
+  Row,
+  SectionButton,
+  SectionContainer,
+} from "./ArticleStyles";
 
 const EventMedia = ({
   media,
@@ -76,6 +40,7 @@ const EventMedia = ({
     );
   return <EventMediaContainer media={media} />;
 };
+
 const LeftDescriptionEvent = ({
   event: { label, longText, media },
 }: {
@@ -108,32 +73,61 @@ const RightDescriptionEvent = ({
   );
 };
 
-const BigEvent = ({ event: { media } }: { event: Milestone }) => {
+const BigEvent = ({ event }: { event: Milestone }) => {
   return (
-    <Row>
-      <EventMedia media={media} big />
+    <Column>
+      <Header event={event} />
+      <Row>
+        <EventText>{event.longText}</EventText>
+      </Row>
+      <EventMedia media={event.media} big />
+    </Column>
+  );
+};
+
+const Separator = ({ img = "InaLogo.png" }: { img?: string }) => {
+  return (
+    <Row center>
+      <EventMedia media={img} big />
     </Row>
   );
 };
 
-const Separator = ({ img = "InaLogo.png" }: { img: string | undefined }) => {
-  return <div></div>;
+const Header = ({ event: { anchor } }: { event: Milestone }) => {
+  return (
+    <Row center>
+      <EventLabel>{anchor}</EventLabel>
+    </Row>
+  );
 };
 
-const Header = ({ event }: { event: Milestone }) => {
-  return <div></div>;
+const SectionSelection = ({
+  sections,
+  selected,
+  setSelected,
+}: {
+  sections: string[];
+  selected: string;
+  setSelected: (selected: string) => void;
+}) => {
+  return (
+    <SectionContainer>
+      {sections.map((section) => (
+        <SectionButton
+          key={section}
+          onClick={() => setSelected(section)}
+          selected={section == selected}
+        >
+          {section}
+        </SectionButton>
+      ))}
+    </SectionContainer>
+  );
 };
 
-const WideEvent = ({ event }: { event: Milestone }) => {
-  return <div></div>;
-};
-
-const BigImage = ({ event }: { event: Milestone }) => {
-  return <div></div>;
-};
-
-const BigText = ({ event }: { event: Milestone }) => {
-  return <div></div>;
+const Anchorhold = () => {
+  const [collapsed, toggle] = useState(true);
+  return null;
 };
 
 export const Article = ({
@@ -142,17 +136,28 @@ export const Article = ({
   milestones: Milestone[];
 }): JSX.Element => {
   const event = milestones[0];
-  return (
-    <NewsPaperContainer>
-      <LeftDescriptionEvent event={event} />
-      <RightDescriptionEvent event={event} />
-      <BigEvent event={event} />
-      <BigImage event={event} />
-      <BigText event={event} />
+  const sections = groupBy(milestones, "section");
+  const [selected, setSelected] = useState("fall");
 
-      <Separator img={event.media} />
-      <Header event={event} />
-      <WideEvent event={event} />
-    </NewsPaperContainer>
+  return (
+    <Column>
+      <Anchorhold></Anchorhold>
+      <SectionSelection
+        sections={Object.keys(sections)}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <NewsPaperContainer>
+        <LeftDescriptionEvent event={event} />
+        <RightDescriptionEvent event={event} />
+
+        <Separator />
+        <Header event={event} />
+        <Header event={event} />
+        <Header event={event} />
+        <BigEvent event={event} />
+        <Header event={event} />
+      </NewsPaperContainer>
+    </Column>
   );
 };
