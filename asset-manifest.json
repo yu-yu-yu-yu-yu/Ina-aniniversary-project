@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Ina-aniniversary-project/static/css/main.bac5a38c.chunk.css",
-    "main.js": "/Ina-aniniversary-project/static/js/main.360b2cf8.chunk.js",
-    "main.js.map": "/Ina-aniniversary-project/static/js/main.360b2cf8.chunk.js.map",
+    "main.js": "/Ina-aniniversary-project/static/js/main.ff527d60.chunk.js",
+    "main.js.map": "/Ina-aniniversary-project/static/js/main.ff527d60.chunk.js.map",
     "runtime-main.js": "/Ina-aniniversary-project/static/js/runtime-main.6175a889.js",
     "runtime-main.js.map": "/Ina-aniniversary-project/static/js/runtime-main.6175a889.js.map",
     "static/js/2.c492e32d.chunk.js": "/Ina-aniniversary-project/static/js/2.c492e32d.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.6175a889.js",
     "static/js/2.c492e32d.chunk.js",
     "static/css/main.bac5a38c.chunk.css",
-    "static/js/main.360b2cf8.chunk.js"
+    "static/js/main.ff527d60.chunk.js"
   ]
 }
