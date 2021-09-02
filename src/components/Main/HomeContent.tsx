@@ -170,8 +170,9 @@ const HomeContent = (): JSX.Element => {
 
         <InaVideoContainer>
           <InaVideo
-            autoPlay={true}
-            loop={true}
+            autoPlay
+            loop
+            muted
             poster={`${process.env.PUBLIC_URL}/InaHoodie.png`}
           >
             <source
