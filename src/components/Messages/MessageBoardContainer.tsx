@@ -8,6 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../TakoLoading/TakoLoading";
 import MessageBoardSwitch from "./MessageBoardSwitch";
 import { Submission } from "./Submission";
+import { NavLink } from "react-router-dom";
 // import MessageBoard from "./MessageBoard";
 
 
@@ -15,6 +16,7 @@ const MessageBoard = styled.div`
     width: 90%;
     margin-right: auto;
     margin-left: auto;
+    margin-top: 20px;
 `;
 
 const FiltersContainer = styled.div`
@@ -49,6 +51,18 @@ const SearchBar = styled.input`
         
         width: 40px;
     }
+`;
+
+const Navbar = styled.nav`
+  background: var(--inai-purple);
+  display: flex;
+  position: relative;
+  flex: 0 1;
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  font: normal normal normal 3em montserrat;
+  letter-spacing: 0;
+  justify-content: space-between;
 `;
 
 // Limit of items to be loaded per time
@@ -134,51 +148,52 @@ const MessageBoardContainer = (): JSX.Element => {
 
 
     return (
-        <MessageBoard>
-            <FiltersContainer>
-                <SearchBar
-                    onChange={handleFilter}
-                    placeholder="Search..."
-                />
+        <div>
+            <Navbar>
+                <NavLink exact to="/">
+                    {`< Messages`}
+                </NavLink>
+            </Navbar>
+            <MessageBoard>
+                <FiltersContainer>
+                    <SearchBar
+                        onChange={handleFilter}
+                        placeholder="Search..."
+                    />
 
-                <MessageBoardSwitch
-                    id="image-switch"
-                    label={'Only Images'}
-                    toggled={isToggledOnlyImg}
-                    onChange={OnlyImgToggle}
-                />
-                <MessageBoardSwitch
-                    id="text-switch"
-                    label={'Only messages'}
-                    toggled={isToggledTextOnly}
-                    onChange={OnlyTextToggle}
-                />
-            </FiltersContainer>
-            <InfiniteScroll
-                style={{ overflow: "hidden" }}
-                scrollThreshold={"90%"}
-                dataLength={data.length}
-                next={fetchMore}
-                hasMore={hasMore}
-                loader={
-                    <Loader>
-                        <TakoLoading />
-                    </Loader>
-                }
-            >
-                <TakoMessages
-                    submissions={data}
-                    isToggledOnlyImg={isToggledOnlyImg}
-                    isToggledTextOnly={isToggledTextOnly}
-                />
-            </InfiniteScroll>
-            {/* <MessageBoard
-                data={data}
-                fetchMore={fetchMore}
-                hasMore={hasMore}
-                isToggledOnlyImg={isToggledOnlyImg}
-            ></MessageBoard> */}
-        </MessageBoard>
+                    <MessageBoardSwitch
+                        id="image-switch"
+                        label={'Only Images'}
+                        toggled={isToggledOnlyImg}
+                        onChange={OnlyImgToggle}
+                    />
+                    <MessageBoardSwitch
+                        id="text-switch"
+                        label={'Only messages'}
+                        toggled={isToggledTextOnly}
+                        onChange={OnlyTextToggle}
+                    />
+                </FiltersContainer>
+                <InfiniteScroll
+                    style={{ overflow: "hidden" }}
+                    scrollThreshold={"90%"}
+                    dataLength={data.length}
+                    next={fetchMore}
+                    hasMore={hasMore}
+                    loader={
+                        <Loader>
+                            <TakoLoading />
+                        </Loader>
+                    }
+                >
+                    <TakoMessages
+                        submissions={data}
+                        isToggledOnlyImg={isToggledOnlyImg}
+                        isToggledTextOnly={isToggledTextOnly}
+                    />
+                </InfiniteScroll>
+            </MessageBoard>
+        </div>
     );
 };
 
