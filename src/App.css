@@ -1,8 +1,27 @@
+
 .App {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    background: var(--unnamed-color-f3edff);
+    position: relative;
+    min-height: 100%;
+    background: var(--unnamed-color-f3edff)
+}
+.App::before{
+    background: transparent url(./Pattern.png) 0 0
+    repeat;
+    content: "";
+    opacity: 0.015;
+    background-size: 5%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+html,body, #root {
+    height:100%
 }
 
 .Header {
