@@ -6,4 +6,12 @@ export interface Milestone {
   section: string;
   anchor?: string;
   major?: boolean;
+  tags?: Tags;
 }
+
+export type Tags = {
+  milestone: boolean;
+  important: boolean;
+  drawing: boolean;
+  collab: boolean;
+};

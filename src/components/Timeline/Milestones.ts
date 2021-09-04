@@ -1,10 +1,25 @@
-import { Milestone } from "./Milestone";
+import {Milestone} from "./Milestone";
 
 export const milestones: Milestone[] = [
   {
-    label: "【DEBUT STREAM】Hi!🐙 #hololiveEnglish #holoMyth",
+    label: "Debut",
     media: "InaHoodie.png",
     date: "12/09/2020",
+    anchor: "Sample Anchor",
+    section: "fall",
+    longText:
+      "One day, Ina'nis picked up a strange book and then started to gain the power of controlling tentacles. To her, tentacles are just a part in her ordinary life; it has never been a big deal for her. However, her girly mind does want to get them dressed up and stay pretty. After gaining power, she started hearing Ancient Whispers and Revelations. Hence, she began her VTuber activities to deliver random sanity checks on humanity, as an ordinary girl.",
+    tags: {
+      milestone: true,
+      important: true,
+      drawing: false,
+      collab: false,
+    },
+  },
+  {
+    label: "【DEBUT STREAM】Hi!🐙 #hololiveEnglish #holoMyth",
+    media: "InaHoodie.png",
+    date: "13/09/2020",
     anchor: "Sample Anchor",
     section: "fall",
     longText:

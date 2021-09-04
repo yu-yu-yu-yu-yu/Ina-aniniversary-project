@@ -1,8 +1,24 @@
 // export {};
-import { Milestone } from "./Milestone";
-import React, { useState } from "react";
-import styled from "styled-components";
-import { zipObject } from "lodash";
+import {Milestone, Tags} from "./Milestone";
+import React, {ChangeEvent, useState} from "react";
+import {findIndex, upperCase, zipObject} from "lodash";
+import {Switch} from "./Switch";
+import {
+  Circle,
+  EventContainer,
+  EventInfo,
+  EventPreview,
+  ListScrollable,
+  MonthDisplay,
+  MonthListContainer,
+  ScrollListContainer,
+  SearchBarContainer,
+  SearchInput,
+  TagBarContainer,
+  TagsContainer,
+  TopControlsContainer,
+  Triangle,
+} from "./styles/List";
 
 const months = [
   "September",
@@ -36,31 +52,60 @@ const mappedMonths = zipObject(months, [
 
 type Month = typeof months[number];
 
-type Tags = {
-  milestones: boolean;
-  important: boolean;
-  drawing: boolean;
-  collab: boolean;
-};
-
-const ScrollListContainer = styled.div``;
-
-const TopControlsContainer = styled.div``;
 const SearchBar = ({
   searchString,
   setSearchString,
 }: {
   searchString: string;
   setSearchString: (string: string) => void;
-}) => <div />;
+}) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchString(event.target.value);
+  };
+  return (
+    <SearchBarContainer>
+      <SearchInput
+        type="text"
+        value={searchString}
+        onInput={handleChange}
+        placeholder="Search..."
+      />
+    </SearchBarContainer>
+  );
+};
 
 const TagBar = ({
-  selectedTags,
+  tags,
   setSelectedTags,
 }: {
-  selectedTags: Tags;
+  tags: Tags;
   setSelectedTags: (tags: Tags) => void;
-}) => <div />;
+}) => (
+  <TagBarContainer>
+    <TagsContainer>
+      <Switch
+        label="Milestones"
+        value={tags.milestone}
+        onChange={(value) => setSelectedTags({ ...tags, milestone: value })}
+      />
+      <Switch
+        label="Important streams"
+        value={tags.important}
+        onChange={(value) => setSelectedTags({ ...tags, important: value })}
+      />
+      <Switch
+        label="Drawing streams"
+        value={tags.drawing}
+        onChange={(value) => setSelectedTags({ ...tags, drawing: value })}
+      />
+      <Switch
+        label="Collabs"
+        value={tags.collab}
+        onChange={(value) => setSelectedTags({ ...tags, collab: value })}
+      />
+    </TagsContainer>
+  </TagBarContainer>
+);
 
 const TopControls = ({
   searchString,
@@ -75,20 +120,70 @@ const TopControls = ({
 }) => (
   <TopControlsContainer>
     <SearchBar searchString={searchString} setSearchString={setSearchString} />
-    <TagBar selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+    <TagBar tags={selectedTags} setSelectedTags={setSelectedTags} />
   </TopControlsContainer>
 );
 
-const List = ({ milestones }: { milestones: Milestone[] }) => <div />;
+const MonthAnchor = ({ date }: { date: Milestone["date"] }) => <div />;
+
+const Thumb = ({ event: { media } }: { event: Milestone }) => (
+  <EventPreview media={media} />
+);
+
+const Event = ({
+  event,
+  monthStart,
+}: {
+  event: Milestone;
+  monthStart: boolean;
+}) => {
+  const { major, label, date } = event;
+  return (
+    <EventContainer>
+      {monthStart ? <MonthAnchor date={date} /> : null}
+      <Thumb event={event} />
+      <EventInfo highlight={!!major}>
+        <Triangle />
+        <Circle />
+        <div>{label}</div>
+        <div>{date}</div>
+      </EventInfo>
+    </EventContainer>
+  );
+};
+
+const List = ({ milestones }: { milestones: Milestone[] }) => {
+  return (
+    <ListScrollable>
+      {milestones.map((milestone) => (
+        <Event key={milestone.date} event={milestone} monthStart={false} />
+      ))}
+    </ListScrollable>
+  );
+};
 
 const BottomControls = ({
-  month,
+  selectedMonth,
   setMonth,
 }: {
-  month: Month;
+  selectedMonth: Month;
   setMonth: (month: Month) => void;
 }) => {
-  return <div />;
+  const selectedIndex = findIndex(months, selectedMonth);
+  return (
+    <MonthListContainer>
+      {months.map((month, index) => (
+        <MonthDisplay
+          highlight={index === selectedIndex}
+          passed={index < selectedIndex}
+          key={month}
+          onClick={() => setMonth(month)}
+        >
+          {month}
+        </MonthDisplay>
+      ))}
+    </MonthListContainer>
+  );
 };
 
 export const ScrollList = ({ milestones }: { milestones: Milestone[] }) => {
@@ -100,7 +195,20 @@ export const ScrollList = ({ milestones }: { milestones: Milestone[] }) => {
     setSelectedTags: (tags: Tags) => void
   ] = useState({} as Tags);
 
-  const selected = milestones;
+  const isAnyTag = Object.values(selectedTags).reduce(
+    (acc, val) => acc || val,
+    false
+  );
+  const selected: Milestone[] = milestones.filter(({ tags, label }) => {
+    const searchCondition = upperCase(label).includes(upperCase(searchString));
+    let tagCondition = !isAnyTag;
+    for (const tag in tags) {
+      tagCondition =
+        tagCondition ||
+        (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
+    }
+    return searchCondition && tagCondition;
+  });
 
   return (
     <ScrollListContainer>
@@ -113,7 +221,7 @@ export const ScrollList = ({ milestones }: { milestones: Milestone[] }) => {
 
       <List milestones={selected} />
 
-      <BottomControls month={month} setMonth={setMonth} />
+      <BottomControls selectedMonth={month} setMonth={setMonth} />
     </ScrollListContainer>
   );
 };

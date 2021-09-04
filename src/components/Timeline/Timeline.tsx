@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import { ScrollList } from "./ScrollList";
+import {ScrollList} from "./ScrollList";
 import Gallery from "./Gallery";
-import { Milestone } from "./Milestone";
-import { NavLink } from "react-router-dom";
-import { Article } from "./Article";
+import {Milestone} from "./Milestone";
+import {NavLink} from "react-router-dom";
+import {Article} from "./Article";
 
 const Container = styled.div`
   flex-direction: column;
   display: flex;
-  // background: transparent url(${process.env.PUBLIC_URL + "/pattern.png"}) 0 0
-  //   repeat;
+
   background-size: 10%;
   flex: 1;
   color: var(--ika-purple);
@@ -53,7 +52,7 @@ export const Timeline = ({
 }: {
   milestones: Milestone[];
 }): JSX.Element => {
-  const [flavour, setFlavour] = useState("article");
+  const [flavour, setFlavour] = useState("list");
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFlavour(event.target.value);
