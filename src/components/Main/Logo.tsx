@@ -12,8 +12,27 @@ const LogoImg = styled.img`
   margin-right: auto;
 
   width: 600px;
+  @media only screen and (max-width: 1350px) {
+    width: 550px;
+  }
+  @media only screen and (max-width: 1000px) {
+    margin-top: 10%;
+    width: 400px;
+  }
+
   @media only screen and (max-width: 768px) {
+    margin-top: 20%;
     width: 300px;
+  }
+
+  @media only screen and (max-width: 450px) {
+    margin-top: 30%;
+    width: 300px;
+  }
+
+  @media only screen and (max-width: 300px) {
+    margin-top: 30%;
+    width: 200px;
   }
 `;
 
@@ -23,8 +42,19 @@ const LogoHeader = styled.h1`
   
   font: normal normal bold 84px/102px Montserrat;
   letter-spacing: 4.2px;
+  
+  @media only screen and (max-width: 1000px) {
+    font: normal normal bold 50px/60px Montserrat;
+    letter-spacing: 2.25px;
+  }
+  
   @media only screen and (max-width: 768px) {
     font: normal normal bold 35px/43px Montserrat;
+    letter-spacing: 1.75px;
+  }
+
+  @media only screen and (max-width: 300px) {
+    font: normal normal bold 25px/33px Montserrat;
     letter-spacing: 1.75px;
   }
 
