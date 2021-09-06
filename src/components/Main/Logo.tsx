@@ -5,7 +5,7 @@ const LogoContainer = styled.div`
   text-align: center;
   height: 100vh;
 
-  @media only screen and (orientation: landscape){
+  @media only screen and max-width:1200px  and (orientation: landscape){
     height: 100vw;
   }
 
@@ -18,7 +18,7 @@ const LogoImg = styled.img`
 
   width: 600px;
   @media only screen and (max-width: 1350px) {
-    width: 550px;
+    width: 500px;
   }
   @media only screen and (max-width: 1000px) {
     margin-top: 10%;
