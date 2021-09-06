@@ -9,7 +9,12 @@ const QuoteContainer = styled.div`
 
 const QuoteInaImg = styled.img`
   display: inline-block;
+  
   width: 300px;
+  @media only screen and (max-width: 701px) {
+    width: 200px;
+  }
+  
 `;
 
 const QuoteContent = styled.div`
@@ -19,6 +24,33 @@ const QuoteContent = styled.div`
   color: #ffffff;
   display: inline-block;
   margin-left: 40px;
+
+  @media only screen and (max-width: 701px) {
+    display: block;
+    margin:auto;
+    text-align: center;
+    font: normal normal normal 26px/32px Roboto;
+    letter-spacing: 1.3px;
+  }
+  
+  img {
+    border-bottom: solid 4px;
+    padding-bottom: 40px;
+    
+    width: 300px;
+
+    @media only screen and (max-width: 701px) {
+        width: 250px;
+        padding-bottom: 10px;
+        padding-top: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        width: 200px;
+        padding-bottom: 10px;
+        padding-top: 20px;
+    }
+  }
 `;
 
 const Quote = (): JSX.Element => {
@@ -29,11 +61,6 @@ const Quote = (): JSX.Element => {
                 <img
                     alt="WAH"
                     src={`${process.env.PUBLIC_URL}/WAH.png`}
-                    style={{
-                        borderBottom: "solid 4px",
-                        paddingBottom: "40px",
-                        width: "300px",
-                    }}
                 />
                 <br />
                 Ninomae Ina&apos;nis
