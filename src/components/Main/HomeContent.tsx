@@ -14,11 +14,6 @@ const Logo = styled.img`
   margin-right: auto;
 `;
 
-const Pattern = styled.div`
-  height: 100%;
-  opacity: 0.6;
-`;
-
 const LogoHeader = styled.h1`
   color: var(--ika-purple);
   text-align: center;
@@ -31,13 +26,12 @@ const LogoHeader = styled.h1`
 `;
 
 const QuoteContainer = styled.div`
-  background: transparent linear-gradient(180deg, #c4bdd2 0%, #d3cce1 100%) 0%
-    0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #c4bdd2 0%, #d3cce1 100%) 0% 0% no-repeat padding-box;
   text-align: center;
+  padding: 40px 20px;
 `;
 
 const QuoteInaImg = styled.img`
-  margin: 20px 20px 20px 20px;
   display: inline-block;
   width: 300px;
 `;
@@ -53,6 +47,7 @@ const Quote = styled.div`
 
 const LoreContainer = styled.div`
   text-align: center;
+  margin-bottom: -10px;
 `;
 
 const LoreTextContainer = styled.div`
@@ -82,14 +77,26 @@ const LoreTextContainer = styled.div`
     border-radius: 32px;
     opacity: 1;
     text-align: left;
-    font: normal normal bold 40px/61px Roboto;
+    font: normal normal bold 35px/51px Roboto;
     letter-spacing: 2.5px;
     color: #ffffff;
     opacity: 1;
 
-    padding: 10px 40px;
+    padding: 20px 40px;
     margin: 10px;
   }
+`;
+
+const LoreTextPolygon = styled.video`  
+  z-index: 1;
+  position: absolute;
+  left: 100%;
+  top: 40%;
+  width: 0; 
+  height: 0; 
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  border-left: 40px solid var(--ika-purple);
 `;
 
 const InaVideo = styled.video`
@@ -139,6 +146,13 @@ export const Footer = styled.footer`
   }
 `;
 
+const AoLogo = styled.div`
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  margin-top: -90px;
+`;
+
 const HomeContent = (): JSX.Element => {
   // useLayoutEffect(() => {
   //     window.scrollTo(0, 0)
@@ -148,7 +162,6 @@ const HomeContent = (): JSX.Element => {
     <div>
       <LogoContainer>
         <Logo alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
-        {/* <Pattern/> */}
         <LogoHeader>ANNIVERSARY FAN PROJECT</LogoHeader>
       </LogoContainer>
       <QuoteContainer>
@@ -158,7 +171,7 @@ const HomeContent = (): JSX.Element => {
             alt="WAH"
             src={`${process.env.PUBLIC_URL}/WAH.png`}
             style={{
-              borderBottom: "solid 3px",
+              borderBottom: "solid 4px",
               paddingBottom: "40px",
               width: "300px",
             }}
@@ -166,11 +179,12 @@ const HomeContent = (): JSX.Element => {
           <br />
           Ninomae Ina&apos;nis
           <br />
-          2020 09 13
+          2020·09·13
         </Quote>
       </QuoteContainer>
       <LoreContainer>
         <LoreTextContainer>
+          <LoreTextPolygon />
           <div className="lore-text">
             <p>
               One day, Ina&apos;nis picked up a strange book and then started to
@@ -210,6 +224,15 @@ const HomeContent = (): JSX.Element => {
         </InaVideoContainer>
       </LoreContainer>
       <Footer>
+        <AoLogo>
+          <img
+              alt="Ao-chan Logo"
+              src={`${process.env.PUBLIC_URL}/AOPatternFilledIn.png`}
+              style={{
+                width: "120px",
+              }}
+            />
+        </AoLogo>
         <div className="footer-social-container">
           <a href="https://twitter.com/ninomaeinanis">
             <p>
