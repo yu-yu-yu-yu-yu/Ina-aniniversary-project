@@ -13,10 +13,21 @@ const LoreTextContainer = styled.div`
   position: absolute;
   left: 190px;
 
-  .lore-text {
+  @media only screen and (max-width: 1400px) {
+    left: 9em;
+  }
+
+  @media only screen and (max-width: 1100px) {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    left: auto;
+  }
+  
+  .lore-text {  
     padding: 2px 25px;
     margin-top: 60px;
-    width: 600px;
+    max-width: 600px;
     background: #564f68 0% 0% no-repeat padding-box;
     border-radius: 32px;
     opacity: 1;
@@ -26,6 +37,39 @@ const LoreTextContainer = styled.div`
     font: normal normal 300 28px/37px Mulish;
     letter-spacing: 0px;
     color: #f3edff;
+
+
+    @media only screen and (max-width: 1400px) {
+      max-width: 400px;
+      font: normal normal 300 20px/30px Mulish;
+    }
+
+    @media only screen and (max-width: 1100px) {
+        display: inline-block;
+        max-width: 550px;
+        width: 70%;
+        color: var(--unnamed-color-f3edff);
+        text-align: left;
+        font: normal normal 300 15px/19px Mulish;
+        letter-spacing: 0px;
+        z-index: 1;
+    }
+
+
+  }
+
+  .buttons-div{
+    margin-top: 50px;
+
+    @media only screen and (max-width: 1100px) {
+      display: inline-block;
+      margin-right: 40%;
+    }
+
+    @media only screen and (max-width: 850px) {
+      margin-right: 50%;
+    }
+
   }
 
   .bio-button {
@@ -42,6 +86,20 @@ const LoreTextContainer = styled.div`
 
     padding: 20px 40px;
     margin: 10px;
+    
+    @media only screen and (max-width: 1400px) {
+      font: normal normal bold 22px/30px Roboto;
+    }
+
+    @media only screen and (max-width: 1100px) {
+        text-align: center;
+        font: normal normal bold 17px/20px Roboto;
+        letter-spacing: 0.34px;
+        width: 110px;
+        padding: 10px 15px;   
+        display: block;
+        z-index: 3;
+    }
   }
 `;
 
@@ -55,18 +113,50 @@ const LoreTextPolygon = styled.video`
   border-top: 40px solid transparent;
   border-bottom: 40px solid transparent;
   border-left: 40px solid var(--ika-purple);
+
+  @media only screen and (max-width: 1100px) {
+      display: none;
+  }
+`;
+
+const InaVideoContainer = styled.div`
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+
+  @media only screen and (max-width: 1100px) {
+    position: relative;
+    display: block;
+    margin-top: -10em;
+    z-index: 0;
+  }
+
 `;
 
 const InaVideo = styled.video`
   width: 100%;
   height: 100%;
   margin-left: 35%;
+
+  @media only screen and (max-width: 1100px) {
+    margin-left: 13em;
+    width: 1000px;
+  }
+
+  @media only screen and (max-width: 850px) {
+    margin-left: 10em;
+    width: 800px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin-left: 0%;
+  }
+
+  @media only screen and (max-width: 350px) {
+    margin-left: -20%;
+  }
 `;
 
-const InaVideoContainer = styled.div`
-  display: inline-block;
-  overflow: hidden;
-`;
 
 const Lore = (): JSX.Element => {
 
@@ -88,7 +178,7 @@ const Lore = (): JSX.Element => {
                         random sanity checks on humanity, as an ordinary girl.
                     </p>
                 </div>
-                <div style={{ marginTop: "50px" }}>
+                <div className="buttons-div">
                     <Link to="/messages" role="button" className="bio-button">
                         Messages
                     </Link>
