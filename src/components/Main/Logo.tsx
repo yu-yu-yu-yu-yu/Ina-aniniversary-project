@@ -4,6 +4,11 @@ import styled from "styled-components";
 const LogoContainer = styled.div`
   text-align: center;
   height: 100vh;
+
+  @media only screen and (orientation: landscape){
+    height: 100vw;
+  }
+
 `;
 
 const LogoImg = styled.img`
