@@ -9,6 +9,7 @@ import { TakoLoading } from "../TakoLoading/TakoLoading";
 import MessageBoardSwitch from "./MessageBoardSwitch";
 import { Submission } from "./Submission";
 import { NavLink } from "react-router-dom";
+import ScrollArrow from "./BackToTop";
 // import MessageBoard from "./MessageBoard";
 
 
@@ -219,6 +220,7 @@ const MessageBoardContainer = (): JSX.Element => {
                         isToggledTextOnly={isToggledTextOnly}
                     />
                 </InfiniteScroll>
+                <ScrollArrow/>
             </MessageBoard>
         </div>
     );
