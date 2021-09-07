@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Milestone} from "../Milestone";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 export const ScrollListContainer = styled.div`
   display: flex;
@@ -36,13 +37,14 @@ export const TagsContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
-export const Circle = styled.div`
+export const Circle = styled.span`
   background: #fff;
   border: 3px solid var(--color);
   border-radius: 50%;
   width: 22px;
   height: 22px;
   //padding: 5px;
+  flex-shrink: 0;
   z-index: 2;
 `;
 export const EventPreview = styled.div<{ media: Milestone["media"] }>`
@@ -60,6 +62,8 @@ export const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 90px;
+  width: 410px;
+  cursor: grab;
 `;
 
 export const Triangle = styled.div`
@@ -81,15 +85,19 @@ export const EventInfo = styled.div<{ highlight: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 0;
 `;
-export const ListScrollable = styled.div`
+export const ListScrollable = styled(ScrollContainer)`
   display: flex;
   flex: 1;
   flex-direction: row;
-  width: calc(100vw - 111px);
+  width: 100vw;
   overflow: hidden;
-  align-items: center;
-  margin-left: 111px;
+  align-items: flex-end;
+  padding-bottom: 10%;
+  > ${EventContainer}:first-child {
+    padding-left: 111px;
+  }
 `;
 
 export const MonthListContainer = styled.div`
@@ -118,4 +126,50 @@ export const MonthDisplay = styled.div<{ highlight: boolean; passed: boolean }>`
   :hover {
     cursor: pointer;
   }
+`;
+
+export const MonthAnchorHeader = styled.span`
+  font: normal normal 300 2em Roboto;
+  color: var(--ina-orange);
+  border-left: 2px solid var(--ina-orange);
+  padding-left: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+`;
+
+export const EventLabel = styled.span`
+  color: var(--color);
+  text-align: center;
+  font: normal normal 300 30px/37px Roboto;
+  letter-spacing: 1.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 430px;
+`;
+
+export const EventDate = styled.span`
+  color: var(--color);
+  text-align: center;
+  font: normal normal 300 30px/37px Roboto;
+  letter-spacing: 1.5px;
+`;
+
+//TODO resplace with a single saner line
+export const LineLeft = styled.span`
+  //position: absolute;
+  //left: 315px;
+  //width: calc(100% - 500px);
+  border: 2px solid var(--ika-purple);
+  position: relative;
+  bottom: -17px;
+  width: 100%;
+`;
+
+export const LineRight = styled.span`
+  border: 2px solid var(--ika-purple);
+  position: relative;
+  bottom: 15px;
+  width: 100%;
+  left: 50%;
 `;

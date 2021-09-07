@@ -9,8 +9,6 @@ import {Article} from "./Article";
 const Container = styled.div`
   flex-direction: column;
   display: flex;
-
-  background-size: 10%;
   flex: 1;
   color: var(--ika-purple);
 `;
@@ -62,7 +60,7 @@ export const Timeline = ({
     <Container>
       <Navbar>
         <NavLink exact to="/">
-          {`< Timeline`}
+          <i className="fa fa-angle-left" /> Timeline
         </NavLink>
         <select value={flavour} onChange={handleSelect}>
           <option value="article">Article</option>

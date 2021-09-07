@@ -6,9 +6,14 @@ import {Switch} from "../Common/Switch";
 import {
   Circle,
   EventContainer,
+  EventDate,
   EventInfo,
+  EventLabel,
   EventPreview,
+  LineLeft,
+  LineRight,
   ListScrollable,
+  MonthAnchorHeader,
   MonthDisplay,
   MonthListContainer,
   ScrollListContainer,
@@ -115,7 +120,7 @@ const TopControls = ({
 );
 
 const MonthAnchor = ({ date }: { date: Milestone["date"] }) => (
-  <h1>{mappedMonths[date.split("/")[1]]}</h1>
+  <MonthAnchorHeader>{mappedMonths[date.split("/")[1]]}</MonthAnchorHeader>
 );
 
 const Thumb = ({ event: { media } }: { event: Milestone }) => (
@@ -125,30 +130,46 @@ const Thumb = ({ event: { media } }: { event: Milestone }) => (
 const Event = ({
   event,
   monthStart,
+  index,
 }: {
+  index: number;
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
     <EventContainer>
-      {/*{monthStart ? <MonthAnchor date={date} /> : null}*/}
+      {monthStart ? <MonthAnchor date={date} /> : null}
       <Thumb event={event} />
       <EventInfo highlight={!!major}>
         <Triangle />
+
+        {!!index && <LineLeft />}
         <Circle />
-        <div>{label}</div>
-        <div>{date}</div>
+        <LineRight />
+        <EventLabel>{label}</EventLabel>
+        <EventDate>{date}</EventDate>
       </EventInfo>
     </EventContainer>
   );
 };
 
 const List = ({ milestones }: { milestones: Milestone[] }) => {
+  const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
+    const prevMonth = list[index - 1].date.split(/\W/)[1];
+    const curMonth = list[index].date.split(/\W/)[1];
+    return prevMonth < curMonth;
+  };
+
   return (
     <ListScrollable>
       {milestones.map((milestone, index) => (
-        <Event key={milestone.date} event={milestone} monthStart={index == 0} />
+        <Event
+          key={milestone.date}
+          event={milestone}
+          index={index}
+          monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
+        />
       ))}
     </ListScrollable>
   );
