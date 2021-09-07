@@ -9,7 +9,6 @@ const Bar = styled.div<{ active: boolean }>`
   background-color: ${({ active }) =>
     active ? "var(--ina-orange)" : "var(--ika-purple)"};
   flex-direction: row;
-  border: 2px solid #c8dbff;
   transition: 0.2s linear;
 `;
 
@@ -36,7 +35,7 @@ const Label = styled.span`
   margin: auto 0 auto 0.2em;
   color: var(--ika-purple);
   text-align: left;
-  font: normal normal 300 25px/30px Montserrat;
+  font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
 `;
 

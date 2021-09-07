@@ -2,7 +2,7 @@
 import {Milestone, Tags} from "./Milestone";
 import React, {ChangeEvent, useState} from "react";
 import {findIndex, upperCase, zipObject} from "lodash";
-import {Switch} from "./Switch";
+import {Switch} from "../Common/Switch";
 import {
   Circle,
   EventContainer,
@@ -35,20 +35,10 @@ const months = [
   "August",
 ] as const;
 
-const mappedMonths = zipObject(months, [
-  "09",
-  "10",
-  "11",
-  "12",
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-]);
+const mappedMonths = zipObject(
+  ["09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08"],
+  months
+);
 
 type Month = typeof months[number];
 
@@ -124,7 +114,9 @@ const TopControls = ({
   </TopControlsContainer>
 );
 
-const MonthAnchor = ({ date }: { date: Milestone["date"] }) => <div />;
+const MonthAnchor = ({ date }: { date: Milestone["date"] }) => (
+  <h1>{mappedMonths[date.split("/")[1]]}</h1>
+);
 
 const Thumb = ({ event: { media } }: { event: Milestone }) => (
   <EventPreview media={media} />
@@ -140,7 +132,7 @@ const Event = ({
   const { major, label, date } = event;
   return (
     <EventContainer>
-      {monthStart ? <MonthAnchor date={date} /> : null}
+      {/*{monthStart ? <MonthAnchor date={date} /> : null}*/}
       <Thumb event={event} />
       <EventInfo highlight={!!major}>
         <Triangle />
@@ -155,8 +147,8 @@ const Event = ({
 const List = ({ milestones }: { milestones: Milestone[] }) => {
   return (
     <ListScrollable>
-      {milestones.map((milestone) => (
-        <Event key={milestone.date} event={milestone} monthStart={false} />
+      {milestones.map((milestone, index) => (
+        <Event key={milestone.date} event={milestone} monthStart={index == 0} />
       ))}
     </ListScrollable>
   );
