@@ -10,6 +10,8 @@ import MessageBoardSwitch from "./MessageBoardSwitch";
 import { Submission } from "./Submission";
 import { NavLink } from "react-router-dom";
 import ScrollArrow from "./BackToTop";
+
+import { Switch } from "../Common/Switch";
 // import MessageBoard from "./MessageBoard";
 
 
@@ -88,7 +90,7 @@ const MessageBoardContainer = (): JSX.Element => {
             setCSV(csvData);
 
             const rows = csvData.slice(offset, LIMIT);
-            
+
             awaitImgs(data);
 
             setData(rows);
@@ -134,8 +136,9 @@ const MessageBoardContainer = (): JSX.Element => {
         }
     };
 
-    const OnlyImgToggle = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
+    const OnlyImgToggle = async (value: boolean) => {
+        console.log(value);
+        if (value) {
             setIsToggledOnlyImg(true);
             setisToggledTextOnly(false);
         } else {
@@ -143,8 +146,8 @@ const MessageBoardContainer = (): JSX.Element => {
         }
     }
 
-    const OnlyTextToggle = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
+    const OnlyTextToggle = async (value: boolean) => {
+        if (value) {
             setisToggledTextOnly(true);
             setIsToggledOnlyImg(false);
         } else {
@@ -152,19 +155,19 @@ const MessageBoardContainer = (): JSX.Element => {
         }
     }
 
-    const awaitImgs = async (data : any) => {
+    const awaitImgs = async (data: any) => {
         const promises = [] as any;
-            
-        data.forEach((row : any) => {
-          if (row.image) {
-            promises.push(
-              new Promise((resolve) => {
-                const img = new Image();
-                img.src = row.image;
-                img.onload = resolve;
-              })
-            );
-          }
+
+        data.forEach((row: any) => {
+            if (row.image) {
+                promises.push(
+                    new Promise((resolve) => {
+                        const img = new Image();
+                        img.src = row.image;
+                        img.onload = resolve;
+                    })
+                );
+            }
         });
 
         await Promise.all(promises);
@@ -183,19 +186,32 @@ const MessageBoardContainer = (): JSX.Element => {
                         onChange={handleFilter}
                         placeholder="Search..."
                     />
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                    <Switch
+                        label="Only Images"
+                        value={isToggledOnlyImg}
+                        onChange={(value) => OnlyImgToggle(value)}
+                    />
 
-                    <MessageBoardSwitch
+                    <Switch
+                        label="Only messages"
+                        value={isToggledTextOnly}
+                        onChange={(value) => OnlyTextToggle(value)}
+                    />
+                    </div>
+
+                    {/* <MessageBoardSwitch
                         id="image-switch"
                         label={'Only Images'}
                         toggled={isToggledOnlyImg}
                         onChange={OnlyImgToggle}
-                    />
-                    <MessageBoardSwitch
+                    /> */}
+                    {/* <MessageBoardSwitch
                         id="text-switch"
                         label={'Only messages'}
                         toggled={isToggledTextOnly}
                         onChange={OnlyTextToggle}
-                    />
+                    /> */}
                 </FiltersContainer>
                 <InfiniteScroll
                     style={{ overflow: "hidden" }}
@@ -210,9 +226,9 @@ const MessageBoardContainer = (): JSX.Element => {
                     }
                     endMessage={
                         <p style={{ textAlign: 'center' }}>
-                          Yay! You have seen it all
+                            Yay! You have seen it all
                         </p>
-                      }
+                    }
                 >
                     <TakoMessages
                         submissions={data}
@@ -220,7 +236,7 @@ const MessageBoardContainer = (): JSX.Element => {
                         isToggledTextOnly={isToggledTextOnly}
                     />
                 </InfiniteScroll>
-                <ScrollArrow/>
+                <ScrollArrow />
             </MessageBoard>
         </div>
     );
