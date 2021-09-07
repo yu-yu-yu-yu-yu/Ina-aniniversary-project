@@ -87,9 +87,8 @@ const MessageBoardContainer = (): JSX.Element => {
             setCSV(csvData);
 
             const rows = csvData.slice(offset, LIMIT);
-
-            // const promises = [] as any;
-            // await Promise.all(promises);
+            
+            awaitImgs(data);
 
             setData(rows);
             setOffset(LIMIT + offset);
@@ -103,8 +102,8 @@ const MessageBoardContainer = (): JSX.Element => {
             if (rows.length === 0) {
                 setHasMore(false);
             }
-            // const promises = [] as any;
-            // await Promise.all(promises);
+
+            awaitImgs(data);
 
             setData(data.concat(rows));
             setOffset(LIMIT + offset);
@@ -118,11 +117,17 @@ const MessageBoardContainer = (): JSX.Element => {
                     row.message.toLowerCase().includes(event.target.value.toLowerCase())
             });
             setHasMore(false);
+
+            awaitImgs(resultData);
+
             setData((resultData));
             setOffset(0);
         } else {
             const rows = csvData.slice(offset, LIMIT);
             setHasMore(true);
+
+            awaitImgs(rows);
+
             setData(rows);
             setOffset(offset + LIMIT);
         }
@@ -146,6 +151,23 @@ const MessageBoardContainer = (): JSX.Element => {
         }
     }
 
+    const awaitImgs = async (data : any) => {
+        const promises = [] as any;
+            
+        data.forEach((row : any) => {
+          if (row.image) {
+            promises.push(
+              new Promise((resolve) => {
+                const img = new Image();
+                img.src = row.image;
+                img.onload = resolve;
+              })
+            );
+          }
+        });
+
+        await Promise.all(promises);
+    }
 
     return (
         <div>
@@ -185,6 +207,11 @@ const MessageBoardContainer = (): JSX.Element => {
                             <TakoLoading />
                         </Loader>
                     }
+                    endMessage={
+                        <p style={{ textAlign: 'center' }}>
+                          Yay! You have seen it all
+                        </p>
+                      }
                 >
                     <TakoMessages
                         submissions={data}
