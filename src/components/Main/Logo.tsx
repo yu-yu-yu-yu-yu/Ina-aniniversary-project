@@ -4,6 +4,7 @@ import styled from "styled-components";
 const LogoContainer = styled.div`
   text-align: center;
   height: 100vh;
+  margin-top: 50px;
 
   @media only screen and max-width:1200px  and (orientation: landscape){
     height: 100vw;

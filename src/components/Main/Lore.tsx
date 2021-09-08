@@ -25,7 +25,7 @@ const LoreTextContainer = styled.div`
   }
   
   .lore-text {  
-    padding: 2px 25px;
+    padding: 35px;
     margin-top: 60px;
     max-width: 600px;
     background: #564f68 0% 0% no-repeat padding-box;
@@ -38,6 +38,9 @@ const LoreTextContainer = styled.div`
     letter-spacing: 0px;
     color: #f3edff;
 
+    @media only screen and (max-width: 701px) {
+      padding: 25px;
+    }
 
     @media only screen and (max-width: 1400px) {
       max-width: 400px;

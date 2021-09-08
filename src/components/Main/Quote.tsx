@@ -2,9 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const QuoteContainer = styled.div`
-  background: transparent linear-gradient(180deg, #c4bdd2 0%, #d3cce1 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #C4BDD2 0%, #AEA2C5 100%) 0% 0% no-repeat padding-box;
   text-align: center;
-  padding: 40px 20px;
+  padding: 80px 20px;
+  margin-top: 200px;
+  margin-bottom: 170px;
+  box-shadow: 0px 10px 6px #0000001C;
+  
+  @media only screen and (max-width: 701px) {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 50px 20px;
+  }
 `;
 
 const QuoteInaImg = styled.img`
@@ -66,6 +75,7 @@ const Quote = (): JSX.Element => {
                 Ninomae Ina&apos;nis
                 <br />
                 2020·09·13
+                <br />
             </QuoteContent>
         </QuoteContainer>
     );
