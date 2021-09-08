@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
 import HomeContent from "./components/Main/HomeContent";
-import { Timeline } from "./components/Timeline/Timeline";
-import { milestones } from "./components/Timeline/Milestones";
+import {Timeline} from "./components/Timeline/Timeline";
+import {milestones} from "./components/Timeline/Milestones";
 
 const App = (): JSX.Element => (
-  <HashRouter>
+  <Router>
     <div className="App">
       {/* <nav className="Header">
         <NavLink exact to="/">
@@ -31,7 +31,7 @@ const App = (): JSX.Element => (
         </Switch>
       </div>
     </div>
-  </HashRouter>
+  </Router>
 );
 
 const Home = () => (

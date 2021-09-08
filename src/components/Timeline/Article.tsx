@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Milestone } from "./Milestone";
-import { groupBy } from "lodash";
+import React, {useState} from "react";
+import {Milestone} from "./Milestone";
+import {groupBy} from "lodash";
 import {
   Column,
   EventLabel,
@@ -143,7 +143,7 @@ const ElementPicker = ({
       {milestones.map((milestone, index) => {
         if (milestone.major) {
           if (!index) {
-            return <BigEvent key={milestone.label} event={milestone} />;
+            return <BigEvent key={milestone.date} event={milestone} />;
           }
           return (
             <>
