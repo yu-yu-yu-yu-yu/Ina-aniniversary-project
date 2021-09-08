@@ -60,6 +60,8 @@ const BubbleImage = styled.img`
     border-radius: 23px;
     opacity: 1; 
     max-width: 400px;
+    cursor: pointer;
+
     @media only screen and (max-width: 768px) {
         width: 100%;
     }
