@@ -123,7 +123,7 @@ const MonthAnchor = ({ date }: { date: Milestone["date"] }) => (
 );
 
 const Thumb = ({ event: { media } }: { event: Milestone }) => (
-  <EventPreview media={media} />
+  <EventPreview src={process.env.PUBLIC_URL + "/" + media} />
 );
 
 const Event = ({

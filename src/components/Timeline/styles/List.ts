@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {Milestone} from "../Milestone";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 export const LineRight = styled.span`
@@ -55,10 +54,12 @@ export const Circle = styled.span`
   flex-shrink: 0;
   z-index: 2;
 `;
-export const EventPreview = styled.div<{ media: Milestone["media"] }>`
-  background: var(--ika-purple)
-    url(${({ media }) => process.env.PUBLIC_URL + "/" + media}) center;
-  background-size: cover;
+
+//url(${({ media }) => }) center;
+//background-size: cover;
+export const EventPreview = styled.img`
+  background: var(--ika-purple);
+
   width: 410px;
   height: 229px;
   border-radius: 5px;
