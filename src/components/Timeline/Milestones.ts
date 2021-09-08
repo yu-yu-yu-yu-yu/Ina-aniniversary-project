@@ -15,6 +15,7 @@ export const milestones: Milestone[] = [
       drawing: false,
       collab: false,
     },
+    major: true,
   },
   {
     label: "【DEBUT STREAM】Hi!🐙 #hololiveEnglish #holoMyth",
@@ -49,6 +50,7 @@ export const milestones: Milestone[] = [
     media: "InaHoodie.png",
     section: "fall",
     date: "13/11/2020",
+    major: true,
   },
   {
     label: "【Minecraft】 8PM Breakfast",

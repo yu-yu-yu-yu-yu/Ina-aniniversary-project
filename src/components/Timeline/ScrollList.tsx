@@ -1,7 +1,7 @@
 // export {};
 import {Milestone, Tags} from "./Milestone";
 import React, {ChangeEvent, useState} from "react";
-import {findIndex, upperCase, zipObject} from "lodash";
+import {upperCase, zipObject} from "lodash";
 import {Switch} from "../Common/Switch";
 import {
   Circle,
@@ -10,7 +10,6 @@ import {
   EventInfo,
   EventLabel,
   EventPreview,
-  LineLeft,
   LineRight,
   ListScrollable,
   MonthAnchorHeader,
@@ -130,21 +129,17 @@ const Thumb = ({ event: { media } }: { event: Milestone }) => (
 const Event = ({
   event,
   monthStart,
-  index,
 }: {
-  index: number;
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
-    <EventContainer>
+    <EventContainer highlight={!!major}>
       {monthStart ? <MonthAnchor date={date} /> : null}
       <Thumb event={event} />
-      <EventInfo highlight={!!major}>
+      <EventInfo>
         <Triangle />
-
-        {!!index && <LineLeft />}
         <Circle />
         <LineRight />
         <EventLabel>{label}</EventLabel>
@@ -167,7 +162,6 @@ const List = ({ milestones }: { milestones: Milestone[] }) => {
         <Event
           key={milestone.date}
           event={milestone}
-          index={index}
           monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
         />
       ))}
@@ -182,7 +176,8 @@ const BottomControls = ({
   selectedMonth: Month;
   setMonth: (month: Month) => void;
 }) => {
-  const selectedIndex = findIndex(months, selectedMonth);
+  const selectedIndex = months.findIndex((month) => month == selectedMonth);
+
   return (
     <MonthListContainer>
       {months.map((month, index) => (
