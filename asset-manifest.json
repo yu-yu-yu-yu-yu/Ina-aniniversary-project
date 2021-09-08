@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Ina-aniniversary-project/static/css/main.099fd11d.chunk.css",
-    "main.js": "/Ina-aniniversary-project/static/js/main.77cbf8bd.chunk.js",
-    "main.js.map": "/Ina-aniniversary-project/static/js/main.77cbf8bd.chunk.js.map",
-    "runtime-main.js": "/Ina-aniniversary-project/static/js/runtime-main.bb02e2e4.js",
-    "runtime-main.js.map": "/Ina-aniniversary-project/static/js/runtime-main.bb02e2e4.js.map",
-    "static/js/2.4f1302c3.chunk.js": "/Ina-aniniversary-project/static/js/2.4f1302c3.chunk.js",
-    "static/js/2.4f1302c3.chunk.js.map": "/Ina-aniniversary-project/static/js/2.4f1302c3.chunk.js.map",
-    "static/js/3.43ddbcbc.chunk.js": "/Ina-aniniversary-project/static/js/3.43ddbcbc.chunk.js",
-    "static/js/3.43ddbcbc.chunk.js.map": "/Ina-aniniversary-project/static/js/3.43ddbcbc.chunk.js.map",
+    "main.css": "/Ina-aniniversary-project/static/css/main.004d25f3.chunk.css",
+    "main.js": "/Ina-aniniversary-project/static/js/main.f519fa0c.chunk.js",
+    "main.js.map": "/Ina-aniniversary-project/static/js/main.f519fa0c.chunk.js.map",
+    "runtime-main.js": "/Ina-aniniversary-project/static/js/runtime-main.e2245da6.js",
+    "runtime-main.js.map": "/Ina-aniniversary-project/static/js/runtime-main.e2245da6.js.map",
+    "static/js/2.3c9319d5.chunk.js": "/Ina-aniniversary-project/static/js/2.3c9319d5.chunk.js",
+    "static/js/2.3c9319d5.chunk.js.map": "/Ina-aniniversary-project/static/js/2.3c9319d5.chunk.js.map",
+    "static/js/3.ddb2e6e5.chunk.js": "/Ina-aniniversary-project/static/js/3.ddb2e6e5.chunk.js",
+    "static/js/3.ddb2e6e5.chunk.js.map": "/Ina-aniniversary-project/static/js/3.ddb2e6e5.chunk.js.map",
     "index.html": "/Ina-aniniversary-project/index.html",
-    "static/css/main.099fd11d.chunk.css.map": "/Ina-aniniversary-project/static/css/main.099fd11d.chunk.css.map",
-    "static/js/2.4f1302c3.chunk.js.LICENSE.txt": "/Ina-aniniversary-project/static/js/2.4f1302c3.chunk.js.LICENSE.txt"
+    "static/css/main.004d25f3.chunk.css.map": "/Ina-aniniversary-project/static/css/main.004d25f3.chunk.css.map",
+    "static/js/2.3c9319d5.chunk.js.LICENSE.txt": "/Ina-aniniversary-project/static/js/2.3c9319d5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.bb02e2e4.js",
-    "static/js/2.4f1302c3.chunk.js",
-    "static/css/main.099fd11d.chunk.css",
-    "static/js/main.77cbf8bd.chunk.js"
+    "static/js/runtime-main.e2245da6.js",
+    "static/js/2.3c9319d5.chunk.js",
+    "static/css/main.004d25f3.chunk.css",
+    "static/js/main.f519fa0c.chunk.js"
   ]
 }
