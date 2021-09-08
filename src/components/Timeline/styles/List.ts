@@ -2,6 +2,14 @@ import styled from "styled-components";
 import {Milestone} from "../Milestone";
 import ScrollContainer from "react-indiana-drag-scroll";
 
+export const LineRight = styled.span`
+  border: 3px solid var(--ika-purple);
+  position: relative;
+  bottom: 17px;
+  width: 500px;
+  left: 245px;
+`;
+
 export const ScrollListContainer = styled.div`
   display: flex;
   flex: 1;
@@ -58,7 +66,9 @@ export const EventPreview = styled.div<{ media: Milestone["media"] }>`
   z-index: 2;
 `;
 
-export const EventContainer = styled.div`
+export const EventContainer = styled.div<{ highlight: boolean }>`
+  --color: ${({ highlight }) =>
+    highlight ? "var(--ina-orange)" : "var(--ika-purple)"};
   display: flex;
   flex-direction: column;
   margin-right: 90px;
@@ -79,9 +89,7 @@ export const Triangle = styled.div`
   background-color: var(--color);
 `;
 
-export const EventInfo = styled.div<{ highlight: boolean }>`
-  --color: ${({ highlight }) =>
-    highlight ? "var(--ina-orange)" : "var(--ika-purple)"};
+export const EventInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,6 +105,11 @@ export const ListScrollable = styled(ScrollContainer)`
   padding-bottom: 10%;
   > ${EventContainer}:first-child {
     padding-left: 111px;
+  }
+  > ${EventContainer}:last-child {
+    ${LineRight} {
+      visibility: hidden;
+    }
   }
 `;
 
@@ -153,23 +166,4 @@ export const EventDate = styled.span`
   text-align: center;
   font: normal normal 300 30px/37px Roboto;
   letter-spacing: 1.5px;
-`;
-
-//TODO resplace with a single saner line
-export const LineLeft = styled.span`
-  //position: absolute;
-  //left: 315px;
-  //width: calc(100% - 500px);
-  border: 2px solid var(--ika-purple);
-  position: relative;
-  bottom: -17px;
-  width: 100%;
-`;
-
-export const LineRight = styled.span`
-  border: 2px solid var(--ika-purple);
-  position: relative;
-  bottom: 15px;
-  width: 100%;
-  left: 50%;
 `;
