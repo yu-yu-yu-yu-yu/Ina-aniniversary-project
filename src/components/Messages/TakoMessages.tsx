@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Submission } from "./Submission";
 import Masonry from "react-masonry-component";
 import { TakoIcon } from "./TakoIcon";
+import { SRLWrapper } from "simple-react-lightbox";
+
 
 const SubmissionContainer = styled.div`
     margin :10px;
@@ -56,7 +58,8 @@ const BubbleImage = styled.img`
     border: 2px solid var(--inai-purple);
     border: 2px solid #A198B3;
     border-radius: 23px;
-    opacity: 1;  
+    opacity: 1; 
+    max-width: 400px;
     @media only screen and (max-width: 768px) {
         width: 100%;
     }
@@ -102,12 +105,30 @@ interface TakoMessagesProps {
     isToggledTextOnly: boolean;
 }
 
+const options = {
+    settings: {
+        disablePanzoom: false,
+    },
+    buttons: {
+        showAutoplayButton: false,
+        showCloseButton: false,
+        showDownloadButton: false,
+        showFullscreenButton: false,
+        showNextButton: false,
+        showPrevButton: false,
+        showThumbnailsButton: false,
+    },
+    thumbnails: {
+        showThumbnails: false,
+    }
+}
+
 const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: TakoMessagesProps): JSX.Element => {
 
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0)
-    },[]);
+    }, []);
 
     if (isToggledOnlyImg) {
         submissions = submissions.filter((sub) => {
@@ -135,20 +156,16 @@ const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: Tako
                                     <TakoIcon id={icon} />
                                 </TakoImgContainer>
                                 <HeaderText>
-                                {user != '' ? user : 'Anonymous Tako'}:
+                                    {user != '' ? user : 'Anonymous Tako'}:
                                 </HeaderText>
                             </BubbleHeader>
-                            <hr/>
-                            
+                            <hr />
+
                             {!isToggledTextOnly && image && (
                                 //Using ina pfp as placeholder.
-
-                                !image.includes("youtube")  
-                                ? <BubbleImage src="https://pbs.twimg.com/profile_images/1339283318848716801/_zU72OLZ_400x400.jpg" />
-                                : <IFrame width="100%" height="315" src={image} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen={true}></IFrame> 
-                                
-                                
-
+                                !image.includes("youtube")
+                                    ? <SRLWrapper options={options}><BubbleImage src="https://via.placeholder.com/1500" /></SRLWrapper>
+                                    : <IFrame width="100%" height="315" src={image} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen={true}></IFrame>
 
                             )}
                             {!isToggledOnlyImg && (
