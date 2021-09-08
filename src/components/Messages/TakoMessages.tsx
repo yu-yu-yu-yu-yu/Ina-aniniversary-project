@@ -72,7 +72,7 @@ const BubbleHeader = styled.div`
     text-align: left;
 
     
-    font: normal normal 600 37px/45px Montserrat;
+    font: normal normal 600 30px/40px Montserrat;
 
     @media only screen and (max-width: 768px) {
         font: normal normal 600 24px/30px Montserrat;    

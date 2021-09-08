@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const TakoImg = styled.img`
-    width: 80px;
+    width: 70px;
+    margin-right: 10px;
     filter: drop-shadow(2px 2px 1px darkgray);
     opacity: 1;
 `;
