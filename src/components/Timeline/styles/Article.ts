@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Milestone } from "../Milestone";
+import {Milestone} from "../Milestone";
 
 export const Row = styled.div<{ big?: boolean; center?: boolean }>`
   display: flex;
@@ -8,7 +8,7 @@ export const Row = styled.div<{ big?: boolean; center?: boolean }>`
   height: ${({ big }) => (big ? "100%" : "initial")};
   justify-content: ${({ center }) => (center ? "center" : "initial")};
   > *:first-child {
-    margin-right: 5em;
+    margin-right: 5%;
   }
   > *:only-child {
     margin: 0;
@@ -25,6 +25,9 @@ export const EventText = styled.p`
   line-height: 2vw;
   //margin: 0 2em;
   text-align: justify;
+  @media (max-width: 950px) {
+    font-size: 13px;
+  }
 `;
 export const EventLabel = styled.h1`
   text-align: center;
