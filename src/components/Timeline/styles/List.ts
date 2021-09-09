@@ -1,22 +1,34 @@
 import styled from "styled-components";
 import ScrollContainer from "react-indiana-drag-scroll";
 
-export const LineRight = styled.span`
+export const Line = styled.span`
   border: 3px solid var(--ika-purple);
   position: relative;
   bottom: 17px;
   width: 500px;
   left: 245px;
+  &.mobile {
+    border: 3px solid var(--ika-purple);
+    position: relative;
+    bottom: unset;
+    height: 240px;
+    top: 120px;
+    left: -17px;
+    width: 0;
+  }
 `;
 
 export const ScrollListContainer = styled.div`
   display: flex;
   flex: 1;
-  margin-top: 38px;
+  width: 100vw;
   flex-direction: column;
+  &.mobile {
+    height: calc(100vh - 87px);
+  }
 `;
 export const TopControlsContainer = styled.div`
-  margin: 0 145px;
+  margin: 38px 145px 0;
 `;
 export const SearchBarContainer = styled.div`
   border-bottom: 1px solid var(--ika-purple);
@@ -59,12 +71,16 @@ export const Circle = styled.span`
 //background-size: cover;
 export const EventPreview = styled.img`
   background: var(--ika-purple);
-
   width: 410px;
   height: 229px;
   border-radius: 5px;
   margin-bottom: 26px;
   z-index: 2;
+  &.mobile {
+    width: 253px;
+    height: 141px;
+    margin-bottom: 5px;
+  }
 `;
 
 export const EventContainer = styled.div<{ highlight: boolean }>`
@@ -75,6 +91,11 @@ export const EventContainer = styled.div<{ highlight: boolean }>`
   margin-right: 90px;
   width: 410px;
   cursor: grab;
+  &.mobile {
+    margin: 0;
+    align-items: center;
+    flex-direction: row;
+  }
 `;
 
 export const Triangle = styled.div`
@@ -104,13 +125,19 @@ export const ListScrollable = styled(ScrollContainer)`
   overflow: hidden;
   align-items: flex-end;
   padding-bottom: 10%;
-  > ${EventContainer}:first-child {
+  :not(&.mobile) > ${EventContainer}:first-child {
     padding-left: 111px;
   }
   > ${EventContainer}:last-child {
-    ${LineRight} {
+    ${Line} {
       visibility: hidden;
     }
+  }
+  &.mobile {
+    padding-bottom: 0;
+    width: unset;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -149,6 +176,18 @@ export const MonthAnchorHeader = styled.span`
   padding-left: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
+  &.mobile {
+    border: none;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    direction: rtl;
+    font: normal normal 300 15px/18px Roboto;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    position: relative;
+    left: -23px;
+  }
 `;
 
 export const EventLabel = styled.span`
@@ -160,6 +199,12 @@ export const EventLabel = styled.span`
   white-space: nowrap;
   overflow: hidden;
   width: 430px;
+  &.mobile {
+    text-align: left;
+    font: normal normal 400 20px/24px Roboto;
+    letter-spacing: 1px;
+    width: 240px;
+  }
 `;
 
 export const EventDate = styled.span`
@@ -167,4 +212,14 @@ export const EventDate = styled.span`
   text-align: center;
   font: normal normal 300 30px/37px Roboto;
   letter-spacing: 1.5px;
+  &.mobile {
+    text-align: right;
+    font: normal normal 300 13px/15px Roboto;
+    letter-spacing: 0.65px;
+  }
+`;
+
+export const EventThumbMobile = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

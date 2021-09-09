@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Milestone} from "../Milestone";
+import { Milestone } from "../Milestone";
 
 export const Row = styled.div<{ big?: boolean; center?: boolean }>`
   display: flex;

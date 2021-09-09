@@ -1,4 +1,4 @@
-import {Milestone} from "./Milestone";
+import { Milestone } from "./Milestone";
 
 export const milestones: Milestone[] = [
   {
@@ -105,5 +105,6 @@ export const milestones: Milestone[] = [
     label: "【Minecraft】 UPRP UPRP",
     date: "08/07/2021",
     section: "summer",
+    media: "InaHoodie.png",
   },
 ];

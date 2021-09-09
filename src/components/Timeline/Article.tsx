@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {Milestone} from "./Milestone";
-import {groupBy} from "lodash";
+import React, { useState } from "react";
+import { Milestone } from "./Milestone";
+import { groupBy } from "lodash";
 import {
   Column,
   EventLabel,

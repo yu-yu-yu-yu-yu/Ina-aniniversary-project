@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {ScrollList} from "./ScrollList";
-import Gallery from "./Gallery";
-import {Milestone} from "./Milestone";
-import {NavLink} from "react-router-dom";
-import {Article} from "./Article";
+import { ScrollList } from "./ScrollList";
+import { Milestone } from "./Milestone";
+import { NavLink } from "react-router-dom";
+import { Article } from "./Article";
 
 const Container = styled.div`
   flex-direction: column;
@@ -32,16 +31,19 @@ const Content = styled.div`
 
 const flavorSwitch = (
   flavour: string,
-  milestones: Milestone[]
+  milestones: Milestone[],
+  mobile?: boolean
 ): JSX.Element => {
   switch (flavour) {
     case "article":
       return <Article milestones={milestones} />;
-    case "gallery":
-      return <Gallery milestones={milestones} />;
+    // case "gallery":
+    //   return <Gallery milestones={milestones} />;
+    case "mobileList":
+      return <ScrollList milestones={milestones} mobile />;
     case "list":
     default:
-      return <ScrollList milestones={milestones} />;
+      return <ScrollList milestones={milestones} mobile={false} />;
   }
 };
 
@@ -64,8 +66,9 @@ export const Timeline = ({
         </NavLink>
         <select value={flavour} onChange={handleSelect}>
           <option value="article">Article</option>
-          <option value="gallery">Gallery</option>
+          {/*<option value="gallery">Gallery</option>*/}
           <option value="list">List</option>
+          <option value="mobileList">mobileList</option>
         </select>
       </Navbar>
 

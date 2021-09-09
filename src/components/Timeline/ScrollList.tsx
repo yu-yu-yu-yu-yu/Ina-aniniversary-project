@@ -1,8 +1,7 @@
 // export {};
-import {Milestone, Tags} from "./Milestone";
-import React, {ChangeEvent, useState} from "react";
-import {upperCase, zipObject} from "lodash";
-import {Switch} from "../Common/Switch";
+import { Milestone, Tags } from "./Milestone";
+import React, { ChangeEvent, useState } from "react";
+import { Switch } from "../Common/Switch";
 import {
   Circle,
   EventContainer,
@@ -10,7 +9,8 @@ import {
   EventInfo,
   EventLabel,
   EventPreview,
-  LineRight,
+  EventThumbMobile,
+  Line,
   ListScrollable,
   MonthAnchorHeader,
   MonthDisplay,
@@ -23,28 +23,7 @@ import {
   TopControlsContainer,
   Triangle,
 } from "./styles/List";
-
-const months = [
-  "September",
-  "October",
-  "November",
-  "December",
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-] as const;
-
-const mappedMonths = zipObject(
-  ["09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08"],
-  months
-);
-
-type Month = typeof months[number];
+import { filterMilestones, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
 
 const SearchBar = ({
   searchString,
@@ -106,25 +85,60 @@ const TopControls = ({
   setSearchString,
   selectedTags,
   setSelectedTags,
-}: {
-  searchString: string;
-  setSearchString: (string: string) => void;
-  selectedTags: Tags;
-  setSelectedTags: (tags: Tags) => void;
-}) => (
+}: IScrollListProps["searchProps"]) => (
   <TopControlsContainer>
     <SearchBar searchString={searchString} setSearchString={setSearchString} />
     <TagBar tags={selectedTags} setSelectedTags={setSelectedTags} />
   </TopControlsContainer>
 );
 
-const MonthAnchor = ({ date }: { date: Milestone["date"] }) => (
-  <MonthAnchorHeader>{mappedMonths[date.split("/")[1]]}</MonthAnchorHeader>
+const MonthAnchor = ({
+  date,
+  mobile,
+}: {
+  date: Milestone["date"];
+  mobile?: boolean;
+}) => (
+  <MonthAnchorHeader className={mobile ? "mobile" : ""}>
+    {mappedMonths[date.split("/")[1]]}
+  </MonthAnchorHeader>
 );
 
-const Thumb = ({ event: { media } }: { event: Milestone }) => (
-  <EventPreview src={process.env.PUBLIC_URL + "/" + media} />
+const Thumb = ({
+  event: { media },
+  mobile,
+}: {
+  event: Milestone;
+  mobile?: boolean;
+}) => (
+  <EventPreview
+    className={mobile ? "mobile" : ""}
+    src={process.env.PUBLIC_URL + "/" + media}
+  />
 );
+
+const EventMobile = ({
+  event,
+  monthStart,
+}: {
+  event: Milestone;
+  monthStart: boolean;
+}) => {
+  const { major, label, date } = event;
+  return (
+    <EventContainer className={"mobile"} highlight={!!major}>
+      {monthStart ? <MonthAnchor mobile date={date} /> : null}
+      <Circle />
+      <Line className={"mobile"} />
+      <Triangle />
+      <EventThumbMobile>
+        <EventLabel className={"mobile"}>{label}</EventLabel>
+        <Thumb mobile event={event} />
+        <EventDate className={"mobile"}>{date.replace(/\W/g, "·")}</EventDate>
+      </EventThumbMobile>
+    </EventContainer>
+  );
+};
 
 const Event = ({
   event,
@@ -141,25 +155,34 @@ const Event = ({
       <EventInfo>
         <Triangle />
         <Circle />
-        <LineRight />
+        <Line />
         <EventLabel>{label}</EventLabel>
-        <EventDate>{date}</EventDate>
+        <EventDate>{date.replace(/\W/g, "·")}</EventDate>
       </EventInfo>
     </EventContainer>
   );
 };
 
-const List = ({ milestones }: { milestones: Milestone[] }) => {
+const List = ({
+  milestones,
+  mobile,
+}: {
+  milestones: Milestone[];
+  mobile?: boolean;
+}) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
     const curMonth = list[index].date.split(/\W/)[1];
     return prevMonth < curMonth;
   };
 
+  const className = mobile ? "mobile" : "";
+  const Element = mobile ? EventMobile : Event;
+
   return (
-    <ListScrollable>
+    <ListScrollable className={className}>
       {milestones.map((milestone, index) => (
-        <Event
+        <Element
           key={milestone.date}
           event={milestone}
           monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
@@ -172,10 +195,7 @@ const List = ({ milestones }: { milestones: Milestone[] }) => {
 const BottomControls = ({
   selectedMonth,
   setMonth,
-}: {
-  selectedMonth: Month;
-  setMonth: (month: Month) => void;
-}) => {
+}: IScrollListProps["monthProps"]) => {
   const selectedIndex = months.findIndex((month) => month == selectedMonth);
 
   return (
@@ -194,7 +214,43 @@ const BottomControls = ({
   );
 };
 
-export const ScrollList = ({ milestones }: { milestones: Milestone[] }) => {
+export const ScrollListWide = ({
+  searchProps,
+  milestones,
+  monthProps,
+}: IScrollListProps) => {
+  return (
+    <ScrollListContainer>
+      <TopControls {...searchProps} />
+
+      <List milestones={milestones} />
+
+      <BottomControls {...monthProps} />
+    </ScrollListContainer>
+  );
+};
+
+const ScrollListNonWide = ({
+  milestones,
+}: // searchProps,
+// monthProps,
+{
+  milestones: IScrollListProps["milestones"];
+}) => {
+  return (
+    <ScrollListContainer className={"mobile"}>
+      <List milestones={milestones} mobile />
+    </ScrollListContainer>
+  );
+};
+
+export const ScrollList = ({
+  milestones,
+  mobile,
+}: {
+  milestones: Milestone[];
+  mobile: boolean;
+}) => {
   const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
     useState("September" as Month);
   const [searchString, setSearchString] = useState("");
@@ -203,33 +259,23 @@ export const ScrollList = ({ milestones }: { milestones: Milestone[] }) => {
     setSelectedTags: (tags: Tags) => void
   ] = useState({} as Tags);
 
-  const isAnyTag = Object.values(selectedTags).reduce(
-    (acc, val) => acc || val,
-    false
-  );
-  const selected: Milestone[] = milestones.filter(({ tags, label }) => {
-    const searchCondition = upperCase(label).includes(upperCase(searchString));
-    let tagCondition = !isAnyTag;
-    for (const tag in tags) {
-      tagCondition =
-        tagCondition ||
-        (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
-    }
-    return searchCondition && tagCondition;
-  });
+  const selected = filterMilestones(selectedTags, milestones, searchString);
 
-  return (
-    <ScrollListContainer>
-      <TopControls
-        searchString={searchString}
-        setSearchString={setSearchString}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-      />
+  const searchProps = {
+    searchString,
+    setSearchString,
+    selectedTags,
+    setSelectedTags,
+  };
+  const months = { selectedMonth: month, setMonth };
 
-      <List milestones={selected} />
-
-      <BottomControls selectedMonth={month} setMonth={setMonth} />
-    </ScrollListContainer>
+  return mobile ? (
+    <ScrollListNonWide milestones={milestones} />
+  ) : (
+    <ScrollListWide
+      searchProps={searchProps}
+      milestones={selected}
+      monthProps={months}
+    />
   );
 };

@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
 import HomeContent from "./components/Main/HomeContent";
-import {Timeline} from "./components/Timeline/Timeline";
-import {milestones} from "./components/Timeline/Milestones";
+import { Timeline } from "./components/Timeline/Timeline";
+import { milestones } from "./components/Timeline/Milestones";
 
 const App = (): JSX.Element => (
   <Router>
