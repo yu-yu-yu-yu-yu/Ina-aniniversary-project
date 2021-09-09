@@ -91,7 +91,7 @@ const MessageBoardContainer = (): JSX.Element => {
 
             const rows = csvData.slice(offset, LIMIT);
 
-            awaitImgs(data);
+            awaitImgs(rows);
 
             setData(rows);
             setOffset(LIMIT + offset);
@@ -101,12 +101,18 @@ const MessageBoardContainer = (): JSX.Element => {
 
     const fetchMore = async () => {
         if (data.length !== 0) {
-            const rows = csvData.slice(offset, LIMIT + offset);
+
+            const resultData = isToggledOnlyImg ? csvData.filter((row: Submission) => {
+                if(row.image != '') return row;
+            }) : csvData;
+
+            const rows = resultData.slice(offset, LIMIT + offset);
+
             if (rows.length === 0) {
                 setHasMore(false);
             }
 
-            awaitImgs(data);
+            awaitImgs(rows);
 
             setData(data.concat(rows));
             setOffset(LIMIT + offset);
@@ -136,13 +142,34 @@ const MessageBoardContainer = (): JSX.Element => {
         }
     };
 
-    const OnlyImgToggle = async (value: boolean) => {
-        console.log(value);
+    const OnlyImgToggle = async (value: boolean) => {        
         if (value) {
+
+            const resultData = csvData.filter((row: Submission) => {
+                if(row.image != '') return row;
+            });
+
+            const rows = resultData.slice(0, LIMIT);
+
+            setHasMore(true);
+            awaitImgs(rows);
+            setData(rows);
+
+            setOffset(0 + LIMIT);
+
             setIsToggledOnlyImg(true);
             setisToggledTextOnly(false);
         } else {
+            
+            setOffset(0);
+            const rows = csvData.slice(0, LIMIT);
+            
+            setHasMore(true);
+            awaitImgs(rows);
+            setData(rows);
+            setOffset(0 + LIMIT);
             setIsToggledOnlyImg(false);
+            
         }
     }
 

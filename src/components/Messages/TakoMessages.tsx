@@ -132,11 +132,11 @@ const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: Tako
         window.scrollTo(0, 0)
     }, []);
 
-    if (isToggledOnlyImg) {
-        submissions = submissions.filter((sub) => {
-            return sub.image;
-        })
-    }
+    // if (isToggledOnlyImg) {
+    //     submissions = submissions.filter((sub) => {
+    //         return sub.image;
+    //     })
+    // }
 
 
     return (
