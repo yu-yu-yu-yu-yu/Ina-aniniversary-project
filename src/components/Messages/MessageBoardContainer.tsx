@@ -163,7 +163,6 @@ const MessageBoardContainer = (): JSX.Element => {
             
             setOffset(0);
             const rows = csvData.slice(0, LIMIT);
-            
             setHasMore(true);
             awaitImgs(rows);
             setData(rows);
@@ -175,6 +174,18 @@ const MessageBoardContainer = (): JSX.Element => {
 
     const OnlyTextToggle = async (value: boolean) => {
         if (value) {
+
+            if(isToggledOnlyImg){
+                setOffset(0);
+                const rows = csvData.slice(0, LIMIT);
+                setHasMore(true);
+                awaitImgs(rows);
+                setData(rows);
+                setOffset(0 + LIMIT);
+                setIsToggledOnlyImg(false);
+    
+            }
+
             setisToggledTextOnly(true);
             setIsToggledOnlyImg(false);
         } else {
