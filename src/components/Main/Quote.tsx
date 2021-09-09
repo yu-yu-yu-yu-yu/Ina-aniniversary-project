@@ -6,7 +6,7 @@ const QuoteContainer = styled.div`
   text-align: center;
   padding: 80px 20px;
   margin-top: 200px;
-  margin-bottom: 170px;
+  margin-bottom: 20px;
   box-shadow: 0px 10px 6px #0000001C;
   
   @media only screen and (max-width: 701px) {

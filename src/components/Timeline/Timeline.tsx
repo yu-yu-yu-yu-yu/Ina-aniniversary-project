@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ScrollList } from "./ScrollList";
 import { Milestone } from "./Milestone";
@@ -37,13 +37,9 @@ const flavorSwitch = (
   switch (flavour) {
     case "article":
       return <Article milestones={milestones} />;
-    // case "gallery":
-    //   return <Gallery milestones={milestones} />;
-    case "mobileList":
-      return <ScrollList milestones={milestones} mobile />;
     case "list":
     default:
-      return <ScrollList milestones={milestones} mobile={false} />;
+      return <ScrollList milestones={milestones} mobile={mobile} />;
   }
 };
 
@@ -53,9 +49,21 @@ export const Timeline = ({
   milestones: Milestone[];
 }): JSX.Element => {
   const [flavour, setFlavour] = useState("list");
+  const [mobile, setMobile] = useState(false);
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFlavour(event.target.value);
+  };
+
+  useEffect(() => {
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const checkMobile = () => {
+    setMobile(window.innerWidth < 768);
   };
 
   return (
@@ -68,11 +76,10 @@ export const Timeline = ({
           <option value="article">Article</option>
           {/*<option value="gallery">Gallery</option>*/}
           <option value="list">List</option>
-          <option value="mobileList">mobileList</option>
         </select>
       </Navbar>
 
-      <Content>{flavorSwitch(flavour, milestones)}</Content>
+      <Content>{flavorSwitch(flavour, milestones, mobile)}</Content>
     </Container>
   );
 };

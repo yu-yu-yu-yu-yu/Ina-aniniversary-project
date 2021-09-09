@@ -249,7 +249,7 @@ export const ScrollList = ({
   mobile,
 }: {
   milestones: Milestone[];
-  mobile: boolean;
+  mobile?: boolean;
 }) => {
   const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
     useState("September" as Month);

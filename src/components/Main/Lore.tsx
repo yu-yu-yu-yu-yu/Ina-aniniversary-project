@@ -6,6 +6,13 @@ import styled from "styled-components";
 const LoreContainer = styled.div`
   text-align: center;
   margin-bottom: -10px;
+  background: var(--unnamed-color-f3edff) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background-size: 8%;
+  
+  
+  @media only screen and (max-width: 701px) {
+    padding-top: auto;
+  }
 `;
 
 const LoreTextContainer = styled.div`
