@@ -146,10 +146,10 @@ const ElementPicker = ({
             return <BigEvent key={milestone.date} event={milestone} />;
           }
           return (
-            <>
-              <Separator key={milestone.label} />
-              <BigEvent key={milestone.label} event={milestone} />
-            </>
+            <React.Fragment key={milestone.date}>
+              <Separator />
+              <BigEvent event={milestone} />
+            </React.Fragment>
           );
         }
         const Element = mix[counter++ % mix.length];
