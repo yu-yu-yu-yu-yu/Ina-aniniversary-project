@@ -1,10 +1,11 @@
-import React, {SyntheticEvent} from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Bar = styled.div<{ active: boolean }>`
   display: flex;
   border-radius: 100px;
   width: 38px;
+  min-width: 38px;
   height: 24px;
   background-color: ${({ active }) =>
     active ? "var(--ina-orange)" : "var(--ika-purple)"};
@@ -47,8 +48,8 @@ export const Switch = ({
   label: string;
   value: boolean;
   onChange: (b: boolean) => void;
-}) => {
-  const handleClick = (event: SyntheticEvent) => {
+}): JSX.Element => {
+  const handleClick = () => {
     onChange(!value);
   };
   return (
