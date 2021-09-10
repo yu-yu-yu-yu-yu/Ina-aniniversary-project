@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { readString } from "react-papaparse";
@@ -6,7 +6,6 @@ import { readString } from "react-papaparse";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../TakoLoading/TakoLoading";
-import MessageBoardSwitch from "./MessageBoardSwitch";
 import { Submission } from "./Submission";
 import { NavLink } from "react-router-dom";
 import ScrollArrow from "./BackToTop";
@@ -14,46 +13,41 @@ import ScrollArrow from "./BackToTop";
 import { Switch } from "../Common/Switch";
 // import MessageBoard from "./MessageBoard";
 
-
-const MessageBoard = styled.div` 
-    width: 90%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 20px;
+const MessageBoard = styled.div`
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
 `;
 
 const FiltersContainer = styled.div`
-    margin: auto;
-    margin-bottom: 35px;
+  margin: auto auto 35px;
 `;
 
 const Loader = styled.div`
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 `;
 
-
 const SearchBar = styled.input`
-    display: block;    
-    width: 100%;
-    background-color: transparent;
-    border: 0;
-    border-bottom: 2px solid;
-    margin-bottom: 20px;
-    outline: none;
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid;
+  margin-bottom: 20px;
+  outline: none;
 
-    color: var(--ika-purple);
-    text-align: left;
-    font: normal normal normal 30px/37px Montserrat;
-    letter-spacing: 0px;
-    color: #564F68;
-    opacity: 1;
-    
-    .switchs-container: {
-        
-        width: 40px;
-    }
+  color: var(--ika-purple);
+  text-align: left;
+  font: normal normal normal 30px/37px Montserrat;
+  letter-spacing: 0;
+  opacity: 1;
+
+  .switchs-container {
+    width: 40px;
+  }
 `;
 
 const Navbar = styled.nav`
@@ -72,213 +66,213 @@ const Navbar = styled.nav`
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
-    const [csvData, setCSV] = useState([] as any);
-    const [data, setData] = useState([] as any);
-    const [offset, setOffset] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
-    const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
+  const [csvData, setCSV] = useState([] as any);
+  const [data, setData] = useState([] as any);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
+  const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
 
-    useEffect(() => {
-        const fetchCSV = async () => {
-            const response = await fetch(`${process.env.PUBLIC_URL}/data/inadata.csv`);
-            const reader = response!.body!.getReader();
-            const result = await reader.read();
-            const decoder = new TextDecoder("utf-8");
-            const csv = await decoder.decode(result.value);
-            const { data: csvData } = readString(csv, { header: true });
-            setCSV(csvData);
+  useEffect(() => {
+    const fetchCSV = async () => {
+      const response = await fetch(
+        `${process.env.PUBLIC_URL}/data/inadata.csv`
+      );
+      const reader = response!.body!.getReader();
+      const result = await reader.read();
+      const decoder = new TextDecoder("utf-8");
+      const csv = await decoder.decode(result.value);
+      const { data: csvData } = readString(csv, { header: true });
+      setCSV(csvData);
 
-            const rows = csvData.slice(offset, LIMIT);
+      const rows = csvData.slice(offset, LIMIT);
 
-            awaitImgs(rows);
+      awaitImgs(rows);
 
-            setData(rows);
-            setOffset(LIMIT + offset);
-        }
-        fetchCSV();
-    }, []);
-
-    const fetchMore = async () => {
-        if (data.length !== 0) {
-
-            const resultData = isToggledOnlyImg ? csvData.filter((row: Submission) => {
-                if(row.image != '') return row;
-            }) : csvData;
-
-            const rows = resultData.slice(offset, LIMIT + offset);
-
-            if (rows.length === 0) {
-                setHasMore(false);
-            }
-
-            awaitImgs(rows);
-
-            setData(data.concat(rows));
-            setOffset(LIMIT + offset);
-        }
+      setData(rows);
+      setOffset(LIMIT + offset);
     };
+    fetchCSV();
+  }, []);
 
-    const handleFilter = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value != '') {
-            const resultData = csvData.filter((row: Submission) => {
-                return row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-                    row.message.toLowerCase().includes(event.target.value.toLowerCase())
-            });
-            setHasMore(false);
+  const fetchMore = async () => {
+    if (data.length !== 0) {
+      const resultData = isToggledOnlyImg
+        ? csvData.filter((row: Submission) => {
+            if (row.image != "") return row;
+          })
+        : csvData;
 
-            awaitImgs(resultData);
+      const rows = resultData.slice(offset, LIMIT + offset);
 
-            setData((resultData));
-            setOffset(0);
-        } else {
-            const rows = csvData.slice(offset, LIMIT);
-            setHasMore(true);
+      if (rows.length === 0) {
+        setHasMore(false);
+      }
 
-            awaitImgs(rows);
+      awaitImgs(rows);
 
-            setData(rows);
-            setOffset(offset + LIMIT);
-        }
-    };
-
-    const OnlyImgToggle = async (value: boolean) => {        
-        if (value) {
-
-            const resultData = csvData.filter((row: Submission) => {
-                if(row.image != '') return row;
-            });
-
-            const rows = resultData.slice(0, LIMIT);
-
-            setHasMore(true);
-            awaitImgs(rows);
-            setData(rows);
-
-            setOffset(0 + LIMIT);
-
-            setIsToggledOnlyImg(true);
-            setisToggledTextOnly(false);
-        } else {
-            
-            setOffset(0);
-            const rows = csvData.slice(0, LIMIT);
-            setHasMore(true);
-            awaitImgs(rows);
-            setData(rows);
-            setOffset(0 + LIMIT);
-            setIsToggledOnlyImg(false);
-            
-        }
+      setData(data.concat(rows));
+      setOffset(LIMIT + offset);
     }
+  };
 
-    const OnlyTextToggle = async (value: boolean) => {
-        if (value) {
+  const handleFilter = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value != "") {
+      const resultData = csvData.filter((row: Submission) => {
+        return (
+          row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
+          row.message.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+      });
+      setHasMore(false);
 
-            if(isToggledOnlyImg){
-                setOffset(0);
-                const rows = csvData.slice(0, LIMIT);
-                setHasMore(true);
-                awaitImgs(rows);
-                setData(rows);
-                setOffset(0 + LIMIT);
-                setIsToggledOnlyImg(false);
-    
-            }
+      awaitImgs(resultData);
 
-            setisToggledTextOnly(true);
-            setIsToggledOnlyImg(false);
-        } else {
-            setisToggledTextOnly(false);
-        }
+      setData(resultData);
+      setOffset(0);
+    } else {
+      const rows = csvData.slice(offset, LIMIT);
+      setHasMore(true);
+
+      awaitImgs(rows);
+
+      setData(rows);
+      setOffset(offset + LIMIT);
     }
+  };
 
-    const awaitImgs = async (data: any) => {
-        const promises = [] as any;
+  const OnlyImgToggle = async (value: boolean) => {
+    if (value) {
+      const resultData = csvData.filter((row: Submission) => {
+        if (row.image != "") return row;
+      });
 
-        data.forEach((row: any) => {
-            if (row.image) {
-                promises.push(
-                    new Promise((resolve) => {
-                        const img = new Image();
-                        img.src = row.image;
-                        img.onload = resolve;
-                    })
-                );
-            }
-        });
+      const rows = resultData.slice(0, LIMIT);
 
-        await Promise.all(promises);
+      setHasMore(true);
+      awaitImgs(rows);
+      setData(rows);
+
+      setOffset(LIMIT);
+
+      setIsToggledOnlyImg(true);
+      setisToggledTextOnly(false);
+    } else {
+      setOffset(0);
+      const rows = csvData.slice(0, LIMIT);
+      setHasMore(true);
+      awaitImgs(rows);
+      setData(rows);
+      setOffset(LIMIT);
+      setIsToggledOnlyImg(false);
     }
+  };
 
-    return (
-        <div>
-            <Navbar>
-                <NavLink exact to="/">
-                    {`< Messages`}
-                </NavLink>
-            </Navbar>
-            <MessageBoard>
-                <FiltersContainer>
-                    <SearchBar
-                        onChange={handleFilter}
-                        placeholder="Search..."
-                    />
-                    <div style={{display: "flex", flexDirection: "row"}}>
-                    <Switch
-                        label="Only Images"
-                        value={isToggledOnlyImg}
-                        onChange={(value) => OnlyImgToggle(value)}
-                    />
+  const OnlyTextToggle = async (value: boolean) => {
+    if (value) {
+      if (isToggledOnlyImg) {
+        setOffset(0);
+        const rows = csvData.slice(0, LIMIT);
+        setHasMore(true);
+        awaitImgs(rows);
+        setData(rows);
+        setOffset(LIMIT);
+        setIsToggledOnlyImg(false);
+      }
 
-                    <Switch
-                        label="Only messages"
-                        value={isToggledTextOnly}
-                        onChange={(value) => OnlyTextToggle(value)}
-                    />
-                    </div>
+      setisToggledTextOnly(true);
+      setIsToggledOnlyImg(false);
+    } else {
+      setisToggledTextOnly(false);
+    }
+  };
 
-                    {/* <MessageBoardSwitch
+  const awaitImgs = async (data: any) => {
+    const promises = [] as any;
+
+    data.forEach((row: any) => {
+      if (row.image) {
+        promises.push(
+          new Promise((resolve) => {
+            const img = new Image();
+            img.src = row.image;
+            img.onload = resolve;
+          })
+        );
+      }
+    });
+
+    await Promise.all(promises);
+  };
+
+  return (
+    <div>
+      <Navbar>
+        <NavLink exact to="/">
+          {`< Messages`}
+        </NavLink>
+      </Navbar>
+      <MessageBoard>
+        <FiltersContainer>
+          <SearchBar onChange={handleFilter} placeholder="Search..." />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              overflow: "hidden",
+            }}
+          >
+            <Switch
+              label="Only Images"
+              value={isToggledOnlyImg}
+              onChange={(value) => OnlyImgToggle(value)}
+            />
+
+            <Switch
+              label="Only messages"
+              value={isToggledTextOnly}
+              onChange={(value) => OnlyTextToggle(value)}
+            />
+          </div>
+
+          {/* <MessageBoardSwitch
                         id="image-switch"
                         label={'Only Images'}
                         toggled={isToggledOnlyImg}
                         onChange={OnlyImgToggle}
                     /> */}
-                    {/* <MessageBoardSwitch
+          {/* <MessageBoardSwitch
                         id="text-switch"
                         label={'Only messages'}
                         toggled={isToggledTextOnly}
                         onChange={OnlyTextToggle}
                     /> */}
-                </FiltersContainer>
-                <InfiniteScroll
-                    style={{ overflow: "hidden" }}
-                    scrollThreshold={"90%"}
-                    dataLength={data.length}
-                    next={fetchMore}
-                    hasMore={hasMore}
-                    loader={
-                        <Loader>
-                            <TakoLoading />
-                        </Loader>
-                    }
-                    endMessage={
-                        <p style={{ textAlign: 'center' }}>
-                            Yay! You have seen it all
-                        </p>
-                    }
-                >
-                    <TakoMessages
-                        submissions={data}
-                        isToggledOnlyImg={isToggledOnlyImg}
-                        isToggledTextOnly={isToggledTextOnly}
-                    />
-                </InfiniteScroll>
-                <ScrollArrow />
-            </MessageBoard>
-        </div>
-    );
+        </FiltersContainer>
+        <InfiniteScroll
+          style={{ overflow: "hidden" }}
+          scrollThreshold={"90%"}
+          dataLength={data.length}
+          next={fetchMore}
+          hasMore={hasMore}
+          loader={
+            <Loader>
+              <TakoLoading />
+            </Loader>
+          }
+          endMessage={
+            <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
+          }
+        >
+          <TakoMessages
+            submissions={data}
+            isToggledOnlyImg={isToggledOnlyImg}
+            isToggledTextOnly={isToggledTextOnly}
+          />
+        </InfiniteScroll>
+        <ScrollArrow />
+      </MessageBoard>
+    </div>
+  );
 };
-
 
 export default MessageBoardContainer;
