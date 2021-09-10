@@ -1,9 +1,13 @@
 // export {};
 import { Milestone, Tags } from "./Milestone";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, } from "react";
 import { Switch } from "../Common/Switch";
 import {
+  Backdrop,
   Circle,
+  DrawerContainer,
+  DrawerSeparator,
+  DrawerToggleI,
   EventContainer,
   EventDate,
   EventInfo,
@@ -24,6 +28,7 @@ import {
   Triangle,
 } from "./styles/List";
 import { filterMilestones, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
+import ReactDOM from "react-dom";
 
 const SearchBar = ({
   searchString,
@@ -50,9 +55,11 @@ const SearchBar = ({
 const TagBar = ({
   tags,
   setSelectedTags,
+  mobile,
 }: {
   tags: Tags;
   setSelectedTags: (tags: Tags) => void;
+  mobile?: boolean;
 }) => (
   <TagBarContainer>
     <TagsContainer>
@@ -60,21 +67,25 @@ const TagBar = ({
         label="Milestones"
         value={tags.milestone}
         onChange={(value) => setSelectedTags({ ...tags, milestone: value })}
+        mobile={mobile}
       />
       <Switch
         label="Important streams"
         value={tags.important}
         onChange={(value) => setSelectedTags({ ...tags, important: value })}
+        mobile={mobile}
       />
       <Switch
         label="Drawing streams"
         value={tags.drawing}
         onChange={(value) => setSelectedTags({ ...tags, drawing: value })}
+        mobile={mobile}
       />
       <Switch
         label="Collabs"
         value={tags.collab}
         onChange={(value) => setSelectedTags({ ...tags, collab: value })}
+        mobile={mobile}
       />
     </TagsContainer>
   </TagBarContainer>
@@ -85,10 +96,15 @@ const TopControls = ({
   setSearchString,
   selectedTags,
   setSelectedTags,
-}: IScrollListProps["searchProps"]) => (
+  mobile,
+}: IScrollListProps["searchProps"] & { mobile?: boolean }) => (
   <TopControlsContainer>
     <SearchBar searchString={searchString} setSearchString={setSearchString} />
-    <TagBar tags={selectedTags} setSelectedTags={setSelectedTags} />
+    <TagBar
+      mobile={mobile}
+      tags={selectedTags}
+      setSelectedTags={setSelectedTags}
+    />
   </TopControlsContainer>
 );
 
@@ -214,27 +230,49 @@ const BottomControls = ({
   );
 };
 
+const Drawer = ({
+  visible,
+  searchProps,
+  monthProps,
+  toggleDrawer,
+}: { visible: boolean; toggleDrawer: () => void } & Pick<
+  IScrollListProps,
+  "searchProps" | "monthProps"
+>) => {
+  if (!visible) return null;
+  return ReactDOM.createPortal(
+    <>
+      <Backdrop onClick={toggleDrawer} />
+      <DrawerContainer>
+        <TopControls mobile {...searchProps} />
+        <DrawerSeparator>Jump To</DrawerSeparator>
+        <BottomControls {...monthProps} />
+      </DrawerContainer>
+    </>,
+    document.getElementById("root") as HTMLElement
+  );
+};
+
 export const ScrollListWide = ({
   searchProps,
   milestones,
   monthProps,
-}: IScrollListProps) => {
+  modalControls,
+}: { modalControls: boolean } & IScrollListProps) => {
   return (
     <ScrollListContainer>
-      <TopControls {...searchProps} />
+      {modalControls ? null : <TopControls {...searchProps} />}
 
       <List milestones={milestones} />
 
-      <BottomControls {...monthProps} />
+      {modalControls ? null : <BottomControls {...monthProps} />}
     </ScrollListContainer>
   );
 };
 
 const ScrollListNonWide = ({
   milestones,
-}: // searchProps,
-// monthProps,
-{
+}: {
   milestones: IScrollListProps["milestones"];
 }) => {
   return (
@@ -244,13 +282,25 @@ const ScrollListNonWide = ({
   );
 };
 
+export const DrawerToggle = ({
+  onClick,
+}: {
+  onClick: () => void;
+}): JSX.Element => <DrawerToggleI onClick={onClick} className="fa fa-search" />;
+
 export const ScrollList = ({
   milestones,
   mobile,
+  modalControls,
+  drawerVisible,
+  toggleDrawer,
 }: {
   milestones: Milestone[];
   mobile?: boolean;
-}) => {
+  modalControls: boolean;
+  drawerVisible: boolean;
+  toggleDrawer: () => void;
+}): JSX.Element => {
   const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
     useState("September" as Month);
   const [searchString, setSearchString] = useState("");
@@ -267,15 +317,26 @@ export const ScrollList = ({
     selectedTags,
     setSelectedTags,
   };
-  const months = { selectedMonth: month, setMonth };
-  // mobile = true;
-  return mobile ? (
-    <ScrollListNonWide milestones={milestones} />
-  ) : (
-    <ScrollListWide
-      searchProps={searchProps}
-      milestones={selected}
-      monthProps={months}
-    />
+  const monthProps = { selectedMonth: month, setMonth };
+
+  return (
+    <>
+      <Drawer
+        visible={drawerVisible}
+        searchProps={searchProps}
+        monthProps={monthProps}
+        toggleDrawer={toggleDrawer}
+      />
+      {mobile ? (
+        <ScrollListNonWide milestones={selected} />
+      ) : (
+        <ScrollListWide
+          searchProps={searchProps}
+          milestones={selected}
+          monthProps={monthProps}
+          modalControls={modalControls}
+        />
+      )}
+    </>
   );
 };

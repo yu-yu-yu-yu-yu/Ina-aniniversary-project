@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { ScrollList } from "./ScrollList";
+import { DrawerToggle, ScrollList } from "./ScrollList";
 import { Milestone } from "./Milestone";
 import { NavLink } from "react-router-dom";
 import { Article } from "./Article";
+import { NavLinkContainer } from "./styles/List";
 
 const Container = styled.div`
   flex-direction: column;
@@ -19,9 +20,12 @@ const Navbar = styled.nav`
   flex: 0 1;
   padding: 0.9rem 1.25rem;
   text-align: left;
-  font: normal normal normal 3em montserrat;
+  font: normal normal normal 45px/55px montserrat;
   letter-spacing: 0;
   justify-content: space-between;
+  &.mobile {
+    font: normal normal normal 25px/30px Montserrat;
+  }
 `;
 
 const Content = styled.div`
@@ -31,15 +35,20 @@ const Content = styled.div`
 
 const flavorSwitch = (
   flavour: string,
-  milestones: Milestone[],
-  mobile?: boolean
+  props: {
+    milestones: Milestone[];
+    mobile: boolean;
+    modalControls: boolean;
+    drawerVisible: boolean;
+    toggleDrawer: () => void;
+  }
 ): JSX.Element => {
   switch (flavour) {
     case "article":
-      return <Article milestones={milestones} />;
+      return <Article milestones={props.milestones} />;
     case "list":
     default:
-      return <ScrollList milestones={milestones} mobile={mobile} />;
+      return <ScrollList {...props} />;
   }
 };
 
@@ -50,9 +59,17 @@ export const Timeline = ({
 }): JSX.Element => {
   const [flavour, setFlavour] = useState("list");
   const [mobile, setMobile] = useState(false);
+  const [modalControls, setModalControls] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navBarRef = useRef(null);
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFlavour(event.target.value);
+  };
+
+  const checkMobile = () => {
+    setMobile(window.innerWidth < 768);
+    setModalControls(window.innerWidth < 1200);
   };
 
   useEffect(() => {
@@ -63,16 +80,21 @@ export const Timeline = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const checkMobile = () => {
-    setMobile(window.innerWidth < 768);
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   return (
     <Container>
-      <Navbar>
-        <NavLink exact to="/">
-          <i className="fa fa-angle-left" /> Timeline
-        </NavLink>
+      <Navbar ref={navBarRef} className={mobile ? "mobile" : ""}>
+        <NavLinkContainer>
+          <NavLink exact to="/">
+            <i className="fa fa-angle-left" /> Timeline
+          </NavLink>
+        </NavLinkContainer>
+        {flavour === "list" && modalControls && (
+          <DrawerToggle onClick={handleDrawerToggle} />
+        )}
         <select value={flavour} onChange={handleSelect}>
           <option value="article">Article</option>
           {/*<option value="gallery">Gallery</option>*/}
@@ -80,7 +102,15 @@ export const Timeline = ({
         </select>
       </Navbar>
 
-      <Content>{flavorSwitch(flavour, milestones, mobile)}</Content>
+      <Content>
+        {flavorSwitch(flavour, {
+          milestones,
+          mobile,
+          modalControls,
+          drawerVisible: drawerOpen,
+          toggleDrawer: handleDrawerToggle,
+        })}
+      </Content>
     </Container>
   );
 };

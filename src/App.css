@@ -19,13 +19,13 @@ html,body, #root {
     flex: 0 1
 }
 
-nav>a{
+nav a{
     display: inline-block;
     text-align: center;
     color: #fff;
 }
 
-nav>a.active{
+nav a.active{
     background: white;
     color: #03a9f4;
 }

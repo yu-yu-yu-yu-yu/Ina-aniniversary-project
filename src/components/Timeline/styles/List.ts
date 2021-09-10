@@ -22,6 +22,7 @@ export const ScrollListContainer = styled.div`
   display: flex;
   flex: 1;
   width: 100vw;
+  overflow: hidden;
   flex-direction: column;
   &.mobile {
     height: calc(100vh - 87px);
@@ -127,6 +128,9 @@ export const ListScrollable = styled(ScrollContainer)`
   width: 100vw;
   align-items: flex-end;
   padding-bottom: 10%;
+  @media (max-width: 1200px) {
+    padding-bottom: 25%;
+  }
   :not(&.mobile) > ${EventContainer}:first-child {
     padding-left: 111px;
   }
@@ -158,7 +162,10 @@ export const MonthListContainer = styled.div`
     margin: 0 auto;
   }
 `;
-export const MonthDisplay = styled.div<{ highlight: boolean; passed: boolean }>`
+export const MonthDisplay = styled.span<{
+  highlight: boolean;
+  passed: boolean;
+}>`
   color: white;
   text-align: center;
   letter-spacing: 0;
@@ -226,4 +233,84 @@ export const EventDate = styled.span`
 export const EventThumbMobile = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const DrawerContainer = styled.div`
+  width: 341px;
+  height: 343px;
+  margin: 70px auto 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background-color: var(--inai-purple);
+  border-radius: 15px;
+  z-index: 69;
+  > ${TopControlsContainer} {
+    margin: 15px auto;
+  }
+  ${SearchInput} {
+    font: normal normal normal 16px/19px Montserrat;
+    color: #ffffff;
+    ::placeholder {
+      color: white;
+    }
+  }
+  ${SearchBarContainer} {
+    border-bottom-color: white;
+    margin: 0 20px;
+  }
+  ${TagBarContainer} {
+    margin-top: 15px;
+    margin-left: 20px;
+  }
+  ${TagsContainer} {
+    flex-direction: column;
+  }
+  ${MonthListContainer} {
+    margin: 0;
+    background: unset;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  ${MonthDisplay} {
+    font-size: 16px;
+    line-height: 19px;
+    :not(:nth-child(4n)) {
+      padding-bottom: 8px;
+    }
+  }
+`;
+
+export const Backdrop = styled.span`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 69;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+export const DrawerSeparator = styled.span`
+  margin: 0 20px;
+  text-align: left;
+  font: normal normal 300 16px/19px Montserrat;
+  letter-spacing: 0;
+  color: white;
+  opacity: 1;
+  border-bottom: 2px solid white;
+  display: block;
+`;
+
+export const DrawerToggleI = styled.i`
+  color: white;
+  padding-right: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const NavLinkContainer = styled.div`
+  flex-grow: 2;
 `;

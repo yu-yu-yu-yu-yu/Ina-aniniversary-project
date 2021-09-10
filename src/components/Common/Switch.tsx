@@ -11,6 +11,12 @@ const Bar = styled.div<{ active: boolean }>`
     active ? "var(--ina-orange)" : "var(--ika-purple)"};
   flex-direction: row;
   transition: 0.2s linear;
+  &.mobile {
+    width: 20px;
+    min-width: 20px;
+    height: 12px;
+    align-self: center;
+  }
 `;
 
 const Circle = styled.div<{ active: boolean }>`
@@ -22,6 +28,12 @@ const Circle = styled.div<{ active: boolean }>`
 
   transform: translateX(${({ active }) => (active ? "15px" : "0")});
   transition: 0.2s linear;
+  &.mobile {
+    width: 10px;
+    height: 10px;
+    margin: auto 1px;
+    transform: translateX(${({ active }) => (active ? "8px" : "0")});
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -38,26 +50,31 @@ const Label = styled.span`
   text-align: left;
   font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
+  &.mobile {
+    font: normal normal 300 16px/19px Montserrat;
+  }
 `;
 
 export const Switch = ({
   label,
   value,
   onChange,
+  mobile,
 }: {
   label: string;
   value: boolean;
   onChange: (b: boolean) => void;
+  mobile?: boolean;
 }): JSX.Element => {
   const handleClick = () => {
     onChange(!value);
   };
   return (
-    <Container onClick={handleClick}>
-      <Bar active={value}>
-        <Circle active={value} />
+    <Container onClick={handleClick} className={mobile ? "mobile" : ""}>
+      <Bar active={value} className={mobile ? "mobile" : ""}>
+        <Circle active={value} className={mobile ? "mobile" : ""} />
       </Bar>
-      <Label>{label}</Label>
+      <Label className={mobile ? "mobile" : ""}>{label}</Label>
     </Container>
   );
 };
