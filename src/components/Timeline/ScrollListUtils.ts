@@ -1,5 +1,6 @@
 import { upperCase, zipObject } from "lodash";
 import { Milestone, Tags } from "./Milestone";
+import { MutableRefObject, RefObject } from "react";
 
 export const months = [
   "September",
@@ -29,11 +30,14 @@ export interface IScrollListProps {
     selectedTags: Tags;
     setSelectedTags: (tags: Tags) => void;
   };
-  milestones: Milestone[];
   monthProps: {
     selectedMonth: Month;
     setMonth: (month: Month) => void;
   };
+  milestones: Milestone[];
+  refMap: MutableRefObject<Record<Month, RefObject<HTMLSpanElement> | null>>;
+  modalControls: boolean;
+  scrollPos: [number, number];
 }
 
 export const filterMilestones = (

@@ -51,6 +51,7 @@ const Label = styled.span`
   font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
   &.mobile {
+    color: white;
     font: normal normal 300 16px/19px Montserrat;
   }
 `;

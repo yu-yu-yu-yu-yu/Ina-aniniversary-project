@@ -1,6 +1,6 @@
 // export {};
 import { Milestone, Tags } from "./Milestone";
-import React, { ChangeEvent, useState, } from "react";
+import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState, } from "react";
 import { Switch } from "../Common/Switch";
 import {
   Backdrop,
@@ -108,16 +108,19 @@ const TopControls = ({
   </TopControlsContainer>
 );
 
-const MonthAnchor = ({
-  date,
-  mobile,
-}: {
+interface IMonthAnchorProps {
   date: Milestone["date"];
   mobile?: boolean;
-}) => (
-  <MonthAnchorHeader className={mobile ? "mobile" : ""}>
-    {mappedMonths[date.split("/")[1]]}
-  </MonthAnchorHeader>
+}
+
+const MonthAnchor = React.forwardRef<HTMLSpanElement, IMonthAnchorProps>(
+  function MonthAnchor({ date, mobile }: IMonthAnchorProps, ref): JSX.Element {
+    return (
+      <MonthAnchorHeader className={mobile ? "mobile" : ""} ref={ref}>
+        {mappedMonths[date.split(/\W/)[1]]}
+      </MonthAnchorHeader>
+    );
+  }
 );
 
 const Thumb = ({
@@ -136,17 +139,25 @@ const Thumb = ({
 const EventMobile = ({
   event,
   monthStart,
+  refMap,
 }: {
+  refMap: IScrollListProps["refMap"];
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
     <EventContainer className={"mobile"} highlight={!!major}>
-      {monthStart ? <MonthAnchor mobile date={date} /> : null}
+      {monthStart ? (
+        <MonthAnchor
+          ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
+          mobile
+          date={date}
+        />
+      ) : null}
       <Circle />
       <Line className={"mobile"} />
-      <Triangle />
+      <Triangle className={"mobile"} />
       <EventThumbMobile>
         <EventLabel className={"mobile"}>{label}</EventLabel>
         <Thumb mobile event={event} />
@@ -157,16 +168,23 @@ const EventMobile = ({
 };
 
 const Event = ({
+  refMap,
   event,
   monthStart,
 }: {
+  refMap: IScrollListProps["refMap"];
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
     <EventContainer highlight={!!major}>
-      {monthStart ? <MonthAnchor date={date} /> : null}
+      {monthStart ? (
+        <MonthAnchor
+          ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
+          date={date}
+        />
+      ) : null}
       <Thumb event={event} />
       <EventInfo>
         <Triangle />
@@ -181,24 +199,37 @@ const Event = ({
 
 const List = ({
   milestones,
+  refMap,
+  scrollPos,
   mobile,
 }: {
   milestones: Milestone[];
+  refMap: IScrollListProps["refMap"];
+  scrollPos: IScrollListProps["scrollPos"];
   mobile?: boolean;
 }) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
     const curMonth = list[index].date.split(/\W/)[1];
-    return prevMonth < curMonth;
+    return prevMonth != curMonth;
   };
+
+  const listRef: RefObject<HTMLElement> = useRef(null);
 
   const className = mobile ? "mobile" : "";
   const Element = mobile ? EventMobile : Event;
 
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo(...scrollPos);
+    }
+  }, [scrollPos]);
+
   return (
-    <ListScrollable className={className}>
+    <ListScrollable className={className} innerRef={listRef}>
       {milestones.map((milestone, index) => (
         <Element
+          refMap={refMap}
           key={milestone.date}
           event={milestone}
           monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
@@ -258,12 +289,14 @@ export const ScrollListWide = ({
   milestones,
   monthProps,
   modalControls,
-}: { modalControls: boolean } & IScrollListProps) => {
+  refMap,
+  scrollPos,
+}: IScrollListProps) => {
   return (
     <ScrollListContainer>
       {modalControls ? null : <TopControls {...searchProps} />}
 
-      <List milestones={milestones} />
+      <List milestones={milestones} refMap={refMap} scrollPos={scrollPos} />
 
       {modalControls ? null : <BottomControls {...monthProps} />}
     </ScrollListContainer>
@@ -272,12 +305,17 @@ export const ScrollListWide = ({
 
 const ScrollListNonWide = ({
   milestones,
-}: {
-  milestones: IScrollListProps["milestones"];
-}) => {
+  refMap,
+  scrollPos,
+}: Pick<IScrollListProps, "milestones" | "refMap" | "scrollPos">) => {
   return (
     <ScrollListContainer className={"mobile"}>
-      <List milestones={milestones} mobile />
+      <List
+        milestones={milestones}
+        mobile
+        refMap={refMap}
+        scrollPos={scrollPos}
+      />
     </ScrollListContainer>
   );
 };
@@ -308,8 +346,34 @@ export const ScrollList = ({
     selectedTags: Tags,
     setSelectedTags: (tags: Tags) => void
   ] = useState({} as Tags);
+  const [scroll, setScroll] = useState([0, 0]);
 
   const selected = filterMilestones(selectedTags, milestones, searchString);
+
+  const monthRefMap = useRef(
+    months.reduce(
+      (acc: Record<Month, RefObject<HTMLSpanElement> | null>, month) => {
+        acc[month] = createRef();
+        return acc;
+      },
+      {} as Record<Month, RefObject<HTMLSpanElement> | null>
+    )
+  );
+  // const listRef: RefObject<HTMLElement> = ();
+
+  const scrollToMonth = (month: Month) => {
+    const selectedMonth = monthRefMap.current?.[month]?.current;
+
+    if (selectedMonth) {
+      if (mobile) {
+        setScroll([0, +(selectedMonth?.offsetTop ?? 0)]);
+      } else {
+        setScroll([+(selectedMonth?.offsetLeft ?? 0), 0]);
+      }
+    }
+
+    setMonth(month);
+  };
 
   const searchProps = {
     searchString,
@@ -317,7 +381,7 @@ export const ScrollList = ({
     selectedTags,
     setSelectedTags,
   };
-  const monthProps = { selectedMonth: month, setMonth };
+  const monthProps = { selectedMonth: month, setMonth: scrollToMonth };
 
   return (
     <>
@@ -328,9 +392,15 @@ export const ScrollList = ({
         toggleDrawer={toggleDrawer}
       />
       {mobile ? (
-        <ScrollListNonWide milestones={selected} />
+        <ScrollListNonWide
+          scrollPos={scroll as [number, number]}
+          milestones={selected}
+          refMap={monthRefMap}
+        />
       ) : (
         <ScrollListWide
+          refMap={monthRefMap}
+          scrollPos={scroll as [number, number]}
           searchProps={searchProps}
           milestones={selected}
           monthProps={monthProps}

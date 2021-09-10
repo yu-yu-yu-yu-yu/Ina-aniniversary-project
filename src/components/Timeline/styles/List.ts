@@ -2,18 +2,18 @@ import styled from "styled-components";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 export const Line = styled.span`
-  border: 3px solid var(--ika-purple);
+  border-top: 5px solid var(--ika-purple);
   position: relative;
-  bottom: 17px;
+  bottom: 16px;
   width: 500px;
   left: 245px;
   &.mobile {
-    border: 3px solid var(--ika-purple);
+    border-left: 4px solid var(--ika-purple);
     position: relative;
     bottom: unset;
     height: 240px;
     top: 120px;
-    left: -17px;
+    left: -16px;
     width: 0;
   }
 `;
@@ -25,7 +25,7 @@ export const ScrollListContainer = styled.div`
   overflow: hidden;
   flex-direction: column;
   &.mobile {
-    height: calc(100vh - 87px);
+    height: 100vh;
   }
 `;
 export const TopControlsContainer = styled.div`
@@ -97,6 +97,7 @@ export const EventContainer = styled.div<{ highlight: boolean }>`
   cursor: grab;
   &.mobile {
     margin: 0;
+    width: unset;
     align-items: center;
     flex-direction: row;
   }
@@ -113,6 +114,9 @@ export const Triangle = styled.div`
 
   border-radius: 0 0 0 0.25em;
   background-color: var(--color);
+  &.mobile {
+    display: none;
+  }
 `;
 
 export const EventInfo = styled.div`
@@ -128,6 +132,7 @@ export const ListScrollable = styled(ScrollContainer)`
   width: 100vw;
   align-items: flex-end;
   padding-bottom: 10%;
+  scroll-behavior: smooth;
   @media (max-width: 1200px) {
     padding-bottom: 25%;
   }
