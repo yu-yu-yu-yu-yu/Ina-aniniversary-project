@@ -268,7 +268,7 @@ export const ScrollList = ({
     setSelectedTags,
   };
   const months = { selectedMonth: month, setMonth };
-
+  // mobile = true;
   return mobile ? (
     <ScrollListNonWide milestones={milestones} />
   ) : (

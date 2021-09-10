@@ -29,6 +29,9 @@ export const ScrollListContainer = styled.div`
 `;
 export const TopControlsContainer = styled.div`
   margin: 38px 145px 0;
+  @media (max-width: 1200px) {
+    margin: 38px auto 0;
+  }
 `;
 export const SearchBarContainer = styled.div`
   border-bottom: 1px solid var(--ika-purple);
@@ -122,7 +125,6 @@ export const ListScrollable = styled(ScrollContainer)`
   flex: 1;
   flex-direction: row;
   width: 100vw;
-  overflow: hidden;
   align-items: flex-end;
   padding-bottom: 10%;
   :not(&.mobile) > ${EventContainer}:first-child {
@@ -152,6 +154,9 @@ export const MonthListContainer = styled.div`
   flex: 0 1;
   margin: 0 111px;
   justify-content: space-between;
+  @media (max-width: 1400px) {
+    margin: 0 auto;
+  }
 `;
 export const MonthDisplay = styled.div<{ highlight: boolean; passed: boolean }>`
   color: white;
@@ -161,7 +166,6 @@ export const MonthDisplay = styled.div<{ highlight: boolean; passed: boolean }>`
     ${({ highlight, passed }) =>
       highlight ? "normal" : passed ? "light" : "100"}
     30px/37px Roboto;
-
   opacity: 1;
   margin: auto 0;
   :hover {
