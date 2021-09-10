@@ -6,10 +6,9 @@ const LogoContainer = styled.div`
   height: 100vh;
   margin-top: 50px;
 
-  @media only screen and max-width:1200px  and (orientation: landscape){
+  @media only screen and (max-width: 1200px) and (orientation: landscape) {
     height: 100vw;
   }
-
 `;
 
 const LogoImg = styled.img`
@@ -45,15 +44,15 @@ const LogoImg = styled.img`
 const LogoHeader = styled.h1`
   color: var(--ika-purple);
   text-align: center;
-  
+
   font: normal normal bold 84px/102px Montserrat;
   letter-spacing: 4.2px;
-  
+
   @media only screen and (max-width: 1000px) {
     font: normal normal bold 50px/60px Montserrat;
     letter-spacing: 2.25px;
   }
-  
+
   @media only screen and (max-width: 768px) {
     font: normal normal bold 35px/43px Montserrat;
     letter-spacing: 1.75px;
@@ -64,8 +63,6 @@ const LogoHeader = styled.h1`
     letter-spacing: 1.75px;
   }
 
-  
-  color: #564f68;
   text-transform: uppercase;
   opacity: 1;
   position: relative;
@@ -79,6 +76,5 @@ const Logo = (): JSX.Element => {
     </LogoContainer>
   );
 };
-
 
 export default Logo;

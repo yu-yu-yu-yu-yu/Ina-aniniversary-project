@@ -2,14 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-
 const LoreContainer = styled.div`
   text-align: center;
   margin-bottom: -10px;
-  background: var(--unnamed-color-f3edff) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
-  background-size: 8%;
-  
-  
+  background: var(--unnamed-color-f3edff)
+    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background-size: 100px;
+
   @media only screen and (max-width: 701px) {
     padding-top: auto;
   }
@@ -30,8 +29,8 @@ const LoreTextContainer = styled.div`
     text-align: center;
     left: auto;
   }
-  
-  .lore-text {  
+
+  .lore-text {
     padding: 35px;
     margin-top: 60px;
     max-width: 600px;
@@ -42,8 +41,7 @@ const LoreTextContainer = styled.div`
     color: var(--unnamed-color-f3edff);
     text-align: left;
     font: normal normal 300 28px/37px Mulish;
-    letter-spacing: 0px;
-    color: #f3edff;
+    letter-spacing: 0;
 
     @media only screen and (max-width: 701px) {
       padding: 25px;
@@ -55,20 +53,18 @@ const LoreTextContainer = styled.div`
     }
 
     @media only screen and (max-width: 1100px) {
-        display: inline-block;
-        max-width: 550px;
-        width: 70%;
-        color: var(--unnamed-color-f3edff);
-        text-align: left;
-        font: normal normal 300 15px/19px Mulish;
-        letter-spacing: 0px;
-        z-index: 1;
+      display: inline-block;
+      max-width: 550px;
+      width: 70%;
+      color: var(--unnamed-color-f3edff);
+      text-align: left;
+      font: normal normal 300 15px/19px Mulish;
+      letter-spacing: 0px;
+      z-index: 1;
     }
-
-
   }
 
-  .buttons-div{
+  .buttons-div {
     margin-top: 50px;
 
     @media only screen and (max-width: 1100px) {
@@ -79,7 +75,6 @@ const LoreTextContainer = styled.div`
     @media only screen and (max-width: 850px) {
       margin-right: 50%;
     }
-
   }
 
   .bio-button {
@@ -96,36 +91,36 @@ const LoreTextContainer = styled.div`
 
     padding: 20px 40px;
     margin: 10px;
-    
+
     @media only screen and (max-width: 1400px) {
       font: normal normal bold 22px/30px Roboto;
     }
 
     @media only screen and (max-width: 1100px) {
-        text-align: center;
-        font: normal normal bold 17px/20px Roboto;
-        letter-spacing: 0.34px;
-        width: 110px;
-        padding: 10px 15px;   
-        display: block;
-        z-index: 3;
+      text-align: center;
+      font: normal normal bold 17px/20px Roboto;
+      letter-spacing: 0.34px;
+      width: 110px;
+      padding: 10px 15px;
+      display: block;
+      z-index: 3;
     }
   }
 `;
 
-const LoreTextPolygon = styled.video`  
+const LoreTextPolygon = styled.video`
   z-index: 1;
   position: absolute;
   left: 100%;
   top: 40%;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-top: 40px solid transparent;
   border-bottom: 40px solid transparent;
   border-left: 40px solid var(--ika-purple);
 
   @media only screen and (max-width: 1100px) {
-      display: none;
+    display: none;
   }
 `;
 
@@ -140,7 +135,6 @@ const InaVideoContainer = styled.div`
     margin-top: -10em;
     z-index: 0;
   }
-
 `;
 
 const InaVideo = styled.video`
@@ -167,52 +161,49 @@ const InaVideo = styled.video`
   }
 `;
 
-
 const Lore = (): JSX.Element => {
-
-    return (
-        <LoreContainer>
-            <LoreTextContainer>
-                <LoreTextPolygon />
-                <div className="lore-text">
-                    <p>
-                        One day, Ina&apos;nis picked up a strange book and then started to
-                        gain the power of controlling tentacles. To her, tentacles are
-                        just a part in her ordinary life; it has never been a big deal for
-                        her. However, her girly mind does want to get them dressed up and
-                        stay pretty.
-                    </p>
-                    <p>
-                        After gaining power, she started hearing Ancient Whispers and
-                        Revelations. Hence, she began her VTuber activities to deliver
-                        random sanity checks on humanity, as an ordinary girl.
-                    </p>
-                </div>
-                <div className="buttons-div">
-                    <Link to="/messages" role="button" className="bio-button">
-                        Messages
-                    </Link>
-                    <Link to="/timeline" role="button" className="bio-button">
-                        Timeline
-                    </Link>
-                </div>
-            </LoreTextContainer>
-            <InaVideoContainer>
-                <InaVideo
-                    autoPlay
-                    loop
-                    muted
-                    poster={`${process.env.PUBLIC_URL}/InaHoodie.png`}
-                >
-                    <source
-                        src={`${process.env.PUBLIC_URL}/InaHoodie.webm`}
-                        type="video/webm"
-                    />
-                </InaVideo>
-            </InaVideoContainer>
-        </LoreContainer>
-    );
-
+  return (
+    <LoreContainer>
+      <LoreTextContainer>
+        <LoreTextPolygon />
+        <div className="lore-text">
+          <p>
+            One day, Ina&apos;nis picked up a strange book and then started to
+            gain the power of controlling tentacles. To her, tentacles are just
+            a part in her ordinary life; it has never been a big deal for her.
+            However, her girly mind does want to get them dressed up and stay
+            pretty.
+          </p>
+          <p>
+            After gaining power, she started hearing Ancient Whispers and
+            Revelations. Hence, she began her VTuber activities to deliver
+            random sanity checks on humanity, as an ordinary girl.
+          </p>
+        </div>
+        <div className="buttons-div">
+          <Link to="/messages" role="button" className="bio-button">
+            Messages
+          </Link>
+          <Link to="/timeline" role="button" className="bio-button">
+            Timeline
+          </Link>
+        </div>
+      </LoreTextContainer>
+      <InaVideoContainer>
+        <InaVideo
+          autoPlay
+          loop
+          muted
+          poster={`${process.env.PUBLIC_URL}/InaHoodie.png`}
+        >
+          <source
+            src={`${process.env.PUBLIC_URL}/InaHoodie.webm`}
+            type="video/webm"
+          />
+        </InaVideo>
+      </InaVideoContainer>
+    </LoreContainer>
+  );
 };
 
 export default Lore;
