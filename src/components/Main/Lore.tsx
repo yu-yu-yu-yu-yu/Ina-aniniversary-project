@@ -31,7 +31,7 @@ const LoreTextContainer = styled.div`
   }
 
   .lore-text {
-    padding: 35px;
+    padding: 10px 35px;
     margin-top: 60px;
     max-width: 600px;
     background: #564f68 0% 0% no-repeat padding-box;
@@ -178,6 +178,13 @@ const Lore = (): JSX.Element => {
             After gaining power, she started hearing Ancient Whispers and
             Revelations. Hence, she began her VTuber activities to deliver
             random sanity checks on humanity, as an ordinary girl.
+          </p>
+          <hr />
+          <p>
+            {`This site was developed by the Tentacult to celebrate Ina's first
+            debut anniversary. We've collected congratulatory messages from
+            Takodachi across the world! We also made a little timeline of all
+            the great things Ina has done in the past year.`}
           </p>
         </div>
         <div className="buttons-div">
