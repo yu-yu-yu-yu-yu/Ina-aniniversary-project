@@ -6,24 +6,46 @@ const Footer = styled.footer`
   z-index: 2;
   background: #fba147 0% 0% no-repeat padding-box;
   opacity: 1;
-  
-  
-  
-  .footer-social-container{
-    display: inline-block;
-    margin-left: 120px;
-    margin-bottom: 20px;
+  display: flex;
+  width: 100%;
 
-    @media only screen and (max-width: 950px) {
-      margin: 15px;
+  flex-direction: row;
+  justify-content: space-around;
+
+  
+  .footer-social-container{    
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    
+
+    a{
+      margin: auto;
     }
+
+  }
+
+  .disclaimer-container{ 
+      flex-grow: 1;
+      max-width 35vw;
+      margin-top: 40px;
+      text-align: center;  
+
+      @media only screen and (max-width: 950px) {
+        margin: auto;
+      }
   }
 
   p{
-    text-align: left;
+    
     font: normal normal normal 35px/43px Montserrat;
     letter-spacing: 0px;
     color: #4F415C;
+
+    @media only screen and (max-width: 1460px) {
+      font: normal normal normal 25px/35px Montserrat;
+      letter-spacing: 0px;
+    }
 
     @media only screen and (max-width: 950px) {
       font: normal normal normal 20px/20px Montserrat;
@@ -38,6 +60,7 @@ const Footer = styled.footer`
       font: normal normal normal 9px/11px Montserrat;
     }
   }
+ 
 
   .fa {
     margin-right: auto;
@@ -45,19 +68,17 @@ const Footer = styled.footer`
   }
 
   .footer-img-container{
-    display: inline-block;
-    float: right;
-    margin-right: 80px;
-    margin-top, margin-bottom: 20px;
-
-    @media only screen and (max-width: 950px) {
-      margin-right: auto;
-    }
+    flex-grow: 2;
+    
+    // margin-left: auto;
+    display: flex;
   }
 
   .footer-img {
-    margin: 20px;
-    width: 300px;
+    margin: auto;
+    max-width: 300px;
+    width: 18vw;
+    // margin-left: auto;
 
     @media only screen and (max-width: 950px) {
       width: 100%;
@@ -66,11 +87,11 @@ const Footer = styled.footer`
 
     @media only screen and (max-width: 750px) {
       max-width: 120px;
+      width: 15vw;
     }
 
     @media only screen and (max-width: 350px) {
       max-width: 100px;
-      margin-left: auto;
     }
 
     @media only screen and (max-width: 270px) {
@@ -92,7 +113,7 @@ const Footer = styled.footer`
 `;
 
 const AoLogo = styled.div`
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   left: 50%;
   margin-top: -7em;
@@ -138,6 +159,11 @@ const HomeFooter = (): JSX.Element => {
           </p>
         </a>
       </div>
+      <div className="disclaimer-container">
+        <p>
+          This is a fan project. We are not affiliated or endorsed by Cover Corporation.
+        </p>
+      </div>
       <div className="footer-img-container">
         <img
           alt="mini-ina"
@@ -145,6 +171,8 @@ const HomeFooter = (): JSX.Element => {
           src={`${process.env.PUBLIC_URL}/MiniIna.png`}
         />
       </div>
+
+
     </Footer>
   );
 };
