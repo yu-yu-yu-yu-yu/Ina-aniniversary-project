@@ -182,7 +182,11 @@ const Credits = ({
             <td>Rift#6565</td>
             <td>General Contribution</td>
           </tr>
-
+          <tr>
+            <td>Chroneco</td>
+            <td>@Chroneco</td>
+            <td>Tako loading animation</td>
+          </tr>
           <tr>
             <td>Ninomae Ina’nis</td>
             <td>@ninomaeinanis</td>
