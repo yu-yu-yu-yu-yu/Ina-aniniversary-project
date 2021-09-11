@@ -377,14 +377,14 @@ export const EventModalDescription = styled.p`
 `;
 export const EventModalHeading = styled.span`
   text-align: right;
-  font: normal normal normal 45px/55px Montserrat;
+  font: normal normal normal 30px/40px Montserrat;
   letter-spacing: 0;
   padding-top: 10px;
   color: #ffffff;
   text-shadow: 0 5px 6px #00000029;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  //text-overflow: ellipsis;
+  //white-space: nowrap;
   width: 300px;
   &.mobile {
     font: normal normal normal 22px/27px Montserrat;
