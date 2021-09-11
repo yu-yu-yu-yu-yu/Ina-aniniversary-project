@@ -9,6 +9,11 @@ const LoreContainer = styled.div`
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-size: 100px;
 
+  @media only screen and (min-width: 1100px) and (max-width: 1650px) {
+    // padding-bottom: 20vh;
+  }
+
+
   @media only screen and (max-width: 701px) {
     padding-top: auto;
   }
@@ -141,6 +146,16 @@ const InaVideo = styled.video`
   width: 100%;
   height: 100%;
   margin-left: 35%;
+
+
+  @media only screen and (min-width: 1440px) and (max-width: 1650px) {
+    margin-top: 20vh;
+  }
+
+  @media only screen and (min-width: 1100px) and (max-width: 1439px) {
+    margin-top: 28vh;
+  }
+
 
   @media only screen and (max-width: 1100px) {
     margin-left: 13em;
