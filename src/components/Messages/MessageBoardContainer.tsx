@@ -204,7 +204,7 @@ const MessageBoardContainer = (): JSX.Element => {
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
-            img.src = `${process.env.PUBLIC_URL}/Images/${row.image}`;
+            img.src = process.env.PUBLIC_URL+"/Images/"+row.image;
             img.onerror = resolve;
             img.onload = resolve;
           })
