@@ -19,7 +19,7 @@ export const TakoIcon = ({ id }: TakoIconProps): JSX.Element => {
         
             <TakoImg
                 alt={`tako-icon-${id}`}
-                src={`${process.env.PUBLIC_URL}/icon/W${id}.png`}
+                src={`${process.env.PUBLIC_URL}/icon/${id}.png`}
             />
         
     )

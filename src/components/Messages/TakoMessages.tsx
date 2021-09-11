@@ -166,7 +166,7 @@ const TakoMessages = ({ submissions, isToggledOnlyImg, isToggledTextOnly }: Tako
                             {!isToggledTextOnly && image && (
                                 //Using ina pfp as placeholder.
                                 !image.includes("youtube")
-                                    ? <SRLWrapper options={options}><BubbleImage src="https://via.placeholder.com/1500" /></SRLWrapper>
+                                    ? <SRLWrapper options={options}><BubbleImage src={process.env.PUBLIC_URL+"/Images/"+image} /></SRLWrapper>
                                     : <IFrame width="100%" height="315" src={image} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen={true}></IFrame>
 
                             )}
