@@ -4,10 +4,12 @@ import styled from "styled-components";
 
 const LoreContainer = styled.div`
   text-align: center;
-  margin-bottom: -10px;
+  padding-top: 90px;
+  margin-bottom: -80px;
   background: var(--unnamed-color-f3edff)
-    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
-  background-size: 100px;
+  url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background-attachment: fixed;
+  background-size: 170px;
 
   @media only screen and (min-width: 1100px) and (max-width: 1650px) {
     // padding-bottom: 20vh;

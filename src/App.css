@@ -6,6 +6,7 @@
     min-height: 100%;
     background: var(--unnamed-color-f3edff) url(./Pattern.png) 0 0;
     background-size: 100px;
+    background-attachment: fixed;
 }
 
 html,body, #root {
