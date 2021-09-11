@@ -27,11 +27,20 @@ const Footer = styled.footer`
 
   }
 
-  .disclaimer-container{ 
+
+
+  .disclaimer-container { 
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
       flex-grow: 1;
       max-width 35vw;
-      margin-top: 40px;
+    
+    p {
       text-align: center;  
+      font-size: 15px;
+      
+    }
 
       @media only screen and (max-width: 950px) {
         margin: auto;
@@ -40,7 +49,10 @@ const Footer = styled.footer`
 
   p{
     
-    font: normal normal normal 35px/43px Montserrat;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 35px;
+    font-weight: 400;
+
     letter-spacing: 0px;
     color: #4F415C;
 
