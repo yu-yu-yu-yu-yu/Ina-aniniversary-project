@@ -319,3 +319,59 @@ export const DrawerToggleI = styled.i`
 export const NavLinkContainer = styled.div`
   flex-grow: 2;
 `;
+export const EventModalInfo = styled.div`
+  padding-left: 60px;
+  display: flex;
+  width: 640px;
+  flex-direction: row;
+  padding-bottom: 10px;
+`;
+export const EventModalInfoLeft = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+`;
+export const EventModalContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 735px;
+  margin: 70px auto 0;
+  z-index: 69;
+  border-radius: 15px;
+  color: #fff;
+  background: var(--inai-purple);
+`;
+export const EventMedia = styled.img`
+  width: 100%;
+  box-shadow: 0px 5px 5px #0000003d;
+`;
+export const EventModalDescription = styled.p`
+  font: normal normal 300 15px/18px Roboto;
+  width: 335px;
+  border-left: 2px solid #fff;
+  padding-left: 20px;
+  flex: 3;
+`;
+export const EventModalHeading = styled.span`
+  text-align: right;
+  font: normal normal normal 45px/55px Montserrat;
+  letter-spacing: 0;
+  padding-top: 10px;
+  color: #ffffff;
+  text-shadow: 0 5px 6px #00000029;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 300px;
+`;
+export const EventModalDate = styled.span`
+  text-align: right;
+  font: normal normal 300 25px/30px Roboto;
+  letter-spacing: 1.25px;
+  color: #ffffff;
+  padding-top: 10px;
+  text-shadow: 0px 5px 6px #00000029;
+`;
