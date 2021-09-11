@@ -87,12 +87,7 @@ const MessageBoardContainer = (): JSX.Element => {
 
       const rows = csvData.slice(offset, LIMIT);
 
-      console.log(rows);
-
       await awaitImgs(rows);
-
-      console.log('ye');
-      
 
       setData(rows);
       setOffset(LIMIT + offset);
@@ -131,7 +126,6 @@ const MessageBoardContainer = (): JSX.Element => {
       });
       setHasMore(false);
 
-      await awaitImgs(resultData);
 
       setData(resultData);
       setOffset(0);
@@ -148,6 +142,8 @@ const MessageBoardContainer = (): JSX.Element => {
 
   const OnlyImgToggle = async (value: boolean) => {
     if (value) {
+          setData([]);
+
       const resultData = csvData.filter((row: Submission) => {
         if (row.image != "") return row;
       });
@@ -195,12 +191,10 @@ const MessageBoardContainer = (): JSX.Element => {
   const awaitImgs = async (data: any) => {
     const promises = [] as any;
 
-    console.log(data);
 
     data.forEach((row: any) => {
-      if (row.image) {
+      if (row.image && !row.image.includes("youtube")) {
         
-        console.log(row.image);
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
