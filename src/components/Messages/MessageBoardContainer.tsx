@@ -77,7 +77,7 @@ const MessageBoardContainer = (): JSX.Element => {
   useEffect(() => {
     const fetchCSV = async () => {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/prepdatav2.csv`
+        `${process.env.PUBLIC_URL}/data/prepdatav3.csv`
       );
       const reader = response!.body!.getReader();
       const result = await reader.read();
