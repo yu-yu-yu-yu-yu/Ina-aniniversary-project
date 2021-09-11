@@ -87,7 +87,12 @@ const MessageBoardContainer = (): JSX.Element => {
 
       const rows = csvData.slice(offset, LIMIT);
 
-      awaitImgs(rows);
+      console.log(rows);
+
+      await awaitImgs(rows);
+
+      console.log('ye');
+      
 
       setData(rows);
       setOffset(LIMIT + offset);
@@ -109,7 +114,7 @@ const MessageBoardContainer = (): JSX.Element => {
         setHasMore(false);
       }
 
-      awaitImgs(rows);
+      await awaitImgs(rows);
 
       setData(data.concat(rows));
       setOffset(LIMIT + offset);
@@ -126,7 +131,7 @@ const MessageBoardContainer = (): JSX.Element => {
       });
       setHasMore(false);
 
-      awaitImgs(resultData);
+      await awaitImgs(resultData);
 
       setData(resultData);
       setOffset(0);
@@ -134,7 +139,7 @@ const MessageBoardContainer = (): JSX.Element => {
       const rows = csvData.slice(offset, LIMIT);
       setHasMore(true);
 
-      awaitImgs(rows);
+      await awaitImgs(rows);
 
       setData(rows);
       setOffset(offset + LIMIT);
@@ -150,7 +155,7 @@ const MessageBoardContainer = (): JSX.Element => {
       const rows = resultData.slice(0, LIMIT);
 
       setHasMore(true);
-      awaitImgs(rows);
+      await awaitImgs(rows);
       setData(rows);
 
       setOffset(LIMIT);
@@ -161,7 +166,7 @@ const MessageBoardContainer = (): JSX.Element => {
       setOffset(0);
       const rows = csvData.slice(0, LIMIT);
       setHasMore(true);
-      awaitImgs(rows);
+      await awaitImgs(rows);
       setData(rows);
       setOffset(LIMIT);
       setIsToggledOnlyImg(false);
@@ -174,7 +179,7 @@ const MessageBoardContainer = (): JSX.Element => {
         setOffset(0);
         const rows = csvData.slice(0, LIMIT);
         setHasMore(true);
-        awaitImgs(rows);
+        await awaitImgs(rows);
         setData(rows);
         setOffset(LIMIT);
         setIsToggledOnlyImg(false);
@@ -190,12 +195,17 @@ const MessageBoardContainer = (): JSX.Element => {
   const awaitImgs = async (data: any) => {
     const promises = [] as any;
 
+    console.log(data);
+
     data.forEach((row: any) => {
       if (row.image) {
+        
+        console.log(row.image);
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
-            img.src = row.image;
+            img.src = `${process.env.PUBLIC_URL}/Images/${row.image}`;
+            img.onerror = resolve;
             img.onload = resolve;
           })
         );
