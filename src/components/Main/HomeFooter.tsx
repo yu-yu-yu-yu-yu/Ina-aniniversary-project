@@ -139,8 +139,9 @@ const AoLogo = styled.div`
 
 const CreditsModal = styled.div`
   width: 600px;
-  height: 343px;
+  height: auto;
   margin: 70px auto 0;
+  padding: 20px;
   right: 0;
   left: 0;
   top: 0;
@@ -148,6 +149,26 @@ const CreditsModal = styled.div`
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
+
+  table {
+      font-family: 'Mulish', sans-serif;
+  }
+
+  th {
+      font-size:25px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+  }
+
+  td {
+      font-size: 17px;
+  }
+
+  th, td {
+      color: #ffffff;
+      padding: 5px 7px;
+  }
+
 `;
 
 const Credits = ({
