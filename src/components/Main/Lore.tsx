@@ -45,8 +45,18 @@ const LoreTextContainer = styled.div`
 
     color: var(--unnamed-color-f3edff);
     text-align: left;
-    font: normal normal 300 28px/37px Mulish;
+    font-family: 'Mulish', sans-serif;
+    font-size: 25px;
+    font-weight: 300;
     letter-spacing: 0;
+
+    b {
+        font-weight: 800;
+    }
+
+    hr {
+        border-bottom: 0.5px solid #f3edff;
+    }
 
     @media only screen and (max-width: 701px) {
       padding: 25px;
@@ -54,7 +64,8 @@ const LoreTextContainer = styled.div`
 
     @media only screen and (max-width: 1400px) {
       max-width: 400px;
-      font: normal normal 300 20px/30px Mulish;
+      font-family: 'Mulish', sans-serif;
+      font-size: 20px;
     }
 
     @media only screen and (max-width: 1100px) {
@@ -63,7 +74,8 @@ const LoreTextContainer = styled.div`
       width: 70%;
       color: var(--unnamed-color-f3edff);
       text-align: left;
-      font: normal normal 300 15px/19px Mulish;
+      font-family: 'Mulish', sans-serif;
+      font-size: 17px;
       letter-spacing: 0px;
       z-index: 1;
     }
@@ -183,15 +195,15 @@ const Lore = (): JSX.Element => {
         <LoreTextPolygon />
         <div className="lore-text">
           <p>
-            One day, Ina&apos;nis picked up a strange book and then started to
-            gain the power of controlling tentacles. To her, tentacles are just
+            One day, <b>Ina&apos;nis</b> picked up a strange <b>book</b> and then started to
+            gain the power of controlling <b>tentacles</b>. To her, <b>tentacles</b> are just
             a part in her ordinary life; it has never been a big deal for her.
             However, her girly mind does want to get them dressed up and stay
             pretty.
           </p>
           <p>
             After gaining power, she started hearing Ancient Whispers and
-            Revelations. Hence, she began her VTuber activities to deliver
+            Revelations. Hence, she began her <b>VTuber</b> activities to deliver
             random sanity checks on humanity, as an ordinary girl.
           </p>
           <hr />
