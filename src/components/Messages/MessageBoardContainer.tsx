@@ -240,19 +240,6 @@ const MessageBoardContainer = (): JSX.Element => {
               onChange={(value) => OnlyTextToggle(value)}
             />
           </div>
-
-          {/* <MessageBoardSwitch
-                        id="image-switch"
-                        label={'Only Images'}
-                        toggled={isToggledOnlyImg}
-                        onChange={OnlyImgToggle}
-                    /> */}
-          {/* <MessageBoardSwitch
-                        id="text-switch"
-                        label={'Only messages'}
-                        toggled={isToggledTextOnly}
-                        onChange={OnlyTextToggle}
-                    /> */}
         </FiltersContainer>
         <InfiniteScroll
           style={{ overflow: "hidden" }}

@@ -13,7 +13,6 @@ const LoreContainer = styled.div`
     // padding-bottom: 20vh;
   }
 
-
   @media only screen and (max-width: 701px) {
     padding-top: auto;
   }
@@ -45,17 +44,17 @@ const LoreTextContainer = styled.div`
 
     color: var(--unnamed-color-f3edff);
     text-align: left;
-    font-family: 'Mulish', sans-serif;
+    font-family: "Mulish", sans-serif;
     font-size: 25px;
     font-weight: 300;
     letter-spacing: 0;
 
     b {
-        font-weight: 800;
+      font-weight: 800;
     }
 
     hr {
-        border-bottom: 0.5px solid #f3edff;
+      border-bottom: 0.5px solid #f3edff;
     }
 
     @media only screen and (max-width: 701px) {
@@ -64,7 +63,7 @@ const LoreTextContainer = styled.div`
 
     @media only screen and (max-width: 1400px) {
       max-width: 400px;
-      font-family: 'Mulish', sans-serif;
+      font-family: "Mulish", sans-serif;
       font-size: 20px;
     }
 
@@ -74,7 +73,7 @@ const LoreTextContainer = styled.div`
       width: 70%;
       color: var(--unnamed-color-f3edff);
       text-align: left;
-      font-family: 'Mulish', sans-serif;
+      font-family: "Mulish", sans-serif;
       font-size: 17px;
       letter-spacing: 0px;
       z-index: 1;
@@ -159,7 +158,6 @@ const InaVideo = styled.video`
   height: 100%;
   margin-left: 35%;
 
-
   @media only screen and (min-width: 1440px) and (max-width: 1650px) {
     margin-top: 20vh;
   }
@@ -167,7 +165,6 @@ const InaVideo = styled.video`
   @media only screen and (min-width: 1100px) and (max-width: 1439px) {
     margin-top: 28vh;
   }
-
 
   @media only screen and (max-width: 1100px) {
     margin-left: 13em;
@@ -188,6 +185,20 @@ const InaVideo = styled.video`
   }
 `;
 
+const AnimationCreditsContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 20%;
+  z-index: 1;
+`;
+
+const AnimationCredits = styled.p`
+  color: white;
+  font-size: 20px;
+  text-shadow: 0 5px 6px #00000029;
+  align-self: center;
+`;
+
 const Lore = (): JSX.Element => {
   return (
     <LoreContainer>
@@ -195,16 +206,16 @@ const Lore = (): JSX.Element => {
         <LoreTextPolygon />
         <div className="lore-text">
           <p>
-            One day, <b>Ina&apos;nis</b> picked up a strange <b>book</b> and then started to
-            gain the power of controlling <b>tentacles</b>. To her, <b>tentacles</b> are just
-            a part in her ordinary life; it has never been a big deal for her.
-            However, her girly mind does want to get them dressed up and stay
-            pretty.
+            One day, <b>Ina&apos;nis</b> picked up a strange <b>book</b> and
+            then started to gain the power of controlling <b>tentacles</b>. To
+            her, <b>tentacles</b> are just a part in her ordinary life; it has
+            never been a big deal for her. However, her girly mind does want to
+            get them dressed up and stay pretty.
           </p>
           <p>
             After gaining power, she started hearing Ancient Whispers and
-            Revelations. Hence, she began her <b>VTuber</b> activities to deliver
-            random sanity checks on humanity, as an ordinary girl.
+            Revelations. Hence, she began her <b>VTuber</b> activities to
+            deliver random sanity checks on humanity, as an ordinary girl.
           </p>
           <hr />
           <p>
@@ -235,6 +246,12 @@ const Lore = (): JSX.Element => {
             type="video/webm"
           />
         </InaVideo>
+        <AnimationCreditsContainer>
+          <AnimationCredits>
+            Illustration: @ninomaeinanis
+            <br /> Live2D Animation: @Shikabashi
+          </AnimationCredits>
+        </AnimationCreditsContainer>
       </InaVideoContainer>
     </LoreContainer>
   );
