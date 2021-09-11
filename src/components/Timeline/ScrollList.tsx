@@ -12,6 +12,13 @@ import {
   EventDate,
   EventInfo,
   EventLabel,
+  EventMedia,
+  EventModalContainer,
+  EventModalDate,
+  EventModalDescription,
+  EventModalHeading,
+  EventModalInfo,
+  EventModalInfoLeft,
   EventPreview,
   EventThumbMobile,
   Line,
@@ -140,14 +147,16 @@ const EventMobile = ({
   event,
   monthStart,
   refMap,
+  onClick,
 }: {
+  onClick: () => void;
   refMap: IScrollListProps["refMap"];
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
-    <EventContainer className={"mobile"} highlight={!!major}>
+    <EventContainer className={"mobile"} highlight={!!major} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
           ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
@@ -171,14 +180,16 @@ const Event = ({
   refMap,
   event,
   monthStart,
+  onClick,
 }: {
+  onClick: () => void;
   refMap: IScrollListProps["refMap"];
   event: Milestone;
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
   return (
-    <EventContainer highlight={!!major}>
+    <EventContainer highlight={!!major} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
           ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
@@ -194,6 +205,33 @@ const Event = ({
         <EventDate>{date.replace(/\W/g, "·")}</EventDate>
       </EventInfo>
     </EventContainer>
+  );
+};
+
+const EventModal = ({
+  event,
+  setEvent,
+}: {
+  event: Milestone | null;
+  setEvent: () => void;
+}) => {
+  if (!event) return null;
+  const { media, label, longText, date } = event;
+  return ReactDOM.createPortal(
+    <>
+      <Backdrop onClick={setEvent} />
+      <EventModalContainer>
+        <EventMedia src={process.env.PUBLIC_URL + "/" + media} />
+        <EventModalInfo>
+          <EventModalInfoLeft>
+            <EventModalHeading>{label}</EventModalHeading>
+            <EventModalDate>{date}</EventModalDate>
+          </EventModalInfoLeft>
+          <EventModalDescription>{longText}</EventModalDescription>
+        </EventModalInfo>
+      </EventModalContainer>
+    </>,
+    document.getElementById("root") as HTMLElement
   );
 };
 
@@ -215,6 +253,7 @@ const List = ({
   };
 
   const listRef: RefObject<HTMLElement> = useRef(null);
+  const [modalEvent, setModalEvent] = useState<Milestone | null>(null);
 
   const className = mobile ? "mobile" : "";
   const Element = mobile ? EventMobile : Event;
@@ -227,8 +266,10 @@ const List = ({
 
   return (
     <ListScrollable className={className} innerRef={listRef}>
+      <EventModal event={modalEvent} setEvent={() => setModalEvent(null)} />
       {milestones.map((milestone, index) => (
         <Element
+          onClick={() => setModalEvent(milestone)}
           refMap={refMap}
           key={milestone.date}
           event={milestone}
