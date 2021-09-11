@@ -260,7 +260,6 @@ const HomeFooter = (): JSX.Element => {
           This is a fan project. We are not affiliated or endorsed by Cover Corporation.
         </p>
       </div>
-      <div className="footer-img-container">
       <div
         className="footer-img-container"
         onClick={() => setCreditsVisible(true)}
@@ -271,8 +270,6 @@ const HomeFooter = (): JSX.Element => {
           src={`${process.env.PUBLIC_URL}/MiniIna.png`}
         />
       </div>
-
-
       <Credits
         visible={creditsVisible}
         hideModal={() => setCreditsVisible(false)}
