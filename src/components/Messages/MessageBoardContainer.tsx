@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { readString } from "react-papaparse";
@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import ScrollArrow from "./BackToTop";
 
 import { Switch } from "../Common/Switch";
+import { debounce } from "lodash";
 // import MessageBoard from "./MessageBoard";
 
 const MessageBoard = styled.div`
@@ -116,7 +117,7 @@ const MessageBoardContainer = (): JSX.Element => {
     }
   };
 
-  const handleFilter = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilter = debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value != "") {
       const resultData = csvData.filter((row: Submission) => {
         return (
@@ -138,7 +139,8 @@ const MessageBoardContainer = (): JSX.Element => {
       setData(rows);
       setOffset(offset + LIMIT);
     }
-  };
+  },1000);
+
 
   const OnlyImgToggle = async (value: boolean) => {
     if (value) {
