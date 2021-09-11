@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { readString } from "react-papaparse";
@@ -74,6 +74,7 @@ const MessageBoardContainer = (): JSX.Element => {
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
 
+  console.log(offset);
   useEffect(() => {
     const fetchCSV = async () => {
       const response = await fetch(
@@ -117,34 +118,35 @@ const MessageBoardContainer = (): JSX.Element => {
     }
   };
 
-  const handleFilter = debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value != "") {
-      const resultData = csvData.filter((row: Submission) => {
-        return (
-          row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-          row.message.toLowerCase().includes(event.target.value.toLowerCase())
-        );
-      });
-      setHasMore(false);
+  const handleFilter = debounce(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.value != "") {
+        const resultData = csvData.filter((row: Submission) => {
+          return (
+            row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
+            row.message.toLowerCase().includes(event.target.value.toLowerCase())
+          );
+        });
+        setHasMore(false);
 
+        setData(resultData);
+        setOffset(0);
+      } else {
+        const rows = csvData.slice(offset, LIMIT);
+        setHasMore(true);
 
-      setData(resultData);
-      setOffset(0);
-    } else {
-      const rows = csvData.slice(offset, LIMIT);
-      setHasMore(true);
+        await awaitImgs(rows);
 
-      await awaitImgs(rows);
-
-      setData(rows);
-      setOffset(offset + LIMIT);
-    }
-  },1000);
-
+        setData(rows);
+        setOffset(offset + LIMIT);
+      }
+    },
+    1000
+  );
 
   const OnlyImgToggle = async (value: boolean) => {
     if (value) {
-          setData([]);
+      setData([]);
 
       const resultData = csvData.filter((row: Submission) => {
         if (row.image != "") return row;
@@ -193,14 +195,12 @@ const MessageBoardContainer = (): JSX.Element => {
   const awaitImgs = async (data: any) => {
     const promises = [] as any;
 
-
     data.forEach((row: any) => {
       if (row.image && !row.image.includes("youtube")) {
-        
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
-            img.src = process.env.PUBLIC_URL+"/Images/"+row.image;
+            img.src = process.env.PUBLIC_URL + "/Images/" + row.image;
             img.onerror = resolve;
             img.onload = resolve;
           })
@@ -256,7 +256,7 @@ const MessageBoardContainer = (): JSX.Element => {
         </FiltersContainer>
         <InfiniteScroll
           style={{ overflow: "hidden" }}
-          scrollThreshold={"90%"}
+          scrollThreshold={"50px"}
           dataLength={data.length}
           next={fetchMore}
           hasMore={hasMore}
