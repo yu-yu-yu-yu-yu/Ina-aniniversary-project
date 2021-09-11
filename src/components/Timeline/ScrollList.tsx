@@ -211,23 +211,28 @@ const Event = ({
 const EventModal = ({
   event,
   setEvent,
+  mobile,
 }: {
   event: Milestone | null;
   setEvent: () => void;
+  mobile: boolean;
 }) => {
   if (!event) return null;
   const { media, label, longText, date } = event;
+  const className = mobile ? "mobile" : "";
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
       <EventModalContainer>
         <EventMedia src={process.env.PUBLIC_URL + "/" + media} />
-        <EventModalInfo>
-          <EventModalInfoLeft>
-            <EventModalHeading>{label}</EventModalHeading>
-            <EventModalDate>{date}</EventModalDate>
+        <EventModalInfo className={className}>
+          <EventModalInfoLeft className={className}>
+            <EventModalHeading className={className}>{label}</EventModalHeading>
+            <EventModalDate className={className}>{date}</EventModalDate>
           </EventModalInfoLeft>
-          <EventModalDescription>{longText}</EventModalDescription>
+          <EventModalDescription className={className}>
+            {longText}
+          </EventModalDescription>
         </EventModalInfo>
       </EventModalContainer>
     </>,
@@ -266,7 +271,11 @@ const List = ({
 
   return (
     <ListScrollable className={className} innerRef={listRef}>
-      <EventModal event={modalEvent} setEvent={() => setModalEvent(null)} />
+      <EventModal
+        event={modalEvent}
+        mobile={!!mobile}
+        setEvent={() => setModalEvent(null)}
+      />
       {milestones.map((milestone, index) => (
         <Element
           onClick={() => setModalEvent(milestone)}

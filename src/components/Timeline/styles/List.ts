@@ -323,14 +323,28 @@ export const EventModalInfo = styled.div`
   padding-left: 60px;
   display: flex;
   width: 640px;
+  max-width: 100%;
   flex-direction: row;
   padding-bottom: 10px;
+  &.mobile {
+    width: unset;
+    padding: 0 30px;
+    flex-direction: column;
+  }
 `;
 export const EventModalInfoLeft = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
   padding-right: 20px;
+  &.mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #fff;
+    flex-direction: row;
+    padding: 0;
+  }
 `;
 export const EventModalContainer = styled.div`
   position: absolute;
@@ -338,6 +352,7 @@ export const EventModalContainer = styled.div`
   left: 0;
   right: 0;
   width: 735px;
+  max-width: 100%;
   margin: 70px auto 0;
   z-index: 69;
   border-radius: 15px;
@@ -354,6 +369,11 @@ export const EventModalDescription = styled.p`
   border-left: 2px solid #fff;
   padding-left: 20px;
   flex: 3;
+  &.mobile {
+    width: unset;
+    padding: 0;
+    border: none;
+  }
 `;
 export const EventModalHeading = styled.span`
   text-align: right;
@@ -366,6 +386,11 @@ export const EventModalHeading = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 300px;
+  &.mobile {
+    font: normal normal normal 22px/27px Montserrat;
+    text-align: left;
+    text-shadow: unset;
+  }
 `;
 export const EventModalDate = styled.span`
   text-align: right;
@@ -374,4 +399,8 @@ export const EventModalDate = styled.span`
   color: #ffffff;
   padding-top: 10px;
   text-shadow: 0px 5px 6px #00000029;
+  &.mobile {
+    font: normal normal 300 13px/15px Roboto;
+    letter-spacing: 0.65px;
+  }
 `;
