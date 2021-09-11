@@ -208,7 +208,7 @@ const MessageBoardContainer = (): JSX.Element => {
       }
     });
 
-    await Promise.all(promises);
+    await Promise.allSettled(promises);
   };
 
   return (
