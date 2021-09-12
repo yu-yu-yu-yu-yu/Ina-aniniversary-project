@@ -34,6 +34,7 @@ export interface IScrollListProps {
     selectedMonth: Month;
     setMonth: (month: Month) => void;
   };
+  setMonth: (month: Month) => void;
   milestones: Milestone[];
   refMap: MutableRefObject<Record<Month, RefObject<HTMLSpanElement> | null>>;
   modalControls: boolean;

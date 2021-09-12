@@ -37,6 +37,8 @@ import {
 } from "./styles/List";
 import { filterMilestones, getMediaLink, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
+import { ScrollEvent } from "react-indiana-drag-scroll";
+import { last, toPairs } from "lodash";
 
 const SearchBar = ({
   searchString,
@@ -262,11 +264,13 @@ const List = ({
   refMap,
   scrollPos,
   mobile,
+  setMonth,
 }: {
   milestones: Milestone[];
   refMap: IScrollListProps["refMap"];
   scrollPos: IScrollListProps["scrollPos"];
   mobile?: boolean;
+  setMonth: IScrollListProps["setMonth"];
 }) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
@@ -286,8 +290,31 @@ const List = ({
     }
   }, [scrollPos]);
 
+  //TODO unfuck prop and typing spaghetti
+  const checkMonthScroll = (e: ScrollEvent) => {
+    if (e?.external) return;
+    const scrollDistance = mobile
+      ? listRef.current?.scrollTop ?? 0
+      : listRef.current?.scrollLeft ?? 0;
+    const months = refMap.current;
+    const month =
+      (last(
+        toPairs(months).filter(([, monthRef]) => {
+          const monthScroll = mobile
+            ? monthRef?.current?.offsetTop ?? 0
+            : monthRef?.current?.offsetLeft ?? 0;
+          return scrollDistance > monthScroll;
+        })
+      )?.[0] as Month) ?? "September";
+    setMonth(month);
+  };
+
   return (
-    <ListScrollable className={className} innerRef={listRef}>
+    <ListScrollable
+      onEndScroll={checkMonthScroll}
+      className={className}
+      innerRef={listRef}
+    >
       <EventModal
         event={modalEvent}
         mobile={!!mobile}
@@ -309,7 +336,10 @@ const List = ({
 const BottomControls = ({
   selectedMonth,
   setMonth,
-}: IScrollListProps["monthProps"]) => {
+}: {
+  selectedMonth: IScrollListProps["monthProps"]["selectedMonth"];
+  setMonth: IScrollListProps["setMonth"];
+}) => {
   const selectedIndex = months.findIndex((month) => month == selectedMonth);
 
   return (
@@ -357,13 +387,19 @@ export const ScrollListWide = ({
   monthProps,
   modalControls,
   refMap,
+  setMonth,
   scrollPos,
 }: IScrollListProps) => {
   return (
     <ScrollListContainer>
       {modalControls ? null : <TopControls {...searchProps} />}
 
-      <List milestones={milestones} refMap={refMap} scrollPos={scrollPos} />
+      <List
+        setMonth={setMonth}
+        milestones={milestones}
+        refMap={refMap}
+        scrollPos={scrollPos}
+      />
 
       {modalControls ? null : <BottomControls {...monthProps} />}
     </ScrollListContainer>
@@ -374,10 +410,14 @@ const ScrollListNonWide = ({
   milestones,
   refMap,
   scrollPos,
-}: Pick<IScrollListProps, "milestones" | "refMap" | "scrollPos">) => {
+  setMonth,
+}: Pick<IScrollListProps, "milestones" | "refMap" | "scrollPos"> & {
+  setMonth: IScrollListProps["setMonth"];
+}) => {
   return (
     <ScrollListContainer className={"mobile"}>
       <List
+        setMonth={setMonth}
         milestones={milestones}
         mobile
         refMap={refMap}
@@ -460,12 +500,14 @@ export const ScrollList = ({
       />
       {mobile ? (
         <ScrollListNonWide
+          setMonth={setMonth}
           scrollPos={scroll as [number, number]}
           milestones={selected}
           refMap={monthRefMap}
         />
       ) : (
         <ScrollListWide
+          setMonth={setMonth}
           refMap={monthRefMap}
           scrollPos={scroll as [number, number]}
           searchProps={searchProps}
