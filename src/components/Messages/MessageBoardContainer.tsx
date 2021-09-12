@@ -209,7 +209,7 @@ const MessageBoardContainer = (): JSX.Element => {
     <div>
       <Navbar>
         <NavLink exact to="/">
-          {`< Messages`}
+        <i className="fa fa-angle-left" /> {` Messages`}
         </NavLink>
       </Navbar>
       <MessageBoard>
