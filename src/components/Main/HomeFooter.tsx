@@ -15,6 +15,13 @@ const Footer = styled.footer`
   flex-direction: row;
   justify-content: space-around;
 
+  @media only screen and (min-width: 1100px) and (max-height: 800px){
+    margin-top: 90px;
+  }
+
+  @media only screen and (min-width: 1300px) and (max-height: 800px){
+    margin-top: 50px;
+  }
   
   @media only screen and (max-width: 750px) {
     padding: 35px 0px;
