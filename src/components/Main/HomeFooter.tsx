@@ -32,13 +32,14 @@ const Footer = styled.footer`
 
     .social-links {
       margin-left: 30px;
-
+      
       @media only screen and (max-width: 750px) {
         margin-left: 0px;
       }
     }
-
+    
     p {
+      display: inline-block;
       margin 10px;
     }
 
@@ -349,6 +350,7 @@ const HomeFooter = (): JSX.Element => {
               <i className="fa fa-twitter"></i> @ninomaeinanis
             </p>
           </a>
+          <br />
           <a
             rel="stylesheet"
             href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
