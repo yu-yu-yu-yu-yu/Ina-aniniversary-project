@@ -4,13 +4,6 @@ object-assign
 @license MIT
 */
 
-/* @license
-  Papa Parse
-  v5.3.0
-  https://github.com/mholt/PapaParse
-  License: MIT
-  */
-
 /*!
  * Masonry v4.2.2
  * Cascading grid layout library
@@ -23,13 +16,6 @@ object-assign
  * Outlayer v2.1.1
  * the brains and guts of a layout library
  * MIT license
- */
-
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <http://feross.org>
- * @license  MIT
  */
 
 /*!
@@ -58,10 +44,6 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * @license
