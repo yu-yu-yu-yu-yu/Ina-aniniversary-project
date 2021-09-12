@@ -25,6 +25,13 @@ const TextBubbleContainer = styled.div`
   border: 3px solid #a198b3;
   border-radius: 15px;
   opacity: 1;
+
+  hr {
+    height: 1px;
+    color: var(--inai-purple);
+    background-color: var(--inai-purple);
+    border: none;  }
+  
 `;
 
 // const TextBubbleBottom = styled.div`

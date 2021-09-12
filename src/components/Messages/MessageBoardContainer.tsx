@@ -15,7 +15,7 @@ const MessageBoard = styled.div`
   width: 90%;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 20px;
+  margin-top: 25px;
 `;
 
 const FiltersContainer = styled.div`
@@ -209,7 +209,7 @@ const MessageBoardContainer = (): JSX.Element => {
     <div>
       <Navbar>
         <NavLink exact to="/">
-          {`< Messages`}
+        <i className="fa fa-angle-left" /> {` Messages`}
         </NavLink>
       </Navbar>
       <MessageBoard>
