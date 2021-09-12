@@ -15,7 +15,7 @@ const MessageBoard = styled.div`
   width: 90%;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 20px;
+  margin-top: 25px;
 `;
 
 const FiltersContainer = styled.div`
