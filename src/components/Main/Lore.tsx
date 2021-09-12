@@ -4,10 +4,12 @@ import styled from "styled-components";
 
 const LoreContainer = styled.div`
   text-align: center;
-  margin-bottom: -10px;
+  padding-top: 90px;
+  margin-bottom: -80px;
   background: var(--unnamed-color-f3edff)
-    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
-  background-size: 100px;
+  url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background-attachment: fixed;
+  background-size: 170px;
 
   @media only screen and (min-width: 1100px) and (max-width: 1650px) {
     // padding-bottom: 20vh;
@@ -210,19 +212,19 @@ const Lore = (): JSX.Element => {
             then started to gain the power of controlling <b>tentacles</b>. To
             her, <b>tentacles</b> are just a part in her ordinary life; it has
             never been a big deal for her. However, her girly mind does want to
-            get them dressed up and stay pretty.
+            get them dressed up and stay<b> pretty</b>.
           </p>
           <p>
-            After gaining power, she started hearing Ancient Whispers and
-            Revelations. Hence, she began her <b>VTuber</b> activities to
-            deliver random sanity checks on humanity, as an ordinary girl.
+            After gaining power, she started hearing <b>Ancient Whispers</b> and
+            <b>Revelations</b>. Hence, she began her <b>VTuber</b> activities to
+            deliver random sanity checks on <b>humanity</b>, as an ordinary girl.
           </p>
           <hr />
           <p>
-            {`This site was developed by the Tentacult to celebrate Ina's first
-            debut anniversary. We've collected congratulatory messages from
-            Takodachi across the world! We also made a little timeline of all
-            the great things Ina has done in the past year.`}
+            This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s</b> first
+            debut <b>anniversary</b>. We&apos;ve collected congratulatory messages from
+            <b> Takodachi</b> across the world! We also made a little <b>timeline</b> of all
+            the great things <b>Ina</b> has done in the past year.
           </p>
         </div>
         <div className="buttons-div">

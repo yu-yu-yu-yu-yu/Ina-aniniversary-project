@@ -5,8 +5,8 @@ const QuoteContainer = styled.div`
   background: transparent linear-gradient(180deg, #C4BDD2 0%, #AEA2C5 100%) 0% 0% no-repeat padding-box;
   text-align: center;
   padding: 80px 20px;
-  margin-top: 200px;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
   box-shadow: 0px 10px 6px #0000001C;
   
   @media only screen and (max-width: 701px) {
