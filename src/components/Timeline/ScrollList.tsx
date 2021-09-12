@@ -74,15 +74,15 @@ const TagBar = ({
   <TagBarContainer>
     <TagsContainer>
       <Switch
-        label="Milestones"
-        value={tags.milestone}
-        onChange={(value) => setSelectedTags({ ...tags, milestone: value })}
-        mobile={mobile}
-      />
-      <Switch
         label="Important streams"
         value={tags.important}
         onChange={(value) => setSelectedTags({ ...tags, important: value })}
+        mobile={mobile}
+      />
+      <Switch
+        label="Gaming streams"
+        value={tags.gaming}
+        onChange={(value) => setSelectedTags({ ...tags, gaming: value })}
         mobile={mobile}
       />
       <Switch

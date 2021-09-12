@@ -12,6 +12,7 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
     day = day.length < 2 ? "0" + day : day;
     return [day, month, year].join("·");
   };
+
   return milestones.map((jmilestone) => {
     return {
       label: jmilestone.label,
@@ -20,8 +21,8 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
       longText: jmilestone.longText,
       major: toBool(jmilestone.major as csvBool),
       tags: {
-        milestone: toBool(jmilestone.milestone as csvBool),
         important: toBool(jmilestone.important as csvBool),
+        gaming: toBool(jmilestone.gaming as csvBool),
         drawing: toBool(jmilestone.drawing as csvBool),
         collab: toBool(jmilestone.collab as csvBool),
       },
