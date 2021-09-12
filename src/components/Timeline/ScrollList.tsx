@@ -12,7 +12,6 @@ import {
   EventDate,
   EventInfo,
   EventLabel,
-  EventMedia,
   EventModalContainer,
   EventModalDate,
   EventModalDescription,
@@ -23,6 +22,8 @@ import {
   EventThumbMobile,
   Line,
   ListScrollable,
+  ModalMedia,
+  ModalVideo,
   MonthAnchorHeader,
   MonthDisplay,
   MonthListContainer,
@@ -34,7 +35,7 @@ import {
   TopControlsContainer,
   Triangle,
 } from "./styles/List";
-import { filterMilestones, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
+import { filterMilestones, getMediaLink, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 
 const SearchBar = ({
@@ -136,7 +137,9 @@ const Thumb = ({
 }: {
   event: Milestone;
   mobile?: boolean;
-}) => <EventPreview className={mobile ? "mobile" : ""} src={media} />;
+}) => (
+  <EventPreview className={mobile ? "mobile" : ""} src={getMediaLink(media)} />
+);
 
 const EventMobile = ({
   event,
@@ -221,20 +224,24 @@ const EventModal = ({
   mobile: boolean;
 }) => {
   if (!event) return null;
-  const { video, label, longText, date } = event;
+  const { media, video, label, longText, date } = event;
   const className = mobile ? "mobile" : "";
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
       <EventModalContainer>
-        <EventMedia
-          src={video}
-          // width="100%"
-          height="415"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen={true}
-        />
+        {video ? (
+          <ModalVideo
+            src={video}
+            // width="100%"
+            height="415"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen={true}
+          />
+        ) : (
+          <ModalMedia src={getMediaLink(media)} />
+        )}
         <EventModalInfo className={className}>
           <EventModalInfoLeft className={className}>
             <EventModalHeading className={className}>{label}</EventModalHeading>

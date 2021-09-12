@@ -61,3 +61,8 @@ export const filterMilestones = (
     return searchCondition && tagCondition;
   });
 };
+
+export const getMediaLink = (src: Milestone["media"]) => {
+  const isUrl = src?.startsWith("http");
+  return isUrl ? src : `process.env.PUBLIC_URL/${src}`;
+};
