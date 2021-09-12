@@ -7,6 +7,7 @@ const Footer = styled.footer`
   position: relative;  
   z-index: 2;
   background: #fba147 0% 0% no-repeat padding-box;
+  padding: 25px 0px;
   opacity: 1;
   display: flex;
   width: 100%;
@@ -15,14 +16,30 @@ const Footer = styled.footer`
   justify-content: space-around;
 
   
+  @media only screen and (max-width: 750px) {
+    padding: 35px 0px;
+    padding-top: 5px;
+  }
+
   .footer-social-container{    
     flex-grow: 2;
     display: flex;
     flex-direction: column;
-    
 
-    a{
-      margin: auto;
+    justify-content:center;
+    
+    margin: 10px;
+
+    .social-links {
+      margin-left: 30px;
+
+      @media only screen and (max-width: 750px) {
+        margin-left: 0px;
+      }
+    }
+
+    p {
+      margin 10px;
     }
 
   }
@@ -30,21 +47,34 @@ const Footer = styled.footer`
 
 
   .disclaimer-container { 
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-      flex-grow: 1;
-      max-width 35vw;
+    position: absolute;
+    width: 80%;
     
-    p {
-      text-align: center;  
+    left: 50%;
+    bottom: 2%;
+    transform: translate(-50%, -30%);
+
+    p {  
+      text-align: center;
       font-size: 15px;
-      
-    }
+      margin: 0px;
+
+      @media only screen and (max-width: 1460px) {
+        font-size: 12px;
+      }
 
       @media only screen and (max-width: 950px) {
-        margin: auto;
+        font-size: 10px;
       }
+      
+      @media only screen and (max-width: 750px) {
+        font-size: 8px;
+      }
+
+      @media only screen and (max-width: 280px) {
+        font-size: 5px;
+      }
+    }
   }
 
   p{
@@ -57,21 +87,27 @@ const Footer = styled.footer`
     color: #4F415C;
 
     @media only screen and (max-width: 1460px) {
-      font: normal normal normal 25px/35px Montserrat;
-      letter-spacing: 0px;
+      font-size: 25px;
     }
 
     @media only screen and (max-width: 950px) {
-      font: normal normal normal 20px/20px Montserrat;
-      letter-spacing: 0px;
+      font-size: 20px;
     }
 
     @media only screen and (max-width: 750px) {
-      font: normal normal normal 11px/14px Montserrat;
+      font-size: 19px;
+    }
+
+    @media only screen and (max-width: 475px) {
+      font-size: 15px;
+    }
+
+    @media only screen and (max-width: 405px) {
+      font-size: 12px;
     }
 
     @media only screen and (max-width: 280px) {
-      font: normal normal normal 9px/11px Montserrat;
+      font-size: 9px;
     }
   }
  
@@ -83,8 +119,8 @@ const Footer = styled.footer`
 
   .footer-img-container{
     flex-grow: 2;
+    cursor: pointer;
     
-    // margin-left: auto;
     display: flex;
   }
 
@@ -92,7 +128,7 @@ const Footer = styled.footer`
     margin: auto;
     max-width: 300px;
     width: 18vw;
-    // margin-left: auto;
+    margin-right: 30px;
 
     @media only screen and (max-width: 950px) {
       width: 100%;
@@ -100,8 +136,8 @@ const Footer = styled.footer`
     }
 
     @media only screen and (max-width: 750px) {
-      max-width: 120px;
-      width: 15vw;
+      max-width: 200px;
+      width: 30vw;
     }
 
     @media only screen and (max-width: 350px) {
@@ -130,11 +166,9 @@ const AoLogo = styled.div`
   z-index: 2;
   position: absolute;
   left: 50%;
-  margin-top: -7em;
+  transform: translate(-50%, -62%);
+  top: 0%;
 
-  @media only screen and (max-width: 1200px) {
-    margin-top: -4.6em;
-  }
 
   img {
     width: 120px;
@@ -274,24 +308,21 @@ const HomeFooter = (): JSX.Element => {
         />
       </AoLogo>
       <div className="footer-social-container">
-        <a href="https://twitter.com/ninomaeinanis">
-          <p>
-            <i className="fa fa-twitter"></i> @ninomaeinanis
-          </p>
-        </a>
-        <a
-          rel="stylesheet"
-          href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
-        >
-          <p>
-            <i className="fa fa-youtube-play"></i> Ninomae Ina&apos;nis Ch.
-          </p>
-        </a>
-      </div>
-      <div className="disclaimer-container">
-        <p>
-          This is a fan project. We are not affiliated or endorsed by Cover Corporation.
-        </p>
+        <div className="social-links">
+          <a href="https://twitter.com/ninomaeinanis">
+            <p>
+              <i className="fa fa-twitter"></i> @ninomaeinanis
+            </p>
+          </a>
+          <a
+            rel="stylesheet"
+            href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
+          >
+            <p>
+              <i className="fa fa-youtube-play"></i> Ninomae Ina&apos;nis Ch.
+            </p>
+          </a>
+        </div>
       </div>
       <div
         className="footer-img-container"
@@ -302,6 +333,11 @@ const HomeFooter = (): JSX.Element => {
           className="footer-img"
           src={`${process.env.PUBLIC_URL}/MiniIna.png`}
         />
+      </div>
+      <div className="disclaimer-container">
+        <p>
+          This is a fan project. We are not affiliated with or endorsed by Cover Corporation.
+        </p>
       </div>
       <Credits
         visible={creditsVisible}
