@@ -11,8 +11,8 @@ export interface Milestone {
 }
 
 export type Tags = {
-  milestone: boolean;
   important: boolean;
+  gaming: boolean;
   drawing: boolean;
   collab: boolean;
 };
