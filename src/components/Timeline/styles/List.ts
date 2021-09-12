@@ -353,7 +353,9 @@ export const EventModalContainer = styled.div`
   right: 0;
   width: 735px;
   max-width: 100%;
-  margin: 70px auto 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 69;
   border-radius: 15px;
   color: #fff;
