@@ -133,6 +133,7 @@ export const ListScrollable = styled(ScrollContainer)`
   align-items: flex-end;
   padding-bottom: 10%;
   scroll-behavior: smooth;
+  transition: all linear;
   @media (max-width: 1200px) {
     padding-bottom: 25%;
   }
@@ -382,7 +383,7 @@ export const EventModalDescription = styled.p`
     border: none;
   }
 `;
-export const EventModalHeading = styled.span`
+export const EventModalHeading = styled.a`
   text-align: right;
   font: normal normal normal 30px/40px Montserrat;
   letter-spacing: 0;
@@ -398,6 +399,7 @@ export const EventModalHeading = styled.span`
     text-align: left;
     text-shadow: unset;
   }
+  text-decoration: underline;
 `;
 export const EventModalDate = styled.span`
   text-align: right;

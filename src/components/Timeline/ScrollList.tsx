@@ -228,11 +228,16 @@ const EventModal = ({
   if (!event) return null;
   const { media, video, label, longText, date } = event;
   const className = mobile ? "mobile" : "";
+  const isYt = video?.includes("youtube.com") || video?.includes("youtu.be");
+  const hrefObj: { href?: Milestone["video"] } = {};
+  if (video && !isYt) {
+    hrefObj.href = video;
+  }
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
       <EventModalContainer>
-        {video ? (
+        {isYt ? (
           <ModalVideo
             src={video}
             // width="100%"
@@ -246,7 +251,9 @@ const EventModal = ({
         )}
         <EventModalInfo className={className}>
           <EventModalInfoLeft className={className}>
-            <EventModalHeading className={className}>{label}</EventModalHeading>
+            <EventModalHeading {...hrefObj} className={className}>
+              {label}
+            </EventModalHeading>
             <EventModalDate className={className}>{date}</EventModalDate>
           </EventModalInfoLeft>
           <EventModalDescription className={className}>
