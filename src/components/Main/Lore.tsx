@@ -208,23 +208,23 @@ const Lore = (): JSX.Element => {
         <LoreTextPolygon />
         <div className="lore-text">
           <p>
-            One day, <b>Ina&apos;nis</b> picked up a strange <b>book</b> and
-            then started to gain the power of controlling <b>tentacles</b>. To
+            One day, <b>Ina&apos;nis</b> picked up a <b>strange book</b> and
+            then started to gain the power of <b>controlling tentacles</b>. To
             her, <b>tentacles</b> are just a part in her ordinary life; it has
             never been a big deal for her. However, her girly mind does want to
-            get them dressed up and stay<b> pretty</b>.
+            get them <b>dressed up and stay pretty</b>.
           </p>
           <p>
-            After gaining power, she started hearing <b>Ancient Whispers</b> and
-            <b>Revelations</b>. Hence, she began her <b>VTuber</b> activities to
-            deliver random sanity checks on <b>humanity</b>, as an ordinary girl.
+            After gaining power, she started hearing <b>Ancient Whispers and Revelations</b>. 
+            Hence, she began her <b>VTuber activities </b> to deliver <b>random sanity checks</b> on
+            humanity, as an <b>ordinary girl</b>.
           </p>
           <hr />
           <p>
-            This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s</b> first
-            debut <b>anniversary</b>. We&apos;ve collected congratulatory messages from
-            <b> Takodachi</b> across the world! We also made a little <b>timeline</b> of all
-            the great things <b>Ina</b> has done in the past year.
+            This site was developed by the Tentacult to celebrate <b>Ina&apos;s first
+            debut anniversary</b>. We&apos;ve collected <b>congratulatory messages</b> from
+            <b> Takodachi around the world</b>! We also made a little timeline of all
+            the <b>great things Ina has done in the past year</b>.
           </p>
         </div>
         <div className="buttons-div">
