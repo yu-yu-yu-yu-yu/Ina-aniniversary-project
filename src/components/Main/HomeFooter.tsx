@@ -130,22 +130,22 @@ const Footer = styled.footer`
 
   .footer-img {
     margin: auto;
-    max-width: 300px;
-    width: 18vw;
+    max-width: 500px;
+    width: 20vw;
     margin-right: 30px;
 
     @media only screen and (max-width: 950px) {
       width: 100%;
-      max-width: 10em;
+      max-width: 30vw;
     }
 
     @media only screen and (max-width: 750px) {
-      max-width: 200px;
-      width: 30vw;
+      max-width: 250px;
+      width: 40vw;
     }
 
     @media only screen and (max-width: 350px) {
-      max-width: 100px;
+      max-width: 150px;
     }
 
     @media only screen and (max-width: 270px) {
