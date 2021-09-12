@@ -6,8 +6,7 @@ const IMG_PATH = "./public/images";
 const CSV_PATH = "./public/data/prepdatav3.csv";
 const filenameDictionary = "./renamedImages.txt";
 
-const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-const csvWriter = createCsvWriter({
+const csvWriter = require("csv-writer").createObjectCsvWriter({
   path: CSV_PATH,
   header: [
     { id: "user", title: "user" },
