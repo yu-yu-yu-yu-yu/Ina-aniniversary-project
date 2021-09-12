@@ -32,13 +32,14 @@ const Footer = styled.footer`
 
     .social-links {
       margin-left: 30px;
-
+      
       @media only screen and (max-width: 750px) {
         margin-left: 0px;
       }
     }
-
+    
     p {
+      display: inline-block;
       margin 10px;
     }
 
@@ -129,22 +130,22 @@ const Footer = styled.footer`
 
   .footer-img {
     margin: auto;
-    max-width: 300px;
-    width: 18vw;
+    max-width: 500px;
+    width: 20vw;
     margin-right: 30px;
 
     @media only screen and (max-width: 950px) {
       width: 100%;
-      max-width: 10em;
+      max-width: 30vw;
     }
 
     @media only screen and (max-width: 750px) {
-      max-width: 200px;
-      width: 30vw;
+      max-width: 250px;
+      width: 40vw;
     }
 
     @media only screen and (max-width: 350px) {
-      max-width: 100px;
+      max-width: 150px;
     }
 
     @media only screen and (max-width: 270px) {
@@ -197,6 +198,7 @@ const CreditsModal = styled.div`
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
+  color: #ffffff;
 
   font-family: 'Mulish', sans-serif;
 
@@ -236,8 +238,18 @@ const CreditsModal = styled.div`
   }
 
   th, td {
-    color: #ffffff;
     padding: 2px 10px;
+  }
+
+  p {
+    font-weight: 200;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  hr {
+    border: 0;
+    border-bottom: 1px solid #ddd;
   }
 
 `;
@@ -311,6 +323,10 @@ const Credits = ({
             </tr>
           </tbody>
         </table>
+        <hr />
+        <p>
+          And thanks to all the amazing takos that contributed their wonderful art and supportive messages!
+        </p>
       </CreditsModal>
     </>,
     document.getElementById("root") as HTMLElement
@@ -334,6 +350,7 @@ const HomeFooter = (): JSX.Element => {
               <i className="fa fa-twitter"></i> @ninomaeinanis
             </p>
           </a>
+          <br />
           <a
             rel="stylesheet"
             href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"

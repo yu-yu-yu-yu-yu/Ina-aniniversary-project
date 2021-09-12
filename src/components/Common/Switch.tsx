@@ -52,7 +52,7 @@ const Label = styled.span`
   letter-spacing: 0;
   &.mobile {
     color: white;
-    font: normal normal 300 16px/19px Montserrat;
+    font: normal normal 300 13px/16px Montserrat;
   }
 `;
 
