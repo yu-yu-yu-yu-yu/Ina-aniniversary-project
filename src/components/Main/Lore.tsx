@@ -189,7 +189,7 @@ const InaVideo = styled.video`
 
 const AnimationCreditsContainer = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 70px;
   right: 20%;
   z-index: 1;
 `;
