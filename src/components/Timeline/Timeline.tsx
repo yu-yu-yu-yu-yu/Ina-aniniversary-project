@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { DrawerToggle, ScrollList } from "./ScrollList";
 import { Milestone } from "./Milestone";
 import { NavLink } from "react-router-dom";
-import { Article } from "./Article";
 import { NavLinkContainer } from "./styles/List";
 
 const Container = styled.div`
@@ -44,8 +43,6 @@ const flavorSwitch = (
   }
 ): JSX.Element => {
   switch (flavour) {
-    case "article":
-      return <Article milestones={props.milestones} />;
     case "list":
     default:
       return <ScrollList {...props} />;

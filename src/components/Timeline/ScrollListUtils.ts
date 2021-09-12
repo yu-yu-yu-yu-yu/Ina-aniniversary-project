@@ -34,6 +34,7 @@ export interface IScrollListProps {
     selectedMonth: Month;
     setMonth: (month: Month) => void;
   };
+  setMonth: (month: Month) => void;
   milestones: Milestone[];
   refMap: MutableRefObject<Record<Month, RefObject<HTMLSpanElement> | null>>;
   modalControls: boolean;
@@ -60,4 +61,9 @@ export const filterMilestones = (
     }
     return searchCondition && tagCondition;
   });
+};
+
+export const getMediaLink = (src: Milestone["media"]) => {
+  const isUrl = src?.startsWith("http");
+  return isUrl ? src : `process.env.PUBLIC_URL/${src}`;
 };
