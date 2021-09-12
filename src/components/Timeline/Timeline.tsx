@@ -95,11 +95,11 @@ export const Timeline = ({
         {flavour === "list" && modalControls && (
           <DrawerToggle onClick={handleDrawerToggle} />
         )}
-        <select value={flavour} onChange={handleSelect}>
-          <option value="article">Article</option>
-          {/*<option value="gallery">Gallery</option>*/}
-          <option value="list">List</option>
-        </select>
+        {/*<select value={flavour} onChange={handleSelect}>*/}
+        {/*  <option value="article">Article</option>*/}
+        {/*  /!*<option value="gallery">Gallery</option>*!/*/}
+        {/*  <option value="list">List</option>*/}
+        {/*</select>*/}
       </Navbar>
 
       <Content>

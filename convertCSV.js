@@ -1,7 +1,10 @@
 const fs = require("fs");
 const csv = require("csv-parser");
 
-const inputFiles = ["./public/data/prepdatav3.csv"];
+const inputFiles = [
+  "./public/data/prepdatav3.csv",
+  "./src/static/Ina Anniversary Milestones.csv",
+];
 
 async function convertCSV(inputFiles) {
   for (const filepath of inputFiles) {

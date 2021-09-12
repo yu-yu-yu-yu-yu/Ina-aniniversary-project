@@ -136,12 +136,7 @@ const Thumb = ({
 }: {
   event: Milestone;
   mobile?: boolean;
-}) => (
-  <EventPreview
-    className={mobile ? "mobile" : ""}
-    src={process.env.PUBLIC_URL + "/" + media}
-  />
-);
+}) => <EventPreview className={mobile ? "mobile" : ""} src={media} />;
 
 const EventMobile = ({
   event,
@@ -188,11 +183,16 @@ const Event = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
+  const isTooLate = (date: Milestone["date"]) => +date.split(/\W/)[2] > 2020;
   return (
     <EventContainer highlight={!!major} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
-          ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
+          ref={
+            isTooLate(date)
+              ? null
+              : refMap.current[mappedMonths[date.split(/\W/)[1]]]
+          }
           date={date}
         />
       ) : null}
@@ -224,7 +224,7 @@ const EventModal = ({
     <>
       <Backdrop onClick={setEvent} />
       <EventModalContainer>
-        <EventMedia src={process.env.PUBLIC_URL + "/" + media} />
+        <EventMedia src={media} />
         <EventModalInfo className={className}>
           <EventModalInfoLeft className={className}>
             <EventModalHeading className={className}>{label}</EventModalHeading>
@@ -280,7 +280,7 @@ const List = ({
         <Element
           onClick={() => setModalEvent(milestone)}
           refMap={refMap}
-          key={milestone.date}
+          key={milestone.label}
           event={milestone}
           monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
         />

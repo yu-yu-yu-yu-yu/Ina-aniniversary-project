@@ -3,10 +3,11 @@ export interface Milestone {
   media?: string;
   date: string;
   longText?: string;
-  section: string;
+  section?: string;
   anchor?: string;
   major?: boolean;
   tags?: Tags;
+  video?: string;
 }
 
 export type Tags = {
