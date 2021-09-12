@@ -4,14 +4,14 @@ import styled from "styled-components";
 const LogoContainer = styled.div`
   text-align: center;
   height: 100vh;
-  margin-top: 50px;
-
+  position: relative;
+  
   @media only screen and (max-width: 1200px) and (orientation: landscape) {
     height: 100vw;
   }
-`;
-
-const LogoImg = styled.img`
+  `;
+  
+  const LogoImg = styled.img`
   opacity: 1;
   margin-left: auto;
   margin-right: auto;
@@ -21,27 +21,25 @@ const LogoImg = styled.img`
     width: 500px;
   }
   @media only screen and (max-width: 1000px) {
-    margin-top: 10%;
     width: 400px;
   }
 
   @media only screen and (max-width: 768px) {
-    margin-top: 20%;
     width: 300px;
   }
 
   @media only screen and (max-width: 450px) {
-    margin-top: 30%;
     width: 300px;
   }
 
   @media only screen and (max-width: 300px) {
-    margin-top: 30%;
     width: 200px;
   }
 `;
 
 const LogoHeader = styled.h1`
+
+  margin: 10px;
   color: var(--ika-purple);
   text-align: center;
 
@@ -68,11 +66,35 @@ const LogoHeader = styled.h1`
   position: relative;
 `;
 
+const ScrollIndicator = styled.div`
+  position: absolute;
+  width:100%;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  color: #584F69;
+`;
+
+const CenterContainer = styled.div`
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+`;
+
 const Logo = (): JSX.Element => {
   return (
     <LogoContainer>
-      <LogoImg alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
-      <LogoHeader>ANNIVERSARY FAN PROJECT</LogoHeader>
+      <CenterContainer>
+        <LogoImg alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
+        <LogoHeader>ANNIVERSARY FAN PROJECT</LogoHeader>
+      </CenterContainer>
+      <ScrollIndicator>
+        <h3>
+          <i className="fa fa-chevron-down"></i> Scroll down for more <i className="fa fa-chevron-down"></i>
+        </h3>
+      </ScrollIndicator>
     </LogoContainer>
   );
 };
