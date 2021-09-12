@@ -197,6 +197,7 @@ const CreditsModal = styled.div`
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
+  color: #ffffff;
 
   font-family: 'Mulish', sans-serif;
 
@@ -236,8 +237,18 @@ const CreditsModal = styled.div`
   }
 
   th, td {
-    color: #ffffff;
     padding: 2px 10px;
+  }
+
+  p {
+    font-weight: 200;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  hr {
+    border: 0;
+    border-bottom: 1px solid #ddd;
   }
 
 `;
@@ -311,6 +322,10 @@ const Credits = ({
             </tr>
           </tbody>
         </table>
+        <hr />
+        <p>
+          And thanks to all the amazing takos that contributed their wonderful art and supportive messages!
+        </p>
       </CreditsModal>
     </>,
     document.getElementById("root") as HTMLElement
