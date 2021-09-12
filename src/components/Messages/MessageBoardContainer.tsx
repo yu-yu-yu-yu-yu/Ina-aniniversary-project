@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-import { readString } from "react-papaparse";
-
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../TakoLoading/TakoLoading";
@@ -67,43 +64,40 @@ const Navbar = styled.nav`
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
-  const [csvData, setCSV] = useState([] as any);
+  const [sourceData, setSourceData] = useState([] as any);
   const [data, setData] = useState([] as any);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
 
-  console.log(offset);
   useEffect(() => {
-    const fetchCSV = async () => {
+    const getData = async () => {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/prepdatav3.csv`
+        `${process.env.PUBLIC_URL}/data/prepdatav3.json`
       );
-      const reader = response!.body!.getReader();
-      const result = await reader.read();
-      const decoder = new TextDecoder("utf-8");
-      const csv = await decoder.decode(result.value);
-      const { data: csvData } = readString(csv, { header: true });
-      setCSV(csvData);
+      const data = await response?.json();
 
-      const rows = csvData.slice(offset, LIMIT);
+      setSourceData(data);
+
+      const rows = data.slice(offset, LIMIT);
 
       await awaitImgs(rows);
 
       setData(rows);
+
       setOffset(LIMIT + offset);
     };
-    fetchCSV();
+    getData();
   }, []);
 
   const fetchMore = async () => {
     if (data.length !== 0) {
       const resultData = isToggledOnlyImg
-        ? csvData.filter((row: Submission) => {
+        ? sourceData.filter((row: Submission) => {
             if (row.image != "") return row;
           })
-        : csvData;
+        : sourceData;
 
       const rows = resultData.slice(offset, LIMIT + offset);
 
@@ -121,7 +115,7 @@ const MessageBoardContainer = (): JSX.Element => {
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value != "") {
-        const resultData = csvData.filter((row: Submission) => {
+        const resultData = sourceData.filter((row: Submission) => {
           return (
             row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
             row.message.toLowerCase().includes(event.target.value.toLowerCase())
@@ -132,7 +126,7 @@ const MessageBoardContainer = (): JSX.Element => {
         setData(resultData);
         setOffset(0);
       } else {
-        const rows = csvData.slice(offset, LIMIT);
+        const rows = sourceData.slice(offset, LIMIT);
         setHasMore(true);
 
         await awaitImgs(rows);
@@ -148,7 +142,7 @@ const MessageBoardContainer = (): JSX.Element => {
     if (value) {
       setData([]);
 
-      const resultData = csvData.filter((row: Submission) => {
+      const resultData = sourceData.filter((row: Submission) => {
         if (row.image != "") return row;
       });
 
@@ -164,7 +158,7 @@ const MessageBoardContainer = (): JSX.Element => {
       setisToggledTextOnly(false);
     } else {
       setOffset(0);
-      const rows = csvData.slice(0, LIMIT);
+      const rows = sourceData.slice(0, LIMIT);
       setHasMore(true);
       await awaitImgs(rows);
       setData(rows);
@@ -177,7 +171,7 @@ const MessageBoardContainer = (): JSX.Element => {
     if (value) {
       if (isToggledOnlyImg) {
         setOffset(0);
-        const rows = csvData.slice(0, LIMIT);
+        const rows = sourceData.slice(0, LIMIT);
         setHasMore(true);
         await awaitImgs(rows);
         setData(rows);
