@@ -73,6 +73,10 @@ const ScrollIndicator = styled.div`
   bottom: -5px;
   transform: translateX(-50%);
   color: #584F69;
+
+  @media only screen and (max-width: 800px) {
+    bottom: 10vh;
+  }
 `;
 
 const CenterContainer = styled.div`
