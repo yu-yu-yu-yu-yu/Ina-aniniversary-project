@@ -9,7 +9,7 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
     // eslint-disable-next-line prefer-const
     let [month, day, year] = string.split(/\W/);
     month = month.length < 2 ? "0" + month : month;
-
+    day = day.length < 2 ? "0" + day : day;
     return [day, month, year].join("·");
   };
   return milestones.map((jmilestone) => {

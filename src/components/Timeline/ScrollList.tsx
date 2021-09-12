@@ -183,7 +183,10 @@ const Event = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
-  const isTooLate = (date: Milestone["date"]) => +date.split(/\W/)[2] > 2020;
+  const isTooLate = (date: Milestone["date"]) => {
+    const [day, month, year] = date.split(/\W/);
+    return +month > 8 && +year > 2020;
+  };
   return (
     <EventContainer highlight={!!major} onClick={onClick}>
       {monthStart ? (
