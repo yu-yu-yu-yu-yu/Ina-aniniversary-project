@@ -221,13 +221,20 @@ const EventModal = ({
   mobile: boolean;
 }) => {
   if (!event) return null;
-  const { media, label, longText, date } = event;
+  const { video, label, longText, date } = event;
   const className = mobile ? "mobile" : "";
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
       <EventModalContainer>
-        <EventMedia src={media} />
+        <EventMedia
+          src={video}
+          // width="100%"
+          height="415"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen={true}
+        />
         <EventModalInfo className={className}>
           <EventModalInfoLeft className={className}>
             <EventModalHeading className={className}>{label}</EventModalHeading>

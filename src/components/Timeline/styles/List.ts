@@ -359,7 +359,7 @@ export const EventModalContainer = styled.div`
   color: #fff;
   background: var(--inai-purple);
 `;
-export const EventMedia = styled.img`
+export const EventMedia = styled.iframe`
   width: 100%;
   box-shadow: 0px 5px 5px #0000003d;
 `;

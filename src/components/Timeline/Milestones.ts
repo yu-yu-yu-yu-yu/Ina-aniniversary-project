@@ -25,7 +25,10 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
         drawing: toBool(jmilestone.drawing as csvBool),
         collab: toBool(jmilestone.collab as csvBool),
       },
-      video: jmilestone.video,
+      video: jmilestone.video.replace(
+        /.*\?v=(.+)$/,
+        `https://www.youtube.com/embed/$1`
+      ),
     };
   });
 };
