@@ -74,7 +74,7 @@ const Quote = (): JSX.Element => {
                 <br />
                 Ninomae Ina&apos;nis
                 <br />
-                2020·09·13
+                12·09·2020
                 <br />
             </QuoteContent>
         </QuoteContainer>
