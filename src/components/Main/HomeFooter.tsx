@@ -285,7 +285,7 @@ const Credits = ({
               <td>Loading animation</td>
             </tr>
             <tr>
-              <td>Kinji</td>
+              <td><a href="https://twitter.com/KinjiDD" target="_blank" rel="noopener noreferrer">Kinji</a></td>
               <td>Developer</td>
             </tr>
             <tr>
@@ -301,7 +301,7 @@ const Credits = ({
               <td>Homepage Ina art</td>
             </tr>
             <tr>
-              <td>Rift</td>
+              <td><a href="https://twitter.com/RiftyRifto" target="_blank" rel="noopener noreferrer">Rift</a></td>
               <td>General contribution</td>
             </tr>
             <tr>
@@ -309,11 +309,11 @@ const Credits = ({
               <td>Homepage Ina art (L2D animation)</td>
             </tr>
             <tr>
-              <td>Swoog</td>
+              <td><a href="https://twitter.com/swoog10" target="_blank" rel="noopener noreferrer">Swoog</a></td>
               <td>Art assets, General contribution</td>
             </tr>
             <tr>
-              <td>Uni88</td>
+              <td><a href="https://twitter.com/YesThatUni" target="_blank" rel="noopener noreferrer">Uni88</a></td>
               <td>General contribution</td>
             </tr>
             <tr>
@@ -323,10 +323,6 @@ const Credits = ({
             <tr>
               <td>Graphic design</td>
               <td>My passion</td>
-            </tr>
-            <tr>
-              <td>Sleep</td>
-              <td>Non-existent</td>
             </tr>
           </tbody>
         </table>
