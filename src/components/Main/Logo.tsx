@@ -17,6 +17,11 @@ const LogoContainer = styled.div`
   margin-right: auto;
 
   width: 600px;
+  
+  @media only screen and (min-width: 1351px) and (max-height: 800px){
+    width: 70vh; 
+  }
+
   @media only screen and (max-width: 1350px) {
     width: 500px;
   }
@@ -45,6 +50,12 @@ const LogoHeader = styled.h1`
 
   font: normal normal bold 84px/102px Montserrat;
   letter-spacing: 4.2px;
+
+  @media only screen and (min-width: 1351px) and (max-height: 800px){
+    font: normal normal bold 64px/82px Montserrat;
+
+  }
+
 
   @media only screen and (max-width: 1000px) {
     font: normal normal bold 50px/60px Montserrat;
