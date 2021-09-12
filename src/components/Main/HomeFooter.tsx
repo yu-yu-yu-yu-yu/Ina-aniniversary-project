@@ -119,7 +119,10 @@ const Footer = styled.footer`
 
   .footer-img-container{
     flex-grow: 2;
-    cursor: pointer;
+
+    img{
+      cursor: pointer;
+    }
     
     display: flex;
   }
@@ -186,33 +189,55 @@ const AoLogo = styled.div`
 const CreditsModal = styled.div`
   width: 600px;
   height: auto;
-  margin: 70px auto 0;
   padding: 20px;
-  right: 0;
-  left: 0;
-  top: 0;
   position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
 
+  font-family: 'Mulish', sans-serif;
+
+  a {
+    font-weight: bold;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  a:hover {
+    text-shadow: 0px 0px 20px #0F0F0F;
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 80%;
+  }
+
   table {
-      font-family: 'Mulish', sans-serif;
+    width: 100%;
   }
 
   th {
-      font-size:25px;
-      font-weight: bold;
-      border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size:25px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
   }
 
   td {
-      font-size: 17px;
+    font-size: 17px;
+    @media only screen and (max-width: 700px) {
+      font-size: 15px;
+    }
+    @media only screen and (max-width: 320px) {
+      font-size: 12px;
+    }
   }
 
   th, td {
-      color: #ffffff;
-      padding: 5px 7px;
+    color: #ffffff;
+    padding: 2px 10px;
   }
 
 `;
@@ -232,64 +257,59 @@ const Credits = ({
         <table>
           <thead>
             <tr>
-              <th colSpan={3}>Credits</th>
+              <th colSpan={2}>Credits</th>
             </tr>
           </thead>
-          <tr>
-            <td>yuyu</td>
-            <td>ﾕﾕ#2434</td>
-            <td>Developer</td>
-          </tr>
-          <tr>
-            <td>@Kimchi</td>
-            <td>Kinji#8200</td>
-            <td>Developer</td>
-          </tr>
-          <tr>
-            <td>Frogo</td>
-            <td>losfroger#8927</td>
-            <td>Art assets,Design</td>
-          </tr>
-          <tr>
-            <td>@Braincell #0901 | swoog</td>
-            <td>swoog#0901</td>
-            <td>Art assets, General Contribution</td>
-          </tr>
-          <tr>
-            <td>Lynn</td>
-            <td>Lynn#0572</td>
-            <td>Planning, General Contribution</td>
-          </tr>
-          <tr>
-            <td>Braincell #88 | Unidachi88</td>
-            <td>Uni#9971</td>
-            <td>General Contribution</td>
-          </tr>
-          <tr>
-            <td>Braincell #3698 || Rift</td>
-            <td>Rift#6565</td>
-            <td>General Contribution</td>
-          </tr>
-          <tr>
-            <td>Chroneco</td>
-            <td>@Chroneco</td>
-            <td>Tako loading animation</td>
-          </tr>
-          <tr>
-            <td>Ninomae Ina’nis</td>
-            <td>@ninomaeinanis</td>
-            <td>Ina L2D Homepage art</td>
-          </tr>
-          <tr>
-            <td>Shikabashi</td>
-            <td>@Shikabashi</td>
-            <td>Ina L2D Homepage animation</td>
-          </tr>
-          <tr>
-            <td>Graphic design</td>
-            <td />
-            <td>My passion</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td><a href="https://twitter.com/chrone_co" target="_blank" rel="noopener noreferrer">Chroneco</a></td>
+              <td>Loading animation</td>
+            </tr>
+            <tr>
+              <td>Kinji</td>
+              <td>Developer</td>
+            </tr>
+            <tr>
+              <td><a href="https://twitter.com/losfroger" target="_blank" rel="noopener noreferrer">Losfroger</a></td>
+              <td>Art assets, Design</td>
+            </tr>
+            <tr>
+              <td>Lynn</td>
+              <td>Planning, General contribution</td>
+            </tr>
+            <tr>
+              <td><a href="https://twitter.com/ninomaeinanis" target="_blank" rel="noopener noreferrer">Ninomae Ina&#39;nis</a></td>
+              <td>Homepage Ina art</td>
+            </tr>
+            <tr>
+              <td>Rift</td>
+              <td>General contribution</td>
+            </tr>
+            <tr>
+              <td><a href="https://twitter.com/Shikabashi" target="_blank" rel="noopener noreferrer">Shikabashi</a></td>
+              <td>Homepage Ina art (L2D animation)</td>
+            </tr>
+            <tr>
+              <td>Swoog</td>
+              <td>Art assets, General contribution</td>
+            </tr>
+            <tr>
+              <td>Uni88</td>
+              <td>General contribution</td>
+            </tr>
+            <tr>
+              <td>Yuyu</td>
+              <td>Developer</td>
+            </tr>
+            <tr>
+              <td>Graphic design</td>
+              <td>My passion</td>
+            </tr>
+            <tr>
+              <td>Sleep</td>
+              <td>Non-existent</td>
+            </tr>
+          </tbody>
         </table>
       </CreditsModal>
     </>,
@@ -325,13 +345,12 @@ const HomeFooter = (): JSX.Element => {
         </div>
       </div>
       <div
-        className="footer-img-container"
-        onClick={() => setCreditsVisible(true)}
-      >
+        className="footer-img-container">
         <img
           alt="mini-ina"
           className="footer-img"
           src={`${process.env.PUBLIC_URL}/MiniIna.png`}
+          onClick={() => setCreditsVisible(true)}
         />
       </div>
       <div className="disclaimer-container">
