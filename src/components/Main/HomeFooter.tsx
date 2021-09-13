@@ -180,7 +180,6 @@ const AoLogo = styled.div`
   transform: translate(-50%, -62%);
   top: 0%;
 
-
   img {
     width: 120px;
 
@@ -207,16 +206,16 @@ const CreditsModal = styled.div`
   z-index: 69;
   color: #ffffff;
 
-  font-family: 'Mulish', sans-serif;
+  font-family: "Mulish", sans-serif;
 
   a {
     font-weight: bold;
     color: #ffffff;
     transition: all 0.2s ease-in-out;
   }
-  
+
   a:hover {
-    text-shadow: 0px 0px 20px #0F0F0F;
+    text-shadow: 0px 0px 20px #0f0f0f;
   }
 
   @media only screen and (max-width: 700px) {
@@ -229,7 +228,7 @@ const CreditsModal = styled.div`
 
   th {
     text-align: left;
-    font-size:25px;
+    font-size: 25px;
     font-weight: bold;
     border-bottom: 1px solid #ddd;
   }
@@ -244,7 +243,8 @@ const CreditsModal = styled.div`
     }
   }
 
-  th, td {
+  th,
+  td {
     padding: 2px 10px;
   }
 
@@ -258,7 +258,6 @@ const CreditsModal = styled.div`
     border: 0;
     border-bottom: 1px solid #ddd;
   }
-
 `;
 
 const Credits = ({
@@ -281,15 +280,39 @@ const Credits = ({
           </thead>
           <tbody>
             <tr>
-              <td><a href="https://twitter.com/chrone_co" target="_blank" rel="noopener noreferrer">Chroneco</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/chrone_co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Chroneco
+                </a>
+              </td>
               <td>Loading animation</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/KinjiDD" target="_blank" rel="noopener noreferrer">Kinji</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/KinjiDD"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Kinji
+                </a>
+              </td>
               <td>Developer</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/losfroger" target="_blank" rel="noopener noreferrer">Losfroger</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/losfroger"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Losfroger
+                </a>
+              </td>
               <td>Art assets, Design</td>
             </tr>
             <tr>
@@ -297,23 +320,63 @@ const Credits = ({
               <td>Planning, General contribution</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/ninomaeinanis" target="_blank" rel="noopener noreferrer">Ninomae Ina&#39;nis</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/ninomaeinanis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ninomae Ina&#39;nis
+                </a>
+              </td>
               <td>Homepage Ina art</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/RiftyRifto" target="_blank" rel="noopener noreferrer">Rift</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/RiftyRifto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Rift
+                </a>
+              </td>
               <td>General contribution</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/Shikabashi" target="_blank" rel="noopener noreferrer">Shikabashi</a></td>
-              <td>Homepage Ina art (L2D animation)</td>
+              <td>
+                <a
+                  href="https://twitter.com/Shikabashi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Shikabashi
+                </a>
+              </td>
+              <td>Homepage Ina art (S2D animation)</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/swoog10" target="_blank" rel="noopener noreferrer">Swoog</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/swoog10"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Swoog
+                </a>
+              </td>
               <td>Art assets, General contribution</td>
             </tr>
             <tr>
-              <td><a href="https://twitter.com/YesThatUni" target="_blank" rel="noopener noreferrer">Uni88</a></td>
+              <td>
+                <a
+                  href="https://twitter.com/YesThatUni"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Uni88
+                </a>
+              </td>
               <td>General contribution</td>
             </tr>
             <tr>
@@ -328,7 +391,8 @@ const Credits = ({
         </table>
         <hr />
         <p>
-          And thanks to all the amazing takos that contributed their wonderful art and supportive messages!
+          And thanks to all the amazing takos that contributed their wonderful
+          art and supportive messages!
         </p>
       </CreditsModal>
     </>,
@@ -364,8 +428,7 @@ const HomeFooter = (): JSX.Element => {
           </a>
         </div>
       </div>
-      <div
-        className="footer-img-container">
+      <div className="footer-img-container">
         <img
           alt="mini-ina"
           className="footer-img"
@@ -375,7 +438,8 @@ const HomeFooter = (): JSX.Element => {
       </div>
       <div className="disclaimer-container">
         <p>
-          This is a fan project. We are not affiliated with or endorsed by Cover Corporation.
+          This is a fan project. We are not affiliated with or endorsed by Cover
+          Corporation.
         </p>
       </div>
       <Credits
