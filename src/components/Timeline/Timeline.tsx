@@ -41,6 +41,9 @@ const TimelineHint = styled.span`
   &.mobile {
     line-height: 20px;
     width: 260px;
+    /* text-shadow: 0 5px 6px #00000029; */
+    top: 64px;
+    color: var(--ika-purple);
   }
 `;
 
@@ -108,7 +111,9 @@ export const Timeline = ({
         </NavLinkContainer>
         {flavour === "list" && (
           <TimelineHint className={mobile ? "mobile" : ""}>
-            Drag timeline to scroll, click on thumbnail to see more details
+            {mobile
+              ? "Click thumbnail to see more"
+              : "Drag timeline to scroll, click on thumbnail to see more details"}
           </TimelineHint>
         )}
         {flavour === "list" && modalControls && (
