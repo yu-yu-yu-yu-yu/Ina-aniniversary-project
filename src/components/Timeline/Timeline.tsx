@@ -27,6 +27,23 @@ const Navbar = styled.nav`
   }
 `;
 
+const TimelineHint = styled.span`
+  font: normal normal normal 15px/45px montserrat;
+  color: white;
+  position: absolute;
+  margin: 0 auto;
+  width: 550px;
+  top: 10px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  //left: 30%;
+  &.mobile {
+    line-height: 20px;
+    width: 260px;
+  }
+`;
+
 const Content = styled.div`
   flex: 1;
   display: flex;
@@ -89,6 +106,12 @@ export const Timeline = ({
             <i className="fa fa-angle-left" /> Timeline
           </NavLink>
         </NavLinkContainer>
+        {flavour === "list" && (
+          <TimelineHint className={mobile ? "mobile" : ""}>
+            Drag timeline to scroll it, you can also click the events for more
+            info
+          </TimelineHint>
+        )}
         {flavour === "list" && modalControls && (
           <DrawerToggle onClick={handleDrawerToggle} />
         )}

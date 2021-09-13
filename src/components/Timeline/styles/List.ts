@@ -151,6 +151,9 @@ export const ListScrollable = styled(ScrollContainer)`
     flex-direction: column;
     align-items: center;
   }
+  img {
+    cursor: pointer;
+  }
 `;
 
 export const MonthListContainer = styled.div`
