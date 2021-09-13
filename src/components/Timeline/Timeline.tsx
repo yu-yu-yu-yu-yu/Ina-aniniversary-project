@@ -108,8 +108,7 @@ export const Timeline = ({
         </NavLinkContainer>
         {flavour === "list" && (
           <TimelineHint className={mobile ? "mobile" : ""}>
-            Drag timeline to scroll it, you can also click the events for more
-            info
+            Drag timeline to scroll, click on thumbnail to see more details
           </TimelineHint>
         )}
         {flavour === "list" && modalControls && (
