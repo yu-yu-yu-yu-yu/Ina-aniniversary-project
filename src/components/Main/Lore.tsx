@@ -7,7 +7,7 @@ const LoreContainer = styled.div`
   padding-top: 90px;
   margin-bottom: -80px;
   background: var(--unnamed-color-f3edff)
-  url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 170px;
 
@@ -215,16 +215,19 @@ const Lore = (): JSX.Element => {
             get them <b>dressed up and stay pretty</b>.
           </p>
           <p>
-            After gaining power, she started hearing <b>Ancient Whispers and Revelations</b>. 
-            Hence, she began her <b>VTuber activities </b> to deliver <b>random sanity checks</b> on
+            After gaining power, she started hearing{" "}
+            <b>Ancient Whispers and Revelations</b>. Hence, she began her{" "}
+            <b>VTuber activities </b> to deliver <b>random sanity checks</b> on
             humanity, as an <b>ordinary girl</b>.
           </p>
           <hr />
           <p>
-            This site was developed by the Tentacult to celebrate <b>Ina&apos;s first
-            debut anniversary</b>. We&apos;ve collected <b>congratulatory messages</b> from
-            <b> Takodachi around the world</b>! We also put together a little timeline about some
-            of the <b>great things Ina has done in the past year</b>.
+            This site was developed by the Tentacult to celebrate{" "}
+            <b>Ina&apos;s first debut anniversary</b>. We&apos;ve collected{" "}
+            <b>congratulatory messages</b> from
+            <b> Takodachi around the world</b>! We also put together a little
+            timeline about some of the{" "}
+            <b>great things Ina has done in the past year</b>.
           </p>
         </div>
         <div className="buttons-div">
@@ -251,7 +254,7 @@ const Lore = (): JSX.Element => {
         <AnimationCreditsContainer>
           <AnimationCredits>
             Illustration: @ninomaeinanis
-            <br /> Live2D Animation: @Shikabashi
+            <br /> Spine 2D Animation: @Shikabashi
           </AnimationCredits>
         </AnimationCreditsContainer>
       </InaVideoContainer>
