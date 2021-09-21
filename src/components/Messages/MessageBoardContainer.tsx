@@ -3,9 +3,9 @@ import styled from "styled-components";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../TakoLoading/TakoLoading";
-import { Submission } from "./Submission";
 import { NavLink } from "react-router-dom";
 import ScrollArrow from "./BackToTop";
+import submissions from "../../static/prepdatav3.json";
 
 import { Switch } from "../Common/Switch";
 import { debounce } from "lodash";
@@ -64,7 +64,7 @@ const Navbar = styled.nav`
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
-  const [sourceData, setSourceData] = useState([] as any);
+  const [sourceData, setSourceData] = useState(submissions);
   const [data, setData] = useState([] as any);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -73,10 +73,7 @@ const MessageBoardContainer = (): JSX.Element => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/prepdatav3.json`
-      );
-      const data = await response?.json();
+      const data = submissions;
 
       setSourceData(data);
 
@@ -94,7 +91,7 @@ const MessageBoardContainer = (): JSX.Element => {
   const fetchMore = async () => {
     if (data.length !== 0) {
       const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => {
+        ? sourceData.filter((row) => {
             if (row.image != "") return row;
           })
         : sourceData;
@@ -115,7 +112,7 @@ const MessageBoardContainer = (): JSX.Element => {
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value != "") {
-        const resultData = sourceData.filter((row: Submission) => {
+        const resultData = sourceData.filter((row) => {
           return (
             row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
             row.message.toLowerCase().includes(event.target.value.toLowerCase())
@@ -142,7 +139,7 @@ const MessageBoardContainer = (): JSX.Element => {
     if (value) {
       setData([]);
 
-      const resultData = sourceData.filter((row: Submission) => {
+      const resultData = sourceData.filter((row) => {
         if (row.image != "") return row;
       });
 
@@ -209,7 +206,7 @@ const MessageBoardContainer = (): JSX.Element => {
     <div>
       <Navbar>
         <NavLink exact to="/">
-        <i className="fa fa-angle-left" /> {` Messages`}
+          <i className="fa fa-angle-left" /> {` Messages`}
         </NavLink>
       </Navbar>
       <MessageBoard>

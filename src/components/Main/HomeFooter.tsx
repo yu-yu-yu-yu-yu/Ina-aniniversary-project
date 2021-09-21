@@ -414,16 +414,13 @@ const HomeFooter = (): JSX.Element => {
         <div className="social-links">
           <a href="https://twitter.com/ninomaeinanis">
             <p>
-              <i className="fa fa-twitter"></i> @ninomaeinanis
+              <i className="fab fa-twitter" /> @ninomaeinanis
             </p>
           </a>
           <br />
-          <a
-            rel="stylesheet"
-            href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
-          >
+          <a href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg">
             <p>
-              <i className="fa fa-youtube-play"></i> Ninomae Ina&apos;nis Ch.
+              <i className="fab fa-youtube" /> Ninomae Ina&apos;nis Ch.
             </p>
           </a>
         </div>

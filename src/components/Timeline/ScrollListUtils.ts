@@ -65,5 +65,5 @@ export const filterMilestones = (
 
 export const getMediaLink = (src: Milestone["media"]) => {
   const isUrl = src?.startsWith("http");
-  return isUrl ? src : `process.env.PUBLIC_URL/${src}`;
+  return isUrl ? src : `${process.env.PUBLIC_URL}/${src}`;
 };

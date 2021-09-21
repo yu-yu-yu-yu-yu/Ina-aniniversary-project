@@ -9,7 +9,7 @@ const SubmissionContainer = styled.div`
   margin: 10px;
   width: 450px;
   @media only screen and (max-width: 768px) {
-    margin-left: 0px;
+    margin-left: 0;
     width: 100%;
   }
 `;
@@ -21,8 +21,7 @@ const TextBubbleContainer = styled.div`
   line-height: 24px;
   padding: 15px;
   border: 3px solid var(--inai-purple);
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 3px solid #a198b3;
+  background: #ffffff 0 0 no-repeat padding-box;
   border-radius: 15px;
   opacity: 1;
 
@@ -30,8 +29,8 @@ const TextBubbleContainer = styled.div`
     height: 1px;
     color: var(--inai-purple);
     background-color: var(--inai-purple);
-    border: none;  }
-  
+    border: none;
+  }
 `;
 
 // const TextBubbleBottom = styled.div`
@@ -60,7 +59,6 @@ const BubbleMessage = styled.div`
 
 const BubbleImage = styled.img`
   border: 2px solid var(--inai-purple);
-  border: 2px solid #a198b3;
   border-radius: 23px;
   opacity: 1;
   max-width: 400px;
@@ -98,7 +96,6 @@ const TakoImgContainer = styled.div`
 
 const IFrame = styled.iframe`
   border: 2px solid var(--inai-purple);
-  border: 2px solid #a198b3;
   border-radius: 23px;
   opacity: 1;
 `;
