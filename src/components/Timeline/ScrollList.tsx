@@ -33,12 +33,22 @@ import {
   TagBarContainer,
   TagsContainer,
   TopControlsContainer,
-  Triangle,
+  Triangle, YearDisplay,
+  YearContainer
 } from "./styles/List";
-import { filterMilestones, getMediaLink, IScrollListProps, mappedMonths, Month, months, } from "./ScrollListUtils";
+import {
+  filterMilestones,
+  getMediaLink,
+  IScrollListProps,
+  mappedMonths,
+  Month,
+  months, monthsWithYears, MonthWithYear,
+  Year,
+  years,
+} from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 import { ScrollEvent } from "react-indiana-drag-scroll";
-import { last, toPairs } from "lodash";
+import {first, last, toPairs} from "lodash";
 
 const SearchBar = ({
   searchString,
@@ -155,11 +165,13 @@ const EventMobile = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
+  const [day, month, year] = date.split(/\W/);
+  const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
     <EventContainer className={"mobile"} highlight={!!major} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
-          ref={refMap.current[mappedMonths[date.split(/\W/)[1]]]}
+          ref={refMap.current[monthWithYear as MonthWithYear]}
           mobile
           date={date}
         />
@@ -188,19 +200,13 @@ const Event = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
-  const isTooLate = (date: Milestone["date"]) => {
-    const [day, month, year] = date.split(/\W/);
-    return +month > 8 && +year > 2020;
-  };
+  const [day, month, year] = date.split(/\W/);
+  const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
     <EventContainer highlight={!!major} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
-          ref={
-            isTooLate(date)
-              ? null
-              : refMap.current[mappedMonths[date.split(/\W/)[1]]]
-          }
+          ref={ refMap.current[monthWithYear as MonthWithYear]}
           date={date}
         />
       ) : null}
@@ -272,12 +278,14 @@ const List = ({
   scrollPos,
   mobile,
   setMonth,
+  setYear
 }: {
   milestones: Milestone[];
   refMap: IScrollListProps["refMap"];
   scrollPos: IScrollListProps["scrollPos"];
   mobile?: boolean;
   setMonth: IScrollListProps["setMonth"];
+  setYear: (year: Year) => void;
 }) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
@@ -303,16 +311,19 @@ const List = ({
     const scrollDistance = mobile
       ? listRef.current?.scrollTop ?? 0
       : listRef.current?.scrollLeft ?? 0;
-    const months = refMap.current;
-    const month =
-      (last(
-        toPairs(months).filter(([, monthRef]) => {
-          const monthScroll = mobile
-            ? monthRef?.current?.offsetTop ?? 0
-            : monthRef?.current?.offsetLeft ?? 0;
-          return scrollDistance > monthScroll;
-        })
-      )?.[0] as Month) ?? "September";
+    const months = refMap.current
+    const filtered = toPairs(months).filter(([, monthRef]) => {
+
+      const monthScroll = mobile
+          ? monthRef?.current?.offsetTop ?? 0
+          : monthRef?.current?.offsetLeft ?? 0;
+      return monthScroll && scrollDistance > monthScroll;
+    })
+
+    const date = (last(filtered)?.[0] as MonthWithYear) ?? "2020_September";
+
+    const [year,month] = date.split('_') as [Year, Month]
+    setYear(year);
     setMonth(month);
   };
 
@@ -340,16 +351,43 @@ const List = ({
   );
 };
 
+
+
+function YearPicker({setYear, selected}:  {setYear: (year: Year) => void; selected: Year}) {
+  const [open,setOpen] = useState(false)
+
+  const handleYearClick = (year:Year) => {
+    setYear(year);
+    // setOpen(false)
+  }
+  return (
+       <YearContainer onClick={() => setOpen(!open)}>
+               {years.map(year =>
+                   <YearDisplay key={year} onClick={() => handleYearClick(year)} selected={year==selected}>
+                     {year}
+                   </YearDisplay>
+               )}
+
+</YearContainer> )
+}
+
 const BottomControls = ({
   selectedMonth,
   setMonth,
+  year,
+  setYear
 }: {
   selectedMonth: IScrollListProps["monthProps"]["selectedMonth"];
   setMonth: IScrollListProps["setMonth"];
+  year: Year;
+  setYear: (year: Year) => void;
 }) => {
-  const selectedIndex = months.findIndex((month) => month == selectedMonth);
+  const selectedIndex = months.findIndex(
+      (month) =>
+          month == selectedMonth);
 
-  return (
+  return (<>
+    <YearPicker selected={year} setYear={setYear}/>
     <MonthListContainer>
       {months.map((month, index) => (
         <MonthDisplay
@@ -362,6 +400,7 @@ const BottomControls = ({
         </MonthDisplay>
       ))}
     </MonthListContainer>
+    </>
   );
 };
 
@@ -395,6 +434,7 @@ export const ScrollListWide = ({
   modalControls,
   refMap,
   setMonth,
+  setYear,
   scrollPos,
 }: IScrollListProps) => {
   return (
@@ -405,6 +445,7 @@ export const ScrollListWide = ({
         setMonth={setMonth}
         milestones={milestones}
         refMap={refMap}
+        setYear={setYear}
         scrollPos={scrollPos}
       />
 
@@ -418,8 +459,10 @@ const ScrollListNonWide = ({
   refMap,
   scrollPos,
   setMonth,
+  setYear
 }: Pick<IScrollListProps, "milestones" | "refMap" | "scrollPos"> & {
-  setMonth: IScrollListProps["setMonth"];
+  setMonth: IScrollListProps["setMonth"]
+  setYear: IScrollListProps["setYear"]
 }) => {
   return (
     <ScrollListContainer className={"mobile"}>
@@ -428,6 +471,7 @@ const ScrollListNonWide = ({
         milestones={milestones}
         mobile
         refMap={refMap}
+        setYear={setYear}
         scrollPos={scrollPos}
       />
     </ScrollListContainer>
@@ -455,6 +499,7 @@ export const ScrollList = ({
 }): JSX.Element => {
   const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
     useState("September" as Month);
+  const [year, setYear]: [year: Year, setYear: (year: Year)=> void] = useState(years[0] as Year)
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags]: [
     selectedTags: Tags,
@@ -465,29 +510,38 @@ export const ScrollList = ({
   const selected = filterMilestones(selectedTags, milestones, searchString);
 
   const monthRefMap = useRef(
-    months.reduce(
-      (acc: Record<Month, RefObject<HTMLSpanElement> | null>, month) => {
-        acc[month] = createRef();
+    monthsWithYears.reduce(
+      (acc: Record<MonthWithYear, RefObject<HTMLSpanElement> | null>, month) => {
+        acc[month as MonthWithYear] = createRef();
         return acc;
       },
-      {} as Record<Month, RefObject<HTMLSpanElement> | null>
+      {} as Record<MonthWithYear, RefObject<HTMLSpanElement> | null>
     )
   );
   // const listRef: RefObject<HTMLElement> = ();
 
-  const scrollToMonth = (month: Month) => {
-    const selectedMonth = monthRefMap.current?.[month]?.current;
+  const scrollToMonth = (month: Month, yearToSet = year) => {
+    const isNextYear = yearToSet == years[0] && months.indexOf(month ) < months.indexOf('September')
+    const nextYear = years[years.indexOf(yearToSet) + 1]
+    const selectedMonth = monthRefMap.current?.[`${isNextYear ? nextYear : yearToSet}_${month}` as MonthWithYear]?.current;
 
     if (selectedMonth) {
       if (mobile) {
+
         setScroll([0, +(selectedMonth?.offsetTop ?? 0)]);
       } else {
         setScroll([+(selectedMonth?.offsetLeft ?? 0), 0]);
       }
     }
 
+
+    setYear(isNextYear ? nextYear : yearToSet)
     setMonth(month);
   };
+
+  const handleYear = (year: Year) => {
+    scrollToMonth(year == years[0] ? 'September': 'January', year)
+  }
 
   const searchProps = {
     searchString,
@@ -495,7 +549,7 @@ export const ScrollList = ({
     selectedTags,
     setSelectedTags,
   };
-  const monthProps = { selectedMonth: month, setMonth: scrollToMonth };
+  const monthProps = { selectedMonth: month, setMonth: scrollToMonth, year, setYear: handleYear };
 
   return (
     <>
@@ -508,6 +562,7 @@ export const ScrollList = ({
       {mobile ? (
         <ScrollListNonWide
           setMonth={setMonth}
+          setYear={setYear}
           scrollPos={scroll as [number, number]}
           milestones={selected}
           refMap={monthRefMap}
@@ -515,6 +570,7 @@ export const ScrollList = ({
       ) : (
         <ScrollListWide
           setMonth={setMonth}
+          setYear={setYear}
           refMap={monthRefMap}
           scrollPos={scroll as [number, number]}
           searchProps={searchProps}

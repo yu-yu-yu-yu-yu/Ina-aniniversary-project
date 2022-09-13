@@ -171,6 +171,34 @@ export const MonthListContainer = styled.div`
     margin: 0 auto;
   }
 `;
+
+export const YearContainer = styled.div`
+  display: flex;
+  flex: 0 1;
+  background-color: var(--ika-purple);
+  flex-direction: row;
+  max-width: 170px;
+  border-radius: 10px;
+  left: 20%;
+  top: 10px;
+  position: relative;
+`
+
+export const YearDisplay = styled.div<{
+    selected: boolean;
+}>`
+  padding: 5px;
+  color: white;
+  text-align: center;
+  letter-spacing: 0;
+  font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
+  opacity: 1;
+  margin: auto 0;
+  :hover {
+    cursor: pointer;
+}
+`
+
 export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
