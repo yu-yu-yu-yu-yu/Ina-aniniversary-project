@@ -225,7 +225,7 @@ const Lore = (): JSX.Element => {
             This site was developed by the Tentacult to celebrate{" "}
             <b>Ina&apos;s second debut anniversary</b>.  As with last year, we&apos;ve collected{" "}
             <b>congratulatory messages and illustrations</b> from
-            <b> Takodachi around the world</b>! We&apos;ve also <b>updated the timeline</b>
+            <b> Takodachi around the world</b>! We&apos;ve also <b>updated the timeline</b>{" "}
             to include things Ina has done between last anniversary and now!
           </p>
         </div>
