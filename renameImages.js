@@ -2,9 +2,9 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const _ = require("lodash");
 
-const IMG_PATH = "./public/images";
+const IMG_PATH = "./public/takos";
 const CSV_PATH = "./public/data/prepdatav3.csv";
-const filenameDictionary = "./renamedImages.txt";
+const filenameDictionary = "./renamedTakos.txt";
 
 const csvWriter = require("csv-writer").createObjectCsvWriter({
   path: CSV_PATH,
@@ -32,24 +32,25 @@ async function renameFiles(path) {
       console.log("filename map saved");
     }
   );
-  const filenames_map = _.fromPairs(filename_pairs);
+  const filenames_map = _.fromPairs(filename_pairs.map(([name, newname]) =>
+      [name.substr(0, name.lastIndexOf('.')), newname] ));
   const csv_by_line = [];
 
   await fs
     .createReadStream(CSV_PATH)
     .pipe(csv())
     .on("data", (data) => {
-      if (data.image) {
-        data.image = filenames_map[data.image];
+      if (data.icon) {
+        data.icon = filenames_map[data.icon];
       }
       csv_by_line.push(data);
     })
     .on("end", () => csvWriter.writeRecords(csv_by_line));
 
-  for (const filename in filenames_map) {
-    fs.rename(
+  for (const filename of filenames) {
+     fs.rename(
       `${IMG_PATH}/${filename}`,
-      `${IMG_PATH}/${filenames_map[filename]}`,
+      `${IMG_PATH}/${filenames_map[filename.substr(0, filename.lastIndexOf('.'))]}`,
       (err) => {
         if (err) throw err;
       }

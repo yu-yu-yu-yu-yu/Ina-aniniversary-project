@@ -1,6 +1,6 @@
 export interface Submission {
   user: string;
-  icon: number;
+  icon: string;
   message: string;
   image?: string;
 }
