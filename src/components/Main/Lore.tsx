@@ -221,12 +221,12 @@ const Lore = (): JSX.Element => {
             humanity, as an <b>ordinary girl</b>.
           </p>
           <hr />
+
           <p>
             This site was developed by the Tentacult to celebrate{" "}
-            <b>Ina&apos;s second debut anniversary</b>.  As with last year, we&apos;ve collected{" "}
-            <b>congratulatory messages and illustrations</b> from
-            <b> Takodachi around the world</b>! We&apos;ve also <b>updated the timeline</b>{" "}
-            to include things Ina has done between last anniversary and now!
+            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her 4th birthday,{" "}
+            <b>we&apos;ve collected congratulatory messages and illustrations</b> from{" "}
+            <b>Takodachi around the world</b>! Happy birthday Ina!
           </p>
         </div>
         <div className="buttons-div">

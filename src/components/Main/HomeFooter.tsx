@@ -387,6 +387,28 @@ const Credits = ({
               <td>Graphic design</td>
               <td>My passion</td>
             </tr>
+            <tr>
+              <td>
+                <a href="https://twitter.com/lyudmilia"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                >
+                Lyudmilia
+                </a>
+              </td>
+              <td>Planning, General contribution</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://twitter.com/wololoSensei"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                >
+                  1st Killer
+                </a>
+              </td>
+              <td>Planning, General contribution</td>
+            </tr>
           </tbody>
         </table>
         <hr />
