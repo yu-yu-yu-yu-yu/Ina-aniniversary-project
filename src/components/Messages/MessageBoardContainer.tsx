@@ -64,8 +64,8 @@ const Navbar = styled.nav`
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
-  const [sourceData, setSourceData] = useState([] as any);
-  const [data, setData] = useState([] as any);
+  const [sourceData, setSourceData] = useState([] );
+  const [data, setData] = useState([] );
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
@@ -186,10 +186,10 @@ const MessageBoardContainer = (): JSX.Element => {
     }
   };
 
-  const awaitImgs = async (data: any) => {
-    const promises = [] as any;
+  const awaitImgs = async (data: Submission[]) => {
+    const promises: Promise<unknown>[] =  [] ;
 
-    data.forEach((row: any) => {
+    data.forEach((row: Submission) => {
       if (row.image && !row.image.includes("youtube")) {
         promises.push(
           new Promise((resolve) => {

@@ -74,15 +74,15 @@ export const Timeline = ({
 }: {
   milestones: Milestone[];
 }): JSX.Element => {
-  const [flavour, setFlavour] = useState("list");
+  const [flavour] = useState("list");
   const [mobile, setMobile] = useState(false);
   const [modalControls, setModalControls] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navBarRef = useRef(null);
 
-  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFlavour(event.target.value);
-  };
+  // const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setFlavour(event.target.value);
+  // };
 
   const checkMobile = () => {
     setMobile(window.innerWidth < 768);
