@@ -92,9 +92,6 @@ const HeaderText = styled.div`
   overflow-wrap: break-word;
 `;
 
-const TakoImgContainer = styled.div`
-  display: flex;
-`;
 
 const IFrame = styled.iframe`
   border: 2px solid var(--inai-purple);
@@ -152,13 +149,13 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {submissions.map(({ message, user, icon, image }, i) => (
+      {submissions.map(({ message, user, icon, image, pun }, i) => (
         <SubmissionContainer key={i}>
           <TextBubbleContainer>
             <BubbleHeader>
-              <TakoImgContainer>
-                <TakoIcon id={icon} />
-              </TakoImgContainer>
+
+                <TakoIcon id={icon} pun={pun} index={i} />
+
               <HeaderText>{user || "Anonymous Tako"}:</HeaderText>
             </BubbleHeader>
             <hr />
