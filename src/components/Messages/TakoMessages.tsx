@@ -159,7 +159,7 @@ const TakoMessages = ({
               <TakoImgContainer>
                 <TakoIcon id={icon} />
               </TakoImgContainer>
-              <HeaderText>{user != "" ? user : "Anonymous Tako"}:</HeaderText>
+              <HeaderText>{user || "Anonymous Tako"}:</HeaderText>
             </BubbleHeader>
             <hr />
 

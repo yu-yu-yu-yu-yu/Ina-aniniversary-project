@@ -2,7 +2,8 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const _ = require("lodash");
 
-const IMG_PATH = "./public/takos";
+const IMG_PATH = "./public/images";
+const TAKO_PATH = "./public/takos";
 const CSV_PATH = "./public/data/prepdatav3.csv";
 const filenameDictionary = "./renamedTakos.txt";
 
@@ -13,6 +14,7 @@ const csvWriter = require("csv-writer").createObjectCsvWriter({
     { id: "icon", title: "icon" },
     { id: "message", title: "message" },
     { id: "image", title: "image" },
+    { id: "pun", title: "pun" },
   ],
 });
 
@@ -33,7 +35,7 @@ async function renameFiles(path) {
     }
   );
   const filenames_map = _.fromPairs(filename_pairs.map(([name, newname]) =>
-      [name.substr(0, name.lastIndexOf('.')), newname] ));
+      [name, newname] ));
   const csv_by_line = [];
 
   await fs
@@ -49,8 +51,8 @@ async function renameFiles(path) {
 
   for (const filename of filenames) {
      fs.rename(
-      `${IMG_PATH}/${filename}`,
-      `${IMG_PATH}/${filenames_map[filename.substr(0, filename.lastIndexOf('.'))]}`,
+      `${path}/${filename}`,
+      `${path}/${filenames_map[filename]}`,
       (err) => {
         if (err) throw err;
       }
@@ -58,4 +60,4 @@ async function renameFiles(path) {
   }
 }
 
-renameFiles(IMG_PATH).catch(console.error);
+renameFiles(TAKO_PATH).catch(console.error);
