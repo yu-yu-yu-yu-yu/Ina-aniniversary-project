@@ -48,7 +48,7 @@ import {
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 import { ScrollEvent } from "react-indiana-drag-scroll";
-import {first, last, toPairs} from "lodash";
+import {last, toPairs} from "lodash";
 
 const SearchBar = ({
   searchString,
@@ -165,7 +165,7 @@ const EventMobile = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
-  const [day, month, year] = date.split(/\W/);
+  const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
     <EventContainer className={"mobile"} highlight={!!major} onClick={onClick}>
@@ -200,7 +200,7 @@ const Event = ({
   monthStart: boolean;
 }) => {
   const { major, label, date } = event;
-  const [day, month, year] = date.split(/\W/);
+  const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
     <EventContainer highlight={!!major} onClick={onClick}>
