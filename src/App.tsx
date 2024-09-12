@@ -5,6 +5,7 @@ import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
 import HomeContent from "./components/Main/HomeContent";
 import { Timeline } from "./components/Timeline/Timeline";
 import { milestones } from "./components/Timeline/Milestones";
+import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
 
 const App = (): JSX.Element => (
   <Router>
@@ -25,6 +26,12 @@ const App = (): JSX.Element => (
           <Route path="/messages">
             <MessageBoardContainer />
           </Route>
+          <Route path="/moments">
+            <VideoBoardContainer  mode='moments'/>
+          </Route>
+          <Route path="/wah">
+            <VideoBoardContainer  mode='wah'/>
+          </Route>
           <Route path="/timeline">
             <Timeline milestones={milestones} />
           </Route>
@@ -36,7 +43,7 @@ const App = (): JSX.Element => (
 
 const Home = () => (
   <div>
-    <HomeContent></HomeContent>
+    <HomeContent/>
   </div>
 );
 

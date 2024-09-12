@@ -103,7 +103,7 @@ const Logo = (): JSX.Element => {
     <LogoContainer>
       <CenterContainer>
         <LogoImg alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
-        <LogoHeader>INA&apos;S 4TH BIRTHDAY CELEBRATION FAN PROJECT</LogoHeader>
+        <LogoHeader>INA&apos;S 4TH ANNIVERSARY CELEBRATION FAN PROJECT</LogoHeader>
       </CenterContainer>
       <ScrollIndicator>
         <h3>

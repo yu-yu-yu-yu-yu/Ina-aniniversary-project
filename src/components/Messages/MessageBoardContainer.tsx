@@ -1,64 +1,15 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, {useEffect, useState} from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { TakoLoading } from "../TakoLoading/TakoLoading";
-import { Submission } from "./Submission";
-import { NavLink } from "react-router-dom";
+import {TakoLoading} from "../TakoLoading/TakoLoading";
+import {Submission} from "./Submission";
+import {NavLink} from "react-router-dom";
 import ScrollArrow from "./BackToTop";
 
-import { Switch } from "../Common/Switch";
-import { debounce } from "lodash";
+import {Switch} from "../Common/Switch";
+import {debounce} from "lodash";
+import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar} from "./styles";
 // import MessageBoard from "./MessageBoard";
-
-const MessageBoard = styled.div`
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 25px;
-`;
-
-const FiltersContainer = styled.div`
-  margin: auto auto 35px;
-`;
-
-const Loader = styled.div`
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-`;
-
-const SearchBar = styled.input`
-  display: block;
-  width: 100%;
-  background-color: transparent;
-  border: 0;
-  border-bottom: 2px solid;
-  margin-bottom: 20px;
-  outline: none;
-
-  color: var(--ika-purple);
-  text-align: left;
-  font: normal normal normal 30px/37px Montserrat;
-  letter-spacing: 0;
-  opacity: 1;
-
-  .switchs-container {
-    width: 40px;
-  }
-`;
-
-const Navbar = styled.nav`
-  background: var(--inai-purple);
-  display: flex;
-  position: relative;
-  flex: 0 1;
-  padding: 0.9rem 1.25rem;
-  text-align: left;
-  font: normal normal normal 3em montserrat;
-  letter-spacing: 0;
-  justify-content: space-between;
-`;
 
 // Limit of items to be loaded per time
 const LIMIT = 10;

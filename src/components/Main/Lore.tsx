@@ -97,7 +97,6 @@ const LoreTextContainer = styled.div`
 
   .bio-button {
     background: var(--inai-purple) 0% 0% no-repeat padding-box;
-    background: #a198b3 0% 0% no-repeat padding-box;
     border: 0px;
     border-radius: 32px;
     opacity: 1;
@@ -105,10 +104,17 @@ const LoreTextContainer = styled.div`
     font: normal normal bold 35px/51px Roboto;
     letter-spacing: 2.5px;
     color: #ffffff;
-    opacity: 1;
-
+    white-space: nowrap;
     padding: 20px 40px;
     margin: 10px;
+
+
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.6;
+    }
+
 
     @media only screen and (max-width: 1400px) {
       font: normal normal bold 22px/30px Roboto;
@@ -224,8 +230,8 @@ const Lore = (): JSX.Element => {
 
           <p>
             This site was developed by the Tentacult to celebrate{" "}
-            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her 4th birthday,{" "}
-            <b>we&apos;ve collected congratulatory messages and illustrations</b> from{" "}
+            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her 4th anniversary,{" "}
+            <b>we&apos;ve collected congratulatory messages and moments</b> from{" "}
             <b>Takodachi around the world</b>! Happy birthday Ina!
           </p>
         </div>
@@ -233,9 +239,20 @@ const Lore = (): JSX.Element => {
           <Link to="/messages" role="button" className="bio-button">
             Messages
           </Link>
-          <Link to="/timeline" role="button" className="bio-button">
-            Timeline
+
+          <Link to="/moments" role="button" className="bio-button">
+            Moments
           </Link>
+
+          <Link to="/wah" role="button" className="bio-button">
+            WAH
+          </Link>
+
+          <Link  to="/timeline" role="button"  className="bio-button disabled">
+            Timeline (under maintenance)
+          </Link>
+
+
         </div>
       </LoreTextContainer>
       <InaVideoContainer>

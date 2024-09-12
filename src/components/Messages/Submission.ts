@@ -1,7 +1,10 @@
 export interface Submission {
   user: string;
-  icon: string;
+  icon?: string;
   message: string;
   image: string;
-  pun: string;
+  pun?: string;
+  sub?: string;
+  wah?: string;
+  wah_sub?: string;
 }

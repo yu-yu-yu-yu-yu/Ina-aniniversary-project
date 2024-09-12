@@ -2,10 +2,9 @@ import React, {useLayoutEffect} from "react";
 import {Submission} from "./Submission";
 import Masonry from "react-masonry-component";
 import {TakoIcon} from "./TakoIcon";
-import {SRLWrapper} from "simple-react-lightbox";
 import {
   BubbleHeader,
-  BubbleImage,
+
   BubbleMessage,
   HeaderText,
   IFrame,
@@ -20,38 +19,14 @@ interface TakoMessagesProps {
   isToggledTextOnly: boolean;
 }
 
-const options = {
-  settings: {
-    disablePanzoom: false,
-  },
-  buttons: {
-    showAutoplayButton: false,
-    showCloseButton: false,
-    showDownloadButton: false,
-    showFullscreenButton: false,
-    showNextButton: false,
-    showPrevButton: false,
-    showThumbnailsButton: false,
-  },
-  thumbnails: {
-    showThumbnails: false,
-  },
-};
 
 const TakoMessages = ({
   submissions,
-  isToggledOnlyImg,
-  isToggledTextOnly,
 }: TakoMessagesProps): JSX.Element => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (isToggledOnlyImg) {
-    submissions = submissions.filter((sub) => {
-      return sub.image;
-    });
-  }
 
   return (
     <Masonry
@@ -63,27 +38,20 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {submissions.map(({ message, user, icon, image, pun }, i) => (
+      {submissions.map(({ message, user, icon, image, pun,sub }, i) => (
         <SubmissionContainer key={i}>
           <TextBubbleContainer>
             <BubbleHeader>
 
-                <TakoIcon id={icon} pun={pun} index={i} />
+              {<TakoIcon id={icon} pun={pun} index={i} />}
 
               <HeaderText>{user || "Anonymous Tako"}:</HeaderText>
             </BubbleHeader>
             <hr />
 
-            {!isToggledTextOnly &&
-              image &&
-              //Using ina pfp as placeholder.
-              (!image.includes("youtube") ? (
-                <SRLWrapper options={options}>
-                  <BubbleImage
-                    src={process.env.PUBLIC_URL + "/Images/" + image}
-                  />
-                </SRLWrapper>
-              ) : (
+            {
+
+              (image.includes("http") ?
                 <IFrame
                   width="100%"
                   height="315"
@@ -91,9 +59,13 @@ const TakoMessages = ({
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={true}
-                ></IFrame>
-              ))}
-            {!isToggledOnlyImg && <BubbleMessage>{message}</BubbleMessage>}
+                /> :  (<><BubbleMessage>{image}</BubbleMessage><hr/></>)
+              )
+
+            }
+            {sub &&  (<><BubbleMessage>{sub}</BubbleMessage><hr/></>)}
+
+            <BubbleMessage>{message}</BubbleMessage>
           </TextBubbleContainer>
         </SubmissionContainer>
       ))}
