@@ -114,6 +114,9 @@ const LoreTextContainer = styled.div`
       cursor: default;
       opacity: 0.6;
     }
+    &.blur {
+      opacity: 0.6;
+    }
 
 
     @media only screen and (max-width: 1400px) {
@@ -236,8 +239,8 @@ const Lore = (): JSX.Element => {
           </p>
         </div>
         <div className="buttons-div">
-          <Link to="/messages" role="button" className="bio-button">
-            Messages
+          <Link to="/messages" role="button" className="bio-button blur">
+            Messages (old)
           </Link>
 
           <Link to="/moments" role="button" className="bio-button">

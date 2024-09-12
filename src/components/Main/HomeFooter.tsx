@@ -409,12 +409,23 @@ const Credits = ({
               </td>
               <td>Planning, General contribution</td>
             </tr>
+            <tr>
+              <td>
+                <a href="https://x.com/Ryusei_Kiiro"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                >
+                  Ryusei
+                </a>
+              </td>
+              <td>General contribution</td>
+            </tr>
           </tbody>
         </table>
         <hr />
         <p>
           And thanks to all the amazing takos that contributed their wonderful
-          art and supportive messages!
+          moments and supportive messages!
         </p>
       </CreditsModal>
     </>,
