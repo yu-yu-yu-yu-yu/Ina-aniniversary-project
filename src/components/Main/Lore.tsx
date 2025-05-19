@@ -233,18 +233,19 @@ const Lore = (): JSX.Element => {
 
           <p>
             This site was developed by the Tentacult to celebrate{" "}
-            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her 4th anniversary,{" "}
-            <b>we&apos;ve collected congratulatory messages and moments</b> from{" "}
-            <b>Takodachi around the world</b>! Happy birthday Ina!
+            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her <s>4th anniversary</s> 5th birthday!{" "}
+            <b>We&apos;ve collected congratulatory messages and moments</b> from{" "}
+            <b>Takodachi around the world</b>!  We also have a cookbook in the works for this special occasion.{" "}
+            Happy birthday (for real this time) Ina!{" "}
           </p>
         </div>
         <div className="buttons-div">
-          <Link to="/messages" role="button" className="bio-button blur">
-            Messages (old)
+          <Link to="/messages" role="button" className="bio-button">
+            Messages
           </Link>
 
           <Link to="/moments" role="button" className="bio-button">
-            Moments
+            Moments (2024)
           </Link>
 
           <Link to="/wah" role="button" className="bio-button">
