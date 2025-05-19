@@ -99,7 +99,7 @@ const TakoMessages = ({
                   allowFullScreen={true}
                 ></IFrame>
               ))}
-            {!isToggledOnlyImg && <BubbleMessage>{message}</BubbleMessage>}
+            {(!isToggledOnlyImg  || image.includes("mp4")) && <BubbleMessage>{message}</BubbleMessage>}
           </TextBubbleContainer>
         </SubmissionContainer>
       ))}
