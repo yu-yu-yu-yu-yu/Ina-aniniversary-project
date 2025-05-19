@@ -76,12 +76,18 @@ const TakoMessages = ({
 
             {!isToggledTextOnly &&
               image &&
-              //Using ina pfp as placeholder.
               (!image.includes("youtube") ? (
                 <SRLWrapper options={options}>
-                  <BubbleImage
+                  {image.includes("mp4") ?
+
+                    <video width={420} controls>
+                        <source src={process.env.PUBLIC_URL + "/Images/" + image} type="video/mp4"/>
+                    </video>
+
+                  : <BubbleImage
                     src={process.env.PUBLIC_URL + "/Images/" + image}
                   />
+                  }
                 </SRLWrapper>
               ) : (
                 <IFrame
