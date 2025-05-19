@@ -85,7 +85,9 @@ const LoreTextContainer = styled.div`
   .buttons-div {
     margin-top: 50px;
 
+
     @media only screen and (max-width: 1100px) {
+
       display: inline-block;
       margin-right: 40%;
     }
@@ -144,7 +146,7 @@ const LoreTextPolygon = styled.video`
   height: 0;
   border-top: 40px solid transparent;
   border-bottom: 40px solid transparent;
-  border-left: 40px solid var(--ika-purple);
+  //border-left: 40px solid var(--ika-purple);
 
   @media only screen and (max-width: 1100px) {
     display: none;
@@ -249,12 +251,14 @@ const Lore = (): JSX.Element => {
           </Link>
 
           <Link to="/wah" role="button" className="bio-button">
-            WAH
+            WAH (2024)
           </Link>
 
-          <Link  to="/timeline" role="button"  className="bio-button disabled">
-            Timeline (under maintenance)
-          </Link>
+          {/*<Link  to="/timeline" role="button"  className="bio-button disabled">*/}
+          {/*  Timeline (under maintenance)*/}
+          {/*</Link>*/}
+
+          <a role="button" className="bio-button" href={process.env.PUBLIC_URL + "Ina Cookbook.pdf"}>Tako cookbook</a>
 
 
         </div>
