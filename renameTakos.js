@@ -42,8 +42,8 @@ async function renameFiles(path) {
     .createReadStream(CSV_PATH)
     .pipe(csv())
     .on("data", (data) => {
-      if (data.image) {
-        data.image = filenames_map[data.image];
+      if (data.icon) {
+        data.icon = filenames_map[data.icon];
       }
       csv_by_line.push(data);
     })
@@ -60,4 +60,4 @@ async function renameFiles(path) {
   }
 }
 
-renameFiles(IMG_PATH).catch(console.error);
+renameFiles(TAKO_PATH).catch(console.error);

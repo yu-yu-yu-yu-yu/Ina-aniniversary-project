@@ -2,8 +2,9 @@ const fs = require("fs");
 const csv = require("csv-parser");
 
 const inputFiles = [
-  "./public/data/video.csv",
+  // "./public/data/video.csv",
   // "./src/static/Ina Anniversary Milestones.csv",
+    "./public/data/prepdatav3.csv"
 ];
 
 async function convertCSV(inputFiles) {
