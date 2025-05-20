@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -85,9 +85,7 @@ const LoreTextContainer = styled.div`
   .buttons-div {
     margin-top: 50px;
 
-
     @media only screen and (max-width: 1100px) {
-
       display: inline-block;
       margin-right: 40%;
     }
@@ -110,7 +108,6 @@ const LoreTextContainer = styled.div`
     padding: 20px 40px;
     margin: 10px;
 
-
     &.disabled {
       pointer-events: none;
       cursor: default;
@@ -119,7 +116,6 @@ const LoreTextContainer = styled.div`
     &.blur {
       opacity: 0.6;
     }
-
 
     @media only screen and (max-width: 1400px) {
       font: normal normal bold 22px/30px Roboto;
@@ -212,7 +208,41 @@ const AnimationCredits = styled.p`
   align-self: center;
 `;
 
+const TAKO_COUNT = 72; // Set this to the number of images in /public/takos
+
+const ButtonContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const TakoPeek = styled.img`
+  position: absolute;
+  left: 50%;
+  top: -60px;
+  transform: translateX(-50%);
+  width: 60px;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+`;
+
+const buttons = [
+  { to: "/messages", label: "Messages" },
+  { to: "/moments", label: "Moments (2024)" },
+  { to: "/wah", label: "WAH (2024)" },
+  { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako cookbook" },
+  { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Secret" },
+];
+
 const Lore = (): JSX.Element => {
+  const [peekIndex, setPeekIndex] = useState<number | null>(null);
+  const [peekTako, setPeekTako] = useState<string>("");
+
+  const handleHover = () => {
+    const idx = Math.floor(Math.random() * TAKO_COUNT);
+    setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
+  };
+
   return (
     <LoreContainer>
       <LoreTextContainer>
@@ -235,32 +265,43 @@ const Lore = (): JSX.Element => {
 
           <p>
             This site was developed by the Tentacult to celebrate{" "}
-            <b>Ina&apos;s last couple of anniversaries</b>,  as well as her <s>4th anniversary</s> 5th birthday!{" "}
+            <b>Ina&apos;s last couple of anniversaries</b>, as well as her{" "}
+            <s>4th anniversary</s> 5th birthday!{" "}
             <b>We&apos;ve collected congratulatory messages and moments</b> from{" "}
-            <b>Takodachi around the world</b>!  We also have a cookbook in the works for this special occasion.{" "}
+            <b>Takodachi around the world</b>! We also have a cookbook in the works for this special occasion.{" "}
             Happy birthday (for real this time) Ina!{" "}
           </p>
         </div>
         <div className="buttons-div">
-          <Link to="/messages" role="button" className="bio-button">
-            Messages
-          </Link>
-
-          <Link to="/moments" role="button" className="bio-button">
-            Moments (2024)
-          </Link>
-
-          <Link to="/wah" role="button" className="bio-button">
-            WAH (2024)
-          </Link>
-
-          {/*<Link  to="/timeline" role="button"  className="bio-button disabled">*/}
-          {/*  Timeline (under maintenance)*/}
-          {/*</Link>*/}
-
-          <a role="button" className="bio-button" href={process.env.PUBLIC_URL + "Ina Cookbook.pdf"}>Tako cookbook</a>
-
-
+          {buttons.map((btn, i) => (
+            <ButtonContainer
+              key={btn.label}
+              onMouseEnter={() => {
+                setPeekIndex(i);
+                handleHover();
+              }}
+              onMouseLeave={() => setPeekIndex(null)}
+            >
+              {peekIndex === i && peekTako && (
+                <TakoPeek src={peekTako} alt="peeking tako" />
+              )}
+              {"to" in btn ? (
+                <Link to={btn.to} role="button" className="bio-button">
+                  {btn.label}
+                </Link>
+              ) : (
+                <a
+                  role="button"
+                  className="bio-button"
+                  href={btn.href}
+                  target={btn.label === "Secret" ? "_blank" : undefined}
+                  rel={btn.label === "Secret" ? "noopener noreferrer" : undefined}
+                >
+                  {btn.label}
+                </a>
+              )}
+            </ButtonContainer>
+          ))}
         </div>
       </LoreTextContainer>
       <InaVideoContainer>
