@@ -8,7 +8,8 @@ const QuoteContainer = styled.div`
   margin-top: 30px;
   margin-bottom: 10px;
   box-shadow: 0px 10px 6px #0000001C;
-  
+  z-index: 3;
+
   @media only screen and (max-width: 701px) {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -18,7 +19,7 @@ const QuoteContainer = styled.div`
 
 const QuoteInaImg = styled.img`
   display: inline-block;
-  
+ z-index: 3;
   width: 300px;
   @media only screen and (max-width: 701px) {
     width: 200px;
@@ -33,7 +34,7 @@ const QuoteContent = styled.div`
   color: #ffffff;
   display: inline-block;
   margin-left: 40px;
-
+ z-index: 3;
   @media only screen and (max-width: 701px) {
     display: block;
     margin:auto;

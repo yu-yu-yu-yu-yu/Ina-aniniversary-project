@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 
 const LoreContainer = styled.div`
   text-align: center;
   padding-top: 90px;
-  margin-bottom: -80px;
+  margin-bottom: -90px;
   background: var(--unnamed-color-f3edff)
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 170px;
-
+  z-index: 3;
   @media only screen and (min-width: 1100px) and (max-width: 1650px) {
     // padding-bottom: 20vh;
   }
@@ -21,10 +20,9 @@ const LoreContainer = styled.div`
 `;
 
 const LoreTextContainer = styled.div`
-  z-index: 1;
   position: absolute;
   left: 190px;
-
+  z-index: 3;
   @media only screen and (max-width: 1400px) {
     left: 9em;
   }
@@ -78,7 +76,6 @@ const LoreTextContainer = styled.div`
       font-family: "Mulish", sans-serif;
       font-size: 17px;
       letter-spacing: 0px;
-      z-index: 1;
     }
   }
 
@@ -134,7 +131,6 @@ const LoreTextContainer = styled.div`
 `;
 
 const LoreTextPolygon = styled.video`
-  z-index: 1;
   position: absolute;
   left: 100%;
   top: 40%;
@@ -198,7 +194,6 @@ const AnimationCreditsContainer = styled.div`
   position: absolute;
   bottom: 70px;
   right: 20%;
-  z-index: 1;
 `;
 
 const AnimationCredits = styled.p`
@@ -208,40 +203,9 @@ const AnimationCredits = styled.p`
   align-self: center;
 `;
 
-const TAKO_COUNT = 72; // Set this to the number of images in /public/takos
 
-const ButtonContainer = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const TakoPeek = styled.img`
-  position: absolute;
-  left: 50%;
-  top: -60px;
-  transform: translateX(-50%);
-  width: 60px;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  z-index: 10;
-`;
-
-const buttons = [
-  { to: "/messages", label: "Messages" },
-  { to: "/moments", label: "Moments (2024)" },
-  { to: "/wah", label: "WAH (2024)" },
-  { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako cookbook" },
-  { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Secret" },
-];
 
 const Lore = (): JSX.Element => {
-  const [peekIndex, setPeekIndex] = useState<number | null>(null);
-  const [peekTako, setPeekTako] = useState<string>("");
-
-  const handleHover = () => {
-    const idx = Math.floor(Math.random() * TAKO_COUNT);
-    setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
-  };
 
   return (
     <LoreContainer>
@@ -262,46 +226,15 @@ const Lore = (): JSX.Element => {
             humanity, as an <b>ordinary girl</b>.
           </p>
           <hr />
-
           <p>
-            This site was developed by the Tentacult to celebrate{" "}
-            <b>Ina&apos;s last couple of anniversaries</b>, as well as her{" "}
-            <s>4th anniversary</s> 5th birthday!{" "}
-            <b>We&apos;ve collected congratulatory messages and moments</b> from{" "}
-            <b>Takodachi around the world</b>! We also have a cookbook in the works for this special occasion.{" "}
-            Happy birthday (for real this time) Ina!{" "}
+            Then five years have passed, <b>humanity&apos;s sanity</b> fluttering back into harmony at a 
+            <b>cadence of world-domination proportions</b>, slowly but surely. 
+            The <b>violet echoes</b> of her earliest melody like a quiet bloom in the void have softened fear into comfort; <b>sapphire petals</b> drift through the darkness, reminders of fragile beauty and fleeting memory; and a <b>whispered hand-ball of colorful hope</b> spins itself into the fabric of the everyday.
           </p>
-        </div>
-        <div className="buttons-div">
-          {buttons.map((btn, i) => (
-            <ButtonContainer
-              key={btn.label}
-              onMouseEnter={() => {
-                setPeekIndex(i);
-                handleHover();
-              }}
-              onMouseLeave={() => setPeekIndex(null)}
-            >
-              {peekIndex === i && peekTako && (
-                <TakoPeek src={peekTako} alt="peeking tako" />
-              )}
-              {"to" in btn ? (
-                <Link to={btn.to} role="button" className="bio-button">
-                  {btn.label}
-                </Link>
-              ) : (
-                <a
-                  role="button"
-                  className="bio-button"
-                  href={btn.href}
-                  target={btn.label === "Secret" ? "_blank" : undefined}
-                  rel={btn.label === "Secret" ? "noopener noreferrer" : undefined}
-                >
-                  {btn.label}
-                </a>
-              )}
-            </ButtonContainer>
-          ))}
+          <p>
+            <b>Miraculously preserved</b>, many <b>newfound friends</b> by her side, countless <b>adventures lived</b> and <b>cookies eaten</b>, hearts moved within <b>glow-stick seas of live concerts</b>, <b>Ina</b> continues her journey always going next, always improving, guiding and inspiring <b>Takodachis</b> across the world with her many <b>talents</b> and <b>perseverance</b> <b>voice</b>, her <b>art</b>, her <b>dance</b>, and her <b>cuteness and gently adorable personality</b>.
+          </p>
+
         </div>
       </LoreTextContainer>
       <InaVideoContainer>

@@ -6,6 +6,7 @@ import HomeContent from "./components/Main/HomeContent";
 import { Timeline } from "./components/Timeline/Timeline";
 import { milestones } from "./components/Timeline/Milestones";
 import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
+import { TakodexList } from "./components/Takodex/TakodexList";
 
 const App = (): JSX.Element => (
   <Router>
@@ -35,6 +36,7 @@ const App = (): JSX.Element => (
           <Route path="/timeline">
             <Timeline milestones={milestones} />
           </Route>
+          <Route path="/takodex" component={TakodexList} />
         </Switch>
       </div>
     </div>
