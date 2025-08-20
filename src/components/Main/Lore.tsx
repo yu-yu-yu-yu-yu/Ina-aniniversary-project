@@ -208,7 +208,7 @@ const AnimationCredits = styled.p`
   align-self: center;
 `;
 
-const TAKO_COUNT = 72; // Set this to the number of images in /public/takos
+const TAKO_COUNT = 72;
 
 const ButtonContainer = styled.div`
   position: relative;
@@ -232,6 +232,7 @@ const buttons = [
   { to: "/wah", label: "WAH (2024)" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako cookbook" },
   { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Secret" },
+  { to: "/takodex", label: "Test Takodex List" },
 ];
 
 const Lore = (): JSX.Element => {
