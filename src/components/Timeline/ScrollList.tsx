@@ -1,4 +1,3 @@
-// export {};
 import { Milestone, Tags } from "./Milestone";
 import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
@@ -35,7 +34,8 @@ import {
   TagsContainer,
   TopControlsContainer,
   Triangle, YearDisplay,
-  YearContainer
+  YearContainer,
+  MuteButton
 } from "./styles/List";
 import {
   filterMilestones,
@@ -50,7 +50,7 @@ import {
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 import { ScrollEvent } from "react-indiana-drag-scroll";
-import {last, toPairs} from "lodash";
+import { last, toPairs } from "lodash";
 import { Banner } from "./Banner";
 
 const SearchBar = ({
@@ -160,17 +160,27 @@ const Thumb = ({
   />
 );
 
+interface EventBaseProps {
+  event: Milestone;
+  monthStart: boolean;
+  onClick: () => void;
+  refMap: IScrollListProps["refMap"];
+}
+
+interface EventMobileProps extends EventBaseProps {
+  // Mobile events
+}
+
+interface EventProps extends EventBaseProps {
+  // Desktop events
+}
+
 const EventMobile = ({
   event,
   monthStart,
   refMap,
   onClick,
-}: {
-  onClick: () => void;
-  refMap: IScrollListProps["refMap"];
-  event: Milestone;
-  monthStart: boolean;
-}) => {
+}: EventMobileProps) => {
   const { major, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
@@ -200,12 +210,7 @@ const Event = ({
   event,
   monthStart,
   onClick,
-}: {
-  onClick: () => void;
-  refMap: IScrollListProps["refMap"];
-  event: Milestone;
-  monthStart: boolean;
-}) => {
+}: EventProps) => {
   const { major, label, date, longText } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`;
@@ -317,7 +322,7 @@ const List = ({
   scrollPos,
   mobile,
   setMonth,
-  setYear
+  setYear,
 }: {
   milestones: Milestone[];
   refMap: IScrollListProps["refMap"];
@@ -354,14 +359,14 @@ const List = ({
     const filtered = toPairs(months).filter(([, monthRef]) => {
 
       const monthScroll = mobile
-          ? monthRef?.current?.offsetTop ?? 0
-          : monthRef?.current?.offsetLeft ?? 0;
+        ? monthRef?.current?.offsetTop ?? 0
+        : monthRef?.current?.offsetLeft ?? 0;
       return monthScroll && scrollDistance > monthScroll;
     })
 
     const date = (last(filtered)?.[0] as MonthWithYear) ?? "2020_September";
 
-    const [year,month] = date.split('_') as [Year, Month]
+    const [year, month] = date.split('_') as [Year, Month]
     setYear(year);
     setMonth(month);
   };
@@ -392,22 +397,22 @@ const List = ({
 
 
 
-function YearPicker({setYear, selected}:  {setYear: (year: Year) => void; selected: Year}) {
-  const [open,setOpen] = useState(false)
+function YearPicker({ setYear, selected }: { setYear: (year: Year) => void; selected: Year }) {
+  const [open, setOpen] = useState(false)
 
-  const handleYearClick = (year:Year) => {
+  const handleYearClick = (year: Year) => {
     setYear(year);
     // setOpen(false)
   }
   return (
-       <YearContainer onClick={() => setOpen(!open)}>
-               {years.map(year =>
-                   <YearDisplay key={year} onClick={() => handleYearClick(year)} selected={year==selected}>
-                     {year}
-                   </YearDisplay>
-               )}
+    <YearContainer onClick={() => setOpen(!open)}>
+      {years.map(year =>
+        <YearDisplay key={year} onClick={() => handleYearClick(year)} selected={year == selected}>
+          {year}
+        </YearDisplay>
+      )}
 
-</YearContainer> )
+    </YearContainer>)
 }
 
 const BottomControls = ({
@@ -422,11 +427,11 @@ const BottomControls = ({
   setYear: (year: Year) => void;
 }) => {
   const selectedIndex = months.findIndex(
-      (month) =>
-          month == selectedMonth);
+    (month) =>
+      month == selectedMonth);
 
   return (<>
-    <YearPicker selected={year} setYear={setYear}/>
+    <YearPicker selected={year} setYear={setYear} />
     <MonthListContainer>
       {months.map((month, index) => (
         <MonthDisplay
@@ -439,7 +444,7 @@ const BottomControls = ({
         </MonthDisplay>
       ))}
     </MonthListContainer>
-    </>
+  </>
   );
 };
 
@@ -537,6 +542,21 @@ export const ScrollList = ({
   drawerVisible: boolean;
   toggleDrawer: () => void;
 }): JSX.Element => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [muted, setMuted] = useState(false);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+    }
+
+  }, [muted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+    }
+  }, []);
   const [month, setMonth] = useState<Month>("September");
   const [year, setYear] = useState<Year>(years[0] as Year);
   const [searchString, setSearchString] = useState("");
@@ -603,6 +623,17 @@ export const ScrollList = ({
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/ensolarado.mp3"}
+        autoPlay
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
+      <MuteButton onClick={() => setMuted((m) => !m)} title={muted ? "Unmute BGM" : "Mute BGM"}>
+        {muted ? '🔇' : '🔊'}
+      </MuteButton>
       <Drawer
         visible={drawerVisible}
         searchProps={searchProps}
