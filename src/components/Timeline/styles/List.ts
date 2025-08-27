@@ -73,13 +73,23 @@ export const Circle = styled.span`
 
 //url(${({ media }) => }) center;
 //background-size: cover;
-export const EventPreview = styled.img`
+export const EventPreview = styled.img<{ outline: string }>`
   background: var(--ika-purple);
   width: 410px;
   height: 229px;
   border-radius: 5px;
   margin-bottom: 26px;
   z-index: 2;
+  border: 5px solid transparent;
+  ${({ outline }) =>
+    outline.startsWith("linear-gradient")
+      ? `
+    border-image: ${outline} 1;
+    border-image-slice: 1;
+  `
+      : `
+    border-color: ${outline};
+  `}
   &.mobile {
     width: 253px;
     height: 141px;
@@ -167,9 +177,11 @@ export const MonthListContainer = styled.div`
   flex: 0 1;
   margin: 0 111px;
   justify-content: space-between;
+  border: 3px solid #34303fff;
   @media (max-width: 1400px) {
     margin: 0 auto;
   }
+  z-index: 1;
 `;
 
 export const YearContainer = styled.div`
@@ -182,6 +194,8 @@ export const YearContainer = styled.div`
   left: 20%;
   top: 10px;
   position: relative;
+  border: 3px solid #34303fff;
+  z-index: 0;
 `
 
 export const YearDisplay = styled.div<{
@@ -243,15 +257,38 @@ export const EventLabel = styled.span`
   text-align: center;
   font: normal normal 300 30px/37px Roboto;
   letter-spacing: 1.5px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   width: 430px;
+  height: 74px;
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: normal;
+  word-break: break-word;
+  text-overflow: unset;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--ika-purple) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--ika-purple);
+    border-radius: 8px;
+    min-height: 16px;
+    box-shadow: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+    
   &.mobile {
     text-align: left;
     font: normal normal 400 20px/24px Roboto;
     letter-spacing: 1px;
     width: 240px;
+    height: 48px;
   }
 `;
 

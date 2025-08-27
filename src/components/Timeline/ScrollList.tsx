@@ -46,6 +46,7 @@ import {
   months, monthsWithYears, MonthWithYear,
   Year,
   years,
+  getMilestoneOutline
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 import { ScrollEvent } from "react-indiana-drag-scroll";
@@ -57,7 +58,7 @@ const SearchBar = ({
   setSearchString,
 }: {
   searchString: string;
-  setSearchString: (string: string) => void;
+  setSearchString: (searchValue: string) => void;
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
@@ -146,13 +147,17 @@ const MonthAnchor = React.forwardRef<HTMLSpanElement, IMonthAnchorProps>(
 );
 
 const Thumb = ({
-  event: { media },
+  event,
   mobile,
 }: {
   event: Milestone;
   mobile?: boolean;
 }) => (
-  <EventPreview className={mobile ? "mobile" : ""} src={getMediaLink(media)} />
+  <EventPreview
+    src={event.media}
+    outline={getMilestoneOutline(event.tags || {})}
+    className={mobile ? "mobile" : ""}
+  />
 );
 
 const EventMobile = ({
@@ -532,15 +537,11 @@ export const ScrollList = ({
   drawerVisible: boolean;
   toggleDrawer: () => void;
 }): JSX.Element => {
-  const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
-    useState("September" as Month);
-  const [year, setYear]: [year: Year, setYear: (year: Year)=> void] = useState(years[0] as Year)
+  const [month, setMonth] = useState<Month>("September");
+  const [year, setYear] = useState<Year>(years[0] as Year);
   const [searchString, setSearchString] = useState("");
-  const [selectedTags, setSelectedTags]: [
-    selectedTags: Tags,
-    setSelectedTags: (tags: Tags) => void
-  ] = useState({} as Tags);
-  const [scroll, setScroll] = useState([0, 0]);
+  const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
+  const [scroll] = useState<[number, number]>([0, 0]);
 
   const selected = filterMilestones(selectedTags, milestones, searchString);
 
@@ -553,30 +554,44 @@ export const ScrollList = ({
       {} as Record<MonthWithYear, RefObject<HTMLSpanElement> | null>
     )
   );
-  // const listRef: RefObject<HTMLElement> = ();
 
-  const scrollToMonth = (month: Month, yearToSet = year) => {
-    const isNextYear = yearToSet == years[0] && months.indexOf(month ) < months.indexOf('September')
-    const nextYear = years[years.indexOf(yearToSet) + 1]
-    const selectedMonth = monthRefMap.current?.[`${isNextYear ? nextYear : yearToSet}_${month}` as MonthWithYear]?.current;
-
-    if (selectedMonth) {
-      if (mobile) {
-
-        setScroll([0, +(selectedMonth?.offsetTop ?? 0)]);
-      } else {
-        setScroll([+(selectedMonth?.offsetLeft ?? 0), 0]);
-      }
+  const getFirstMonthInYear = (milestones: Milestone[], targetYear: Year): Month | null => {
+    const found = milestones.find(m => m.date.split(/\W/)[2] === targetYear);
+    if (found) {
+      const [, month] = found.date.split(/\W/);
+      return mappedMonths[month] as Month;
     }
-
-
-    setYear(isNextYear ? nextYear : yearToSet)
-    setMonth(month);
+    return null;
   };
 
-  const handleYear = (year: Year) => {
-    scrollToMonth(year == years[0] ? 'September': 'January', year)
-  }
+  const getFirstMonthWithYear = (milestones: Milestone[], targetMonth: Month, targetYear: Year): MonthWithYear | null => {
+    const found = milestones.find(m => {
+      const [, mMonth, mYear] = m.date.split(/\W/);
+      return mappedMonths[mMonth] === targetMonth && mYear === targetYear;
+    });
+    if (found) {
+      return `${targetYear}_${targetMonth}` as MonthWithYear;
+    }
+    return null;
+  };
+
+  const scrollToMonth = (targetMonth: Month, targetYear: Year = year) => {
+    const monthWithYear = getFirstMonthWithYear(selected, targetMonth, targetYear);
+    if (!monthWithYear) return;
+    const anchor = monthRefMap.current?.[monthWithYear]?.current;
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: mobile ? "start" : "nearest", inline: "start" });
+    }
+    setYear(targetYear);
+    setMonth(targetMonth);
+  };
+
+  const handleYear = (targetYear: Year) => {
+    const firstMonth = getFirstMonthInYear(selected, targetYear);
+    if (firstMonth) {
+      scrollToMonth(firstMonth, targetYear);
+    }
+  };
 
   const searchProps = {
     searchString,
@@ -598,7 +613,7 @@ export const ScrollList = ({
         <ScrollListNonWide
           setMonth={setMonth}
           setYear={setYear}
-          scrollPos={scroll as [number, number]}
+          scrollPos={scroll}
           milestones={selected}
           refMap={monthRefMap}
         />
@@ -607,7 +622,7 @@ export const ScrollList = ({
           setMonth={setMonth}
           setYear={setYear}
           refMap={monthRefMap}
-          scrollPos={scroll as [number, number]}
+          scrollPos={scroll}
           searchProps={searchProps}
           milestones={selected}
           monthProps={monthProps}

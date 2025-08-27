@@ -21,7 +21,7 @@ export const mappedMonths = zipObject(
   [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",],
   months
 );
-//TODO generate from data
+//Timeline is kinda starting to be dynamic
 export type Month = typeof months[number];
 
 export const getDynamicYears = () => {
@@ -87,3 +87,24 @@ export const getMediaLink = (src: Milestone["media"]) => {
 
 export const monthsWithYears = years.flatMap(year => months.map(month => `${year}_${month}`))
 export type MonthWithYear = `${Year}_${Month}`
+
+const tagColors = {
+  important: "#FFD700",
+  gaming: "#3B7BFF",
+  drawing: "#A259E6",
+  collab: "#00E6E6",
+};
+
+export function getMilestoneOutline(tags: {
+  important?: boolean;
+  gaming?: boolean;
+  drawing?: boolean;
+  collab?: boolean;
+}): string {
+  const activeColors = Object.entries(tags)
+    .filter(([, v]) => v === true)
+    .map(([k]) => tagColors[k as keyof typeof tagColors]);
+  if (activeColors.length === 0) return "transparent";
+  if (activeColors.length === 1) return activeColors[0];
+  return `linear-gradient(135deg, ${activeColors.join(", ")})`;
+}
