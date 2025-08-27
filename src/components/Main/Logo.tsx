@@ -45,7 +45,7 @@ const LogoContainer = styled.div`
 
 const TitleHeader = styled.h2`
 
-  margin: 10px;
+  margin: 8px;
   color: var(--ika-purple);
   text-align: center;
 
@@ -80,7 +80,7 @@ const TitleHeader = styled.h2`
 
 const LogoHeader = styled.h1`
 
-  margin: 10px;
+  margin: 8px;
   color: var(--ika-purple);
   text-align: center;
 
@@ -116,7 +116,7 @@ const CenterContainer = styled.div`
   top: 50%;
   left: 50%;
   width: 100%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -60%);
   position: absolute;
   z-index: 1;
 `;
@@ -125,7 +125,7 @@ const ScrollIndicator = styled.div`
   position: absolute;
   width:100%;
   left: 50%;
-  bottom: -5px;
+  bottom: 40px;
   transform: translateX(-50%);
   color: #584F69;
   z-index: 1;

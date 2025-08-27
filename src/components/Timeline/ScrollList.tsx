@@ -1,6 +1,7 @@
 // export {};
 import { Milestone, Tags } from "./Milestone";
-import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState, } from "react";
+import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 import { Switch } from "../Common/Switch";
 import {
   Backdrop,
@@ -49,6 +50,7 @@ import {
 import ReactDOM from "react-dom";
 import { ScrollEvent } from "react-indiana-drag-scroll";
 import {last, toPairs} from "lodash";
+import { Banner } from "./Banner";
 
 const SearchBar = ({
   searchString,
@@ -199,14 +201,33 @@ const Event = ({
   event: Milestone;
   monthStart: boolean;
 }) => {
-  const { major, label, date } = event;
+  const { major, label, date, longText } = event;
   const [, month, year] = date.split(/\W/);
-  const monthWithYear = `${year}_${mappedMonths[month]}`
+  const monthWithYear = `${year}_${mappedMonths[month]}`;
+  const [hovered, setHovered] = useState(false);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+
+  const handleMouseEnter = () => setHovered(true);
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setMousePos(null);
+  };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+
   return (
-    <EventContainer highlight={!!major} onClick={onClick}>
+    <EventContainer
+      highlight={!!major}
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      style={{ position: "relative" }}
+    >
       {monthStart ? (
         <MonthAnchor
-          ref={ refMap.current[monthWithYear as MonthWithYear]}
+          ref={refMap.current[monthWithYear as MonthWithYear]}
           date={date}
         />
       ) : null}
@@ -218,6 +239,19 @@ const Event = ({
         <EventLabel>{label}</EventLabel>
         <EventDate>{date.replace(/\W/g, "·")}</EventDate>
       </EventInfo>
+      {hovered && longText && mousePos && (
+        <TimelineDialogueBox
+          style={{
+            left: mousePos.x,
+            top: mousePos.y,
+            transform: "translateY(-100%rem)",
+            position: "fixed",
+            pointerEvents: "none",
+          }}
+        >
+          {longText}
+        </TimelineDialogueBox>
+      )}
     </EventContainer>
   );
 };
@@ -439,6 +473,7 @@ export const ScrollListWide = ({
 }: IScrollListProps) => {
   return (
     <ScrollListContainer>
+      <Banner />
       {modalControls ? null : <TopControls {...searchProps} />}
 
       <List
@@ -582,3 +617,24 @@ export const ScrollList = ({
     </>
   );
 };
+
+const TimelineDialogueBox = styled.div`
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%) translateY(-100%);
+  min-width: 220px;
+  max-width: 400px;
+  background: var(--ika-purple);
+  color: #fff;
+  border: 2px solid var(--ina-orange);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #0003;
+  padding: 16px 22px;
+  font-size: 16px;
+  z-index: 20;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  white-space: pre-line;
+`;

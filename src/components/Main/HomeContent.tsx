@@ -1,4 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
+const MuteButton = styled.button`
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px #0002;
+  cursor: pointer;
+  font-size: 1.7rem;
+`;
 import styled, { keyframes } from "styled-components";
 import HomeFooter from "./HomeFooter";
 import Logo from "./Logo";
@@ -44,14 +61,14 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
   width: 100px;
   z-index: 1;
   pointer-events: none;
-  animation: ${floatUp} 15s linear forwards;
+  animation: ${floatUp} 9s linear forwards;
 `;
 
-const TakoFloatBg = styled.div<{ height: number }>`
+const TakoFloatBg = styled.div`
   position: absolute;
   pointer-events: none;
-  top: 0; left: 0; width: 100vw; height: ${({ height }) => height}px;
-  z-index: 2;
+  top: 0; left: 0; width: 100vw; height: 100%;
+  z-index: 1;
   overflow: visible;
   pointer-events: none;
 `;
@@ -70,19 +87,23 @@ interface FloatingTakoData {
   createdAt: number;
 }
 
-const ANIMATION_DURATION = 15000;
+const ANIMATION_DURATION = 9000;
+
 
 const HomeContent = (): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       const spawnCount = Math.floor(Math.random() * 3) + 1;
+      const spawnHeight = document.documentElement.scrollHeight;
       for (let i = 0; i < spawnCount; i++) {
         if (Math.random() < 0.5) {
           const randomTako = Math.floor(Math.random() * takoCount);
-          const spawnBottom = Math.random() * document.documentElement.scrollHeight;
+          const spawnBottom = Math.random() * (spawnHeight);
           const newTako: FloatingTakoData = {
             key: Date.now() + Math.random() + i,
             left: Math.random() * 80 + 10,
@@ -109,9 +130,33 @@ const HomeContent = (): JSX.Element => {
     return () => clearInterval(cleanupInterval);
   }, []);
 
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+    }
+  }, [muted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+    }
+  }, []);
+
   return (
     <>
-      <TakoFloatBg height={document.documentElement.scrollHeight}>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/明日も晴れるといいね.mp3"}
+        autoPlay
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
+      <MuteButton onClick={() => setMuted((m) => !m)} title={muted ? "Unmute BGM" : "Mute BGM"}>
+        {muted ? '🔇' : '🔊'}
+      </MuteButton>
+      <TakoFloatBg>
         {floatingTakos.map((tako) => (
           <FloatingTako
             key={tako.key}

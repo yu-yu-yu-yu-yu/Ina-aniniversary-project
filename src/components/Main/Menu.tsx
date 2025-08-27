@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -17,18 +18,36 @@ const MenuContainer = styled.div`
   }
 `;
 
+const MenuFlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  @media only screen and (max-width: 1100px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 100%;
+  }
+`;
+
 const MenuTextContainer = styled.div`
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
   text-align: center;
   padding-top: 10px;
   z-index: 3;
+  flex: 1 1 0;
+  min-width: 320px;
+  max-width: 600px;
   
   @media only screen and (max-width: 1100px) {
-    left: auto;
-    transform: none;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   &:before {
@@ -80,66 +99,31 @@ const MenuTextContainer = styled.div`
       padding: 25px;
     }
   }
+`;
 
-  .buttons-div {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 50px;
-    column-gap: 30px;
-    justify-items: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-
-    @media only screen and (max-width: 1080px) {
-      row-gap: 50px;
-      column-gap: 25px;
-    }
-
-    @media only screen and (max-width: 1100px) {
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: 40px;
-      column-gap: 20px;
-      padding-top: 30px;
-      padding-bottom: 30px;
-    }
-
-    @media only screen and (max-width: 701px) {
-      grid-template-columns: 1fr;
-      row-gap: 40px;
-      column-gap: 0;
-    }
+const ButtonsDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 198px);
+  row-gap: 16px;
+  column-gap: 16px;
+  justify-content: center;
+  align-items: start;
+  padding-top: 0;
+  padding-bottom: 0;
+  flex: 1 1 0;
+  min-width: 198px;
+  max-width: 700px;
+  @media only screen and (max-width: 1100px) {
+    grid-template-columns: repeat(2, 198px);
+    row-gap: 14px;
+    column-gap: 12px;
+    max-width: 420px;
   }
-
-  .buttons-div .bio-button {
-    background: var(--inai-purple) 0% 0% no-repeat padding-box;
-    border: 0;
-    border-radius: 24px;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: center;
-    white-space: nowrap;
-    padding: 20px 40px;
-    margin: 15px;
-
-    &.disabled {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    &.blur {
-      opacity: 0.6;
-    }
-
-    @media only screen and (max-width: 1400px) {
-      font-size: 22px;
-      padding: 15px 30px;
-    }
-
-    @media only screen and (max-width: 1100px) {
-      font-size: 17px;
-      padding: 10px 15px;
-      width: 110px;
-    }
+  @media only screen and (max-width: 701px) {
+    grid-template-columns: 198px;
+    row-gap: 12px;
+    column-gap: 0;
+    max-width: 198px;
   }
 `;
 
@@ -148,9 +132,9 @@ const TAKO_COUNT = 72;
 const ButtonContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 180px;
-  height: 180px;
-  margin: 28px;
+  width: 198px;
+  height: 198px;
+  margin: 12px;
   z-index: 1;
   overflow: visible;
 `;
@@ -172,8 +156,8 @@ const TakoPeek = styled.img<TakoPeekProps>`
 `;
 
 const CookieImg = styled.img<{ rotation: number }>`
-  width: 180px;
-  height: 180px;
+  width: 198px;
+  height: 198px;
   display: block;
   margin: 0 auto;
   transform: rotate(${({ rotation }) => rotation}deg);
@@ -181,8 +165,8 @@ const CookieImg = styled.img<{ rotation: number }>`
 `;
 
 const CookieButton = styled.button`
-  width: 180px;
-  height: 180px;
+  width: 198px;
+  height: 198px; 
   border: none;
   background: none;
   display: flex;
@@ -191,17 +175,19 @@ const CookieButton = styled.button`
   justify-content: flex-start;
   cursor: pointer;
   outline: none;
-  margin: 0 16px 24px 16px;
+  margin: 0 8px 16px 8px;
   position: relative;
 `;
 
 const CookieLabel = styled.span`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 1000;
   color: #38250aff;
   text-shadow:
-    2px 2px 0 #fff,
-    0 1px 0 #fff8;
+    0 2px 0 #fff,
+    2px 0 0 #fff,
+    0 -2px 0 #fff,
+    -2px 0 0 #fff;
   margin-top: -105px;
   text-align: ceter;
   width: 200px;
@@ -229,13 +215,13 @@ const CookieA = styled.a`
 `;
 
 const buttons = [
-    { to: "/messages", label: "Messages" },
-    { to: "/moments", label: "Moments (2024)" },
-    { to: "/wah", label: "WAH (2024)" },
-    { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako cookbook" },
-    { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Secret" },
-    { to: "/takodex", label: "Test Takodex List" },
     { to: "/timeline", label: "Ina's Timeline" },
+    { to: "/takodex", label: "Takodex" },
+    { to: "/messages", label: "Messages" },
+    { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
+    { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Takollages" },
+    { to: "/moments", label: `Ina Moments (2024)` },
+    { to: "/wah", label: "WAH (2024)" },
 ];
 
 const Menu = (): JSX.Element => {
@@ -247,83 +233,85 @@ const Menu = (): JSX.Element => {
         setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
     };
 
-    return (
-        <MenuContainer>
-            <MenuTextContainer>
-                <div className="Menu-text">
-                    <p>
-                        This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s milestones</b>!
-                    </p>
-                    <p>
-                        This time we honor her <b>5th anniversary since debut</b>!
-                    </p>
-                    <p>
-                        We&apos;ve collected <b>congratulatory messages</b> and <b>artworks</b> from Takodachis around the world and also updated the <b>timeline</b> with all of her streams and achievements.
-                    </p>
-                    <p>
-                        And now we are introducing the <b>TakoDex</b>!
-                    </p>
-                    <p>
-                        We are so proud and extremely happy for how much she has achieved in these five years.
-                    </p>
-                    <p>
-                        <b>Thank you so much</b> from all Takodachis, and <b>Happy Anniversary Ina</b>!
-                    </p>
-                </div>
-                <div className="buttons-div" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-                    {buttons.map((btn, i) => {
-                        const rotation = (i * 37) % 360;
-                        return (
-                            <ButtonContainer
-                                key={btn.label}
-                                onMouseEnter={() => {
-                                    setPeekIndex(i);
-                                    handleHover();
-                                }}
-                                onMouseLeave={() => setPeekIndex(null)}
-                            >
-                                <TakoPeek
-                                    className="tako-peek"
-                                    src={peekTako}
-                                    alt="peeking tako"
-                                    active={peekIndex === i && !!peekTako}
-                                    style={{ visibility: peekTako ? 'visible' : 'hidden' }}
-                                />
-                                {"to" in btn ? (
-                                    <CookieLink to={btn.to} role="button">
-                                        <CookieButton title={btn.label}>
-                                            <CookieImg
-                                                src={process.env.PUBLIC_URL + "/cookie.png"}
-                                                alt="cookie"
-                                                rotation={rotation}
-                                            />
-                                            <CookieLabel>{btn.label}</CookieLabel>
-                                        </CookieButton>
-                                    </CookieLink>
-                                ) : (
-                                    <CookieA
-                                        href={btn.href}
-                                        role="button"
-                                        target={btn.label === "Secret" ? "_blank" : undefined}
-                                        rel={btn.label === "Secret" ? "noopener noreferrer" : undefined}
-                                    >
-                                        <CookieButton title={btn.label}>
-                                            <CookieImg
-                                                src={process.env.PUBLIC_URL + "/cookie.png"}
-                                                alt="cookie"
-                                                rotation={rotation}
-                                            />
-                                            <CookieLabel>{btn.label}</CookieLabel>
-                                        </CookieButton>
-                                    </CookieA>
-                                )}
-                            </ButtonContainer>
-                        );
-                    })}
-                </div>
-            </MenuTextContainer>
-        </MenuContainer>
-    );
+  return (
+    <MenuContainer>
+      <MenuFlexRow>
+        <MenuTextContainer>
+          <div className="Menu-text">
+            <p>
+              This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s milestones</b>!
+            </p>
+            <p>
+              This time we honor her <b>5th anniversary since debut</b>!
+            </p>
+            <p>
+              We&apos;ve collected <b>congratulatory messages</b> and <b>artworks</b> from Takodachis around the world and also updated the <b>timeline</b> with all of her streams and achievements.
+            </p>
+            <p>
+              And now we are introducing the <b>TakoDex</b>!
+            </p>
+            <p>
+              We are so proud and extremely happy for how much she has achieved in these five years.
+            </p>
+            <p>
+              <b>Thank you so much</b> from all Takodachis, and <b>Happy Anniversary Ina</b>!
+            </p>
+          </div>
+        </MenuTextContainer>
+        <ButtonsDiv>
+          {buttons.map((btn, i) => {
+            const rotation = (i * 37) % 360;
+            return (
+              <ButtonContainer
+                key={btn.label}
+                onMouseEnter={() => {
+                  setPeekIndex(i);
+                  handleHover();
+                }}
+                onMouseLeave={() => setPeekIndex(null)}
+              >
+                <TakoPeek
+                  className="tako-peek"
+                  src={peekTako}
+                  alt="peeking tako"
+                  active={peekIndex === i && !!peekTako}
+                  style={{ visibility: peekTako ? 'visible' : 'hidden' }}
+                />
+                {"to" in btn ? (
+                  <CookieLink to={btn.to} role="button">
+                    <CookieButton title={btn.label}>
+                      <CookieImg
+                        src={process.env.PUBLIC_URL + "/cookie.png"}
+                        alt="cookie"
+                        rotation={rotation}
+                      />
+                      <CookieLabel>{btn.label}</CookieLabel>
+                    </CookieButton>
+                  </CookieLink>
+                ) : (
+                  <CookieA
+                    href={btn.href}
+                    role="button"
+                    target={btn.label === "Takollages" ? "_blank" : undefined}
+                    rel={btn.label === "Takollages" ? "noopener noreferrer" : undefined}
+                  >
+                    <CookieButton title={btn.label}>
+                      <CookieImg
+                        src={process.env.PUBLIC_URL + "/cookie.png"}
+                        alt="cookie"
+                        rotation={rotation}
+                      />
+                      <CookieLabel>{btn.label}</CookieLabel>
+                    </CookieButton>
+                  </CookieA>
+                )}
+              </ButtonContainer>
+            );
+          })}
+        </ButtonsDiv>
+      </MenuFlexRow>
+    </MenuContainer>
+  );
 };
 
 export default Menu;

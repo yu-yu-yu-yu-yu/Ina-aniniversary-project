@@ -1,6 +1,7 @@
 import { upperCase, zipObject } from "lodash";
 import { Milestone, Tags } from "./Milestone";
 import { MutableRefObject, RefObject } from "react";
+import milestoneJson from "../../static/Ina Anniversary Milestones.json";
 
 export const months = [
   "January",
@@ -23,11 +24,18 @@ export const mappedMonths = zipObject(
 //TODO generate from data
 export type Month = typeof months[number];
 
-export const years = ['2020', '2021', '2022'] as const;
+export const getDynamicYears = () => {
+  const yearsSet = new Set<string>();
+  milestoneJson.forEach((milestone: { date: string }) => {
+    const parts = milestone.date.split(/\W/);
+    const year = parts[2];
+    if (year) yearsSet.add(year);
+  });
+  return Array.from(yearsSet).sort();
+};
 
+export const years = getDynamicYears() as unknown as readonly string[];
 export type Year = typeof years[number]
-
-
 
 export interface IScrollListProps {
   searchProps: {
