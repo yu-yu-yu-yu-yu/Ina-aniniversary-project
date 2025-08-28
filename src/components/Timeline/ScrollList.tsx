@@ -49,8 +49,6 @@ import {
   getMilestoneOutline
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
-import { ScrollEvent } from "react-indiana-drag-scroll";
-import { last, toPairs } from "lodash";
 import { Banner } from "./Banner";
 
 const SearchBar = ({
@@ -168,7 +166,7 @@ interface EventBaseProps {
 }
 
 interface EventMobileProps extends EventBaseProps {
-  // Mobile events
+  // Mobile
 }
 
 interface EventProps extends EventBaseProps {
@@ -339,6 +337,13 @@ const List = ({
 
   const listRef: RefObject<HTMLElement> = useRef(null);
   const [modalEvent, setModalEvent] = useState<Milestone | null>(null);
+  const milestoneRefs = useRef<RefObject<HTMLDivElement>[]>([]);
+
+  useEffect(() => {
+    milestoneRefs.current = milestones.map(
+      (_, i) => milestoneRefs.current[i] || React.createRef<HTMLDivElement>()
+    );
+  }, [milestones.length]);
 
   const className = mobile ? "mobile" : "";
   const Element = mobile ? EventMobile : Event;
@@ -349,31 +354,37 @@ const List = ({
     }
   }, [scrollPos]);
 
-  //TODO unfuck prop and typing spaghetti
-  const checkMonthScroll = (e: ScrollEvent) => {
-    if (e?.external) return;
-    const scrollDistance = mobile
-      ? listRef.current?.scrollTop ?? 0
-      : listRef.current?.scrollLeft ?? 0;
-    const months = refMap.current
-    const filtered = toPairs(months).filter(([, monthRef]) => {
-
-      const monthScroll = mobile
-        ? monthRef?.current?.offsetTop ?? 0
-        : monthRef?.current?.offsetLeft ?? 0;
-      return monthScroll && scrollDistance > monthScroll;
-    })
-
-    const date = (last(filtered)?.[0] as MonthWithYear) ?? "2020_September";
-
-    const [year, month] = date.split('_') as [Year, Month]
-    setYear(year);
-    setMonth(month);
+  const checkMonthScroll = () => {
+    let bestIndex = 0;
+    let bestValue = Infinity;
+    milestoneRefs.current.forEach((ref, i) => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        // Use left for desktop, top for mobile
+        const value = mobile ? Math.abs(rect.top) : Math.abs(rect.left);
+        // Only consider milestones that are at least partially visible
+        if (
+          (mobile && rect.bottom > 0 && rect.top < window.innerHeight) ||
+          (!mobile && rect.right > 0 && rect.left < window.innerWidth)
+        ) {
+          if (value < bestValue) {
+            bestValue = value;
+            bestIndex = i;
+          }
+        }
+      }
+    });
+    const milestone = milestones[bestIndex];
+    if (milestone) {
+      const [, m, y] = milestone.date.split(/\W/);
+      setYear(y);
+      setMonth(mappedMonths[m]);
+    }
   };
 
   return (
     <ListScrollable
-      onEndScroll={checkMonthScroll}
+      onScroll={checkMonthScroll}
       className={className}
       innerRef={listRef}
     >
@@ -383,13 +394,14 @@ const List = ({
         setEvent={() => setModalEvent(null)}
       />
       {milestones.map((milestone, index) => (
-        <Element
-          onClick={() => setModalEvent(milestone)}
-          refMap={refMap}
-          key={milestone.label}
-          event={milestone}
-          monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
-        />
+        <div ref={milestoneRefs.current[index]} key={milestone.label}>
+          <Element
+            onClick={() => setModalEvent(milestone)}
+            refMap={refMap}
+            event={milestone}
+            monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
+          />
+        </div>
       ))}
     </ListScrollable>
   );

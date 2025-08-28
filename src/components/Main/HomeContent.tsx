@@ -67,7 +67,7 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
 const TakoFloatBg = styled.div`
   position: absolute;
   pointer-events: none;
-  top: 0; left: 0; width: 100vw; height: 100%;
+  top: 0; left: 0; width: 100vh; height: 100%;
   z-index: 1;
   overflow: visible;
   pointer-events: none;

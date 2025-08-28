@@ -148,7 +148,7 @@ export const ListScrollable = styled(ScrollContainer)`
     padding-bottom: 25%;
   }
   :not(&.mobile) > ${EventContainer}:first-child {
-    padding-left: 111px;
+    padding-left: 0; 
   }
   > ${EventContainer}:last-child {
     ${Line} {
@@ -202,7 +202,7 @@ export const YearDisplay = styled.div<{
     selected: boolean;
 }>`
   padding: 5px;
-  color: white;
+  color: ${({ selected }) => selected ? "var(--ina-orange)" : "white"};
   text-align: center;
   letter-spacing: 0;
   font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
@@ -210,24 +210,41 @@ export const YearDisplay = styled.div<{
   margin: auto 0;
   :hover {
     cursor: pointer;
-}
-`
+  }
+  ${({ selected }) =>
+    selected &&
+    `
+      text-shadow:
+        -1px -1px 0 var(--ika-purple),
+         1px -1px 0 var(--ika-purple),
+        -1px  1px 0 var(--ika-purple),
+         1px  1px 0 var(--ika-purple);
+    `
+  }
+`;
 
 export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
 }>`
-  color: white;
+  color: ${({ highlight }) => highlight ? "var(--ina-orange)" : "white"};
   text-align: center;
-  letter-spacing: 0;
-  font: normal normal
-    ${({ highlight, passed }) =>
-      highlight ? "normal" : passed ? "light" : "100"}
-    30px/37px Roboto;
+  font: normal normal ${({ highlight, passed }) =>
+    highlight ? "normal" : passed ? "light" : "100"} 30px/37px Roboto;
   opacity: 1;
   margin: auto 0;
   :hover {
     cursor: pointer;
+  }
+  ${({ highlight }) =>
+    highlight &&
+    `
+      text-shadow:
+        -1px -1px 0 var(--ika-purple),
+         1px -1px 0 var(--ika-purple),
+        -1px  1px 0 var(--ika-purple),
+         1px  1px 0 var(--ika-purple);
+    `
   }
 `;
 
@@ -416,19 +433,20 @@ export const EventModalInfoLeft = styled.div`
   }
 `;
 export const EventModalContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 735px;
-  max-width: 100%;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 69;
-  border-radius: 15px;
+  z-index: 1000;
+  background: var(--ika-purple);
   color: #fff;
-  background: var(--inai-purple);
+  border: 2px solid var(--ina-orange);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #0003;
+  padding: 24px 32px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
 `;
 export const ModalVideo = styled.iframe`
   width: 100%;
