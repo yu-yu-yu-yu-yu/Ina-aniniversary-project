@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,7 +6,7 @@ const MenuContainer = styled.div`
   text-align: center;
   padding-top: 150px;
   padding-bottom: 150px;
-  background: var(--unnamed-color-f3edff)
+  background: var(--background)
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
@@ -64,11 +63,11 @@ const MenuTextContainer = styled.div`
     padding: 10px 35px;
     margin: 0 auto 35px auto;
     max-width: 600px;
-    background: #564f68 0% 0% no-repeat padding-box;
+    background: var(--ika-purple) 0% 0% no-repeat padding-box;
     border-radius: 32px;
     opacity: 1;
 
-    color: var(--unnamed-color-f3edff);
+    color: var(--text-color);
     text-align: justify;
     font-family: "Mulish", sans-serif;
     font-size: 25px;
@@ -79,7 +78,7 @@ const MenuTextContainer = styled.div`
     }
 
     hr {
-      border-bottom: 0.5px solid #f3edff;
+      border-bottom: 0.5px solid var(--lightdark);
     }
 
     @media only screen and (max-width: 1400px) {

@@ -215,10 +215,10 @@ export const YearDisplay = styled.div<{
     selected &&
     `
       text-shadow:
-        -1px -1px 0 var(--ika-purple),
-         1px -1px 0 var(--ika-purple),
-        -1px  1px 0 var(--ika-purple),
-         1px  1px 0 var(--ika-purple);
+        -2px -2px 0 #34303fff,
+         2px -2px 0 #34303fff,
+        -2px  2px 0 #34303fff,
+         2px  2px 0 #34303fff;
     `
   }
 `;
@@ -240,10 +240,10 @@ export const MonthDisplay = styled.span<{
     highlight &&
     `
       text-shadow:
-        -1px -1px 0 var(--ika-purple),
-         1px -1px 0 var(--ika-purple),
-        -1px  1px 0 var(--ika-purple),
-         1px  1px 0 var(--ika-purple);
+        -2px -2px 0 #34303fff,
+         2px -2px 0 #34303fff,
+        -2px  2px 0 #34303fff,
+         2px  2px 0 #34303fff;
     `
   }
 `;

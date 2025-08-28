@@ -5,7 +5,7 @@ const LoreContainer = styled.div`
   text-align: center;
   padding-top: 90px;
   margin-bottom: -90px;
-  background: var(--unnamed-color-f3edff)
+  background: var(--background)
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 170px;
@@ -38,11 +38,11 @@ const LoreTextContainer = styled.div`
     padding: 10px 35px;
     margin-top: 60px;
     max-width: 600px;
-    background: #564f68 0% 0% no-repeat padding-box;
+    background: var(--ika-purple) 0% 0% no-repeat padding-box;
     border-radius: 32px;
     opacity: 1;
 
-    color: var(--unnamed-color-f3edff);
+    color: var(--text-color);
     text-align: left;
     font-family: "Mulish", sans-serif;
     font-size: 25px;
@@ -54,7 +54,7 @@ const LoreTextContainer = styled.div`
     }
 
     hr {
-      border-bottom: 0.5px solid #f3edff;
+      border-bottom: 0.5px solid var(--text-color);
     }
 
     @media only screen and (max-width: 701px) {
@@ -71,7 +71,7 @@ const LoreTextContainer = styled.div`
       display: inline-block;
       max-width: 550px;
       width: 70%;
-      color: var(--unnamed-color-f3edff);
+      color: var(--text-color);
       text-align: left;
       font-family: "Mulish", sans-serif;
       font-size: 17px;

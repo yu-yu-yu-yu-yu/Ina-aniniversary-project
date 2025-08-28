@@ -6,7 +6,7 @@ import { Backdrop } from "../Timeline/styles/List";
 const Footer = styled.footer`
   position: relative;  
   z-index: 2;
-  background: #fba147 0% 0% no-repeat padding-box;
+  background: var(--ina-orange) 0% 0% no-repeat padding-box;
   padding: 25px 0px;
   opacity: 1;
   display: flex;

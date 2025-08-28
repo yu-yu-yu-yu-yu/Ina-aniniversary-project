@@ -7,6 +7,7 @@ import { Timeline } from "./components/Timeline/Timeline";
 import { milestones } from "./components/Timeline/Milestones";
 import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
 import { TakodexList } from "./components/Takodex/TakodexList";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
 
 const App = (): JSX.Element => (
   <Router>
@@ -28,10 +29,10 @@ const App = (): JSX.Element => (
             <MessageBoardContainer />
           </Route>
           <Route path="/moments">
-            <VideoBoardContainer  mode='moments'/>
+            <VideoBoardContainer mode="moments" />
           </Route>
           <Route path="/wah">
-            <VideoBoardContainer  mode='wah'/>
+            <VideoBoardContainer mode="wah" />
           </Route>
           <Route path="/timeline">
             <Timeline milestones={milestones} />
@@ -39,13 +40,14 @@ const App = (): JSX.Element => (
           <Route path="/takodex" component={TakodexList} />
         </Switch>
       </div>
+      <ThemeSwitcher />
     </div>
   </Router>
 );
 
 const Home = () => (
   <div>
-    <HomeContent/>
+    <HomeContent />
   </div>
 );
 
