@@ -1,27 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-const MuteButton = styled.button`
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 1000;
-  background: rgba(255,255,255,0.8);
-  border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px #0002;
-  cursor: pointer;
-  font-size: 1.7rem;
-`;
 import styled, { keyframes } from "styled-components";
 import HomeFooter from "./HomeFooter";
 import Logo from "./Logo";
 import Lore from "./Lore";
 import Quote from "./Quote";
 import Menu from "./Menu";
+import { useMute } from "../MuteButton";
 
 const floatUp = keyframes`
   0% {
@@ -94,7 +78,7 @@ const HomeContent = (): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [muted, setMuted] = useState(false);
+  const { muted } = useMute();
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -152,10 +136,8 @@ const HomeContent = (): JSX.Element => {
         loop
         preload="auto"
         style={{ display: "none" }}
+        muted={muted}
       />
-      <MuteButton onClick={() => setMuted((m) => !m)} title={muted ? "Unmute BGM" : "Mute BGM"}>
-        {muted ? '🔇' : '🔊'}
-      </MuteButton>
       <TakoFloatBg>
         {floatingTakos.map((tako) => (
           <FloatingTako

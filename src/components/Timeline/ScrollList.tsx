@@ -34,8 +34,7 @@ import {
   TagsContainer,
   TopControlsContainer,
   Triangle, YearDisplay,
-  YearContainer,
-  MuteButton
+  YearContainer
 } from "./styles/List";
 import {
   filterMilestones,
@@ -49,7 +48,7 @@ import {
   getMilestoneOutline
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
-import { Banner } from "./Banner";
+import { useMute } from "../MuteButton";
 
 const SearchBar = ({
   searchString,
@@ -495,9 +494,7 @@ export const ScrollListWide = ({
 }: IScrollListProps) => {
   return (
     <ScrollListContainer>
-      <Banner />
       {modalControls ? null : <TopControls {...searchProps} />}
-
       <List
         setMonth={setMonth}
         milestones={milestones}
@@ -555,25 +552,18 @@ export const ScrollList = ({
   toggleDrawer: () => void;
 }): JSX.Element => {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [muted, setMuted] = useState(false);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = muted;
-    }
-
-  }, [muted]);
+  const { muted } = useMute();
+  const [month, setMonth] = useState<Month>("September");
+  const [year, setYear] = useState<Year>(years[0] as Year);
+  const [searchString, setSearchString] = useState("");
+  const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
+  const [scroll] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.1;
     }
   }, []);
-  const [month, setMonth] = useState<Month>("September");
-  const [year, setYear] = useState<Year>(years[0] as Year);
-  const [searchString, setSearchString] = useState("");
-  const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
-  const [scroll] = useState<[number, number]>([0, 0]);
 
   const selected = filterMilestones(selectedTags, milestones, searchString);
 
@@ -642,10 +632,8 @@ export const ScrollList = ({
         loop
         preload="auto"
         style={{ display: "none" }}
+        muted={muted}
       />
-      <MuteButton onClick={() => setMuted((m) => !m)} title={muted ? "Unmute BGM" : "Mute BGM"}>
-        {muted ? '🔇' : '🔊'}
-      </MuteButton>
       <Drawer
         visible={drawerVisible}
         searchProps={searchProps}

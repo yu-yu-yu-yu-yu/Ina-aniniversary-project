@@ -114,3 +114,19 @@ export const Navbar = styled.nav`
   letter-spacing: 0;
   justify-content: space-between;
 `;
+
+export const Title = styled.h2`
+  margin: 0;
+  color: var(--ika-purple);
+  text-align: center;
+  font: normal normal bold 48px/56px Montserrat;
+  flex: 1;
+  @media only screen and (max-width: 1000px) {
+    font: normal normal bold 32px/40px Montserrat;
+    letter-spacing: 1.25px;
+  }
+  @media only screen and (max-width: 768px) {
+    font: normal normal bold 24px/30px Montserrat;
+    letter-spacing: 1px;
+  }
+`;

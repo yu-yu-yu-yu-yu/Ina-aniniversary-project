@@ -7,7 +7,8 @@ import {
     BubbleImage,
     BubbleHeader,
     HeaderText,
-    BubbleMessage
+    BubbleMessage,
+    Title
 } from "../Takodex/styles";
 import { Navbar, MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
 
@@ -69,7 +70,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                 <NavLink exact to="/">
                     <i className="fa fa-angle-left" /> Return
                 </NavLink>
-                <span>Takodex</span>
+                <Title>Takodex</Title>
             </Navbar>
             <MessageBoard>
                 <MessagesSearchBar

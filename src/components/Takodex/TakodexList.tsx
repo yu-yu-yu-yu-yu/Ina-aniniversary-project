@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { TakodexMessages } from "./TakodexMessages";
+import { useMute } from "../MuteButton"; 
 
 interface TakodexEntry {
   name: string;
@@ -11,7 +12,22 @@ interface TakodexEntry {
 }
 
 const TakodexList = () => {
-  const [entries, setEntries] = useState<TakodexEntry[]>([]);
+  const [entries, setEntries] = React.useState<TakodexEntry[]>([]);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const { muted } = useMute ? useMute() : { muted: false };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+      audioRef.current.volume = 0.1;
+    }
+  }, [muted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+    }
+  }, []);
 
   useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/data/TakoEntries.json`)
@@ -19,7 +35,20 @@ const TakodexList = () => {
       .then(setEntries);
   }, []);
 
-  return <TakodexMessages entries={entries} />;
+  return (
+    <>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/リコーダービート2.mp3"}
+        autoPlay
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+        muted={muted}
+      />
+      <TakodexMessages entries={entries} />
+    </>
+  );
 };
 
 export { TakodexList };

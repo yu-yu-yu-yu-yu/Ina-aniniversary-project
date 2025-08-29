@@ -8,6 +8,7 @@ import { milestones } from "./components/Timeline/Milestones";
 import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
 import { TakodexList } from "./components/Takodex/TakodexList";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
+import { MuteProvider } from "./components/MuteButton";
 
 const App = (): JSX.Element => (
   <Router>
@@ -51,10 +52,12 @@ const Home = () => (
   </div>
 );
 
-// const Messages = () => (
-//   <div>
-//     <h2>Messages</h2>
-//   </div>
-// );
+function AppWrapper() {
+  return (
+    <MuteProvider>
+      <App />
+    </MuteProvider>
+  );
+}
 
-export default App;
+export default AppWrapper;

@@ -36,8 +36,8 @@ const LoreTextContainer = styled.div`
 
   .lore-text {
     padding: 10px 35px;
-    margin-top: 60px;
-    max-width: 600px;
+    margin-top: 20px;
+    max-width: 650px;
     background: var(--ika-purple) 0% 0% no-repeat padding-box;
     border-radius: 32px;
     opacity: 1;
@@ -227,12 +227,12 @@ const Lore = (): JSX.Element => {
           </p>
           <hr />
           <p>
-            Then five years have passed, <b>humanity&apos;s sanity</b> fluttering back into harmony at a 
-            <b>cadence of world-domination proportions</b>, slowly but surely. 
+            And thus five years have passed, <b>humanity&apos;s sanity</b> fluttering back into harmony at a 
+            <b> cadence of world-domination proportions</b>, slowly but surely. 
             The <b>violet echoes</b> of her earliest melody like a quiet bloom in the void have softened fear into comfort; <b>sapphire petals</b> drift through the darkness, reminders of fragile beauty and fleeting memory; and a <b>whispered hand-ball of colorful hope</b> spins itself into the fabric of the everyday.
           </p>
           <p>
-            <b>Miraculously preserved</b>, many <b>newfound friends</b> by her side, countless <b>adventures lived</b> and <b>cookies eaten</b>, hearts moved within <b>glow-stick seas of live concerts</b>, <b>Ina</b> continues her journey always going next, always improving, guiding and inspiring <b>Takodachis</b> across the world with her many <b>talents</b> and <b>perseverance</b> <b>voice</b>, her <b>art</b>, her <b>dance</b>, and her <b>cuteness and gently adorable personality</b>.
+            No longer just an ordinary girl, but an icon, a hero, an idol. <b>Miraculously preserved</b>, and with many <b>newfound friends</b> by her side, countless <b>adventures lived</b> and <b>cookies eaten</b>, hearts moved within <b>glow-stick seas of live concerts</b>, <b>Ina</b> continues her journey always going next, always improving, guiding and inspiring <b>Takodachis</b> across the world with her many <b>talents</b> and <b>perseverance</b>, her <b>art</b>, <b>voice</b>, <b>dance</b>, and <b>unbelievable cuteness and gently adorable personality</b>.
           </p>
 
         </div>

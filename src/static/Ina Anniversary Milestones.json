@@ -1992,6 +1992,30 @@
         "video": "https://www.youtube.com/watch?v=PQ3--0NvUa8"
     },
     {
+        "label": "【MV】Non-Fiction 【hololive English -Myth- Original Song】",
+        "media": "https://i.ytimg.com/vi/zbgWUK_tidI/maxresdefault.jpg",
+        "date": "09/30/2022",
+        "longText": "Third original song by Myth! Each member poured their heart into this project, and you shined alongside your genmates with a performance that perfectly captured the your mythical power and coolness!",
+        "major": "TRUE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=zbgWUK_tidI"
+    },
+    {
+        "label": "【MV】Bad ∞ End ∞ Night【HoloPro EN/ID】",
+        "media": "https://i.ytimg.com/vi/wFTSE4h4SSs/maxresdefault.jpg",
+        "date": "29/10/2022",
+        "longText": "A massive EN/ID collab cover of the classic Vocaloid story song! You took on the role of the village girl and performed it with flair. The whole production showed just how much fun and talent both branches can bring together.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=wFTSE4h4SSs"
+    },
+    {
         "label": "HAPPY 2nd ANNIVERSARY!!!!!!!!!!! #Tako2sDay",
         "media": "https://i3.ytimg.com/vi/OrxbO9VdT4s/maxresdefault.jpg",
         "date": "9/13/2022",
@@ -2002,5 +2026,101 @@
         "drawing": "FALSE",
         "collab": "FALSE",
         "video": "https://www.youtube.com/watch?v=OrxbO9VdT4s"
+    },
+    {
+        "label": "Camellia feat. Ninomae Ina'nis - Drenched in Air [From Ashed Wings / 灰の羽搏]",
+        "media": "https://i.ytimg.com/vi/9w4X67atXEo/maxresdefault.jpg",
+        "date": "04/05/2023",
+        "longText": "You collaborated with the amazing Camellia on this track, blending your voice beautifully with his unique style. A dreamy and powerful song that showed your versatility!",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=9w4X67atXEo"
+    },
+    {
+        "label": "【MV】 Connect the World 【hololive English Original Song】",
+        "media": "https://i.ytimg.com/vi/bitH6NZ_e2Q/maxresdefault.jpg",
+        "date": "06/16/2023",
+        "longText": "The first full EN original group song, celebrating Hololive English as a whole! You stood side by side with all EN members, uniting your voices to show the world the strength of EN.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=bitH6NZ_e2Q"
+    },
+    {
+        "label": "【MV】 ReUnion【hololive English -Myth- Original Song】",
+        "media": "https://i.ytimg.com/vi/4ytZJoWR2mI/maxresdefault.jpg",
+        "date": "01/10/2024",
+        "longText": "A heartfelt Myth original song released to mark your journey together. The lyrics reflect the bond, struggles, and unity of Myth, and your voice gave it such an emotional weight.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=4ytZJoWR2mI"
+    },
+    {
+        "label": "【MV】The Show Goes On!【hololive English -Myth- Original Song】",
+        "media": "https://i.ytimg.com/vi/S2dWTOCdnEA/maxresdefault.jpg",
+        "date": "09/15/2024",
+        "longText": "The fourth Myth original celebrating perseverance and moving forward! With bright energy and hope, you and your genmates reminded everyone that no matter what, the show must go on.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=S2dWTOCdnEA"
+    },
+    {
+        "label": "【MV】Odyssey - Hololive English (Original Song)",
+        "media": "https://i.ytimg.com/vi/0wO8d70KSXw/maxresdefault.jpg",
+        "date": "12/26/2024",
+        "longText": "A song that represents Hololive EN continuing journey into new horizons. Your vocals blended into this grand anthem of adventure, giving strength and hope to fans.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=0wO8d70KSXw"
+    },
+    {
+        "label": "【MV】MONSTER【ENigmatic Recollection Chapter 2 Theme Song】",
+        "media": "https://i.ytimg.com/vi/nUrITFpI85A/maxresdefault.jpg",
+        "date": "5/2/2025",
+        "longText": "Your voice helped bring to life the theme song of EN’s ENigmatic Recollection project. Dark, powerful, and thrilling, it captured a new side of you and EN’s storytelling.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=nUrITFpI85A"
+    },
+    {
+        "label": "【MV】All for One【hololive English Original Song】",
+        "media": "https://i.ytimg.com/vi/ok24HgzbeLs/maxresdefault.jpg",
+        "date": "08/17/2025",
+        "longText": "A unifying EN anthem for the 3rd concert! About friendship and standing together as one. Your performance carried warmth and determination.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=ok24HgzbeLs"
+    },
+    {
+        "label": "【MV】Kirameki Rider - English ver.【hololive English -Myth- & -Promise-】",
+        "media": "https://i.ytimg.com/vi/AB_CKhn3ZrI/maxresdefault.jpg",
+        "date": "08/18/2025",
+        "longText": "The English version of the beloved Hololive song, performed by Myth and Promise together! You sang with your kouhai, bridging generations and bringing new sparkle to a classic.",
+        "major": "FALSE",
+        "important": "TRUE",
+        "gaming": "FALSE",
+        "drawing": "FALSE",
+        "collab": "TRUE",
+        "video": "https://www.youtube.com/watch?v=AB_CKhn3ZrI"
     }
 ]

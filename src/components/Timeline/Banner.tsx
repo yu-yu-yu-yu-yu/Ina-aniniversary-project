@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ScrollContainer from "react-indiana-drag-scroll";
+import outfits from "./outfits.json";
 
-const images = Array.from({ length: 17 }, (_, i) => ({
-  src: `${process.env.PUBLIC_URL}/PLACEHOLDER.png`,
-  alt: `Placeholder ${i + 1}`,
-  explain: "PLACEHOLDER EXPLAIN",
-  outfit: "PLACEHOLDER OUTFIT",
-  artist: "PLACEHOLDER ARTIST",
+interface Outfit {
+  title: string;
+  artist: string;
+  handle: string;
+  username: string;
+  filename: string;
+  vodtitle?: string;
+  video?: string;
+  date?: string;
+}
+
+const images = outfits.map((item: Outfit) => ({
+  title: item.title,
+  artist: item.artist,
+  handle: item.handle,
+  username: item.username,
+  filename: item.filename,
+  vodtitle: item.vodtitle,
+  video: item.video,
+  date: item.date,
+  src: `${process.env.PUBLIC_URL}/outfits/${item.filename}`,
+  alt: item.title,
 }));
 
 const BannerWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   margin: 0 auto 32px auto;
   display: flex;
   justify-content: center;
@@ -26,8 +43,7 @@ const BannerWrapper = styled.div`
 const Container = styled(ScrollContainer)`
   display: flex;
   align-items: flex-end;
-  width: 100vw;
-  max-width: 2000px;
+  width: 100%;
   justify-content: space-between;
   position: relative;
   height: auto;
@@ -41,28 +57,52 @@ const Container = styled(ScrollContainer)`
   }
 `;
 
-const BannerImgWrapper = styled.div`
+const VodLink = styled.a`
+  color: var(--ina-orange);
+  font-style: italic;
+  font-weight: bold;
+  transition: color 0.2s;
+  &:hover {
+    color: #fff7b2;
+    background: var(--ina-orange);
+    text-decoration: underline;
+    border-radius: 4px;
+    padding: 0 4px;
+  }
+`;
+
+const BannerImgWrapper = styled.div<{ imgSrc: string }>`
   position: relative;
   margin: 0 16px;
   transition: transform 0.2s;
   &:hover {
     z-index: 2;
   }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 50%);
+    background: var(--ika-purple);
+    filter: blur(50px) brightness(2) saturate(1.2);
+    opacity: 0.8;
+    z-index: 0;
+    pointer-events: none;
+  }
 `;
 
 const BannerImg = styled.img`
   max-width: 400px;
-  max-height: 400px;
+  max-height: 500px;
   width: auto;
   height: auto;
-  border-radius: 50% / 35%;
-  border: 3px solid var(--ika-purple);
-  background: #fff;
-  box-shadow: 0 2px 8px #0002;
+  border: 3px solid transparent;
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  z-index: 1;
   &:hover {
-    box-shadow: 0 6px 16px #0004;
     transform: scale(1.08);
   }
 `;
@@ -73,8 +113,8 @@ const DialogueBox = styled.div<{ $active: boolean }>`
   bottom: 90px;
   transform: translateX(-50%);
   min-width: 180px;
-  background: var(--ika-purple); 
-  color: #fff; 
+  background: var(--ika-purple);
+  color: #fff;
   border: 2px solid var(--ina-orange);
   border-radius: 12px;
   box-shadow: 0 4px 16px #0003;
@@ -88,39 +128,59 @@ const DialogueBox = styled.div<{ $active: boolean }>`
 
 export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const [lockedIdx, setLockedIdx] = useState<number | null>(null);
 
   const handleMouseEnter = (i: number) => {
-    if (lockedIdx === null) setActiveIdx(i);
+    setActiveIdx(i);
   };
   const handleMouseLeave = () => {
-    if (lockedIdx === null) setActiveIdx(null);
-  };
-  const handleClick = (i: number) => {
-    setLockedIdx(lockedIdx === i ? null : i);
-    setActiveIdx(i);
+    setActiveIdx(null);
   };
 
   return (
-    <BannerWrapper>
-      <Container horizontal>
-        {images.map((img, i) => (
-          <BannerImgWrapper
-            key={i}
-            style={{ transform: `translateY(0px) scale(1)` }}
-            onMouseEnter={() => handleMouseEnter(i)}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => handleClick(i)}
-          >
-            <BannerImg src={img.src} alt={img.alt} />
-            <DialogueBox $active={activeIdx === i || lockedIdx === i}>
-              <div><b>{img.explain}</b></div>
-              <div>{img.outfit}</div>
-              <div>{img.artist}</div>
-            </DialogueBox>
-          </BannerImgWrapper>
-        ))}
-      </Container>
-    </BannerWrapper>
+    <>
+      <h2 style={{ fontSize: "3em", textAlign: "center", margin: "0.5em"}}>
+        Ina&apos;s Outfits Across Time
+      </h2>
+      <BannerWrapper>
+        <Container horizontal>
+          {images.map((img, i) => (
+            <BannerImgWrapper
+              key={i}
+              imgSrc={img.src}
+              style={{ transform: `translateY(0px) scale(1)` }}
+              onMouseEnter={() => handleMouseEnter(i)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <BannerImg src={img.src} alt={img.alt} loading="lazy" />
+              <DialogueBox $active={activeIdx === i}>
+                <div style={{ textAlign: "center" }}>
+                  <b style={{ fontSize: "1.25em" }}>{img.title}</b>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  {"By:"} {img.artist} ({img.handle})
+                </div>
+                <br />
+                {img.vodtitle && img.video ? (
+                  <div style={{ textAlign: "center" }}>
+                    <VodLink href={img.video} target="_blank" rel="noopener noreferrer">
+                      {img.vodtitle}
+                    </VodLink>
+                  </div>
+                ) : img.vodtitle ? (
+                  <div>
+                    <i>{img.vodtitle}</i>
+                  </div>
+                ) : null}
+                {img.date && (
+                  <div style={{ textAlign: "center" }}>
+                    <small>{img.date}</small>
+                  </div>
+                )}
+              </DialogueBox>
+            </BannerImgWrapper>
+          ))}
+        </Container>
+      </BannerWrapper>
+    </>
   );
 };

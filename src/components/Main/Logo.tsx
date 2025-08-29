@@ -18,7 +18,7 @@ const LogoContainer = styled.div`
   margin-right: auto;
 
   width: 600px;
-  
+  filter: var(--logo-filter); 
   @media only screen and (min-width: 1200px) and (max-height: 800px){
     width: 70vh !important; 
   }
@@ -127,7 +127,7 @@ const ScrollIndicator = styled.div`
   left: 50%;
   bottom: 40px;
   transform: translateX(-50%);
-  color: #584F69;
+  color: var(--ika-purple);
   z-index: 1;
 
   @media only screen and (max-width: 800px) {
