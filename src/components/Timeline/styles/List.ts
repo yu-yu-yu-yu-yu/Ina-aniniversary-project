@@ -187,15 +187,14 @@ export const MonthListContainer = styled.div`
 
 export const YearContainer = styled.div`
   display: flex;
-  flex: 0 1;
-  background-color: var(--ika-purple);
   flex-direction: row;
-  max-width: 170px;
+  background-color: var(--ika-purple);
   border-radius: 10px;
-  left: 20%;
-  top: 10px;
+  border: 3px solid var(--ink-black);
+  padding: 0 12px;
+  margin: 0 auto 12px auto;
+  width: fit-content;
   position: relative;
-  border: 3px solid #34303fff;
   z-index: 0;
 `
 
@@ -216,10 +215,10 @@ export const YearDisplay = styled.div<{
     selected &&
     `
       text-shadow:
-        -2px -2px 0 #34303fff,
-         2px -2px 0 #34303fff,
-        -2px  2px 0 #34303fff,
-         2px  2px 0 #34303fff;
+        -1px -1px 0 #34303fff,
+         1px -1px 0 #34303fff,
+        -1px  1px 0 #34303fff,
+         1px  1px 0 #34303fff;
     `
   }
 `;
