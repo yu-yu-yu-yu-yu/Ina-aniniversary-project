@@ -135,6 +135,7 @@ const HomeContent = (): JSX.Element => {
 
   const handleTakoClick = () => {
     if (sfxRef.current) {
+      sfxRef.current.volume = 0.1;
       sfxRef.current.currentTime = 0;
       sfxRef.current.play();
     }

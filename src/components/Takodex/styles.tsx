@@ -139,3 +139,19 @@ export const Title = styled.h2`
     letter-spacing: 1px;
   }
 `;
+
+export const AddTakoButton = styled.a`
+  background: var(--ina-orange);
+  color: var(--ika-purple);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 500;
+  font-size: 0.5em;
+  text-decoration: none;
+  margin-left: 16px;
+  transition: background 0.2s, color 0.2s, filter 0.2s;
+  &:hover {
+    background: var(--ika-purple);
+    color: var(--ina-orange);
+  }
+`;

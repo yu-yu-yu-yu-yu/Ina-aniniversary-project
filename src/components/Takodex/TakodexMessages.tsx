@@ -8,8 +8,9 @@ import {
     BubbleHeader,
     HeaderText,
     BubbleMessage,
-    Title
-} from "../Takodex/styles";
+    Title,
+    AddTakoButton
+} from "./styles";
 import { Navbar, MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
 
 const iconImages = [
@@ -71,6 +72,15 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                     <i className="fa fa-angle-left" /> Return
                 </NavLink>
                 <Title>Takodex</Title>
+                <div style={{ marginLeft: "auto" }}>
+                  <AddTakoButton
+                    href="https://forms.gle/qnrMrk2z6QaRHsdZ7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Add my Tako
+                  </AddTakoButton>
+                </div>
             </Navbar>
             <MessageBoard>
                 <MessagesSearchBar
