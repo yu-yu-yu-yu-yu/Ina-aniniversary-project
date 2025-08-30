@@ -16,7 +16,9 @@ const Container = styled.div`
 const Navbar = styled.nav`
   background: var(--inai-purple);
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   flex: 0 1;
   padding: 0.9rem 1.25rem;
   text-align: left;
@@ -56,9 +58,10 @@ const HintButton = styled.button`
   width: 38px;
   height: 38px;
   color: var(--ika-purple);
-  font-size: 1.5em;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-left: 16px;
+  margin-right: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -138,7 +141,7 @@ export const Timeline = ({
 
   return (
     <Container>
-      <Navbar ref={navBarRef} className={mobile ? "mobile" : ""} style={{ alignItems: "center", position: "relative" }}>
+      <Navbar ref={navBarRef} className={mobile ? "mobile" : ""} style={{ alignItems: "center"}}>
         <NavLinkContainer style={{ flex: "0 0 auto" }}>
           <NavLink exact to="/">
             <i className="fa fa-angle-left" /> Return

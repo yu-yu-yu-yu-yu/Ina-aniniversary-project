@@ -537,8 +537,26 @@ const ScrollListNonWide = ({
   setMonth: IScrollListProps["setMonth"]
   setYear: IScrollListProps["setYear"]
 }) => {
+  const listRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef<[number, number]>([0, 0]);
+
+  const handleScroll = () => {
+    if (listRef.current) {
+      scrollPosRef.current = [
+        listRef.current.scrollLeft,
+        listRef.current.scrollTop,
+      ];
+    }
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo(...scrollPosRef.current);
+    }
+  }, [milestones]);
+
   return (
-    <ScrollListContainer className={"mobile"}>
+    <ScrollListContainer className={"mobile"} ref={listRef} onScroll={handleScroll}>
       <List
         setMonth={setMonth}
         milestones={milestones}

@@ -110,5 +110,4 @@ const NodeContainer = styled.div`
   background: #666666;
   padding: 0 1em;
   position: relative;
-  overflow: hidden;
 `;

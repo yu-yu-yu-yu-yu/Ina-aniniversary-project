@@ -281,6 +281,32 @@ const Credits = ({
           <tbody>
             <tr>
               <td>
+                <a href="https://dova-s.jp/" target="_blank" rel="noopener noreferrer">
+                  DOVA-SYNDROME
+                </a>
+              </td>
+              <td>
+                BGM
+              </td>
+            </tr>
+            <tr>
+              <td>
+                rinh, eLun, Takomonty, floomf, Sei, LuLu, Malvar0.0, kshut, m-pien, Yoru, Younhand, Kais3r, NowaruArt, Eyeye, JangJang
+              </td>
+              <td>
+                Timeline Banner Outfit Artworks
+              </td>
+            </tr>
+            <tr>
+              <td>
+                StrawberryCandy, Sock
+              </td>
+              <td>
+                All for One Banner Planning and Organizing
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <a
                   href="https://twitter.com/chrone_co"
                   target="_blank"
@@ -384,10 +410,6 @@ const Credits = ({
               <td>Planning(2025), Developer, General contribution</td>
             </tr>
             <tr>
-              <td>Graphic design</td>
-              <td>My passion</td>
-            </tr>
-            <tr>
               <td>
                 <a href="https://twitter.com/lyudmilia"
                   target="_blank"
@@ -420,6 +442,14 @@ const Credits = ({
               </td>
               <td>General contribution</td>
             </tr>
+            <tr>
+              <td>Graphic design</td>
+              <td>My passion</td>
+            </tr>
+            <tr>
+              <td>That cookie</td>
+              <td>man that cookie was so good</td>
+            </tr>
             <br />
             <tr>
               <td>
@@ -431,7 +461,7 @@ const Credits = ({
                   Ninomae Ina&#39;nis
                 </a>
               </td>
-              <td>Being cute, our priestess, our idol, Homepage Ina art</td>
+              <td>For being so cute and cool and our priestess, Homepage Ina art</td>
             </tr>
           </tbody>
         </table>

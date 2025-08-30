@@ -83,6 +83,7 @@ const HomeContent = (): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const sfxRef = useRef<HTMLAudioElement>(null);
   const { muted } = useMute();
 
   useEffect(() => {
@@ -132,6 +133,13 @@ const HomeContent = (): JSX.Element => {
     }
   }, []);
 
+  const handleTakoClick = () => {
+    if (sfxRef.current) {
+      sfxRef.current.currentTime = 0;
+      sfxRef.current.play();
+    }
+  };
+
   return (
     <>
       <audio
@@ -143,6 +151,12 @@ const HomeContent = (): JSX.Element => {
         style={{ display: "none" }}
         muted={muted}
       />
+      <audio
+        ref={sfxRef}
+        src={process.env.PUBLIC_URL + "/takosound.mp3"}
+        preload="auto"
+        style={{ display: "none" }}
+      />
       <TakoFloatBg>
         {floatingTakos.map((tako) => (
           <FloatingTako
@@ -151,6 +165,8 @@ const HomeContent = (): JSX.Element => {
             bottom={tako.bottom}
             src={`${process.env.PUBLIC_URL}/takos/${tako.tako}.png`}
             alt="floating takodachi"
+            onClick={handleTakoClick}
+            style={{ pointerEvents: "auto", cursor: "pointer" }}
           />
         ))}
       </TakoFloatBg>

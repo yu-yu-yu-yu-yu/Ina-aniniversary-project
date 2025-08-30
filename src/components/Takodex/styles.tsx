@@ -109,10 +109,13 @@ export const SearchBar = styled.input`
     width: 40px;
   }
 `;
+
 export const Navbar = styled.nav`
   background: var(--inai-purple);
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   flex: 0 1;
   padding: 0.9rem 1.25rem;
   text-align: center;

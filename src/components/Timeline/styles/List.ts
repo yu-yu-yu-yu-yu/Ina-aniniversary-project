@@ -326,12 +326,13 @@ export const EventThumbMobile = styled.div`
 
 export const DrawerContainer = styled.div`
   width: 341px;
-  height: 343px;
-  margin: 70px auto 0;
-  right: 0;
-  left: 0;
-  top: 0;
-  position: absolute;
+  height: auto;
+  margin: 0;
+  right: unset;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
