@@ -21,7 +21,7 @@ const EventMedia = ({
 }): JSX.Element | null => {
   if (!media) return null;
   //We're only expecting local files or YT links
-  if (media.startsWith("http"))
+  if (media?.startsWith("http"))
     return (
       <iframe
         width="100%"
@@ -141,7 +141,7 @@ const ElementPicker = ({
   return (
     <>
       {milestones.map((milestone, index) => {
-        if (milestone.major) {
+        if (milestone.highlight) {
           if (!index) {
             return <BigEvent key={milestone.date} event={milestone} />;
           }

@@ -322,18 +322,6 @@ const Credits = ({
             <tr>
               <td>
                 <a
-                  href="https://twitter.com/ninomaeinanis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ninomae Ina&#39;nis
-                </a>
-              </td>
-              <td>Homepage Ina art</td>
-            </tr>
-            <tr>
-              <td>
-                <a
                   href="https://twitter.com/RiftyRifto"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -384,16 +372,28 @@ const Credits = ({
               <td>Developer</td>
             </tr>
             <tr>
+              <td>
+                <a
+                  href="https://twitter.com/NexoZerok"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  NxKarim
+                </a>
+              </td>
+              <td>Planning(2025), Developer, General contribution</td>
+            </tr>
+            <tr>
               <td>Graphic design</td>
               <td>My passion</td>
             </tr>
             <tr>
               <td>
                 <a href="https://twitter.com/lyudmilia"
-                     target="_blank"
-                     rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                Lyudmilia
+                  Lyudmilia
                 </a>
               </td>
               <td>Planning, General contribution</td>
@@ -401,8 +401,8 @@ const Credits = ({
             <tr>
               <td>
                 <a href="https://twitter.com/wololoSensei"
-                   target="_blank"
-                   rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   1st Killer
                 </a>
@@ -412,13 +412,26 @@ const Credits = ({
             <tr>
               <td>
                 <a href="https://x.com/Ryusei_Kiiro"
-                   target="_blank"
-                   rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Ryusei
                 </a>
               </td>
               <td>General contribution</td>
+            </tr>
+            <br />
+            <tr>
+              <td>
+                <a
+                  href="https://twitter.com/ninomaeinanis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ninomae Ina&#39;nis
+                </a>
+              </td>
+              <td>Being cute, our priestess, our idol, Homepage Ina art</td>
             </tr>
           </tbody>
         </table>

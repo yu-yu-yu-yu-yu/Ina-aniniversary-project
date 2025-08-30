@@ -45,7 +45,8 @@ import {
   months, monthsWithYears, MonthWithYear,
   Year,
   years,
-  getMilestoneOutline
+  getMilestoneOutline,
+  tagColors
 } from "./ScrollListUtils";
 import ReactDOM from "react-dom";
 import { useMute } from "../MuteButton";
@@ -84,27 +85,45 @@ const TagBar = ({
   <TagBarContainer>
     <TagsContainer>
       <Switch
+        label="Highlighted"
+        value={tags.highlight}
+        onChange={(value) => setSelectedTags({ ...tags, highlight: value })}
+        color={tagColors.highlight}
+        mobile={mobile}
+      />
+      <Switch
         label="Important streams"
         value={tags.important}
         onChange={(value) => setSelectedTags({ ...tags, important: value })}
+        color={tagColors.important}
         mobile={mobile}
       />
       <Switch
         label="Gaming streams"
         value={tags.gaming}
         onChange={(value) => setSelectedTags({ ...tags, gaming: value })}
+        color={tagColors.gaming}
         mobile={mobile}
       />
       <Switch
         label="Drawing streams"
         value={tags.drawing}
         onChange={(value) => setSelectedTags({ ...tags, drawing: value })}
+        color={tagColors.drawing}
         mobile={mobile}
       />
       <Switch
         label="Collabs"
         value={tags.collab}
         onChange={(value) => setSelectedTags({ ...tags, collab: value })}
+        color={tagColors.collab}
+        mobile={mobile}
+      />
+      <Switch
+        label="Songs"
+        value={tags.song}
+        onChange={(value) => setSelectedTags({ ...tags, song: value })}
+        color={tagColors.song}
         mobile={mobile}
       />
     </TagsContainer>
@@ -178,11 +197,11 @@ const EventMobile = ({
   refMap,
   onClick,
 }: EventMobileProps) => {
-  const { major, label, date } = event;
+  const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
-    <EventContainer className={"mobile"} highlight={!!major} onClick={onClick}>
+    <EventContainer className={"mobile"} highlight={!!highlight} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
           ref={refMap.current[monthWithYear as MonthWithYear]}
@@ -208,7 +227,7 @@ const Event = ({
   monthStart,
   onClick,
 }: EventProps) => {
-  const { major, label, date, longText } = event;
+  const { highlight, label, date, longText } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`;
   const [hovered, setHovered] = useState(false);
@@ -225,7 +244,7 @@ const Event = ({
 
   return (
     <EventContainer
-      highlight={!!major}
+      highlight={!!highlight}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

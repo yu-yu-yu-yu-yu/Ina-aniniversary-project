@@ -16,12 +16,14 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
       media: jmilestone.media,
       date: formatDate(jmilestone.date), // i may be dumb
       longText: jmilestone.longText,
-      major: jmilestone.major,
+      highlight: jmilestone.highlight,
       tags: {
+        highlight: jmilestone.highlight,
         important: jmilestone.important,
         gaming: jmilestone.gaming,
         drawing: jmilestone.drawing,
         collab: jmilestone.collab,
+        song: jmilestone.song
       },
       video: jmilestone.video.replace(
         /.*\?v=(.+)$/,

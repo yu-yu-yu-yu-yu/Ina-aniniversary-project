@@ -88,18 +88,22 @@ export const getMediaLink = (src: Milestone["media"]) => {
 export const monthsWithYears = years.flatMap(year => months.map(month => `${year}_${month}`))
 export type MonthWithYear = `${Year}_${Month}`
 
-const tagColors = {
+export const tagColors = {
+  highlight: "var(--ina-orange)",
   important: "#FFD700",
   gaming: "#3B7BFF",
   drawing: "#A259E6",
   collab: "#00E6E6",
+  song: "#FF69B4",
 };
 
 export function getMilestoneOutline(tags: {
+  highlight?: boolean;
   important?: boolean;
   gaming?: boolean;
   drawing?: boolean;
   collab?: boolean;
+  song?: boolean;
 }): string {
   const activeColors = Object.entries(tags)
     .filter(([, v]) => v === true)
