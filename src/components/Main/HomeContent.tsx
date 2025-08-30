@@ -42,7 +42,7 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
   position: absolute;
   left: ${({ left }) => left}vw;
   bottom: ${({ bottom }) => bottom}px;
-  width: 100px;
+  width: 5vmax;
   z-index: 1;
   pointer-events: none;
   animation: ${floatUp} 9s linear forwards;
@@ -51,9 +51,14 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
 const TakoFloatBg = styled.div`
   position: absolute;
   pointer-events: none;
-  top: 0; left: 0; width: 100vh; height: 100%;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  width: 100vw; 
+  height: 100%;
   z-index: 1;
   overflow: visible;
+  overflow-x: hidden;
   pointer-events: none;
 `;
 
@@ -90,7 +95,7 @@ const HomeContent = (): JSX.Element => {
           const spawnBottom = Math.random() * (spawnHeight);
           const newTako: FloatingTakoData = {
             key: Date.now() + Math.random() + i,
-            left: Math.random() * 80 + 10,
+            left: Math.random() * 90,
             tako: randomTako,
             bottom: spawnBottom,
             createdAt: Date.now(),

@@ -72,8 +72,6 @@ export const Circle = styled.span`
   z-index: 2;
 `;
 
-//url(${({ media }) => }) center;
-//background-size: cover;
 export const EventPreview = styled.img<{ outline: string }>`
   background: var(--ika-purple);
   width: 410px;

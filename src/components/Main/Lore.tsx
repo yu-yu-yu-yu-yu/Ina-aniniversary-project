@@ -153,8 +153,11 @@ const InaVideoContainer = styled.div`
   @media only screen and (max-width: 1100px) {
     position: relative;
     display: block;
-    margin-top: -10em;
+    margin-top: 0;
     z-index: 0;
+    width: 100vw;
+    left: 0;
+    right: 0;
   }
 `;
 
@@ -172,21 +175,25 @@ const InaVideo = styled.video`
   }
 
   @media only screen and (max-width: 1100px) {
-    margin-left: 13em;
-    width: 1000px;
+    margin-left: 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin-top: 80px; // Lower the video on mobile
+    display: block;
   }
 
   @media only screen and (max-width: 850px) {
-    margin-left: 10em;
-    width: 800px;
+    width: 100vw;
+    max-width: 100vw;
+    margin-top: 100px; // Even lower on smaller screens
   }
 
   @media only screen and (max-width: 600px) {
-    margin-left: 0%;
+    margin-top: 120px;
   }
 
   @media only screen and (max-width: 350px) {
-    margin-left: -20%;
+    margin-top: 140px;
   }
 `;
 

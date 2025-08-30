@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
+
+// Add shake keyframes
+const shake = keyframes`
+  0% { transform: rotate(0deg);}
+  20% { transform: rotate(-8deg);}
+  40% { transform: rotate(8deg);}
+  60% { transform: rotate(-4deg);}
+  80% { transform: rotate(4deg);}
+  100% { transform: rotate(0deg);}
+`;
 
 const MenuContainer = styled.div`
   text-align: center;
@@ -102,7 +112,7 @@ const MenuTextContainer = styled.div`
 
 const ButtonsDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 198px);
+  grid-template-columns: repeat(3, 10vw);
   row-gap: 16px;
   column-gap: 16px;
   justify-content: center;
@@ -110,19 +120,19 @@ const ButtonsDiv = styled.div`
   padding-top: 0;
   padding-bottom: 0;
   flex: 1 1 0;
-  min-width: 198px;
+  min-width: 10vw;
   max-width: 700px;
   @media only screen and (max-width: 1100px) {
-    grid-template-columns: repeat(2, 198px);
-    row-gap: 14px;
-    column-gap: 12px;
-    max-width: 420px;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 24px;
+    column-gap: 32px;
+    max-width: 100vw;
   }
-  @media only screen and (max-width: 701px) {
-    grid-template-columns: 198px;
-    row-gap: 12px;
+  @media only screen and (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100vw;
     column-gap: 0;
-    max-width: 198px;
+    row-gap: 12px;
   }
 `;
 
@@ -131,41 +141,44 @@ const TAKO_COUNT = 72;
 const ButtonContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 198px;
-  height: 198px;
+  width: 10vw;
+  height: 10vw;
   margin: 12px;
   z-index: 1;
   overflow: visible;
+  @media only screen and (max-width: 1100px) {
+    width: 22vw;
+    height: 22vw;
+    margin: 10px 0;
+    max-width: 180px;
+    max-height: 180px;
+  }
+  @media only screen and (max-width: 700px) {
+    width: min(40vw, 160px);
+    height: min(40vw, 160px);
+    margin: 8px 0;
+  }
 `;
 
 interface TakoPeekProps {
-    active: boolean;
+  active: boolean;
 }
 const TakoPeek = styled.img<TakoPeekProps>`
   position: absolute;
   left: 50%;
   top: 5px;
-  width: 80px;
+  width: 5vw;
   pointer-events: none;
   z-index: 0;
   transition: transform 0.4s cubic-bezier(.4,2,.6,1);
   transform: translateX(-50%)
-    translateY(${props => (props.active ? '-80px' : '20px')})
+    translateY(${props => (props.active ? '-5.1vw' : '1vw')})
     scale(${props => (props.active ? 1.1 : 1)});
 `;
 
-const CookieImg = styled.img<{ rotation: number }>`
-  width: 198px;
-  height: 198px;
-  display: block;
-  margin: 0 auto;
-  transform: rotate(${({ rotation }) => rotation}deg);
-  transition: transform 0.2s;
-`;
-
-const CookieButton = styled.button`
-  width: 198px;
-  height: 198px; 
+const CookieButton = styled.button<{ $shaking?: boolean }>`
+  width: 10vw;
+  height: 10vw; 
   border: none;
   background: none;
   display: flex;
@@ -176,10 +189,49 @@ const CookieButton = styled.button`
   outline: none;
   margin: 0 8px 16px 8px;
   position: relative;
+  ${({ $shaking }) =>
+    $shaking &&
+    css`
+      animation: ${shake} 0.4s linear;
+    `}
+  @media only screen and (max-width: 1100px) {
+    width: 22vw;
+    height: 22vw;
+    max-width: 180px;
+    max-height: 180px;
+    margin: 0 8px 16px 8px;
+  }
+  @media only screen and (max-width: 700px) {
+    width: min(40vw, 160px);
+    height: min(40vw, 160px);
+    margin: 0 8px 16px 8px;
+  }
+`;
+
+const CookieImg = styled.img`
+  width: 10vw;
+  height: 10vw;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.2s;
+  @media only screen and (max-width: 1100px) {
+    width: 22vw;
+    height: 22vw;
+    max-width: 180px;
+    max-height: 180px;
+  }
+  @media only screen and (max-width: 700px) {
+    width: min(40vw, 160px);
+    height: min(40vw, 160px);
+  }
 `;
 
 const CookieLabel = styled.span`
-  font-size: 1.1rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1vw;
   font-weight: 1000;
   color: #38250aff;
   text-shadow:
@@ -187,10 +239,21 @@ const CookieLabel = styled.span`
     2px 0 0 #fff,
     0 -2px 0 #fff,
     -2px 0 0 #fff;
-  margin-top: -105px;
-  text-align: ceter;
-  width: 200px;
+  width: 8vw;
+  text-align: center;
   z-index: 1;
+  pointer-events: none;
+  white-space: pre-line;
+  line-height: 1.15;
+
+  @media only screen and (max-width: 1100px) {
+    font-size: 1.8vw;
+    width: 10vw;
+  }
+  @media only screen and (max-width: 700px) {
+    font-size: 2.5vw;
+    width: 16vw;
+  }
 `;
 
 const CookieLink = styled(Link)`
@@ -214,23 +277,26 @@ const CookieA = styled.a`
 `;
 
 const buttons = [
-    { to: "/timeline", label: "Ina's Timeline" },
-    { to: "/takodex", label: "Takodex" },
-    { to: "/messages", label: "Messages" },
-    { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
-    { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Takollages" },
-    { to: "/moments", label: `Ina Moments (2024)` },
-    { to: "/wah", label: "WAH (2024)" },
+  { to: "/timeline", label: "Ina's Timeline" },
+  { to: "/takodex", label: "Takodex" },
+  { to: "/messages", label: "Messages" },
+  { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
+  { href: `${process.env.PUBLIC_URL}/collage.png`, label: "Takollages" },
+  { to: "/moments", label: `Ina Moments (2024)` },
+  { to: "/wah", label: "WAH (2024)" },
 ];
 
 const Menu = (): JSX.Element => {
-    const [peekIndex, setPeekIndex] = useState<number | null>(null);
-    const [peekTako, setPeekTako] = useState<string>("");
+  const [peekIndex, setPeekIndex] = useState<number | null>(null);
+  const [peekTako, setPeekTako] = useState<string>("");
+  const [shakingIndex, setShakingIndex] = useState<number | null>(null);
 
-    const handleHover = () => {
-        const idx = Math.floor(Math.random() * TAKO_COUNT);
-        setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
-    };
+  const handleHover = (i: number) => {
+    setShakingIndex(i);
+    setTimeout(() => setShakingIndex(null), 400);
+    const idx = Math.floor(Math.random() * TAKO_COUNT);
+    setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
+  };
 
   return (
     <MenuContainer>
@@ -258,55 +324,56 @@ const Menu = (): JSX.Element => {
           </div>
         </MenuTextContainer>
         <ButtonsDiv>
-          {buttons.map((btn, i) => {
-            const rotation = (i * 37) % 360;
-            return (
-              <ButtonContainer
-                key={btn.label}
-                onMouseEnter={() => {
-                  setPeekIndex(i);
-                  handleHover();
-                }}
-                onMouseLeave={() => setPeekIndex(null)}
-              >
-                <TakoPeek
-                  className="tako-peek"
-                  src={peekTako}
-                  alt="peeking tako"
-                  active={peekIndex === i && !!peekTako}
-                  style={{ visibility: peekTako ? 'visible' : 'hidden' }}
-                />
-                {"to" in btn ? (
-                  <CookieLink to={btn.to} role="button">
-                    <CookieButton title={btn.label}>
-                      <CookieImg
-                        src={process.env.PUBLIC_URL + "/cookie.png"}
-                        alt="cookie"
-                        rotation={rotation}
-                      />
-                      <CookieLabel>{btn.label}</CookieLabel>
-                    </CookieButton>
-                  </CookieLink>
-                ) : (
-                  <CookieA
-                    href={btn.href}
-                    role="button"
-                    target={btn.label === "Takollages" ? "_blank" : undefined}
-                    rel={btn.label === "Takollages" ? "noopener noreferrer" : undefined}
+          {buttons.map((btn, i) => (
+            <ButtonContainer
+              key={btn.label}
+              onMouseEnter={() => {
+                setPeekIndex(i);
+                handleHover(i);
+              }}
+              onMouseLeave={() => setPeekIndex(null)}
+            >
+              <TakoPeek
+                className="tako-peek"
+                src={peekTako}
+                alt="peeking tako"
+                active={peekIndex === i && !!peekTako}
+                style={{ visibility: peekTako ? 'visible' : 'hidden' }}
+              />
+              {"to" in btn ? (
+                <CookieLink to={btn.to} role="button">
+                  <CookieButton
+                    title={btn.label}
+                    $shaking={shakingIndex === i}
                   >
-                    <CookieButton title={btn.label}>
-                      <CookieImg
-                        src={process.env.PUBLIC_URL + "/cookie.png"}
-                        alt="cookie"
-                        rotation={rotation}
-                      />
-                      <CookieLabel>{btn.label}</CookieLabel>
-                    </CookieButton>
-                  </CookieA>
-                )}
-              </ButtonContainer>
-            );
-          })}
+                    <CookieImg
+                      src={process.env.PUBLIC_URL + "/cookie.png"}
+                      alt="cookie"
+                    />
+                    <CookieLabel>{btn.label}</CookieLabel>
+                  </CookieButton>
+                </CookieLink>
+              ) : (
+                <CookieA
+                  href={btn.href}
+                  role="button"
+                  target={btn.label === "Takollages" ? "_blank" : undefined}
+                  rel={btn.label === "Takollages" ? "noopener noreferrer" : undefined}
+                >
+                  <CookieButton
+                    title={btn.label}
+                    $shaking={shakingIndex === i}
+                  >
+                    <CookieImg
+                      src={process.env.PUBLIC_URL + "/cookie.png"}
+                      alt="cookie"
+                    />
+                    <CookieLabel>{btn.label}</CookieLabel>
+                  </CookieButton>
+                </CookieA>
+              )}
+            </ButtonContainer>
+          ))}
         </ButtonsDiv>
       </MenuFlexRow>
     </MenuContainer>
