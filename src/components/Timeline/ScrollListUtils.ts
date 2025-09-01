@@ -2,6 +2,7 @@ import { upperCase, zipObject } from "lodash";
 import { Milestone, Tags } from "./Milestone";
 import { MutableRefObject, RefObject } from "react";
 import milestoneJson from "../../static/Ina Anniversary Milestones.json";
+import timelineMessages from "../../static/TimelineMessages.json";
 
 export const months = [
   "January",
@@ -43,8 +44,11 @@ export interface IScrollListProps {
     setSearchString: (string: string) => void;
     selectedTags: Tags;
     setSelectedTags: (tags: Tags) => void;
+    selectedTitleTag: string;
+    setSelectedTitleTag: (tag: string) => void;
+    milestones: Milestone[];
   };
-  setYear: (year:Year) => void;
+  setYear: (year: Year) => void;
   monthProps: {
     selectedMonth: Month;
     setMonth: (month: Month) => void;
@@ -111,4 +115,66 @@ export function getMilestoneOutline(tags: {
   if (activeColors.length === 0) return "transparent";
   if (activeColors.length === 1) return activeColors[0];
   return `linear-gradient(135deg, ${activeColors.join(", ")})`;
+}
+
+export const genericTakoIcons = [
+  "8-bit Tako.png",
+  "Hollow Tako.png",
+  "Ikadachi.png",
+  "Mori Tako.png",
+  "Robodachi.png",
+  "Tako Amelia (Takoson).png",
+  "Tako Gura (Chum Tako).png",
+  "Tako Ina.png",
+  "Tako Kiara (Tako Bell).png",
+  "Tako Ross.png",
+  "Takodachi.png",
+  "Takomfy.png",
+  "Tophat Tako.png",
+  "Violet Tako.png",
+  "Wonder Tako.png",
+  "Yuul B. Tako.png"
+];
+
+export function getTakoAvatar(author: string | null, index: number = 0): string {
+  if (author && author.trim() !== "") {
+    const fileName = `${author}.png`;
+    return `${process.env.PUBLIC_URL}/takoswentries/${fileName}`;
+  }
+  const icon = genericTakoIcons[index % genericTakoIcons.length];
+  return `${process.env.PUBLIC_URL}/icon/${icon}`;
+}
+
+export function getUniqueTitleTags(milestones: Milestone[]): string[] {
+  const tags = new Set<string>();
+  milestones.forEach(m => {
+    const match = m.label.match(/【([^】]+)】/);
+    if (match) tags.add(match[1]);
+  });
+  return Array.from(tags);
+}
+
+type TimelineMessageEntry = {
+  label: string;
+  tako1?: string;
+  takoMessage1?: string;
+  tako2?: string;
+  takoMessage2?: string;
+  tako3?: string;
+  takoMessage3?: string;
+};
+
+export function getMessagesForMilestone(milestone: Milestone) {
+  const timelineEntry = (timelineMessages as TimelineMessageEntry[]).find(
+    (msg) => msg.label === milestone.label
+  );
+  const messages = [
+    { type: "longText", text: milestone.longText, author: null },
+    ...[1, 2, 3].map(i => ({
+      type: `takoMessage${i}`,
+      text: timelineEntry?.[`takoMessage${i}` as `takoMessage1` | `takoMessage2` | `takoMessage3`] || "",
+      author: timelineEntry?.[`tako${i}` as `tako1` | `tako2` | `tako3`] || null,
+    })),
+  ].filter(msg => msg.text && msg.text.trim() !== "");
+  return messages;
 }

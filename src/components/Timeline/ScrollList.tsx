@@ -1,7 +1,7 @@
 import { Milestone, Tags } from "./Milestone";
 import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import { Switch } from "../Common/Switch";
+import { upperCase } from "lodash";
 import {
   Backdrop,
   Circle,
@@ -14,7 +14,6 @@ import {
   EventLabel,
   EventModalContainer,
   EventModalDate,
-  EventModalDescription,
   EventModalHeading,
   EventModalInfo,
   EventModalInfoLeft,
@@ -37,7 +36,6 @@ import {
   YearContainer
 } from "./styles/List";
 import {
-  filterMilestones,
   getMediaLink,
   IScrollListProps,
   mappedMonths,
@@ -46,10 +44,15 @@ import {
   Year,
   years,
   getMilestoneOutline,
-  tagColors
+  tagColors,
+  getTakoAvatar,
+  getUniqueTitleTags,
+  getMessagesForMilestone
 } from "./ScrollListUtils";
+import { TimelineDialogueBox } from "./styles/List";
 import ReactDOM from "react-dom";
 import { useMute } from "../MuteButton";
+
 
 const SearchBar = ({
   searchString,
@@ -135,15 +138,33 @@ const TopControls = ({
   setSearchString,
   selectedTags,
   setSelectedTags,
+  selectedTitleTag,
+  setSelectedTitleTag,
+  milestones,
   mobile,
-}: IScrollListProps["searchProps"] & { mobile?: boolean }) => (
+}: IScrollListProps["searchProps"] & {
+  selectedTitleTag: string;
+  setSelectedTitleTag: (tag: string) => void;
+  milestones: Milestone[];
+  mobile?: boolean;
+}) => (
   <TopControlsContainer>
-    <SearchBar searchString={searchString} setSearchString={setSearchString} />
-    <TagBar
-      mobile={mobile}
-      tags={selectedTags}
-      setSelectedTags={setSelectedTags}
-    />
+    <div style={{ marginBottom: 18 }}>
+      <SearchBar searchString={searchString} setSearchString={setSearchString} />
+    </div>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <TagBar
+        mobile={mobile}
+        tags={selectedTags}
+        setSelectedTags={setSelectedTags}
+      />
+      <TagDropdown
+        milestones={milestones}
+        selectedTag={selectedTitleTag}
+        setSelectedTag={setSelectedTitleTag}
+        mobile={mobile}
+      />
+    </div>
   </TopControlsContainer>
 );
 
@@ -184,11 +205,9 @@ interface EventBaseProps {
 }
 
 interface EventMobileProps extends EventBaseProps {
-  // Mobile
 }
 
 interface EventProps extends EventBaseProps {
-  // Desktop events
 }
 
 const EventMobile = ({
@@ -196,7 +215,7 @@ const EventMobile = ({
   monthStart,
   refMap,
   onClick,
-}: EventMobileProps) => {
+}: EventMobileProps & { event: Milestone & { isLast?: boolean } }) => {
   const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
@@ -210,7 +229,7 @@ const EventMobile = ({
         />
       ) : null}
       <Circle />
-      <Line className={"mobile"} />
+      {!event.isLast && <Line className={"mobile"} />}
       <Triangle className={"mobile"} />
       <EventThumbMobile>
         <EventLabel className={"mobile"}>{label}</EventLabel>
@@ -226,17 +245,25 @@ const Event = ({
   event,
   monthStart,
   onClick,
-}: EventProps) => {
-  const { highlight, label, date, longText } = event;
+}: EventProps & { event: Milestone & { isLast?: boolean } }) => {
+  const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`;
   const [hovered, setHovered] = useState(false);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [hoverMessage, setHoverMessage] = useState<{ text: string, author: string | null, type: string } | null>(null);
 
-  const handleMouseEnter = () => setHovered(true);
+  const handleMouseEnter = () => {
+    const messages = getMessagesForMilestone(event);
+    if (messages.length > 0) {
+      setHoverMessage(messages[Math.floor(Math.random() * messages.length)]);
+    }
+    setHovered(true);
+  };
   const handleMouseLeave = () => {
     setHovered(false);
     setMousePos(null);
+    setHoverMessage(null);
   };
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -261,11 +288,11 @@ const Event = ({
       <EventInfo>
         <Triangle />
         <Circle />
-        <Line />
+        {!event.isLast && <Line />}
         <EventLabel>{label}</EventLabel>
         <EventDate>{date.replace(/\W/g, "·")}</EventDate>
       </EventInfo>
-      {hovered && longText && mousePos && (
+      {hovered && hoverMessage && mousePos && (
         <TimelineDialogueBox
           style={{
             left: mousePos.x,
@@ -273,9 +300,32 @@ const Event = ({
             transform: "translateY(-100%rem)",
             position: "fixed",
             pointerEvents: "none",
+            display: "flex",
+            alignItems: "center",
+            gap: "0"
           }}
         >
-          {longText}
+          {hoverMessage.author && (
+            <img
+              src={getTakoAvatar(hoverMessage.author)}
+              alt={hoverMessage.author || "Takodachi"}
+              className="takodachi-avatar"
+              style={{
+                width: 150,
+                height: 150,
+                position: "absolute",
+                left: -75,
+              }}
+            />
+          )}
+          <div style={{ marginLeft: hoverMessage.author ? 32 : 0, minWidth: 220, maxWidth: 400, display: "flex", flexDirection: "column" }}>
+            <span style={{ fontSize: 14 }}>{hoverMessage.text}</span>
+            {hoverMessage.author && (
+              <span style={{ fontSize: 13, marginTop: 12, color: "#ffd580", alignSelf: "flex-end" }}>
+                by: {hoverMessage.author}
+              </span>
+            )}
+          </div>
         </TimelineDialogueBox>
       )}
     </EventContainer>
@@ -292,13 +342,16 @@ const EventModal = ({
   mobile: boolean;
 }) => {
   if (!event) return null;
-  const { media, video, label, longText, date } = event;
+  const { media, video, label, date } = event;
   const className = mobile ? "mobile" : "";
   const isYt = video?.includes("youtube.com") || video?.includes("youtu.be");
   const hrefObj: { href?: Milestone["video"] } = {};
   if (video && !isYt) {
     hrefObj.href = video;
   }
+
+  const messages = getMessagesForMilestone(event);
+
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
@@ -306,7 +359,6 @@ const EventModal = ({
         {isYt ? (
           <ModalVideo
             src={video}
-            // width="100%"
             height="415"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -322,15 +374,119 @@ const EventModal = ({
             </EventModalHeading>
             <EventModalDate className={className}>{date}</EventModalDate>
           </EventModalInfoLeft>
-          <EventModalDescription className={className}>
-            {longText}
-          </EventModalDescription>
+          <div>
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginBottom: 18,
+                  gap: 12,
+                  background: "rgba(0,0,0,0.15)",
+                  borderRadius: 8,
+                  padding: "12px 16px"
+                }}
+              >
+                {msg.author && (
+                  <img
+                    src={getTakoAvatar(msg.author, idx)}
+                    alt={msg.author || "Takodachi"}
+                    className="takodachi-avatar"
+                    style={{
+                      width: 100,
+                      height: 100,
+                      marginRight: 0,
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: 15, wordBreak: "break-word", whiteSpace: "pre-line" }}>
+                    {msg.text}
+                  </span>
+                  {msg.author && (
+                    <div style={{ fontSize: 13, marginTop: 10, color: "#ffd580", textAlign: "right" }}>
+                      by: {msg.author}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </EventModalInfo>
       </EventModalContainer>
     </>,
     document.getElementById("root") as HTMLElement
   );
 };
+
+const TagDropdown = ({
+  milestones,
+  selectedTag,
+  setSelectedTag,
+  mobile,
+}: {
+  milestones: Milestone[];
+  selectedTag: string;
+  setSelectedTag: (tag: string) => void;
+  mobile?: boolean;
+}) => {
+  const tags = getUniqueTitleTags(milestones);
+  return (
+    <div style={{ marginLeft: 24, display: "inline-block" }}>
+      <select
+        value={selectedTag}
+        onChange={e => setSelectedTag(e.target.value)}
+        style={{
+          background: "var(--ika-purple)",
+          color: "white",
+          border: "2px solid var(--ina-orange)",
+          borderRadius: 8,
+          fontSize: mobile ? 16 : 22,
+          padding: "6px 16px",
+          fontFamily: "Montserrat, sans-serif",
+          fontWeight: 500,
+          outline: "none",
+        }}
+      >
+        <option value="">All Tags</option>
+        {tags.map(tag => (
+          <option key={tag} value={tag}>
+            【{tag}】
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+function filterMilestonesWithTitleTag(
+  selectedTags: Tags,
+  milestones: Milestone[],
+  searchString: string,
+  selectedTitleTag: string
+) {
+  const isAnyTag = Object.values(selectedTags).reduce(
+    (acc, val) => acc || val,
+    false
+  );
+  return milestones.filter(({ tags, label }) => {
+    const searchCondition = upperCase(label).includes(upperCase(searchString));
+    let tagCondition = !isAnyTag;
+    for (const tag in tags) {
+      tagCondition =
+        tagCondition ||
+        (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
+    }
+    let titleTagCondition = true;
+    if (selectedTitleTag) {
+      const match = label.match(/【([^】]+)】/);
+      titleTagCondition = match ? match[1] === selectedTitleTag : false;
+    }
+    return searchCondition && tagCondition && titleTagCondition;
+  });
+}
 
 const List = ({
   milestones,
@@ -378,9 +534,9 @@ const List = ({
     milestoneRefs.current.forEach((ref, i) => {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
-        // Use left for desktop, top for mobile
+
         const value = mobile ? Math.abs(rect.top) : Math.abs(rect.left);
-        // Only consider milestones that are at least partially visible
+
         if (
           (mobile && rect.bottom > 0 && rect.top < window.innerHeight) ||
           (!mobile && rect.right > 0 && rect.left < window.innerWidth)
@@ -416,7 +572,10 @@ const List = ({
           <Element
             onClick={() => setModalEvent(milestone)}
             refMap={refMap}
-            event={milestone}
+            event={{
+              ...milestone,
+              isLast: index === milestones.length - 1,
+            }}
             monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
           />
         </div>
@@ -483,7 +642,8 @@ const Drawer = ({
   searchProps,
   monthProps,
   toggleDrawer,
-}: { visible: boolean; toggleDrawer: () => void } & Pick<
+  milestones,
+}: { visible: boolean; toggleDrawer: () => void; milestones: Milestone[] } & Pick<
   IScrollListProps,
   "searchProps" | "monthProps"
 >) => {
@@ -492,7 +652,13 @@ const Drawer = ({
     <>
       <Backdrop onClick={toggleDrawer} />
       <DrawerContainer>
-        <TopControls mobile {...searchProps} />
+        <TopControls
+          mobile
+          {...searchProps}
+          selectedTitleTag={searchProps.selectedTitleTag}
+          setSelectedTitleTag={searchProps.setSelectedTitleTag}
+          milestones={milestones}
+        />
         <DrawerSeparator>Jump To</DrawerSeparator>
         <BottomControls {...monthProps} />
       </DrawerContainer>
@@ -595,6 +761,7 @@ export const ScrollList = ({
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
   const [scroll] = useState<[number, number]>([0, 0]);
+  const [selectedTitleTag, setSelectedTitleTag] = useState<string>("");
 
   useEffect(() => {
     if (audioRef.current) {
@@ -602,7 +769,13 @@ export const ScrollList = ({
     }
   }, []);
 
-  const selected = filterMilestones(selectedTags, milestones, searchString);
+
+  const selected = filterMilestonesWithTitleTag(
+    selectedTags,
+    milestones,
+    searchString,
+    selectedTitleTag
+  );
 
   const monthRefMap = useRef(
     monthsWithYears.reduce(
@@ -657,6 +830,9 @@ export const ScrollList = ({
     setSearchString,
     selectedTags,
     setSelectedTags,
+    selectedTitleTag,
+    setSelectedTitleTag,
+    milestones,
   };
   const monthProps = { selectedMonth: month, setMonth: scrollToMonth, year, setYear: handleYear };
 
@@ -676,6 +852,7 @@ export const ScrollList = ({
         searchProps={searchProps}
         monthProps={monthProps}
         toggleDrawer={toggleDrawer}
+        milestones={milestones}
       />
       {mobile ? (
         <ScrollListNonWide
@@ -700,24 +877,3 @@ export const ScrollList = ({
     </>
   );
 };
-
-const TimelineDialogueBox = styled.div`
-  position: absolute;
-  left: 50%;
-  top: -10px;
-  transform: translateX(-50%) translateY(-100%);
-  min-width: 220px;
-  max-width: 400px;
-  background: var(--ika-purple);
-  color: #fff;
-  border: 2px solid var(--ina-orange);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px #0003;
-  padding: 16px 22px;
-  font-size: 16px;
-  z-index: 20;
-  opacity: 1;
-  pointer-events: none;
-  transition: opacity 0.15s;
-  white-space: pre-line;
-`;

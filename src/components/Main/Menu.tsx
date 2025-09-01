@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 
-// Add shake keyframes
 const shake = keyframes`
   0% { transform: rotate(0deg);}
   20% { transform: rotate(-8deg);}

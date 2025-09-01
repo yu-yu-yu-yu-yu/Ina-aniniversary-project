@@ -6,6 +6,7 @@ export const SubmissionContainer = styled.div`
   @media only screen and (max-width: 768px) {
     margin-left: 0px;
     width: 100%;
+    padding-bottom: 5px;
   }
 `;
 export const TextBubbleContainer = styled.div`
@@ -82,6 +83,7 @@ export const MessageBoard = styled.div`
   margin-left: auto;
   margin-top: 25px;
 `;
+
 export const FiltersContainer = styled.div`
   margin: auto auto 35px;
 `;
@@ -122,6 +124,12 @@ export const Navbar = styled.nav`
   font: normal normal normal 3em montserrat;
   letter-spacing: 0;
   justify-content: space-between;
+
+  @media only screen and (max-width: 768px) {
+    font: normal normal normal 25px/30px Montserrat;
+    padding: 0.7rem 0.5rem;
+    text-align: left;
+  }
 `;
 
 export const Title = styled.h2`
@@ -153,5 +161,13 @@ export const AddTakoButton = styled.a`
   &:hover {
     background: var(--ika-purple);
     color: var(--ina-orange);
+  }
+
+  @media only screen and (max-width: 768px) {
+    font-size: 0.5em;
+    padding: 10px 12px;
+    margin-left: 8px;
+    margin-top: 6px;
+    display: inline-block;
   }
 `;

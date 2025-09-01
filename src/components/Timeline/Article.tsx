@@ -153,8 +153,6 @@ const ElementPicker = ({
           );
         }
         const Element = mix[counter++ % mix.length];
-        // eslint-disable-next-line no-debugger
-        // debugger;
         return <Element key={milestone.label} event={milestone} />;
       })}
     </>

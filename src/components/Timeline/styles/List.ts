@@ -446,6 +446,13 @@ export const EventModalContainer = styled.div`
   max-width: 90vw;
   max-height: 90vh;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
 `;
 export const ModalVideo = styled.iframe`
   width: 100%;
@@ -486,6 +493,7 @@ export const EventModalHeading = styled.a`
   }
   text-decoration: underline;
 `;
+
 export const EventModalDate = styled.span`
   text-align: right;
   font: normal normal 300 25px/30px Roboto;
@@ -497,4 +505,27 @@ export const EventModalDate = styled.span`
     font: normal normal 300 13px/15px Roboto;
     letter-spacing: 0.65px;
   }
+`;
+
+export const TimelineDialogueBox = styled.div`
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%) translateY(-100%);
+  min-width: 250px;
+  max-width: 300px;
+  background: var(--ika-purple);
+  color: #fff;
+  border: 2px solid var(--ina-orange);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #0003;
+  padding: 16px 22px;
+  font-size: 16px;
+  z-index: 20;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  white-space: pre-line;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 `;

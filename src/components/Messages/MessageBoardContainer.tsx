@@ -10,9 +10,7 @@ import {Switch} from "../Common/Switch";
 import {debounce} from "lodash";
 import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar, Title} from "./styles";
 import { useMute } from "../MuteButton";
-// import MessageBoard from "./MessageBoard";
 
-// Limit of items to be loaded per time
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
