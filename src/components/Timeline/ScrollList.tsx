@@ -33,7 +33,8 @@ import {
   TagsContainer,
   TopControlsContainer,
   Triangle, YearDisplay,
-  YearContainer
+  YearContainer,
+  TagDropdownSelect
 } from "./styles/List";
 import {
   getMediaLink,
@@ -435,20 +436,10 @@ const TagDropdown = ({
   const tags = getUniqueTitleTags(milestones);
   return (
     <div style={{ marginLeft: 24, display: "inline-block" }}>
-      <select
+      <TagDropdownSelect
         value={selectedTag}
         onChange={e => setSelectedTag(e.target.value)}
-        style={{
-          background: "var(--ika-purple)",
-          color: "white",
-          border: "2px solid var(--ina-orange)",
-          borderRadius: 8,
-          fontSize: mobile ? 16 : 22,
-          padding: "6px 16px",
-          fontFamily: "Montserrat, sans-serif",
-          fontWeight: 500,
-          outline: "none",
-        }}
+        mobile={mobile}
       >
         <option value="">All Tags</option>
         {tags.map(tag => (
@@ -456,7 +447,7 @@ const TagDropdown = ({
             【{tag}】
           </option>
         ))}
-      </select>
+      </TagDropdownSelect>
     </div>
   );
 };

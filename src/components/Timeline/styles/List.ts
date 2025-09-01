@@ -529,3 +529,16 @@ export const TimelineDialogueBox = styled.div`
   word-break: break-word;
   overflow-wrap: anywhere;
 `;
+
+export const TagDropdownSelect = styled.select<{ mobile?: boolean }>`
+  background: var(--ika-purple);
+  color: white;
+  border: 2px solid var(--ina-orange);
+  border-radius: 8px;
+  font-size: ${({ mobile }) => (mobile ? 16 : 22)}px;
+  padding: 6px 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  width: 100%;
+  outline: none;
+`;
