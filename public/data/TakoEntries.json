@@ -1,82 +1,426 @@
 [
-    {
-        "author": "Notar",
-        "name": "Notar",
-        "category": "Couch Cookie",
-        "attributes": "Horizontal",
-        "description": "Often found lying on the floor surrounded by cookies and some method to watch streams of Ninomae Ina’nis of Hololive English. Although called a ‘couch’ cookie, they are more often found lying on a floor. This misnomer comes from the first few sightings of them on couches, but we now know the couch cookie will sleep on many surfaces, beds, floors, sometimes tables.\n\nThis species of takodachi has been spotted consuming massive amounts of cookies while not moving from its place of rest. Despite this, the couch cookie does not gain mass, this is likely due to the connection with the void.\n\nIt is a rare occurrence to witness the couch cookie move from its position, and only a few documented cases have been recorded. This is usually done to either change its sleeping point to a cooler area or to restock its cookie pile, at which point, the couch cookie will lie down once more and settle to watch streams of Ninomae Ina’nis from Hololive English.\n\nHowever, in secret, even fewer sightings are seen of the couch cookie spreading awareness of their priestess through comments and posts on other sites, furthering the silent movement of WAHrld domINAtion as all takodachis do.",
-        "image": ""
-    },
-    {
-        "author": "Husker",
-        "name": "Husker",
-        "category": "Quiet Tide Tako",
-        "attributes": "Patient / Steadfast",
-        "description": "Content to drift in the calmer currents, this Tako watches from the shadows of the reef, its presence felt more than seen. Though rarely at the forefront, it remains ever loyal to the Priestess, offering silent support through every voyage. When the tides of celebration come, it surfaces with a gentle wave, reminding all that the deep still holds many faithful hearts.",
-        "image": ""
-    },
-    {
-        "author": "Scalim",
-        "name": "Scalim",
-        "category": "Mage",
-        "attributes": "Optimistic / Squishy",
-        "description": "This Optimistic Mage serves with a boundless sense of cheer, casting spells that shimmer with positivity and light. Despite their incredibly Squishy form, which isn't built for direct combat, their resilience is unmatched; they always bounce back with a smile. Their magic is often a shield of support and comfort, proving that true power comes not from brute force, but from an unwavering, hopeful heart.",
-        "image": "Scalim.png"
-    },
-    {
-        "author": "Asarai",
-        "name": "Asarai",
-        "category": "Lurker",
-        "attributes": "Comfy / Potato",
-        "description": "One of many, this Tako gathers cute and comfortable stuff Like A Dragon and it's pile of gold. Although it remains unseen most of the time, it shows support in its own comfy ways by silently watching and cheering occasionally whilst drowning in the comfortable depths of their pillows.",
-        "image": ""
-    },
-    {
-        "author": "Kurasu Kanon",
-        "name": "Kanon",
-        "category": "Just a lil guy",
-        "attributes": "Round / Lazy",
-        "description": "This Tako prefers to lay on the floor of an air-conditioned room. Small though they may be, these round entities are some of the most numerous, and just like any other Tako, the Priestess's presence fills them with happiness.",
-        "image": "Kanon.png"
-    },
-    {
-        "author": "Kaede, Acolyte of Wahtcher",
-        "name": "Kaede Nakamura",
-        "category": "Priestess",
-        "attributes": "Devout / Warm",
-        "description": "A Priestess from a parallel world, this humanoid Tako resides in a shrine dedicated to Wahtcher. There were more of her kind in her world, but they have fled to the void between worlds during a war. She has striking similarities to the priestess of AO, Ninomae Ina'nis. Kaede's main ability is spiritual healing, but has been known to have the ability to hop between dimensions, exorcise demons, and make use of her third eye. She prefers to stay hidden from the world, as her kind has had conflict with humans in the past.",
-        "image": "KaedeNakamura.png"
-    },
-    {
-        "author": "Hiu",
-        "name": "Normiedachi",
-        "category": "WAHdomination Malaysia Branch Member",
-        "attributes": "Hidden / Squishy",
-        "description": "A secret member of WAHdomination Malaysia Branch, this tako stays hidden and waits for the command of Priestess INA. Its responsibility is to transform people into Takodachi if there is a chance. This tako is extremely solidary and will not appear in normal occasions.",
-        "image": ""
-    },
-    {
-        "author": "Bolt",
-        "name": "Bolt",
-        "category": "Merch consumer",
-        "attributes": "Sleepy / Small",
-        "description": "A Takodachi that found his happiness in collecting all artifacts that have connection to the Priestess, proceeds to spend a huge amount of his income on artifacts so he has to work a lot to cover it, compensates his lack of sleep with energy drinks.",
-        "image": ""
-    },
-    {
-        "author": "Kodithehoomanshark🌙🥐",
-        "name": "Takohoomanshark",
-        "category": "Tako commander of the second battalion takochi",
-        "attributes": "Strong / Squishy / Stealthy / Cute / Loyal / Dumb / Strong swimmer / Water control / Sword master",
-        "description": "A loyal follower of the Priestess, this Tako is a very high ranking tako in the tako nation, it is said that only ten Tako commanders are left in the nation. There were originally 100 of them before the Great Rampage in Atlantis where 90 of them were wiped out due to the power gap between the Takos and the Priestess's rampaging form.",
-        "image": ""
-    },
-    {
-        "author": "Yato Tako",
-        "name": "Yato Takoyaki",
-        "category": "",
-        "attributes": "",
-        "description": "",
-        "image": "YatoTakoyaki.png"
-    }
+  {
+    "author": "Notar",
+    "name": "Notar",
+    "category": "Couch Cookie",
+    "attributes": "Horizontal",
+    "description": "Often found lying on the floor surrounded by cookies and some method to watch streams of Ninomae Ina’nis of Hololive English. Although called a ‘couch’ cookie, they are more often found lying on a floor. This misnomer comes from the first few sightings of them on couches, but we now know the couch cookie will sleep on many surfaces, beds, floors, sometimes tables.\n\nThis species of takodachi has been spotted consuming massive amounts of cookies while not moving from its place of rest. Despite this, the couch cookie does not gain mass, this is likely due to the connection with the void.\n\nIt is a rare occurrence to witness the couch cookie move from its position, and only a few documented cases have been recorded. This is usually done to either change its sleeping point to a cooler area or to restock its cookie pile, at which point, the couch cookie will lie down once more and settle to watch streams of Ninomae Ina’nis from Hololive English.\n\nHowever, in secret, even fewer sightings are seen of the couch cookie spreading awareness of their priestess through comments and posts on other sites, furthering the silent movement of WAHrld domINAtion as all takodachis do.",
+    "image": ""
+  },
+  {
+    "author": "Husker",
+    "name": "Husker",
+    "category": "Quiet Tide Tako",
+    "attributes": "Patient / Steadfast",
+    "description": "Content to drift in the calmer currents, this Tako watches from the shadows of the reef, its presence felt more than seen. Though rarely at the forefront, it remains ever loyal to the Priestess, offering silent support through every voyage. When the tides of celebration come, it surfaces with a gentle wave, reminding all that the deep still holds many faithful hearts.",
+    "image": ""
+  },
+  {
+    "author": "Scalim",
+    "name": "Scalim",
+    "category": "Mage",
+    "attributes": "Optimistic / Squishy",
+    "description": "This Optimistic Mage serves with a boundless sense of cheer, casting spells that shimmer with positivity and light. Despite their incredibly Squishy form, which isn't built for direct combat, their resilience is unmatched; they always bounce back with a smile. Their magic is often a shield of support and comfort, proving that true power comes not from brute force, but from an unwavering, hopeful heart.",
+    "image": "Scalim.png"
+  },
+  {
+    "author": "Asarai",
+    "name": "Asarai",
+    "category": "Lurker",
+    "attributes": "Comfy / Potato",
+    "description": "One of many, this Tako gathers cute and comfortable stuff Like A Dragon and it's pile of gold. Although it remains unseen most of the time, it shows support in its own comfy ways by silently watching and cheering occasionally whilst drowning in the comfortable depths of their pillows.",
+    "image": ""
+  },
+  {
+    "author": "Kurasu Kanon",
+    "name": "Kanon",
+    "category": "Just a lil guy",
+    "attributes": "Round / Lazy",
+    "description": "\"This Tako prefers to lay on the floor of an air-conditioned room. Small though they may be, these round entities are some of the most numerous, and just like any other Tako, the Priestess's presence fills them with happiness.\"",
+    "image": "KurasuKanon.png"
+  },
+  {
+    "author": "Kaede, Acolyte of Wahtcher",
+    "name": "Kaede Nakamura",
+    "category": "Priestess",
+    "attributes": "Devout/Warm",
+    "description": "\"A Priestess from a parallel world, this humanoids Tako resides in a shrine dedicated to Wahtcher. There were more of her kind in her world, but they have fled to the void between worlds during a war. She has striking similarities to the priestess of AO, Ninomae Ina'nis. Kaede's main ability is spiritual healing, but has been known to have the ability to hop between dimensions, exorcise demons, and make use of her third eye. She prefers to stay hidden from the world, as her kind has had conflict with humans in the past.",
+    "image": "Kaede,Acolyte of Wahtcher.png"
+  },
+  {
+    "author": "Hiu",
+    "name": "Normiedachi",
+    "category": "",
+    "attributes": "Hidden/ Squishy",
+    "description": "Membership: WAHdomination Malaysia Branch Member\n\n\"A secret member of WAHdomination Malaysia Branch, this tako stay hidden and waiting for the command of Priestess INA. Its responsible is to transform people into Takodachi if there is a chance. This tako is extremely solidary  and will not appear in normal occasion.\"",
+    "image": "Hiu.png"
+  },
+  {
+    "author": "Bolt",
+    "name": "Bolt",
+    "category": "Cannon ball",
+    "attributes": "Sleepy / small",
+    "description": "Categore:Merch consumer \n\n\"A Takodachi that found his happiness in collecting all artifacts that have connection to the Priestess, proseeds to spend a huge amount of his income on artifacts so he has to work a lot to cover it,compensates his lack of sleep with energy drinks\n\nAttributes: Lazy / Big\n\n\"Lazy Takodachi that grew so big he can work as cannon ball, After the shot refuses going back to base so others tako's have to pick him up back",
+    "image": "Bolt.png"
+  },
+  {
+    "author": "Kodithehoomanshark🌙🥐",
+    "name": "Takohoomanshark",
+    "category": "Tako commander of the second battalion takochi",
+    "attributes": "Strong / Squishy / Stealthy / Cute / Loyal / Dumb / Strong swimmer / Water control / Sword master",
+    "description": "A loyal follower of the Priestess, this Tako is a very high ranking tako in the tako nation, it is said that only ten Tako commanders are left in the nation. There were originally 100 of them before the Great Rampage in Atlantis where 90 of them were wiped out due to the power gap between the Takos and the Priestess's rampaging form.",
+    "image": ""
+  },
+  {
+    "author": "Yato Tako",
+    "name": "Yato Takoyaki",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "YatoTako.png"
+  },
+  {
+    "author": "Notar",
+    "name": "",
+    "category": "couch cookie. Like a couch potato except cookie.",
+    "attributes": "horizontal",
+    "description": "Description: \n“Often found lying on the floor surrounded by cookies and some method to watch streams of Ninomae Ina’nis of Hololive English. Although called a ‘couch’ cookie, they are more often found lying on a floor. This misnomer comes from the first few sightings of them on couches, but we now know the couch cookie will sleep on many surfaces, beds, floors, sometimes tables. \n\nThis species of takodachi has been spotted consuming massive amounts of cookies while not moving from its place of rest. Despite this, the couch cookie does not gain mass, this is likely due to the connection with the void. \n\nIt is a rare occurrence to witness the couch cookie move from its position, and only a few documented cases have been recorded. This is usually done to either change its sleeping point to a cooler area or to restock its cookie pile, at which point, the couch cookie will lie down once more and settle to watch streams of Ninomae Ina’nis from Hololive English.\n\nHowever, in secret, even fewer sightings are seen of the couch cookie spreading awareness of their priestess through comments and posts on other sites, furthering the silent movement of WAHrld domINAtion as all takodachis do”",
+    "image": "Notar.png"
+  },
+  {
+    "author": "Husker",
+    "name": "",
+    "category": "Quiet Tide Tako",
+    "attributes": "Patient / Steadfast",
+    "description": "Class / \nDescription:\n\"Content to drift in the calmer currents, this Tako watches from the shadows of the reef, its presence felt more than seen. Though rarely at the forefront, it remains ever loyal to the Priestess, offering silent support through every voyage. When the tides of celebration come, it surfaces with a gentle wave, reminding all that the deep still holds many faithful hearts.\"",
+    "image": "Husker.png"
+  },
+  {
+    "author": "Asarai",
+    "name": "",
+    "category": "Lurker",
+    "attributes": "Comfy / Potato",
+    "description": "\"One of many, this Tako gathers cute and comfortable stuff Like A Dragon and it's pile of gold. Although it remains unseen most of the time, it shows support in its' own comfy ways by silently watching and cheering occasionally whilst drowning in the comfortable depths of their pillows.\"",
+    "image": "Asarai.png"
+  },
+  {
+    "author": "Kodithehoomanshark🌙🥐",
+    "name": "Takohoomanshark🐙🦉🦈",
+    "category": "Tako commander of the second batalion takochi",
+    "attributes": "Strong/squishy/stealthy/cute/loyal/dumb/strong swimmer/water control/sword master",
+    "description": "A loyal follower of the Priestess, this Tako is a very high ranking tako in the tako nation, it is said that only ten Tako commanders are left in the nation. THERE WERE ORIGINALY 100 OF THEM BEFORE THE GREAT Rampage In Atlantis 90 Of Them We're WIPED OUT DUE to the power gap between the Takos and the Priestess rampaging form. \n\nClass:batalion commander\nAttributes: smol and cute",
+    "image": "Kodithehoomanshark🌙🥐.png"
+  },
+  {
+    "author": "HiloNero",
+    "name": "",
+    "category": "Swordbug",
+    "attributes": "Hidden / Sharp",
+    "description": "* A mysterious tiny Takodachi whose name and appearance are only whispered among the shadows. Their stories are scattered across the world, each recounting a tiny piece of the road that they travel. The most common detail between all of them is that they always prominently use a sharp nail-like weapon and wear a mask akin to a crescent moon. However, recently, a new prophecy was revealed detailing about the Tako's upcoming appearance...",
+    "image": "HiloNero.png"
+  },
+  {
+    "author": "BandaiNenzai",
+    "name": "",
+    "category": "Procrastinator",
+    "attributes": "Clever / Dumb",
+    "description": "",
+    "image": "BandaiNenzai.png"
+  },
+  {
+    "author": "Fluid",
+    "name": "74k0d4chi",
+    "category": "Software Glitch",
+    "attributes": "Introverted / Grainy",
+    "description": "\"Surviving solely in digital spaces, this elusive Tako may be spotted wherever software produces unintended results. Prefers to live in places where its shenanigans cause delights instead of concern, like Bethesda games. Finding one at your workplace, however, is a sign of bad luck.\"",
+    "image": "Fluid.png"
+  },
+  {
+    "author": "Synnrad AKA Eric",
+    "name": "Synnrad AKA Eric",
+    "category": "Computer Enjoyer/Baker",
+    "attributes": "Long / Indecisive",
+    "description": "\"Devout follower of the Priestess, this Tako doesn't always know what to focus on aside from watching the Priestess when she streams. Can bake many types of treats and is also a good troubleshooter for tech. It yearns to be more social at times, but its battery can drain fast.\"",
+    "image": "SynnradAKA Eric.png"
+  },
+  {
+    "author": "Nameless (They/Them)",
+    "name": "Ari AKA Nameless",
+    "category": "Knowledge Devourer",
+    "attributes": "resilient / tri-eyed",
+    "description": "\"This tako is in a constant evolution, gathering info and increasing their abilities, all with the express purpose of maximizing cookie consumption. At present, they are very limited, but that has never stopped from trying their best in the face of everything.\"",
+    "image": "Nameless(They/Them).png"
+  },
+  {
+    "author": "Tornhalo",
+    "name": "Tornhalo",
+    "category": "Story Teller",
+    "attributes": "Friendly / Plump",
+    "description": "“This Tako is known to hold many stories it collected as it wanders the void. It likes to share its stories with any and all that wish to hear them. Be it other takos or friendly humans that encounter it.”",
+    "image": "Tornhalo.png"
+  },
+  {
+    "author": "Yato TakoTaco",
+    "name": "Yato TakoTaco",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "YatoTakoTaco.png"
+  },
+  {
+    "author": "NowaruArt",
+    "name": "Cattodachi",
+    "category": "Cat",
+    "attributes": "UwU / Fuzzy",
+    "description": "One of the Takodachi that is very different from the others, with pointy flaps and a tail. This Tako is very similar to Feline / Cat, which is why this Tako is named \"Catto\"dachi! Cattodachi is very shy at first, but once trust is gained, this Tako loves staying close to them. Cattodachi also loves drawing and is always trying its best to get attention from its Priestess by showing off its drawing skills and improvements!",
+    "image": "NowaruArt.png"
+  },
+  {
+    "author": "Endactam",
+    "name": "",
+    "category": "Wrench user.  Attributes: Green, standard tako shape.  *This tako takes things that are  not supposed to work together and makes them function as one.  Machines are easy. If they are broken fix them, if they are too slow upgrade them.  People are difficult.",
+    "attributes": "Green, standard tako shape.  *This tako takes things that are  not supposed to work together and makes them function as one.  Machines are easy. If they are broken fix them, if they are too slow upgrade them.  People are difficult.",
+    "description": "",
+    "image": "Endactam.png"
+  },
+  {
+    "author": "イカ^10",
+    "name": "ika．1024",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "イカ^10.png"
+  },
+  {
+    "author": "Vantablack",
+    "name": "",
+    "category": "Fishing Bait (Conditional)",
+    "attributes": "Moody / Squishy",
+    "description": "\"A versatile bait effective for attracting a wide variety of fish species. Prior to casting it as bait, one must first offer the Tako a cookie. Without it, the creature will promptly retreat to its nest, curl up, and fall into a deep sleep, making it unsuitable for fishing.\n\nNote: Experienced anglers advise keeping a small pouch of cookies on hand, in case the Tako refuses to cooperate at a crucial moment.\"",
+    "image": "Vantablack.png"
+  },
+  {
+    "author": "Popop",
+    "name": "popop",
+    "category": "Mastering the 8th WAH (we adore her(",
+    "attributes": "Passionate / smart",
+    "description": "A devout follower of the priestess. This Tako draws fan art whenever. My drawing powers from the void. A power that comes from the unknown.\n\nClass: Wizard\nAttributes: fat / bouncy \n\n“A tako famous for its wise decisions. This Tako is a researcher of the door to darkness.  I use the ways of the bounce to learn ways of the ancient ones. This Tako is very determined to learn and may inspire other Takos as well",
+    "image": "Popop.png"
+  },
+  {
+    "author": "Huros",
+    "name": "",
+    "category": "Sharing Heater",
+    "attributes": "Warm /confy",
+    "description": "A tako that turned into a soft, warm blanket. He loves cuddling with other takos, rainy afternoons, and movie nights.\n\nHe always stays clean because he feeds on the cookie crumbs and milk stains that fall on him.",
+    "image": "Huros.png"
+  },
+  {
+    "author": "Chumbeque ",
+    "name": "Chumbeque ",
+    "category": "Support",
+    "attributes": "Timid / Squishy",
+    "description": "\"A very shy Tako who struggle to speak until help is needed specially for the priestess and his fellows takodachis\"",
+    "image": "Chumbeque.png"
+  },
+  {
+    "author": "Gathog",
+    "name": "Takonfect",
+    "category": "Confectioner",
+    "attributes": "Shy / Chubby",
+    "description": "\"Inspired by Ina's cooking, this Tako learned the arts of baking all kinds of sweets.\nIts goal is to find the ultimate cookie recipe and use it to supply their fellow Takos.\"",
+    "image": "Gathog.png"
+  },
+  {
+    "author": "Ren",
+    "name": "Takoband",
+    "category": "Head Accessory",
+    "attributes": "Parasitic",
+    "description": "\"A Tako that disguises itself as a hairband, quietly perching atop its host's head. Occasionally, it will manipulate its host to create more of its kinds and distribute them to random people, especially those who gather during certain fes. Those who wear the ‘Takoband’ (willingly) soon find themselves...changed. Converted. ONE OF US!\"\n\n\"World Domination for the Priestess! WAH!\"",
+    "image": "Ren.png"
+  },
+  {
+    "author": "Reyk",
+    "name": "We Are Wahn",
+    "category": "Legion",
+    "attributes": "Metallic Taste/ Unity",
+    "description": "Category/\n\"A bunch of takos, who got inspiration from old traditional Sentai, Yuusha Ina, and Inside Out(lol), decided one day that they should build a robot and name it Takozord(international copyright laws won't allow them to use the name Megazord..)They believe that through unity, combination of braincells and all for one, it would help them achieve much more cookies, togethaa",
+    "image": "Reyk.png"
+  },
+  {
+    "author": "Eyeye",
+    "name": "Eyeye",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Eyeye.png"
+  },
+  {
+    "author": "KiwiNeko",
+    "name": "KiwiNeko",
+    "category": "Catto",
+    "attributes": "Potato, Patient, Otaku",
+    "description": "\"This Tako dreams of attending HoloFes in-person someday to cheer on all the talents and witness the hype. Thus far his work schedule as an internal medicine resident has not been cooperative. Nevertheless, he remains hopeful for next year and prays to the gacha gods for favorable scheduling!\"",
+    "image": "KiwiNeko.png"
+  },
+  {
+    "author": "Arthain",
+    "name": "Arthain",
+    "category": "Caster",
+    "attributes": "Reliable / Soft",
+    "description": "\"No matter the pain, no matter the difficulty, even as the scars accumulate this Tako always gets the job done. The soft, malleable form allows it to adapt to nearly any situation that comes their way, although it'd really rather just relax and roll around in a bed as soft as they are.\"",
+    "image": "Arthain.png"
+  },
+  {
+    "author": "yanagiarisa",
+    "name": "yanagiarisa",
+    "category": "Onigiri Enthusiast",
+    "attributes": "Airhead but loyal, likes to munch",
+    "description": "A loyal follower of the cult and its priestess. Will give free handmade onigiris to fellow takos and ina with a side of calpico. Will be commonly seen in a box swiping credit cards for their waifu and husbandos while eating onigiri",
+    "image": "yanagiarisa.png"
+  },
+  {
+    "author": "Neminem",
+    "name": "Patter Of Takos",
+    "category": "Tako Patter",
+    "attributes": "Squishy, Cuddly, & Multiple Hands for Patting Tako Heads",
+    "description": "When Ina doesn't have time to pat the tako heads, this tako pats the tako heads until Ina returns. Will grow more hands depending on Tako Headpat demands. When not patting takos, this tako uses the hands to do programming faster (because that's how it works in the TV shows right?).",
+    "image": "Neminem.png"
+  },
+  {
+    "author": "Sock",
+    "name": "Sock",
+    "category": "Shapeshifter",
+    "attributes": "Greyscale & Relaxed",
+    "description": "This Tako makes regular use of it's shapeshifting powers to spread good vibes and cheer, all in the aid of the priestess' peaceful takeover and in support of her and her friends.",
+    "image": "Sock.png"
+  },
+  {
+    "author": " LasagnaLaffeydiction",
+    "name": "",
+    "category": "Tophatdachi",
+    "attributes": "Beardy Eyebrows",
+    "description": "\"This Tako is eternaly sleepy and loves the floor. He wishes for his priestess to rest more.\"",
+    "image": "LasagnaLaffeydiction.png"
+  },
+  {
+    "author": "Takomonty",
+    "name": "Takomonty",
+    "category": "Pictomancer",
+    "attributes": "Color Blind / Mute",
+    "description": "\"A perpetually tired tako run ragged by work and scholarly pursuits. It finds comfort in painting, jetpacks, and bardic ballads. It is often strangely silent, and communicates primarily through illustration rather than words; though some say that a picture is worth a thousand wahs\"",
+    "image": "Takomonty.png"
+  },
+  {
+    "author": "vignedev",
+    "name": "vignedev",
+    "category": "Deadline Chaser",
+    "attributes": "Jittery / Hyped",
+    "description": "\"Tako with an unrestricted access to Elixirs of the Undying, ready to jump into action, even when their physical form is screaming in agony. Due to said condition however, they'll often take long breaks, resulting in tasks being done at the last minute, but always on time.\"",
+    "image": "vignedev.png"
+  },
+  {
+    "author": "Ironsigh",
+    "name": "Ironsigh",
+    "category": "Lurker / Observer",
+    "attributes": "Adaptable / Quiet",
+    "description": "\"This Tako is actually a sentient swarm of nanites. After stumbling into some of the Priestess streams, further observation was deemed necessary, so it assumed the malleable and versatile form of a Takodachi, to help blend in, so it can observe and learn more of her wholesome views, cozy streams and with some luck, the hidden knowledge of the Potato ways.\nBeing surrounded by fellow Takos, in such a nice community, decided to settle down amongst them, ready to support Ina and her endeavors whenever it was possible.\n\nWhile quiet in nature, it will always cheer loudly for the Priestess it has chosen to follow\"",
+    "image": "Ironsigh.png"
+  },
+  {
+    "author": "LynsDoodles",
+    "name": "TakoGrem",
+    "category": "Pixel Fusion",
+    "attributes": "Creative / Pointy",
+    "description": "\"A mixture of a Grem and Takodachi that was also thrown into a pixel converter. How did this happen no one really knows. All that matters is that they are here, and ready to show their devotion towards the priestess with a dash of chaos!!!\"",
+    "image": "LynsDoodles.png"
+  },
+  {
+    "author": "chuunilord",
+    "name": "",
+    "category": "Procrastinating Artist",
+    "attributes": "Tired/Bounces notably high",
+    "description": "\"(Not so rare) Tako of the sleepless variety, by now it's blood has been entirely replaced by a certain liquid made of roasted beans, only the priestess's voice can temporarily rouse it from it's constant near dead state\"",
+    "image": "chuunilord.png"
+  },
+  {
+    "author": "Cortes",
+    "name": "Eepydachi",
+    "category": "Potato",
+    "attributes": "Lazy / Rotund",
+    "description": "\"Its perfectly spherical shape allows this tako to move around as much as it wants with minimal effort, even though stopping might prove difficult. It follows the flow of the world, influencing others to do the same  and walk down the path of true potato. (Disclaimer: will still flap around when required)",
+    "image": "Cortes.png"
+  },
+  {
+    "author": "Tonster117",
+    "name": "",
+    "category": "Bug Eater",
+    "attributes": "Calm/Silly",
+    "description": "This Takodachi loves finding bugs and munching on them. So much so it even tries to eat bugs that it finds in video games",
+    "image": "Tonster117.png"
+  },
+  {
+    "author": "Flagicepic",
+    "name": "The Enhancer",
+    "category": "Milk Bender",
+    "attributes": "Jolly / Squishy",
+    "description": "\"All cookies need milk in order to maximize their tasty potential. This Tako will make sure that each cookie comes with the right amount of milk! It uses magic to transfer milk from its infinite milk backpack to the cookies. It's very whimsical and loves to party and drink (milk)\"",
+    "image": "Flagicepic.png"
+  },
+  {
+    "author": "RickyT713",
+    "name": "",
+    "category": "",
+    "attributes": "funny/round",
+    "description": "Catagory: couch potato\n By day, a humble worker. By night, builds a nest on a chair or couch to enjoy snacks and enjoy video games and watch favorite streamers. Known to share snacks and give game tips to those in need and a shoulder to lean on if needed. WARNING: WILL CRY TEARS OF JOY when seeing their favorite idols (including a certain priestess) acheive their dreams and shine for all to see.",
+    "image": "RickyT713.png"
+  },
+  {
+    "author": "RemixDave",
+    "name": "RemixDave",
+    "category": "Technodachi",
+    "attributes": "Electric / Squishy",
+    "description": "\"Known as the one who fixes computers through electrical aura... computers recognise that there will be a zap or a formatting if they don't comply and so give up and comply.\"",
+    "image": "RemixDave.png"
+  },
+  {
+    "author": "Lethargic ",
+    "name": "Kumodachi",
+    "category": "Barbarian",
+    "attributes": "Ferocious, loyal, nimble",
+    "description": "Description: Loyal takodachis that previously assisted Ina in vanquishing an contagious light. Aids in providing damage to any enemy and always comes in numbers. Wears a durable battle mask resembling a certain tribe of spiders. Uses leaps and their sharpened tentacles to disorient enemies while dealing gradual damage. Said to be able to transform into their spider form but has yet to do so. Apparently, Ina herself came up with the name.",
+    "image": "Lethargic.png"
+  },
+  {
+    "author": "Wydken",
+    "name": "Rider Tako",
+    "category": "Capybara Rider",
+    "attributes": "Comfy / Rider",
+    "description": "A master of tranquility, this Takodachi has unlocked the secret art of ultimate chill. Through his bond with the noble Capybara, he has achieved perfect harmony, moving in effortless synchrony with his companion. Like a mikan resting gently on top, he has become one with the Capybara Zen itself.",
+    "image": "Wydken.png"
+  },
+  {
+    "author": "The Shiv Spoon",
+    "name": "",
+    "category": "Spiral Brawler",
+    "attributes": "Strong Willed/ Sharp",
+    "description": "\"This Tako prefers to solve problems head on, and leaps directly into the heart of battle, overwhelming opponents with power and force of will. This also leads to them getting in over their head, and requiring them to adapt to the situation, and come up with plans on the fly\"",
+    "image": "TheShiv Spoon.png"
+  },
+  {
+    "author": "OutOfRice",
+    "name": "RicelessTako",
+    "category": "Tako Farmer",
+    "attributes": "Sleepy / Pixelated",
+    "description": "Description: Born pixelated, this takodachi spent years learning its place in the world. Along the way, it has become a farmer but could never seem to keep its grains of rice around for longer than a day. It prefers to sleep on its downtime.",
+    "image": "OutOfRice.png"
+  },
+  {
+    "author": "Alloy Automaton",
+    "name": "Alloy Automaton",
+    "category": "Inorganic",
+    "attributes": "Quiet / Durable",
+    "description": "\"An ancient magical automaton with the form of a Tako, it moves like a tako, feels like a tako, WAHs like a tako, it is a tako. Right?\"",
+    "image": "AlloyAutomaton.png"
+  }
 ]

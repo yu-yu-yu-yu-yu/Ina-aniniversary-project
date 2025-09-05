@@ -138,7 +138,7 @@ export const genericTakoIcons = [
 
 export function getTakoAvatar(author: string | null, index: number = 0): string {
   if (author && author.trim() !== "") {
-    const fileName = `${author}.png`;
+    const fileName = `${author.replace(/ /g, "")}.png`;
     return `${process.env.PUBLIC_URL}/takoswentries/${fileName}`;
   }
   const icon = genericTakoIcons[index % genericTakoIcons.length];

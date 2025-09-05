@@ -36,7 +36,7 @@ const MessageBoardContainer = (): JSX.Element => {
       const response = await fetch(
         `${process.env.PUBLIC_URL}/data/prepdatav3.json`
       );
-      const data = await response?.json();
+      const data = (await response.json()).reverse();
 
       setSourceData(data);
 

@@ -1,5 +1,15 @@
 [
   {
+    "title": "Classic Ina",
+    "artist": "NowaruArt",
+    "handle": "@NowaruArt",
+    "username": "NowaruArt",
+    "filename": "og_ina_nowaru.png",
+    "vodtitle": "【DEBUT STREAM】Hi!🐙 #hololiveEnglish #holoMyth",
+    "video": "https://www.youtube.com/watch?v=ujCxiHpVYmg",
+    "date": "Sept 12, 2020"
+  },
+  {
     "title": "Painter Ina",
     "artist": "rinh",
     "handle": "@fakh_rinh",
@@ -28,6 +38,26 @@
     "vodtitle": "『VIOLET』 - Ninomae Ina'nis",
     "video": "https://www.youtube.com/watch?v=8ZdLXELdF9Q",
     "date": "Aug 4, 2021"
+  },
+  {
+    "title": "Dr. Oopsie",
+    "artist": "Sock",
+    "handle": "@Sock_Wanders",
+    "username": "Sock_Wanders",
+    "filename": "droopsie_ina_sock.png",
+    "vodtitle": "【COLLAB】 Happy Holoween with HoloEN!!!",
+    "video": "https://www.youtube.com/watch?v=q_2wqvu-tbY",
+    "date": "Oct 31, 2021"
+  },
+  {
+    "title": "Formal Dress Ina",
+    "artist": "floomf",
+    "handle": "@fluumf",
+    "username": "fluumf",
+    "filename": "formal_ina_floomf.png",
+    "vodtitle": "【DEBUT STREAM】Hi!🐙 #hololiveEnglish #holoMyth",
+    "video": "https://www.youtube.com/watch?v=ujCxiHpVYmg",
+    "date": "Dec 11, 2021"
   },
   {
     "title": "New Years Ina",

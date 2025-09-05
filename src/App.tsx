@@ -9,6 +9,7 @@ import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
 import { TakodexList } from "./components/Takodex/TakodexList";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { MuteProvider } from "./components/MuteButton";
+import CollagePage from "./components/Collages/collage";
 
 const App = (): JSX.Element => (
   <Router>
@@ -39,6 +40,9 @@ const App = (): JSX.Element => (
             <Timeline milestones={milestones} />
           </Route>
           <Route path="/takodex" component={TakodexList} />
+          <Route path="/collages">
+            <CollagePage />
+          </Route>
         </Switch>
       </div>
       <ThemeSwitcher />

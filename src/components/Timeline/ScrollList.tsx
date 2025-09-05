@@ -312,10 +312,14 @@ const Event = ({
               alt={hoverMessage.author || "Takodachi"}
               className="takodachi-avatar"
               style={{
-                width: 150,
-                height: 150,
+                width: 120,
+                height: 120,
                 position: "absolute",
                 left: -75,
+              }}
+              onError={e => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = getTakoAvatar(null);
               }}
             />
           )}
@@ -382,7 +386,8 @@ const EventModal = ({
                 style={{
                   display: "flex",
                   alignItems: "flex-start",
-                  marginBottom: 18,
+                  marginBottom: 9,
+                  marginTop: 9,
                   gap: 12,
                   background: "rgba(0,0,0,0.15)",
                   borderRadius: 8,
@@ -399,6 +404,10 @@ const EventModal = ({
                       height: 100,
                       marginRight: 0,
                       flexShrink: 0,
+                    }}
+                    onError={e => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = getTakoAvatar(null, idx);
                     }}
                   />
                 )}
