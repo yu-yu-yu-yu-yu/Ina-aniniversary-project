@@ -34,7 +34,7 @@ const MessageBoardContainer = (): JSX.Element => {
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/prepdatav3.json`
+        `${process.env.PUBLIC_URL}/data/messageData.json`
       );
       const data = (await response.json()).reverse();
 

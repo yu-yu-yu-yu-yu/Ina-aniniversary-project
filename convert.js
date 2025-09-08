@@ -4,23 +4,23 @@ const path = require("path");
 const fetch = require("node-fetch");
 
 const inputCSV = "./src/static/form.csv";
-const prepdatav3Input = "./public/data/prepdatav3.json";
+const messageDataInput = "./public/data/messageData.json";
 const timelineMessagesInput = "./src/static/TimelineMessages.json";
 const takoEntriesInput = "./public/data/TakoEntries.json";
-const prepdatav3Output = "./public/data/prepdatapv.json";
+const messageDataOutput = "./public/data/prepdatapv.json";
 const timelineMessagesOutput = "./public/data/timelinepv.json";
 const takoEntriesOutput = "./public/data/entriespv.json";
 
-const prepdatav3 = [];
+const messageData = [];
 const timelineMessages = [];
 const takoEntries = [];
 
-let artworkIndex = 86;
+let artworkIndex = 0;
 let takosIndex = 73;
 
 // Read original JSON files
-const origPrepdatav3 = fs.existsSync(prepdatav3Input)
-  ? JSON.parse(fs.readFileSync(prepdatav3Input, "utf8"))
+const origmessageData = fs.existsSync(messageDataInput)
+  ? JSON.parse(fs.readFileSync(messageDataInput, "utf8"))
   : [];
 const origTimelineMessages = fs.existsSync(timelineMessagesInput)
   ? JSON.parse(fs.readFileSync(timelineMessagesInput, "utf8"))
@@ -37,9 +37,11 @@ const takosDownloads = [];
 fs.createReadStream(inputCSV)
   .pipe(csv())
   .on("data", (row) => {
-    // prepdatav3: messages and art
+    // messageData: messages and art
     if (row["Anniversary Message Submission"] || row["Art Submission"]) {
       let imageFilename = "";
+      let iconFilename = "";
+
       if (row["Art Submission"] && row["Art Submission"].startsWith("http")) {
         imageFilename = `${artworkIndex}.png`;
         artworkDownloads.push({
@@ -48,10 +50,21 @@ fs.createReadStream(inputCSV)
         });
         artworkIndex++;
       }
-      prepdatav3.push({
+
+      // Set iconFilename only if "Your own Takodachi!" is a valid image link
+      if (row["Your own Takodachi!"] && row["Your own Takodachi!"].startsWith("http")) {
+        iconFilename = `${takosIndex}.png`;
+        takosDownloads.push({
+          url: row["Your own Takodachi!"],
+          filepath: path.join("C:\\Users\\karim\\Documents\\Ina-aniniversary-project\\public\\takos", iconFilename),
+        });
+        takosIndex++;
+      }
+
+      messageData.push({
         user: row["Your Display Name"] || row["Discord Name"] || "",
-        icon: "",
-        message: row["Anniversary Message Submission"].replace("/n","<br>") || "",
+        icon: iconFilename, // Set icon only if downloaded
+        message: row["Anniversary Message Submission"]?.replace("/n","<br>") || "",
         image: imageFilename,
       });
     }
@@ -141,21 +154,17 @@ fs.createReadStream(inputCSV)
         image: takoImageFilename,
       });
     }
-
-    // Download takodachi image to "takos" folder with sequential number
-    if (row["Your own Takodachi!"] && row["Your own Takodachi!"].startsWith("http")) {
-      const takosImageFilename = `${takosIndex}.png`;
-      takosDownloads.push({
-        url: row["Your own Takodachi!"],
-        filepath: path.join("C:\\Users\\karim\\Documents\\Ina-aniniversary-project\\public\\takos", takosImageFilename),
-      });
-      takosIndex++;
-    }
   })
   .on("end", async () => {
-    fs.writeFileSync(prepdatav3Output, JSON.stringify([...origPrepdatav3, ...prepdatav3], null, 2));
+    fs.writeFileSync(messageDataOutput, JSON.stringify([...origmessageData, ...messageData], null, 2));
     console.log("prepdatapv.json written");
 
+    // fs.writeFileSync(timelineMessagesOutput, JSON.stringify(mergedTimelineMessages, null, 2));
+    // console.log("timelinepv.json written");
+
+    // fs.writeFileSync(takoEntriesOutput, JSON.stringify(mergedTakoEntries, null, 2));
+    // console.log("TakoEntries.json written");
+//
     function mergeTimelineMessages(oldEntries, newEntries) {
       // Map by label for quick lookup
       const oldMap = Object.fromEntries(oldEntries.map(e => [e.label, { ...e }]));

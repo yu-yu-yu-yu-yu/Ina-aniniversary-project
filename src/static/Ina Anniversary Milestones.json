@@ -7845,7 +7845,7 @@
         "tako": ""
     },
     {
-        "label": "【POKEMON VIOLET】 ON THE 10TH STREAM OF POKEMON MY TRUE LOVE GAVE TO ME 【#10】",
+        "label": "【POKEMON VIOLET】 ON THE 10TH STREAM OF POKEMON MYtrueLOVE GAVE TO ME 【#10】",
         "media": "https://i.ytimg.com/vi/-IDinB_IWU4/maxresdefault.jpg",
         "date": "02/14/2023",
         "longText": "",
@@ -11433,7 +11433,7 @@
         "label": "【AmiAmi】 Official WAHmbassador On Duty!!!",
         "media": "https://i.ytimg.com/vi/Ona-9_dYIwQ/maxresdefault.jpg",
         "date": "09/28/2024",
-        "longText": "",
+        "longText": "Ina is officially becomes an AmiAmi WAHmbassador, celebrating with a special stream!",
         "highlight": true,
         "important": true,
         "gaming": false,
@@ -11494,7 +11494,7 @@
         "media": "https://i.ytimg.com/vi/B3kE_zxORik/maxresdefault.jpg",
         "date": "10/08/2024",
         "longText": "",
-        "highlight": false,
+        "highlight": true,
         "important": true,
         "gaming": false,
         "drawing": false,
@@ -13160,7 +13160,7 @@
         "date": "08/28/2025",
         "longText": "",
         "highlight": false,
-        "important": false,
+        "important": true,
         "gaming": false,
         "drawing": false,
         "collab": false,
@@ -13168,5 +13168,44 @@
         "video": "https://www.youtube.com/watch?v=LMXky-XlUqM",
         "author": "",
         "tako": ""
+    },
+    {
+        "label": "【Hollow Knight: Silksong】Gitting Gud【#1】",
+        "media": "https://i.ytimg.com/vi/Z9zz1_KQ3L4/hqdefault.jpg",
+        "date": "09/05/2025",
+        "longText": "SILKSONG IS OUT!!!!! AND INA IS PLAYING IT!!!!",
+        "major": false,
+        "important": true,
+        "gaming": false,
+        "drawing": false,
+        "collab": false,
+        "song": false,
+        "video": "https://www.youtube.com/watch?v=Z9zz1_KQ3L4"
+    },
+    {
+        "label": "【Hollow Knight: Silksong】Not Getting Lost Challenge (HARD)【#2】",
+        "media": "https://i.ytimg.com/vi/IUlIoOQ5gpM/hqdefault.jpg",
+        "date": "09/07/2025",
+        "longText": "",
+        "major": false,
+        "important": false,
+        "gaming": true,
+        "drawing": false,
+        "collab": false,
+        "song": false,
+        "video": "https://www.youtube.com/watch?v=IUlIoOQ5gpM"
+    },
+    {
+        "label": "【Work With Inya】Grinding Away At Homework (Chatting In Text)【NO MIC】",
+        "media": "https://i.ytimg.com/vi/2stclSlBJHY/hqdefault.jpg",
+        "date": "09/07/2025",
+        "longText": "",
+        "major": false,
+        "important": false,
+        "gaming": false,
+        "drawing": false,
+        "collab": false,
+        "song": false,
+        "video": "https://www.youtube.com/watch?v=2stclSlBJHY"
     }
 ]

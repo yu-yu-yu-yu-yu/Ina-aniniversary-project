@@ -150,6 +150,16 @@
     "date": "Dec 25, 2024"
   },
   {
+    "title": "Pleides Ina",
+    "artist": "Teo",
+    "handle": "@TeoMurs",
+    "username": "TeoMurs",
+    "filename": "pleides_ina_teo.png",
+    "vodtitle": "【3D LIVE】『Pleides』Ninomae Ina'nis 2024 Live #Pleides3D",
+    "video": "https://www.youtube.com/watch?v=3n9igJnSXtQ",
+    "date": "Dec 28, 2024"
+  },
+  {
     "title": "Spring Party Ina",
     "artist": "NowaruArt",
     "handle": "@NowaruArt",
@@ -158,6 +168,16 @@
     "vodtitle": "【#holoENSpringParty】Celebrating Spring (And Painting) with hololive English!",
     "video": "https://www.youtube.com/watch?v=TjXIQOK7Hs0",
     "date": "Mar 1, 2025"
+  },
+  {
+    "title": "Temari Ina",
+    "artist": "Diana",
+    "handle": "@valkyrie_illust",
+    "username": "valkyrie_illust",
+    "filename": "temari_ina_diana.png",
+    "vodtitle": "『TEMARI』 - Ninomae Ina'nis",
+    "video": "https://www.youtube.com/watch?v=LtTO1HMGjqA",
+    "date": "Mar 13, 2025"
   },
   {
     "title": "Chuuni Ina",
@@ -178,5 +198,15 @@
     "vodtitle": "【3D LIVE】『EVERMORE』 Ninomae Ina'nis Birthday Live 2025 #EvermoreLIVE",
     "video": "https://www.youtube.com/watch?v=I-J11Da5ONY",
     "date": "May 20, 2025"
+  },
+  {
+    "title": "All For One Ina",
+    "artist": "Applejuice",
+    "handle": "@Applenotepad91",
+    "username": "Applejuice",
+    "filename": "afo_ina_applejuice.png",
+    "vodtitle": "【MV】All for One【hololive English Original Song】",
+    "video": "https://www.youtube.com/watch?v=ok24HgzbeLs",
+    "date": "Aug 16, 2025"
   }
 ]
