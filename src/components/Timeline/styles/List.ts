@@ -30,6 +30,7 @@ export const ScrollListContainer = styled.div`
 `;
 export const TopControlsContainer = styled.div`
   margin: 38px 145px 0;
+  padding-bottom: 32px;
   @media (max-width: 1200px) {
     margin: 38px auto 0;
   }
@@ -71,15 +72,23 @@ export const Circle = styled.span`
   z-index: 2;
 `;
 
-//url(${({ media }) => }) center;
-//background-size: cover;
-export const EventPreview = styled.img`
+export const EventPreview = styled.img<{ outline: string }>`
   background: var(--ika-purple);
   width: 410px;
   height: 229px;
   border-radius: 5px;
   margin-bottom: 26px;
   z-index: 2;
+  border: 5px solid transparent;
+  ${({ outline }) =>
+    outline.startsWith("linear-gradient")
+      ? `
+    border-image: ${outline} 1;
+    border-image-slice: 1;
+  `
+      : `
+    border-color: ${outline};
+  `}
   &.mobile {
     width: 253px;
     height: 141px;
@@ -138,7 +147,7 @@ export const ListScrollable = styled(ScrollContainer)`
     padding-bottom: 25%;
   }
   :not(&.mobile) > ${EventContainer}:first-child {
-    padding-left: 111px;
+    padding-left: 0; 
   }
   > ${EventContainer}:last-child {
     ${Line} {
@@ -167,28 +176,31 @@ export const MonthListContainer = styled.div`
   flex: 0 1;
   margin: 0 111px;
   justify-content: space-between;
+  border: 3px solid #34303fff;
   @media (max-width: 1400px) {
     margin: 0 auto;
   }
+  z-index: 1;
 `;
 
 export const YearContainer = styled.div`
   display: flex;
-  flex: 0 1;
-  background-color: var(--ika-purple);
   flex-direction: row;
-  max-width: 170px;
+  background-color: var(--ika-purple);
   border-radius: 10px;
-  left: 20%;
-  top: 10px;
+  border: 3px solid var(--ink-black);
+  padding: 0 12px;
+  margin: 0 auto 12px auto;
+  width: fit-content;
   position: relative;
+  z-index: 0;
 `
 
 export const YearDisplay = styled.div<{
     selected: boolean;
 }>`
   padding: 5px;
-  color: white;
+  color: ${({ selected }) => selected ? "var(--ina-orange)" : "white"};
   text-align: center;
   letter-spacing: 0;
   font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
@@ -196,24 +208,41 @@ export const YearDisplay = styled.div<{
   margin: auto 0;
   :hover {
     cursor: pointer;
-}
-`
+  }
+  ${({ selected }) =>
+    selected &&
+    `
+      text-shadow:
+        -1px -1px 0 #34303fff,
+         1px -1px 0 #34303fff,
+        -1px  1px 0 #34303fff,
+         1px  1px 0 #34303fff;
+    `
+  }
+`;
 
 export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
 }>`
-  color: white;
+  color: ${({ highlight }) => highlight ? "var(--ina-orange)" : "white"};
   text-align: center;
-  letter-spacing: 0;
-  font: normal normal
-    ${({ highlight, passed }) =>
-      highlight ? "normal" : passed ? "light" : "100"}
-    30px/37px Roboto;
+  font: normal normal ${({ highlight, passed }) =>
+    highlight ? "normal" : passed ? "light" : "100"} 30px/37px Roboto;
   opacity: 1;
   margin: auto 0;
   :hover {
     cursor: pointer;
+  }
+  ${({ highlight }) =>
+    highlight &&
+    `
+      text-shadow:
+        -2px -2px 0 #34303fff,
+         2px -2px 0 #34303fff,
+        -2px  2px 0 #34303fff,
+         2px  2px 0 #34303fff;
+    `
   }
 `;
 
@@ -243,15 +272,38 @@ export const EventLabel = styled.span`
   text-align: center;
   font: normal normal 300 30px/37px Roboto;
   letter-spacing: 1.5px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   width: 430px;
+  height: 74px;
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: normal;
+  word-break: break-word;
+  text-overflow: unset;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--ika-purple) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--ika-purple);
+    border-radius: 8px;
+    min-height: 16px;
+    box-shadow: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+    
   &.mobile {
     text-align: left;
     font: normal normal 400 20px/24px Roboto;
     letter-spacing: 1px;
     width: 240px;
+    height: 48px;
   }
 `;
 
@@ -274,12 +326,13 @@ export const EventThumbMobile = styled.div`
 
 export const DrawerContainer = styled.div`
   width: 341px;
-  height: 343px;
-  margin: 70px auto 0;
-  right: 0;
-  left: 0;
-  top: 0;
-  position: absolute;
+  height: auto;
+  margin: 0;
+  right: unset;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
   background-color: var(--inai-purple);
   border-radius: 15px;
   z-index: 69;
@@ -379,19 +432,27 @@ export const EventModalInfoLeft = styled.div`
   }
 `;
 export const EventModalContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 735px;
-  max-width: 100%;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 69;
-  border-radius: 15px;
+  z-index: 1000;
+  background: var(--ika-purple);
   color: #fff;
-  background: var(--inai-purple);
+  border: 2px solid var(--ina-orange);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #0003;
+  padding: 24px 32px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
 `;
 export const ModalVideo = styled.iframe`
   width: 100%;
@@ -432,6 +493,7 @@ export const EventModalHeading = styled.a`
   }
   text-decoration: underline;
 `;
+
 export const EventModalDate = styled.span`
   text-align: right;
   font: normal normal 300 25px/30px Roboto;
@@ -443,4 +505,40 @@ export const EventModalDate = styled.span`
     font: normal normal 300 13px/15px Roboto;
     letter-spacing: 0.65px;
   }
+`;
+
+export const TimelineDialogueBox = styled.div`
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%) translateY(-100%);
+  min-width: 250px;
+  max-width: 300px;
+  background: var(--ika-purple);
+  color: #fff;
+  border: 2px solid var(--ina-orange);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #0003;
+  padding: 16px 22px;
+  font-size: 16px;
+  z-index: 20;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  white-space: pre-line;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+`;
+
+export const TagDropdownSelect = styled.select<{ mobile?: boolean }>`
+  background: var(--ika-purple);
+  color: white;
+  border: 2px solid var(--ina-orange);
+  border-radius: 8px;
+  font-size: ${({ mobile }) => (mobile ? 16 : 22)}px;
+  padding: 6px 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  width: 100%;
+  outline: none;
 `;

@@ -13,7 +13,6 @@ const Gallery = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
   const isLast = cur === milestones.length - 1;
 
   const scrollStrength = 20;
-  //Seeker progress for the milestones
 
   const trackScroll = (e: any) => {
     const { deltaY: yOffset } = e;

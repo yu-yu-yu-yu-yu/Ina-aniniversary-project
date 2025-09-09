@@ -6,6 +6,10 @@ import HomeContent from "./components/Main/HomeContent";
 import { Timeline } from "./components/Timeline/Timeline";
 import { milestones } from "./components/Timeline/Milestones";
 import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
+import { TakodexList } from "./components/Takodex/TakodexList";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
+import { MuteProvider } from "./components/MuteButton";
+import CollagePage from "./components/Collages/collage";
 
 const App = (): JSX.Element => (
   <Router>
@@ -27,30 +31,37 @@ const App = (): JSX.Element => (
             <MessageBoardContainer />
           </Route>
           <Route path="/moments">
-            <VideoBoardContainer  mode='moments'/>
+            <VideoBoardContainer mode="moments" />
           </Route>
           <Route path="/wah">
-            <VideoBoardContainer  mode='wah'/>
+            <VideoBoardContainer mode="wah" />
           </Route>
           <Route path="/timeline">
             <Timeline milestones={milestones} />
           </Route>
+          <Route path="/takodex" component={TakodexList} />
+          <Route path="/collages">
+            <CollagePage />
+          </Route>
         </Switch>
       </div>
+      <ThemeSwitcher />
     </div>
   </Router>
 );
 
 const Home = () => (
   <div>
-    <HomeContent/>
+    <HomeContent />
   </div>
 );
 
-// const Messages = () => (
-//   <div>
-//     <h2>Messages</h2>
-//   </div>
-// );
+function AppWrapper() {
+  return (
+    <MuteProvider>
+      <App />
+    </MuteProvider>
+  );
+}
 
-export default App;
+export default AppWrapper;
