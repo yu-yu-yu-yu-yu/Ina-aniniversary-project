@@ -5,14 +5,16 @@ export interface Milestone {
   longText?: string;
   section?: string;
   anchor?: string;
-  major?: boolean;
+  highlight?: boolean;
   tags?: Tags;
   video?: string;
 }
 
 export type Tags = {
-  important: boolean;
-  gaming: boolean;
-  drawing: boolean;
-  collab: boolean;
+  highlight?: boolean;
+  important?: boolean;
+  gaming?: boolean;
+  drawing?: boolean;
+  collab?: boolean;
+  song?: boolean;
 };

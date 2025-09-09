@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {TakoLoading} from "../TakoLoading/TakoLoading";
@@ -8,13 +8,22 @@ import ScrollArrow from "./BackToTop";
 
 import {Switch} from "../Common/Switch";
 import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar} from "./styles";
-// import MessageBoard from "./MessageBoard";
+import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar, Title} from "./styles";
+import { useMute } from "../MuteButton";
 
-// Limit of items to be loaded per time
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const { muted } = useMute ? useMute() : { muted: false };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+      audioRef.current.volume = 0.1;
+    }
+  }, [muted]);
+
   const [sourceData, setSourceData] = useState([] );
   const [data, setData] = useState([] );
   const [offset, setOffset] = useState(0);
@@ -25,9 +34,9 @@ const MessageBoardContainer = (): JSX.Element => {
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/prepdatav3.json`
+        `${process.env.PUBLIC_URL}/data/messageData.json`
       );
-      const data = await response?.json();
+      const data = (await response.json()).reverse();
 
       setSourceData(data);
 
@@ -158,10 +167,20 @@ const MessageBoardContainer = (): JSX.Element => {
 
   return (
     <div>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
+        autoPlay
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+        muted={muted}
+      />
       <Navbar>
         <NavLink exact to="/">
-        <i className="fa fa-angle-left" /> {` Messages`}
+        <i className="fa fa-angle-left" /> {`Return`}
         </NavLink>
+        <Title>Messages from Takos</Title>
       </Navbar>
       <MessageBoard>
         <FiltersContainer>

@@ -1,14 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const Bar = styled.div<{ active: boolean }>`
+const Container = styled.div`
+  display: flex;
+  margin-right: 57px;
+  flex-direction: row;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const Bar = styled.div<{ active: boolean; color: string }>`
   display: flex;
   border-radius: 100px;
   width: 38px;
   min-width: 38px;
   height: 24px;
-  background-color: ${({ active }) =>
-    active ? "var(--ina-orange)" : "var(--ika-purple)"};
+  background-color: ${({ active, color }) =>
+    active ? color : "var(--ika-purple)"};
   flex-direction: row;
   transition: 0.2s linear;
   &.mobile {
@@ -19,12 +28,13 @@ const Bar = styled.div<{ active: boolean }>`
   }
 `;
 
-const Circle = styled.div<{ active: boolean }>`
+const Circle = styled.div<{ active: boolean; color: string }>`
   border-radius: 50%;
   width: 18px;
   height: 18px;
   background: white;
   margin: auto 3px;
+  border: 2px solid ${({ color }) => color};
 
   transform: translateX(${({ active }) => (active ? "15px" : "0")});
   transition: 0.2s linear;
@@ -33,14 +43,6 @@ const Circle = styled.div<{ active: boolean }>`
     height: 10px;
     margin: auto 1px;
     transform: translateX(${({ active }) => (active ? "8px" : "0")});
-  }
-`;
-const Container = styled.div`
-  display: flex;
-  margin-right: 57px;
-  flex-direction: row;
-  :hover {
-    cursor: pointer;
   }
 `;
 
@@ -60,11 +62,13 @@ export const Switch = ({
   label,
   value,
   onChange,
+  color = "var(--ika-purple)",
   mobile,
 }: {
   label: string;
   value: boolean;
   onChange: (b: boolean) => void;
+  color?: string;
   mobile?: boolean;
 }): JSX.Element => {
   const handleClick = () => {
@@ -72,8 +76,8 @@ export const Switch = ({
   };
   return (
     <Container onClick={handleClick} className={mobile ? "mobile" : ""}>
-      <Bar active={value} className={mobile ? "mobile" : ""}>
-        <Circle active={value} className={mobile ? "mobile" : ""} />
+      <Bar active={value} color={color} className={mobile ? "mobile" : ""}>
+        <Circle active={value} color={color} className={mobile ? "mobile" : ""} />
       </Bar>
       <Label className={mobile ? "mobile" : ""}>{label}</Label>
     </Container>

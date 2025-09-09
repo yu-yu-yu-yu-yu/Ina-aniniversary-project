@@ -1,7 +1,7 @@
-// export {};
 import { Milestone, Tags } from "./Milestone";
-import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState, } from "react";
+import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
 import { Switch } from "../Common/Switch";
+import { upperCase } from "lodash";
 import {
   Backdrop,
   Circle,
@@ -14,7 +14,6 @@ import {
   EventLabel,
   EventModalContainer,
   EventModalDate,
-  EventModalDescription,
   EventModalHeading,
   EventModalInfo,
   EventModalInfoLeft,
@@ -34,10 +33,10 @@ import {
   TagsContainer,
   TopControlsContainer,
   Triangle, YearDisplay,
-  YearContainer
+  YearContainer,
+  TagDropdownSelect
 } from "./styles/List";
 import {
-  filterMilestones,
   getMediaLink,
   IScrollListProps,
   mappedMonths,
@@ -45,17 +44,23 @@ import {
   months, monthsWithYears, MonthWithYear,
   Year,
   years,
+  getMilestoneOutline,
+  tagColors,
+  getTakoAvatar,
+  getUniqueTitleTags,
+  getMessagesForMilestone
 } from "./ScrollListUtils";
+import { TimelineDialogueBox } from "./styles/List";
 import ReactDOM from "react-dom";
-import { ScrollEvent } from "react-indiana-drag-scroll";
-import {last, toPairs} from "lodash";
+import { useMute } from "../MuteButton";
+
 
 const SearchBar = ({
   searchString,
   setSearchString,
 }: {
   searchString: string;
-  setSearchString: (string: string) => void;
+  setSearchString: (searchValue: string) => void;
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
@@ -84,27 +89,45 @@ const TagBar = ({
   <TagBarContainer>
     <TagsContainer>
       <Switch
+        label="Highlighted"
+        value={tags.highlight}
+        onChange={(value) => setSelectedTags({ ...tags, highlight: value })}
+        color={tagColors.highlight}
+        mobile={mobile}
+      />
+      <Switch
         label="Important streams"
         value={tags.important}
         onChange={(value) => setSelectedTags({ ...tags, important: value })}
+        color={tagColors.important}
         mobile={mobile}
       />
       <Switch
         label="Gaming streams"
         value={tags.gaming}
         onChange={(value) => setSelectedTags({ ...tags, gaming: value })}
+        color={tagColors.gaming}
         mobile={mobile}
       />
       <Switch
         label="Drawing streams"
         value={tags.drawing}
         onChange={(value) => setSelectedTags({ ...tags, drawing: value })}
+        color={tagColors.drawing}
         mobile={mobile}
       />
       <Switch
         label="Collabs"
         value={tags.collab}
         onChange={(value) => setSelectedTags({ ...tags, collab: value })}
+        color={tagColors.collab}
+        mobile={mobile}
+      />
+      <Switch
+        label="Songs"
+        value={tags.song}
+        onChange={(value) => setSelectedTags({ ...tags, song: value })}
+        color={tagColors.song}
         mobile={mobile}
       />
     </TagsContainer>
@@ -116,15 +139,33 @@ const TopControls = ({
   setSearchString,
   selectedTags,
   setSelectedTags,
+  selectedTitleTag,
+  setSelectedTitleTag,
+  milestones,
   mobile,
-}: IScrollListProps["searchProps"] & { mobile?: boolean }) => (
+}: IScrollListProps["searchProps"] & {
+  selectedTitleTag: string;
+  setSelectedTitleTag: (tag: string) => void;
+  milestones: Milestone[];
+  mobile?: boolean;
+}) => (
   <TopControlsContainer>
-    <SearchBar searchString={searchString} setSearchString={setSearchString} />
-    <TagBar
-      mobile={mobile}
-      tags={selectedTags}
-      setSelectedTags={setSelectedTags}
-    />
+    <div style={{ marginBottom: 18 }}>
+      <SearchBar searchString={searchString} setSearchString={setSearchString} />
+    </div>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <TagBar
+        mobile={mobile}
+        tags={selectedTags}
+        setSelectedTags={setSelectedTags}
+      />
+      <TagDropdown
+        milestones={milestones}
+        selectedTag={selectedTitleTag}
+        setSelectedTag={setSelectedTitleTag}
+        mobile={mobile}
+      />
+    </div>
   </TopControlsContainer>
 );
 
@@ -144,31 +185,43 @@ const MonthAnchor = React.forwardRef<HTMLSpanElement, IMonthAnchorProps>(
 );
 
 const Thumb = ({
-  event: { media },
+  event,
   mobile,
 }: {
   event: Milestone;
   mobile?: boolean;
 }) => (
-  <EventPreview className={mobile ? "mobile" : ""} src={getMediaLink(media)} />
+  <EventPreview
+    src={event.media}
+    outline={getMilestoneOutline(event.tags || {})}
+    className={mobile ? "mobile" : ""}
+  />
 );
+
+interface EventBaseProps {
+  event: Milestone;
+  monthStart: boolean;
+  onClick: () => void;
+  refMap: IScrollListProps["refMap"];
+}
+
+interface EventMobileProps extends EventBaseProps {
+}
+
+interface EventProps extends EventBaseProps {
+}
 
 const EventMobile = ({
   event,
   monthStart,
   refMap,
   onClick,
-}: {
-  onClick: () => void;
-  refMap: IScrollListProps["refMap"];
-  event: Milestone;
-  monthStart: boolean;
-}) => {
-  const { major, label, date } = event;
+}: EventMobileProps & { event: Milestone & { isLast?: boolean } }) => {
+  const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
   return (
-    <EventContainer className={"mobile"} highlight={!!major} onClick={onClick}>
+    <EventContainer className={"mobile"} highlight={!!highlight} onClick={onClick}>
       {monthStart ? (
         <MonthAnchor
           ref={refMap.current[monthWithYear as MonthWithYear]}
@@ -177,7 +230,7 @@ const EventMobile = ({
         />
       ) : null}
       <Circle />
-      <Line className={"mobile"} />
+      {!event.isLast && <Line className={"mobile"} />}
       <Triangle className={"mobile"} />
       <EventThumbMobile>
         <EventLabel className={"mobile"}>{label}</EventLabel>
@@ -193,20 +246,42 @@ const Event = ({
   event,
   monthStart,
   onClick,
-}: {
-  onClick: () => void;
-  refMap: IScrollListProps["refMap"];
-  event: Milestone;
-  monthStart: boolean;
-}) => {
-  const { major, label, date } = event;
+}: EventProps & { event: Milestone & { isLast?: boolean } }) => {
+  const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
-  const monthWithYear = `${year}_${mappedMonths[month]}`
+  const monthWithYear = `${year}_${mappedMonths[month]}`;
+  const [hovered, setHovered] = useState(false);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [hoverMessage, setHoverMessage] = useState<{ text: string, author: string | null, type: string } | null>(null);
+
+  const handleMouseEnter = () => {
+    const messages = getMessagesForMilestone(event);
+    if (messages.length > 0) {
+      setHoverMessage(messages[Math.floor(Math.random() * messages.length)]);
+    }
+    setHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setMousePos(null);
+    setHoverMessage(null);
+  };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+
   return (
-    <EventContainer highlight={!!major} onClick={onClick}>
+    <EventContainer
+      highlight={!!highlight}
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+      style={{ position: "relative" }}
+    >
       {monthStart ? (
         <MonthAnchor
-          ref={ refMap.current[monthWithYear as MonthWithYear]}
+          ref={refMap.current[monthWithYear as MonthWithYear]}
           date={date}
         />
       ) : null}
@@ -214,10 +289,50 @@ const Event = ({
       <EventInfo>
         <Triangle />
         <Circle />
-        <Line />
+        {!event.isLast && <Line />}
         <EventLabel>{label}</EventLabel>
         <EventDate>{date.replace(/\W/g, "·")}</EventDate>
       </EventInfo>
+      {hovered && hoverMessage && mousePos && (
+        <TimelineDialogueBox
+          style={{
+            left: mousePos.x,
+            top: mousePos.y,
+            transform: "translateY(-100%rem)",
+            position: "fixed",
+            pointerEvents: "none",
+            display: "flex",
+            alignItems: "center",
+            gap: "0"
+          }}
+        >
+          {hoverMessage.author && (
+            <img
+              src={getTakoAvatar(hoverMessage.author)}
+              alt={hoverMessage.author || "Takodachi"}
+              className="takodachi-avatar"
+              style={{
+                width: 120,
+                height: 120,
+                position: "absolute",
+                left: -75,
+              }}
+              onError={e => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = getTakoAvatar(null);
+              }}
+            />
+          )}
+          <div style={{ marginLeft: hoverMessage.author ? 32 : 0, minWidth: 220, maxWidth: 400, display: "flex", flexDirection: "column" }}>
+            <span style={{ fontSize: 14 }}>{hoverMessage.text}</span>
+            {hoverMessage.author && (
+              <span style={{ fontSize: 13, marginTop: 12, color: "#ffd580", alignSelf: "flex-end" }}>
+                by: {hoverMessage.author}
+              </span>
+            )}
+          </div>
+        </TimelineDialogueBox>
+      )}
     </EventContainer>
   );
 };
@@ -232,13 +347,16 @@ const EventModal = ({
   mobile: boolean;
 }) => {
   if (!event) return null;
-  const { media, video, label, longText, date } = event;
+  const { media, video, label, date } = event;
   const className = mobile ? "mobile" : "";
   const isYt = video?.includes("youtube.com") || video?.includes("youtu.be");
   const hrefObj: { href?: Milestone["video"] } = {};
   if (video && !isYt) {
     hrefObj.href = video;
   }
+
+  const messages = getMessagesForMilestone(event);
+
   return ReactDOM.createPortal(
     <>
       <Backdrop onClick={setEvent} />
@@ -246,7 +364,6 @@ const EventModal = ({
         {isYt ? (
           <ModalVideo
             src={video}
-            // width="100%"
             height="415"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -262,9 +379,51 @@ const EventModal = ({
             </EventModalHeading>
             <EventModalDate className={className}>{date}</EventModalDate>
           </EventModalInfoLeft>
-          <EventModalDescription className={className}>
-            {longText}
-          </EventModalDescription>
+          <div>
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginBottom: 9,
+                  marginTop: 9,
+                  gap: 12,
+                  background: "rgba(0,0,0,0.15)",
+                  borderRadius: 8,
+                  padding: "12px 16px"
+                }}
+              >
+                {msg.author && (
+                  <img
+                    src={getTakoAvatar(msg.author, idx)}
+                    alt={msg.author || "Takodachi"}
+                    className="takodachi-avatar"
+                    style={{
+                      width: 100,
+                      height: 100,
+                      marginRight: 0,
+                      flexShrink: 0,
+                    }}
+                    onError={e => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = getTakoAvatar(null, idx);
+                    }}
+                  />
+                )}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: 15, wordBreak: "break-word", whiteSpace: "pre-line" }}>
+                    {msg.text}
+                  </span>
+                  {msg.author && (
+                    <div style={{ fontSize: 13, marginTop: 10, color: "#ffd580", textAlign: "right" }}>
+                      by: {msg.author}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </EventModalInfo>
       </EventModalContainer>
     </>,
@@ -272,13 +431,70 @@ const EventModal = ({
   );
 };
 
+const TagDropdown = ({
+  milestones,
+  selectedTag,
+  setSelectedTag,
+  mobile,
+}: {
+  milestones: Milestone[];
+  selectedTag: string;
+  setSelectedTag: (tag: string) => void;
+  mobile?: boolean;
+}) => {
+  const tags = getUniqueTitleTags(milestones);
+  return (
+    <div style={{ marginLeft: 24, display: "inline-block" }}>
+      <TagDropdownSelect
+        value={selectedTag}
+        onChange={e => setSelectedTag(e.target.value)}
+        mobile={mobile}
+      >
+        <option value="">All Tags</option>
+        {tags.map(tag => (
+          <option key={tag} value={tag}>
+            【{tag}】
+          </option>
+        ))}
+      </TagDropdownSelect>
+    </div>
+  );
+};
+
+function filterMilestonesWithTitleTag(
+  selectedTags: Tags,
+  milestones: Milestone[],
+  searchString: string,
+  selectedTitleTag: string
+) {
+  const isAnyTag = Object.values(selectedTags).reduce(
+    (acc, val) => acc || val,
+    false
+  );
+  return milestones.filter(({ tags, label }) => {
+    const searchCondition = upperCase(label).includes(upperCase(searchString));
+    let tagCondition = !isAnyTag;
+    for (const tag in tags) {
+      tagCondition =
+        tagCondition ||
+        (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
+    }
+    let titleTagCondition = true;
+    if (selectedTitleTag) {
+      const match = label.match(/【([^】]+)】/);
+      titleTagCondition = match ? match[1] === selectedTitleTag : false;
+    }
+    return searchCondition && tagCondition && titleTagCondition;
+  });
+}
+
 const List = ({
   milestones,
   refMap,
   scrollPos,
   mobile,
   setMonth,
-  setYear
+  setYear,
 }: {
   milestones: Milestone[];
   refMap: IScrollListProps["refMap"];
@@ -295,6 +511,13 @@ const List = ({
 
   const listRef: RefObject<HTMLElement> = useRef(null);
   const [modalEvent, setModalEvent] = useState<Milestone | null>(null);
+  const milestoneRefs = useRef<RefObject<HTMLDivElement>[]>([]);
+
+  useEffect(() => {
+    milestoneRefs.current = milestones.map(
+      (_, i) => milestoneRefs.current[i] || React.createRef<HTMLDivElement>()
+    );
+  }, [milestones.length]);
 
   const className = mobile ? "mobile" : "";
   const Element = mobile ? EventMobile : Event;
@@ -305,31 +528,37 @@ const List = ({
     }
   }, [scrollPos]);
 
-  //TODO unfuck prop and typing spaghetti
-  const checkMonthScroll = (e: ScrollEvent) => {
-    if (e?.external) return;
-    const scrollDistance = mobile
-      ? listRef.current?.scrollTop ?? 0
-      : listRef.current?.scrollLeft ?? 0;
-    const months = refMap.current
-    const filtered = toPairs(months).filter(([, monthRef]) => {
+  const checkMonthScroll = () => {
+    let bestIndex = 0;
+    let bestValue = Infinity;
+    milestoneRefs.current.forEach((ref, i) => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
 
-      const monthScroll = mobile
-          ? monthRef?.current?.offsetTop ?? 0
-          : monthRef?.current?.offsetLeft ?? 0;
-      return monthScroll && scrollDistance > monthScroll;
-    })
+        const value = mobile ? Math.abs(rect.top) : Math.abs(rect.left);
 
-    const date = (last(filtered)?.[0] as MonthWithYear) ?? "2020_September";
-
-    const [year,month] = date.split('_') as [Year, Month]
-    setYear(year);
-    setMonth(month);
+        if (
+          (mobile && rect.bottom > 0 && rect.top < window.innerHeight) ||
+          (!mobile && rect.right > 0 && rect.left < window.innerWidth)
+        ) {
+          if (value < bestValue) {
+            bestValue = value;
+            bestIndex = i;
+          }
+        }
+      }
+    });
+    const milestone = milestones[bestIndex];
+    if (milestone) {
+      const [, m, y] = milestone.date.split(/\W/);
+      setYear(y);
+      setMonth(mappedMonths[m]);
+    }
   };
 
   return (
     <ListScrollable
-      onEndScroll={checkMonthScroll}
+      onScroll={checkMonthScroll}
       className={className}
       innerRef={listRef}
     >
@@ -339,13 +568,17 @@ const List = ({
         setEvent={() => setModalEvent(null)}
       />
       {milestones.map((milestone, index) => (
-        <Element
-          onClick={() => setModalEvent(milestone)}
-          refMap={refMap}
-          key={milestone.label}
-          event={milestone}
-          monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
-        />
+        <div ref={milestoneRefs.current[index]} key={milestone.label}>
+          <Element
+            onClick={() => setModalEvent(milestone)}
+            refMap={refMap}
+            event={{
+              ...milestone,
+              isLast: index === milestones.length - 1,
+            }}
+            monthStart={index === 0 || isFirstEventOfTheMonth(index, milestones)}
+          />
+        </div>
       ))}
     </ListScrollable>
   );
@@ -353,22 +586,22 @@ const List = ({
 
 
 
-function YearPicker({setYear, selected}:  {setYear: (year: Year) => void; selected: Year}) {
-  const [open,setOpen] = useState(false)
+function YearPicker({ setYear, selected }: { setYear: (year: Year) => void; selected: Year }) {
+  const [open, setOpen] = useState(false)
 
-  const handleYearClick = (year:Year) => {
+  const handleYearClick = (year: Year) => {
     setYear(year);
     // setOpen(false)
   }
   return (
-       <YearContainer onClick={() => setOpen(!open)}>
-               {years.map(year =>
-                   <YearDisplay key={year} onClick={() => handleYearClick(year)} selected={year==selected}>
-                     {year}
-                   </YearDisplay>
-               )}
+    <YearContainer onClick={() => setOpen(!open)}>
+      {years.map(year =>
+        <YearDisplay key={year} onClick={() => handleYearClick(year)} selected={year == selected}>
+          {year}
+        </YearDisplay>
+      )}
 
-</YearContainer> )
+    </YearContainer>)
 }
 
 const BottomControls = ({
@@ -383,11 +616,11 @@ const BottomControls = ({
   setYear: (year: Year) => void;
 }) => {
   const selectedIndex = months.findIndex(
-      (month) =>
-          month == selectedMonth);
+    (month) =>
+      month == selectedMonth);
 
   return (<>
-    <YearPicker selected={year} setYear={setYear}/>
+    <YearPicker selected={year} setYear={setYear} />
     <MonthListContainer>
       {months.map((month, index) => (
         <MonthDisplay
@@ -400,7 +633,7 @@ const BottomControls = ({
         </MonthDisplay>
       ))}
     </MonthListContainer>
-    </>
+  </>
   );
 };
 
@@ -409,7 +642,8 @@ const Drawer = ({
   searchProps,
   monthProps,
   toggleDrawer,
-}: { visible: boolean; toggleDrawer: () => void } & Pick<
+  milestones,
+}: { visible: boolean; toggleDrawer: () => void; milestones: Milestone[] } & Pick<
   IScrollListProps,
   "searchProps" | "monthProps"
 >) => {
@@ -418,7 +652,13 @@ const Drawer = ({
     <>
       <Backdrop onClick={toggleDrawer} />
       <DrawerContainer>
-        <TopControls mobile {...searchProps} />
+        <TopControls
+          mobile
+          {...searchProps}
+          selectedTitleTag={searchProps.selectedTitleTag}
+          setSelectedTitleTag={searchProps.setSelectedTitleTag}
+          milestones={milestones}
+        />
         <DrawerSeparator>Jump To</DrawerSeparator>
         <BottomControls {...monthProps} />
       </DrawerContainer>
@@ -440,7 +680,6 @@ export const ScrollListWide = ({
   return (
     <ScrollListContainer>
       {modalControls ? null : <TopControls {...searchProps} />}
-
       <List
         setMonth={setMonth}
         milestones={milestones}
@@ -464,8 +703,26 @@ const ScrollListNonWide = ({
   setMonth: IScrollListProps["setMonth"]
   setYear: IScrollListProps["setYear"]
 }) => {
+  const listRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef<[number, number]>([0, 0]);
+
+  const handleScroll = () => {
+    if (listRef.current) {
+      scrollPosRef.current = [
+        listRef.current.scrollLeft,
+        listRef.current.scrollTop,
+      ];
+    }
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo(...scrollPosRef.current);
+    }
+  }, [milestones]);
+
   return (
-    <ScrollListContainer className={"mobile"}>
+    <ScrollListContainer className={"mobile"} ref={listRef} onScroll={handleScroll}>
       <List
         setMonth={setMonth}
         milestones={milestones}
@@ -497,17 +754,28 @@ export const ScrollList = ({
   drawerVisible: boolean;
   toggleDrawer: () => void;
 }): JSX.Element => {
-  const [month, setMonth]: [month: Month, setMonth: (month: Month) => void] =
-    useState("September" as Month);
-  const [year, setYear]: [year: Year, setYear: (year: Year)=> void] = useState(years[0] as Year)
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const { muted } = useMute();
+  const [month, setMonth] = useState<Month>("September");
+  const [year, setYear] = useState<Year>(years[0] as Year);
   const [searchString, setSearchString] = useState("");
-  const [selectedTags, setSelectedTags]: [
-    selectedTags: Tags,
-    setSelectedTags: (tags: Tags) => void
-  ] = useState({} as Tags);
-  const [scroll, setScroll] = useState([0, 0]);
+  const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
+  const [scroll] = useState<[number, number]>([0, 0]);
+  const [selectedTitleTag, setSelectedTitleTag] = useState<string>("");
 
-  const selected = filterMilestones(selectedTags, milestones, searchString);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+    }
+  }, []);
+
+
+  const selected = filterMilestonesWithTitleTag(
+    selectedTags,
+    milestones,
+    searchString,
+    selectedTitleTag
+  );
 
   const monthRefMap = useRef(
     monthsWithYears.reduce(
@@ -518,52 +786,79 @@ export const ScrollList = ({
       {} as Record<MonthWithYear, RefObject<HTMLSpanElement> | null>
     )
   );
-  // const listRef: RefObject<HTMLElement> = ();
 
-  const scrollToMonth = (month: Month, yearToSet = year) => {
-    const isNextYear = yearToSet == years[0] && months.indexOf(month ) < months.indexOf('September')
-    const nextYear = years[years.indexOf(yearToSet) + 1]
-    const selectedMonth = monthRefMap.current?.[`${isNextYear ? nextYear : yearToSet}_${month}` as MonthWithYear]?.current;
-
-    if (selectedMonth) {
-      if (mobile) {
-
-        setScroll([0, +(selectedMonth?.offsetTop ?? 0)]);
-      } else {
-        setScroll([+(selectedMonth?.offsetLeft ?? 0), 0]);
-      }
+  const getFirstMonthInYear = (milestones: Milestone[], targetYear: Year): Month | null => {
+    const found = milestones.find(m => m.date.split(/\W/)[2] === targetYear);
+    if (found) {
+      const [, month] = found.date.split(/\W/);
+      return mappedMonths[month] as Month;
     }
-
-
-    setYear(isNextYear ? nextYear : yearToSet)
-    setMonth(month);
+    return null;
   };
 
-  const handleYear = (year: Year) => {
-    scrollToMonth(year == years[0] ? 'September': 'January', year)
-  }
+  const getFirstMonthWithYear = (milestones: Milestone[], targetMonth: Month, targetYear: Year): MonthWithYear | null => {
+    const found = milestones.find(m => {
+      const [, mMonth, mYear] = m.date.split(/\W/);
+      return mappedMonths[mMonth] === targetMonth && mYear === targetYear;
+    });
+    if (found) {
+      return `${targetYear}_${targetMonth}` as MonthWithYear;
+    }
+    return null;
+  };
+
+  const scrollToMonth = (targetMonth: Month, targetYear: Year = year) => {
+    const monthWithYear = getFirstMonthWithYear(selected, targetMonth, targetYear);
+    if (!monthWithYear) return;
+    const anchor = monthRefMap.current?.[monthWithYear]?.current;
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: mobile ? "start" : "nearest", inline: "start" });
+    }
+    setYear(targetYear);
+    setMonth(targetMonth);
+  };
+
+  const handleYear = (targetYear: Year) => {
+    const firstMonth = getFirstMonthInYear(selected, targetYear);
+    if (firstMonth) {
+      scrollToMonth(firstMonth, targetYear);
+    }
+  };
 
   const searchProps = {
     searchString,
     setSearchString,
     selectedTags,
     setSelectedTags,
+    selectedTitleTag,
+    setSelectedTitleTag,
+    milestones,
   };
   const monthProps = { selectedMonth: month, setMonth: scrollToMonth, year, setYear: handleYear };
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/ensolarado.mp3"}
+        autoPlay
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+        muted={muted}
+      />
       <Drawer
         visible={drawerVisible}
         searchProps={searchProps}
         monthProps={monthProps}
         toggleDrawer={toggleDrawer}
+        milestones={milestones}
       />
       {mobile ? (
         <ScrollListNonWide
           setMonth={setMonth}
           setYear={setYear}
-          scrollPos={scroll as [number, number]}
+          scrollPos={scroll}
           milestones={selected}
           refMap={monthRefMap}
         />
@@ -572,7 +867,7 @@ export const ScrollList = ({
           setMonth={setMonth}
           setYear={setYear}
           refMap={monthRefMap}
-          scrollPos={scroll as [number, number]}
+          scrollPos={scroll}
           searchProps={searchProps}
           milestones={selected}
           monthProps={monthProps}
