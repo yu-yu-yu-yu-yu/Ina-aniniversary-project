@@ -6,7 +6,7 @@ import { Backdrop } from "../Timeline/styles/List";
 const Footer = styled.footer`
   position: relative;  
   z-index: 2;
-  background: var(--ina-orange) 0% 0% no-repeat padding-box;
+  background: #fba147 0% 0% no-repeat padding-box;
   padding: 25px 0px;
   opacity: 1;
   display: flex;
@@ -281,32 +281,6 @@ const Credits = ({
           <tbody>
             <tr>
               <td>
-                <a href="https://dova-s.jp/" target="_blank" rel="noopener noreferrer">
-                  DOVA-SYNDROME
-                </a>
-              </td>
-              <td>
-                BGM
-              </td>
-            </tr>
-            <tr>
-              <td>
-                rinh, eLun, Takomonty, floomf, Sei, LuLu, Malvar0.0, kshut, m-pien, Yoru, Younhand, Kais3r, NowaruArt, Eyeye, JangJang
-              </td>
-              <td>
-                Timeline Banner Outfit Artworks
-              </td>
-            </tr>
-            <tr>
-              <td>
-                StrawberryCandy, Sock
-              </td>
-              <td>
-                All for One Banner Planning and Organizing
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <a
                   href="https://twitter.com/chrone_co"
                   target="_blank"
@@ -344,6 +318,18 @@ const Credits = ({
             <tr>
               <td>Lynn</td>
               <td>Planning, General contribution</td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://twitter.com/ninomaeinanis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ninomae Ina&#39;nis
+                </a>
+              </td>
+              <td>Homepage Ina art</td>
             </tr>
             <tr>
               <td>
@@ -398,24 +384,16 @@ const Credits = ({
               <td>Developer</td>
             </tr>
             <tr>
-              <td>
-                <a
-                  href="https://twitter.com/NexoZerok"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  NxKarim
-                </a>
-              </td>
-              <td>Planning(2025), Developer, General contribution</td>
+              <td>Graphic design</td>
+              <td>My passion</td>
             </tr>
             <tr>
               <td>
                 <a href="https://twitter.com/lyudmilia"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                     target="_blank"
+                     rel="noopener noreferrer"
                 >
-                  Lyudmilia
+                Lyudmilia
                 </a>
               </td>
               <td>Planning, General contribution</td>
@@ -423,8 +401,8 @@ const Credits = ({
             <tr>
               <td>
                 <a href="https://twitter.com/wololoSensei"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                   target="_blank"
+                   rel="noopener noreferrer"
                 >
                   1st Killer
                 </a>
@@ -434,34 +412,13 @@ const Credits = ({
             <tr>
               <td>
                 <a href="https://x.com/Ryusei_Kiiro"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                   target="_blank"
+                   rel="noopener noreferrer"
                 >
                   Ryusei
                 </a>
               </td>
               <td>General contribution</td>
-            </tr>
-            <tr>
-              <td>Graphic design</td>
-              <td>My passion</td>
-            </tr>
-            <tr>
-              <td>That cookie</td>
-              <td>man that cookie was so good</td>
-            </tr>
-            <br />
-            <tr>
-              <td>
-                <a
-                  href="https://twitter.com/ninomaeinanis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ninomae Ina&#39;nis
-                </a>
-              </td>
-              <td>For being so cute and cool and our priestess, Homepage Ina art</td>
             </tr>
           </tbody>
         </table>

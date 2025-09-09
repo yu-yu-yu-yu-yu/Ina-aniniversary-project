@@ -4,7 +4,7 @@
     flex-direction: column;
     position: relative;
     min-height: 100%;
-    background: var(--background) url(./Pattern.png) 0 0;
+    background: var(--unnamed-color-f3edff) url(./Pattern.png) 0 0;
     background-size: 100px;
     background-attachment: fixed;
 }
@@ -41,7 +41,7 @@ nav a.active{
 
     /* Colors: */
     --unnamed-color-ffda9a: #FFDA9A;
-    --lightdark: #F3EDFF;
+    --unnamed-color-f3edff: #F3EDFF;
     --inai-purple: #A198B3;
     --ina-orange: #F8BF04;
     --ika-purple: #564F68;

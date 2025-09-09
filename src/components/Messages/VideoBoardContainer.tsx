@@ -7,8 +7,9 @@ import ScrollArrow from "./BackToTop";
 import {debounce} from "lodash";
 import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar} from "./styles";
 import TakoVideos from "./TakoVideos";
+// import MessageBoard from "./MessageBoard";
 
-
+// Limit of items to be loaded per time
 const LIMIT = 10;
 
 const VideoBoardContainer = ({mode}: {mode:string}): JSX.Element => {

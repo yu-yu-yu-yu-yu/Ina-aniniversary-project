@@ -4,8 +4,7 @@ const csv = require("csv-parser");
 const inputFiles = [
   // "./public/data/video.csv",
   // "./src/static/Ina Anniversary Milestones.csv",
-  //  "./public/data/messageData.csv"
-   "./src/components/Takodex/TakoEntries.csv"
+    "./public/data/prepdatav3.csv"
 ];
 
 async function convertCSV(inputFiles) {

@@ -52,7 +52,7 @@ const SwitchTextLabel = styled.div`
   color: var(--ika-purple);
   font: normal normal 300 25px/30px Montserrat;
   letter-spacing: 0px;
-  color: var(--ika-purple);
+  color: #564F68;
   opacity: 1;
   margin: auto;
   margin-left: 5px;

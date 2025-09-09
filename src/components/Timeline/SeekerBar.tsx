@@ -93,7 +93,7 @@ const StyledNode = styled.div<{ active: boolean; passed: boolean }>`
   background: #fff;
   border: 0.35rem solid
     ${({ active, passed }) =>
-      active ? "var(--ina-orange)" : passed ? "var(--lightdark)" : "var(--ika-purple)"};
+      active ? "#F29A31" : passed ? "#E1D9EF" : "#564F68"};
   border-radius: 50%;
   margin: 1rem 0;
   min-width: 0.7rem;
@@ -110,4 +110,5 @@ const NodeContainer = styled.div`
   background: #666666;
   padding: 0 1em;
   position: relative;
+  overflow: hidden;
 `;

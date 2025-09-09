@@ -4,7 +4,7 @@ const _ = require("lodash");
 
 const IMG_PATH = "./public/images";
 const TAKO_PATH = "./public/takos";
-const CSV_PATH = "./public/data/messageData.csv";
+const CSV_PATH = "./public/data/prepdatav3.csv";
 const filenameDictionary = "./renamedTakos.txt";
 
 const csvWriter = require("csv-writer").createObjectCsvWriter({
