@@ -19,7 +19,6 @@ const images = outfits.map((item: Outfit) => ({
   alt: item.title,
 }));
 
-// Group by title
 const grouped: Record<string, Outfit[]> = {};
 images.forEach(img => {
   if (!grouped[img.title]) grouped[img.title] = [];
@@ -30,7 +29,6 @@ export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
 
-  // Cycle through duplicates every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setDupIdx(prev => {

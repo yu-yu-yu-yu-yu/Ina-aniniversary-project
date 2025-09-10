@@ -66,7 +66,7 @@ const Home = styled.div`
   position: relative;
 `;
 
-const takoCount = 72;
+const takoCount = 137;
 
 interface FloatingTakoData {
   key: number;
@@ -91,7 +91,7 @@ const HomeContent = (): JSX.Element => {
       const spawnCount = Math.floor(Math.random() * 3) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
       for (let i = 0; i < spawnCount; i++) {
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.6) {
           const randomTako = Math.floor(Math.random() * takoCount);
           const spawnBottom = Math.random() * (spawnHeight);
           const newTako: FloatingTakoData = {
