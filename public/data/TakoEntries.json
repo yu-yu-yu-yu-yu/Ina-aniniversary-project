@@ -758,5 +758,13 @@
     "attributes": "Swift / Spiny",
     "description": "\"This Tako likes to be one with the wind, following it wherever it goes.This means it's actually very light and can be flung around easily. Nonetheless, it's good at dodging incoming attacks.\"",
     "image": "Jems.png"
+  },
+  {
+    "author": "SharkyDoko",
+    "name": "Kukki Doko",
+    "category": "Secret Undersea Lurker",
+    "attributes": "Shy / Sneaky / Flowy",
+    "description": "\"One of the 'Shadow Observer' that has a sole duty to monitor and collect data according to the Priestess needs in the shadows. Specialized in underwater observations; by using his flowy body it allows him to get into very dedicate areas to monitor. Is unnaturally shy due to very limited contact with anyone else besides to the Priestess when receiving a new target to monitor.\"",
+    "image": "SharkyDoko.png"
   }
 ]

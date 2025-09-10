@@ -23,8 +23,10 @@ const Menu = (): JSX.Element => {
   const handleHover = (i: number) => {
     setShakingIndex(i);
     setTimeout(() => setShakingIndex(null), 400);
-    const idx = Math.floor(Math.random() * TAKO_COUNT);
-    setPeekTako(`${process.env.PUBLIC_URL}/takos/${idx}.png`);
+    setPeekTako("");
+    setTimeout(() => {
+      setPeekTako(`${process.env.PUBLIC_URL}/takos/${Math.floor(Math.random() * TAKO_COUNT)}.png`);
+    }, 120);
   };
 
   return (

@@ -152,22 +152,19 @@ export const ButtonsDiv = styled.div`
 export const ButtonContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 10vw;
-  height: 10vw;
+  width: 160px;
+  height: 160px;
   margin: 12px;
+  margin-top: 50px;
   z-index: 1;
   overflow: visible;
   @media only screen and (max-width: 1100px) {
-    width: 22vw;
-    height: 22vw;
-    margin: 10px 0;
-    max-width: 180px;
-    max-height: 180px;
+    width: 180px;
+    height: 180px;
   }
   @media only screen and (max-width: 700px) {
-    width: min(40vw, 160px);
-    height: min(40vw, 160px);
-    margin: 8px 0;
+    width: 160px;
+    height: 160px;
   }
 `;
 
@@ -245,11 +242,16 @@ export const CookieLabel = styled.span`
   font-size: 1.1vw;
   font-weight: 1000;
   color: #38250aff;
-  text-shadow:
-    0 2px 0 #fff,
-    2px 0 0 #fff,
-    0 -2px 0 #fff,
-    -2px 0 0 #fff;
+    text-shadow:
+    0 0 0.08em #fff,
+    0.08em 0 0 #fff,
+    -0.08em 0 0 #fff,
+    0 0.08em 0 #fff,
+    0 -0.08em 0 #fff,
+    0.08em 0.08em 0 #fff,
+    -0.08em -0.08em 0 #fff,
+    0.08em -0.08em 0 #fff,
+    -0.08em 0.08em 0 #fff;
   width: 8vw;
   text-align: center;
   z-index: 1;
