@@ -166,7 +166,7 @@ const HomeContent = (): JSX.Element => {
       />
       <audio
         ref={sfxRef}
-        src={process.env.PUBLIC_URL + "/takosound.mp3"}
+        src={process.env.PUBLIC_URL + "/inatakosound.mp3"}
         preload="auto"
         style={{ display: "none" }}
       />
