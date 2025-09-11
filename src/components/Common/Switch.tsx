@@ -33,7 +33,7 @@ const Circle = styled.div<{ active: boolean; color: string }>`
   width: 18px;
   height: 18px;
   background: white;
-  margin: auto 3px;
+  margin: auto 1px;
   border: 2px solid ${({ color }) => color};
 
   transform: translateX(${({ active }) => (active ? "15px" : "0")});

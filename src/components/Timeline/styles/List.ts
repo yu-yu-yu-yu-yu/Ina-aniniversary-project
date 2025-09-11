@@ -57,10 +57,14 @@ export const SearchInput = styled.input`
 export const TagBarContainer = styled.div`
   margin-top: 25px;
 `;
+
 export const TagsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
 `;
+
 export const Circle = styled.span`
   background: #fff;
   border: 3px solid var(--color);

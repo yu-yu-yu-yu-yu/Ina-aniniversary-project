@@ -130,6 +130,13 @@ const TagBar = ({
         color={tagColors.song}
         mobile={mobile}
       />
+      <Switch
+        label="Has Comment"
+        value={tags.hasComment}
+        onChange={(value) => setSelectedTags({ ...tags, hasComment: value })}
+        color="#00FF99"
+        mobile={mobile}
+      />
     </TagsContainer>
   </TagBarContainer>
 );
@@ -471,13 +478,18 @@ function filterMilestonesWithTitleTag(
     (acc, val) => acc || val,
     false
   );
-  return milestones.filter(({ tags, label }) => {
+  return milestones.filter(({ tags, label, longText }) => {
     const searchCondition = upperCase(label).includes(upperCase(searchString));
     let tagCondition = !isAnyTag;
     for (const tag in tags) {
       tagCondition =
         tagCondition ||
         (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
+    }
+    if (selectedTags.hasComment) {
+      const messages = getMessagesForMilestone({ label, longText } as Milestone);
+      if (!messages.length) return false;
+      tagCondition = true;
     }
     let titleTagCondition = true;
     if (selectedTitleTag) {

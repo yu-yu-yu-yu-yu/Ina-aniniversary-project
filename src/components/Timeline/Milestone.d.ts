@@ -17,4 +17,5 @@ export type Tags = {
   drawing?: boolean;
   collab?: boolean;
   song?: boolean;
+  hasComment?: boolean; 
 };

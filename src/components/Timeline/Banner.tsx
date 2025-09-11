@@ -28,6 +28,7 @@ images.forEach(img => {
 export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
+  const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,7 +62,12 @@ export const Banner = () => {
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
               >
-                <BannerImg src={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`} alt={outfit.title}/>
+                <span
+                  style={{ display: "block", cursor: "pointer" }}
+                  onClick={() => setModalImgSrc(`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`)}
+                >
+                  <BannerImg src={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`} alt={outfit.title}/>
+                </span>
                 <DialogueBox $active={activeIdx === i}>
                   <div style={{ textAlign: "center" }}>
                     <b style={{ fontSize: "1.25em" }}>{outfit.title}</b>
@@ -101,6 +107,34 @@ export const Banner = () => {
           })}
         </Container>
       </BannerWrapper>
+      {modalImgSrc && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.8)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => setModalImgSrc(null)}
+        >
+          <img
+            src={modalImgSrc}
+            alt="Artwork"
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              borderRadius: "12px",
+            }}
+            onClick={e => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 };

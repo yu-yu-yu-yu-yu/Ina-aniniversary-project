@@ -291,7 +291,7 @@ const Credits = ({
             </tr>
             <tr>
               <td>
-                rinh, eLun, Takomonty, floomf, Sei, LuLu, Malvar0.0, kshut, m-pien, Yoru, Younhand, Kais3r, NowaruArt, Eyeye, JangJang
+                rinh, eLun, Takomonty, floomf, Sei, LuLu, Malvar0.0, kshut, m-pien, Yoru, Younhand, Kais3r, NowaruArt, Eyeye, JangJang, Taiki, RCSI, Teo, Diana, Applejuice, Wydken, Astraea
               </td>
               <td>
                 Timeline Banner Outfit Artworks
