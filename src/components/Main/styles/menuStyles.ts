@@ -45,10 +45,10 @@ export const MenuFlexRow = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 48px;
+  gap: clamp(64px, 10vw, 240px);
   width: 100%;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1600px;
   @media only screen and (max-width: 1100px) {
     flex-direction: column;
     align-items: center;
@@ -65,7 +65,6 @@ export const MenuTextContainer = styled.div`
   flex: 1 1 0;
   min-width: 320px;
   max-width: 600px;
-  
   @media only screen and (max-width: 1100px) {
     width: 100%;
     max-width: 100%;
@@ -125,27 +124,22 @@ export const MenuTextContainer = styled.div`
 
 export const ButtonsDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 10vw);
-  row-gap: 16px;
-  column-gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: clamp(18px, 3vw, 48px);
   justify-content: center;
   align-items: start;
-  padding-top: 0;
-  padding-bottom: 0;
   flex: 1 1 0;
   min-width: 10vw;
   max-width: 700px;
   @media only screen and (max-width: 1100px) {
     grid-template-columns: repeat(2, 1fr);
-    row-gap: 24px;
-    column-gap: 32px;
+    gap: clamp(12px, 2vw, 32px);
     max-width: 100vw;
   }
   @media only screen and (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
     max-width: 100vw;
-    column-gap: 0;
-    row-gap: 12px;
+    gap: clamp(8px, 2vw, 16px);
   }
 `;
 
