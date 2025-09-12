@@ -64,6 +64,9 @@ const TakoFloatBg = styled.div`
 
 const Home = styled.div`
   position: relative;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 `;
 
 const takoCount = 137;

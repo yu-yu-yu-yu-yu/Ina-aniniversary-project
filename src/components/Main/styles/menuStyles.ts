@@ -235,7 +235,7 @@ export const CookieLabel = styled.span`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20px;
+  font-size: clamp(14px, 4vw, 20px);
   font-weight: 1000;
   color: #38250aff;
   text-shadow:
@@ -248,7 +248,9 @@ export const CookieLabel = styled.span`
     -0.08em -0.08em 0 #fff,
     0.08em -0.08em 0 #fff,
     -0.08em 0.08em 0 #fff;
-  width: 8vw;
+  width: auto;
+  min-width: 0;
+  max-width: 90%;
   text-align: center;
   z-index: 1;
   pointer-events: none;
@@ -259,12 +261,12 @@ export const CookieLabel = styled.span`
   justify-content: center;
 
   @media only screen and (max-width: 1100px) {
-    font-size: 1.8vw;
-    width: 10vw;
+    font-size: clamp(13px, 3vw, 18px);
+    max-width: 90%;
   }
   @media only screen and (max-width: 700px) {
-    font-size: 2.5vw;
-    width: 16vw;
+    font-size: clamp(12px, 4vw, 16px);
+    max-width: 90%;
   }
 `;
 

@@ -98,22 +98,24 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                     }}
                     style={{ margin: "0 auto" }}
                 >
-                    {filteredEntries.map(({ name, author, category, attributes, description, image }, i) => (
-                        <SubmissionContainer key={i}>
-                            <TextBubbleContainer>
-                                <BubbleHeader>
-                                    <HeaderText>{name}</HeaderText>
-                                </BubbleHeader>
-                                <BubbleMessage>
-                                    <b>Category:</b> {category}
-                                </BubbleMessage>
-                                <BubbleMessage>
-                                    <b>Attributes:</b> {attributes}
-                                </BubbleMessage>
+                    {filteredEntries.map(({ name, author, category, attributes, description, image }, i) => {
+                        const displayName = name && name.trim() !== "" ? name : author;
+                        return (
+                            <SubmissionContainer key={i}>
+                                <TextBubbleContainer>
+                                    <BubbleHeader>
+                                        <HeaderText>{displayName ? displayName : author}</HeaderText>
+                                    </BubbleHeader>
+                                    <BubbleMessage>
+                                        <b>Category:</b> {category ? category : "Uncategorized"}
+                                    </BubbleMessage>
+                                    <BubbleMessage>
+                                        <b>Attributes:</b> {attributes ? attributes : "Unkwnown"}
+                                    </BubbleMessage>
                                     {(image && !failedImages[i]) ? (
                                         <BubbleImage
                                             src={process.env.PUBLIC_URL + "/takoswentries/" + image}
-                                            alt={name}
+                                            alt={displayName}
                                             onError={() => handleImgError(i)}
                                         />
                                     ) : (
@@ -122,14 +124,15 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                                             alt="random tako icon"
                                         />
                                     )}
-                                <hr />
-                                <BubbleMessage>{description}</BubbleMessage>
-                                <BubbleMessage>
-                                    <b>by: {author}</b>
-                                </BubbleMessage>
-                            </TextBubbleContainer>
-                        </SubmissionContainer>
-                    ))}
+                                    <hr />
+                                    <BubbleMessage>{description}</BubbleMessage>
+                                    <BubbleMessage>
+                                        <b>by: {author}</b>
+                                    </BubbleMessage>
+                                </TextBubbleContainer>
+                            </SubmissionContainer>
+                        );
+                    })}
                 </Masonry>
             </MessageBoard>
         </>
