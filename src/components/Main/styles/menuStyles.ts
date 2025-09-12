@@ -158,13 +158,13 @@ export const ButtonContainer = styled.div`
   z-index: 1;
   overflow: visible;
   @media only screen and (max-width: 1100px) {
-    width: 170px;
-    height: 170px;
+    width: 160px;
+    height: 160px;
     padding-top: 25px;
   }
   @media only screen and (max-width: 700px) {
-    width: 160px;
-    height: 160px;
+    width: 150px;
+    height: 150px;
     padding-top: 15px;
   }
 `;
@@ -211,8 +211,8 @@ export const CookieButton = styled.button<{ $shaking?: boolean }>`
     max-height: 180px;
   }
   @media only screen and (max-width: 700px) {
-    width: min(30vw, 160px);
-    height: min(30vw, 160px);
+    width: 160px;
+    height: 160px;
   }
 `;
 

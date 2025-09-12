@@ -26,6 +26,9 @@ const LoreTextContainer = styled.div`
     text-align: center;
     left: auto;
   }
+  @media (max-width: 701px) {
+  margin-left: 0;
+  }
   .lore-text {
     padding: 10px 35px;
     margin-top: 20px;
