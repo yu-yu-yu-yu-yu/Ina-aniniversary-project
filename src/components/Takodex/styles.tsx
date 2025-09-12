@@ -9,6 +9,7 @@ export const SubmissionContainer = styled.div`
     padding-bottom: 5px;
   }
 `;
+
 export const TextBubbleContainer = styled.div`
   position: relative;
   font-family: sans-serif;

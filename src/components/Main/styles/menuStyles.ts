@@ -1,14 +1,13 @@
 import styled, { keyframes, css } from "styled-components";
 import { Link } from "react-router-dom";
 
-
 export const NewTag = styled.div`
   position: absolute;
-  top: -10px;
+  top: 50px;
   left: 10px;
   background: var(--ika-purple);
   color: white;
-  font-size: 0.8em;
+  font-size: 12px;
   font-weight: bold;
   padding: 2px 8px;
   border-radius: 12px;
@@ -27,16 +26,16 @@ export const shake = keyframes`
 
 export const MenuContainer = styled.div`
   text-align: center;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   background: var(--background)
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
   z-index: 1;
   @media only screen and (max-width: 701px) {
-    padding-top: auto;
-    padding-bottom: 150px; 
+    padding-top: 0;
+    padding-bottom: 50px;
   }
 `;
 
@@ -45,10 +44,10 @@ export const MenuFlexRow = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: clamp(64px, 10vw, 240px);
+  gap: 48px;
   width: 100%;
   margin: 0 auto;
-  max-width: 1600px;
+  max-width: 1200px;
   @media only screen and (max-width: 1100px) {
     flex-direction: column;
     align-items: center;
@@ -60,7 +59,7 @@ export const MenuFlexRow = styled.div`
 export const MenuTextContainer = styled.div`
   position: relative;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 50px;
   z-index: 3;
   flex: 1 1 0;
   min-width: 320px;
@@ -69,6 +68,7 @@ export const MenuTextContainer = styled.div`
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    padding-top: 25px;
   }
 
   &:before {
@@ -124,72 +124,82 @@ export const MenuTextContainer = styled.div`
 
 export const ButtonsDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: clamp(18px, 3vw, 48px);
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 32px 32px;
   justify-content: center;
   align-items: start;
   flex: 1 1 0;
   min-width: 10vw;
   max-width: 700px;
+  margin-top: 50px;
   @media only screen and (max-width: 1100px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(12px, 2vw, 32px);
-    max-width: 100vw;
+    gap: 24px;
+    max-width: 100%;
+    margin-top: 25px;
   }
   @media only screen and (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 100vw;
-    gap: clamp(8px, 2vw, 16px);
+    gap: 16px;
+    max-width: 100%;
+    margin-top: 15px;
   }
 `;
 
 export const ButtonContainer = styled.div`
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 160px;
   height: 160px;
-  margin: 12px;
-  margin-top: 50px;
+  margin: 0;
+  padding-top: 50px;
   z-index: 1;
   overflow: visible;
   @media only screen and (max-width: 1100px) {
-    width: 180px;
-    height: 180px;
+    width: 170px;
+    height: 170px;
+    padding-top: 25px;
   }
   @media only screen and (max-width: 700px) {
     width: 160px;
     height: 160px;
+    padding-top: 15px;
   }
 `;
 
 export interface TakoPeekProps {
   active: boolean;
 }
+
 export const TakoPeek = styled.img<TakoPeekProps>`
   position: absolute;
   left: 50%;
-  top: 5px;
-  width: 5vw;
+  top: 50%;
+  width: 80px;
   pointer-events: none;
   z-index: 0;
   transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-  transform: translateX(-50%)
-    translateY(${props => (props.active ? '-5.1vw' : '1vw')})
-    scale(${props => (props.active ? 1.1 : 1)});
+  transform: translate(-50%, -50%) translateY(${props => (props.active ? '-5.1vw' : '4vw')}) scale(${props => (props.active ? 1.1 : 0.5)});
+  @media only screen and (max-width: 700px) {
+    width: 60px;
+    transform: translate(-50%, -50%) translateY(${props => (props.active ? '-15vw' : '4vw')}) scale(${props => (props.active ? 1.1 : 0.5)});
+  }
 `;
 
 export const CookieButton = styled.button<{ $shaking?: boolean }>`
-  width: 10vw;
-  height: 10vw; 
+  width: 200px;
+  height: 200px;
   border: none;
   background: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   cursor: pointer;
   outline: none;
-  margin: 0 8px 16px 8px;
+  margin: 0;
   position: relative;
   ${({ $shaking }) =>
     $shaking &&
@@ -197,34 +207,26 @@ export const CookieButton = styled.button<{ $shaking?: boolean }>`
       animation: ${shake} 0.4s linear;
     `}
   @media only screen and (max-width: 1100px) {
-    width: 22vw;
-    height: 22vw;
     max-width: 180px;
     max-height: 180px;
-    margin: 0 8px 16px 8px;
   }
   @media only screen and (max-width: 700px) {
-    width: min(40vw, 160px);
-    height: min(40vw, 160px);
-    margin: 0 8px 16px 8px;
+    width: min(30vw, 160px);
+    height: min(30vw, 160px);
   }
 `;
 
 export const CookieImg = styled.img`
-  width: 10vw;
-  height: 10vw;
   display: block;
   margin: 0 auto;
   transition: transform 0.2s;
   @media only screen and (max-width: 1100px) {
-    width: 22vw;
-    height: 22vw;
-    max-width: 180px;
-    max-height: 180px;
+    width: min(50vw, 180px);
+    height: min(50vw, 180px);
   }
   @media only screen and (max-width: 700px) {
-    width: min(40vw, 160px);
-    height: min(40vw, 160px);
+    width: min(50vw, 160px);
+    height: min(50vw, 160px);
   }
 `;
 
@@ -233,10 +235,10 @@ export const CookieLabel = styled.span`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.1vw;
+  font-size: 20px;
   font-weight: 1000;
   color: #38250aff;
-    text-shadow:
+  text-shadow:
     0 0 0.08em #fff,
     0.08em 0 0 #fff,
     -0.08em 0 0 #fff,
@@ -252,6 +254,9 @@ export const CookieLabel = styled.span`
   pointer-events: none;
   white-space: pre-line;
   line-height: 1.15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media only screen and (max-width: 1100px) {
     font-size: 1.8vw;

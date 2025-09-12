@@ -766,5 +766,13 @@
     "attributes": "Shy / Sneaky / Flowy",
     "description": "\"One of the 'Shadow Observer' that has a sole duty to monitor and collect data according to the Priestess needs in the shadows. Specialized in underwater observations; by using his flowy body it allows him to get into very dedicate areas to monitor. Is unnaturally shy due to very limited contact with anyone else besides to the Priestess when receiving a new target to monitor.\"",
     "image": "SharkyDoko.png"
+  },
+  {
+    "author": "Lyudmilia",
+    "name": "Videnov",
+    "category": "Observer",
+    "attributes": "Short / Observant",
+    "description": "\"A peculiar takodachi with no remarkable features except with it's notebook near it. It loves observing other takodachi and the priestess. Some rumors say, that it also sneaks for some cookies at night when all other takos are asleep.\"",
+    "image": "Lyudmilia.png"
   }
 ]
