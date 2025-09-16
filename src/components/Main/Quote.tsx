@@ -67,7 +67,7 @@ const GrayscaleButton = styled.button`
   position: absolute;
   bottom: 18px;
   right: 18px;
-  background: var(--ika-purple);
+  background: var(--ina-orange);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -80,8 +80,8 @@ const GrayscaleButton = styled.button`
   transition: background 0.2s, color 0.2s;
   z-index: 10;
   &:hover {
-    background: var(--ina-orange);
-    color: var(--ika-purple);
+    background: var(--ika-purple);
+    color: var(--ina-orange);
   }
 `;
 
@@ -108,7 +108,7 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <GrayscaleButton onClick={() => setGrayscale((g) => !g)}>
-        {grayscale ? "Revive Ina" : "Ina Asked For This Button"}
+        {grayscale ? "Revive Ina" : "Ina asked for this button but did't see it so it's now another color www "}
       </GrayscaleButton>
     </QuoteContainer>
   );

@@ -144,11 +144,11 @@ export const ListScrollable = styled(ScrollContainer)`
   flex-direction: row;
   width: 100vw;
   align-items: flex-end;
-  padding-bottom: 10%;
+  padding-bottom: 100px;
   scroll-behavior: smooth;
   transition: all linear;
   @media (max-width: 1200px) {
-    padding-bottom: 25%;
+    padding-bottom: 150px;
   }
   :not(&.mobile) > ${EventContainer}:first-child {
     padding-left: 0; 

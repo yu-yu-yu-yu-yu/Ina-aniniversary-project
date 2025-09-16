@@ -50,6 +50,26 @@ export const Banner = () => {
       <h2 style={{ fontSize: "3em", textAlign: "center", margin: "0.5em"}}>
         Ina&apos;s Outfits Across Time
       </h2>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
+          marginBottom: "12px",
+          marginTop: "-18px",
+          fontSize: "1.25em",
+          color: "var(--ika-purple)",
+          fontWeight: 600,
+          userSelect: "none",
+        }}
+      >
+        <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8592;</span>
+        <span style={{ background: "var(--ika-purple)", color: "white", borderRadius: 12, padding: "6px 18px", boxShadow: "0 2px 8px #0002" }}>
+          Drag to scroll
+        </span>
+        <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8594;</span>
+      </div>
       <BannerWrapper>
         <Container horizontal>
           {Object.entries(grouped).map(([title, arr], i) => {
