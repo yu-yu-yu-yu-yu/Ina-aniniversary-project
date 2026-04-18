@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import {
-  Navbar,
   Title,
   Grid,
   Card,
@@ -12,6 +11,8 @@ import {
   ModalBackdrop,
   ModalImg
 } from "./styles";
+
+import { Navbar } from "../Common/Navbar";
 
 const collages = [
   {

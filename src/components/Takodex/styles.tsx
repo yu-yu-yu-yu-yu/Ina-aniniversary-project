@@ -113,26 +113,6 @@ export const SearchBar = styled.input`
   }
 `;
 
-export const Navbar = styled.nav`
-  background: var(--inai-purple);
-  display: flex;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex: 0 1;
-  padding: 0.9rem 1.25rem;
-  text-align: center;
-  font: normal normal normal 3em montserrat;
-  letter-spacing: 0;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 768px) {
-    font: normal normal normal 25px/30px Montserrat;
-    padding: 0.7rem 0.5rem;
-    text-align: left;
-  }
-`;
-
 export const Title = styled.h2`
   margin: 0;
   color: var(--ika-purple);

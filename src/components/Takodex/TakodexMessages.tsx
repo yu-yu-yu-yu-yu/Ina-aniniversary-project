@@ -11,7 +11,8 @@ import {
     Title,
     AddTakoButton
 } from "./styles";
-import { Navbar, MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
+import {MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
+import { Navbar } from "../Common/Navbar";
 
 const iconImages = [
     "8-bit Tako.png",

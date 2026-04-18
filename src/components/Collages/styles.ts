@@ -1,19 +1,5 @@
 import styled from "styled-components";
 
-export const Navbar = styled.nav`
-  background: var(--inai-purple);
-  display: flex;
-  position: sticky;
-  z-index: 100;
-  top: 0;
-  flex: 0 1;
-  padding: 0.9rem 1.25rem;
-  text-align: left;
-  font: normal normal normal 3em montserrat;
-  letter-spacing: 0;
-  justify-content: space-between;
-`;
-
 export const NavLinkContainer = styled.div`
   flex-grow: 2;
 `;

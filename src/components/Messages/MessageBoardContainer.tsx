@@ -8,7 +8,8 @@ import ScrollArrow from "./BackToTop";
 
 import {Switch} from "../Common/Switch";
 import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, Navbar, SearchBar, Title} from "./styles";
+import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
+import { Navbar } from "../Common/Navbar";
 import { useMute } from "../MuteButton";
 
 const LIMIT = 10;

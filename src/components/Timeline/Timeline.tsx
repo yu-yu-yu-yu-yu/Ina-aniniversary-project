@@ -5,29 +5,13 @@ import { Milestone } from "./Milestone";
 import { NavLink } from "react-router-dom";
 import { NavLinkContainer } from "./styles/List";
 import { Banner } from "./Banner";
+import { Navbar } from "../Common/Navbar";
 
 const Container = styled.div`
   flex-direction: column;
   display: flex;
   flex: 1;
   color: var(--ika-purple);
-`;
-
-const Navbar = styled.nav`
-  background: var(--inai-purple);
-  display: flex;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex: 0 1;
-  padding: 0.9rem 1.25rem;
-  text-align: left;
-  font: normal normal normal 45px/55px montserrat;
-  letter-spacing: 0;
-  justify-content: space-between;
-  &.mobile {
-    font: normal normal normal 25px/30px Montserrat;
-  }
 `;
 
 const Content = styled.div`
