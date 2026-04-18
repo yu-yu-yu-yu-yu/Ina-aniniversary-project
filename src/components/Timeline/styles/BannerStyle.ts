@@ -37,7 +37,7 @@ export const VodLink = styled.a`
   font-weight: bold;
   transition: color 0.2s;
   &:hover {
-    color: #fff7b2;
+    color: var(--text-color);
     background: var(--ina-orange);
     text-decoration: underline;
     border-radius: 4px;
@@ -88,10 +88,10 @@ export const DialogueBox = styled.div<{ $active: boolean }>`
   transform: translateX(-50%);
   min-width: 180px;
   background: var(--ika-purple);
-  color: #fff;
+  color: var(--text-color);
   border: 2px solid var(--ina-orange);
   border-radius: 12px;
-  box-shadow: 0 4px 16px #0003;
+  box-shadow: 0 4px 16px var(--shadow);
   padding: 12px 18px;
   font-size: 15px;
   z-index: 10;

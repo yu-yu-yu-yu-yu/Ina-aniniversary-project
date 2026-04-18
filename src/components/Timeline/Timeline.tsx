@@ -78,10 +78,10 @@ const HintPopover = styled.div`
   top: 60px;
   right: 10px;
   background: var(--ika-purple);
-  color: #fff;
+  color: var(--text-color);
   border: 2px solid var(--ina-orange);
   border-radius: 12px;
-  box-shadow: 0 4px 16px #0003;
+  box-shadow: 0 4px 16px var(--shadow);
   padding: 16px 22px;
   font-size: 0.5em;
   z-index: 100;

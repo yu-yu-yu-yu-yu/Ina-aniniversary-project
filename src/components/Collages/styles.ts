@@ -64,7 +64,7 @@ export const CollageTitle = styled.h3`
 `;
 
 export const Description = styled.p`
-  color: #fff;
+  color: var(--text-color);
   font-size: 1em;
 `;
 

@@ -6,7 +6,7 @@ export const NewTag = styled.div`
   top: 50px;
   left: 10px;
   background: var(--ika-purple);
-  color: white;
+  color: var(--text-color);
   font-size: 12px;
   font-weight: bold;
   padding: 2px 8px;

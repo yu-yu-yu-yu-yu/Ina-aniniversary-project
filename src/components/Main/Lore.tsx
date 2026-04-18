@@ -112,9 +112,9 @@ const AnimationCreditsContainer = styled.div`
 `;
 
 const AnimationCredits = styled.p`
-  color: white;
+  color: var(--text-color);
   font-size: 20px;
-  text-shadow: 0 5px 6px #00000029;
+  text-shadow: 0 5px 6px var(--shadow);
   align-self: center;
 `;
 

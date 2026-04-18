@@ -33,7 +33,7 @@ const PunContainer = styled.div`
   border: 2px solid var(--ika-purple);
   border-radius: .4em;
   position: absolute;
-  background: white;
+  background: var(--text-color);
   z-index: 69;
   top: 100px;
   min-width: 90%;
@@ -41,7 +41,7 @@ const PunContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 10px 1px rgba(0,0,0,0.25);
+  box-shadow: 0 0 10px 1px var(--shadow);
 `
 
 interface TakoIconProps {
@@ -57,7 +57,7 @@ const PunDisplay = styled.span`
 
 
 const PunHint = styled.div`
-  color: #fff;
+  color: var(--text-color);
   font-size: 14px;
   max-width: 28ch;
   text-align: center;

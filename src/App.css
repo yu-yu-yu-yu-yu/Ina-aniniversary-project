@@ -23,12 +23,12 @@ html,body, #root {
 nav a{
     display: inline-block;
     text-align: center;
-    color: #fff;
+    color: var(--text-color);
 }
 
 nav a.active{
-    background: white;
-    color: #03a9f4;
+    background: var(--text-color);
+    color: var(--ina-orange);
 }
 
 .Content {
@@ -45,5 +45,19 @@ nav a.active{
     --inai-purple: #A198B3;
     --ina-orange: #F8BF04;
     --ika-purple: #564F68;
-    --ink-black: #000000;
+        --ink-black: #000000;
+        --text-color: #ffffff;
+        --background-image: url('./Pattern.png');
     }
+
+/* Standard site title and icon styles to keep consistency across pages */
+.site-title {
+    font-family: Montserrat, sans-serif;
+    color: var(--ika-purple);
+    font-weight: 700;
+}
+.topbar-icon {
+    color: var(--ina-orange);
+    width: 32px;
+    height: 32px;
+}

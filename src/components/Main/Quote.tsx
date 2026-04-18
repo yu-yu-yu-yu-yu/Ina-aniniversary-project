@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const QuoteContainer = styled.div`
-  background: transparent linear-gradient(180deg, var(--inai-purple) 0%, var(--ika-purple) 100%) 0% 0% no-repeat padding-box;
+const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
+  background: ${({ $grayscale }) =>
+    $grayscale
+      ? "linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(40,40,40,0.95) 100%)"
+      : "transparent linear-gradient(180deg, var(--inai-purple) 0%, var(--ika-purple) 100%) 0% 0% no-repeat padding-box"};
   text-align: center;
   padding: 80px 20px;
   margin-top: 30px;
@@ -37,6 +40,7 @@ const QuoteContent = styled.div`
   font: normal normal normal 40px/51px Roboto;
   letter-spacing: 2.5px;
   color: #ffffff;
+  color: var(--text-color);
   @media only screen and (max-width: 701px) {
     display: block;
     margin: auto;
@@ -68,7 +72,7 @@ const GrayscaleButton = styled.button`
   bottom: 18px;
   right: 18px;
   background: var(--ina-orange);
-  color: #fff;
+  color: var(--text-color);
   border: none;
   border-radius: 8px;
   padding: 10px 18px;
@@ -76,7 +80,7 @@ const GrayscaleButton = styled.button`
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: 0 2px 8px var(--shadow);
   transition: background 0.2s, color 0.2s;
   z-index: 10;
   &:hover {
@@ -89,7 +93,7 @@ const Quote = (): JSX.Element => {
   const [grayscale, setGrayscale] = useState(false);
 
   return (
-    <QuoteContainer>
+    <QuoteContainer $grayscale={grayscale}>
       <QuoteInaImg
         src={`${process.env.PUBLIC_URL}/InaInaIna.png`}
         grayscale={grayscale}

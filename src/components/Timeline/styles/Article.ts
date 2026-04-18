@@ -53,7 +53,7 @@ export const NewsPaperContainer = styled.div`
   }
 `;
 export const SectionButton = styled.div<{ selected: boolean }>`
-  color: #fff;
+  color: var(--text-color);
   font-size: 5vw;
   line-height: 5vw;
   font-weight: 300;

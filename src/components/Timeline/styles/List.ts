@@ -66,7 +66,7 @@ export const TagsContainer = styled.div`
 `;
 
 export const Circle = styled.span`
-  background: #fff;
+  background: var(--text-color);
   border: 3px solid var(--color);
   border-radius: 50%;
   width: 22px;
@@ -180,7 +180,7 @@ export const MonthListContainer = styled.div`
   flex: 0 1;
   margin: 0 111px;
   justify-content: space-between;
-  border: 3px solid #34303fff;
+  border: 3px solid var(--ink-black);
   @media (max-width: 1400px) {
     margin: 0 auto;
   }
@@ -204,7 +204,7 @@ export const YearDisplay = styled.div<{
     selected: boolean;
 }>`
   padding: 5px;
-  color: ${({ selected }) => selected ? "var(--ina-orange)" : "white"};
+  color: ${({ selected }) => selected ? "var(--ina-orange)" : "var(--text-color)"};
   text-align: center;
   letter-spacing: 0;
   font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
@@ -217,10 +217,10 @@ export const YearDisplay = styled.div<{
     selected &&
     `
       text-shadow:
-        -1px -1px 0 #34303fff,
-         1px -1px 0 #34303fff,
-        -1px  1px 0 #34303fff,
-         1px  1px 0 #34303fff;
+        -1px -1px 0 var(--shadow),
+         1px -1px 0 var(--shadow),
+        -1px  1px 0 var(--shadow),
+         1px  1px 0 var(--shadow);
     `
   }
 `;
@@ -229,7 +229,7 @@ export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
 }>`
-  color: ${({ highlight }) => highlight ? "var(--ina-orange)" : "white"};
+  color: ${({ highlight }) => highlight ? "var(--ina-orange)" : "var(--text-color)"};
   text-align: center;
   font: normal normal ${({ highlight, passed }) =>
     highlight ? "normal" : passed ? "light" : "100"} 30px/37px Roboto;
@@ -242,10 +242,10 @@ export const MonthDisplay = styled.span<{
     highlight &&
     `
       text-shadow:
-        -2px -2px 0 #34303fff,
-         2px -2px 0 #34303fff,
-        -2px  2px 0 #34303fff,
-         2px  2px 0 #34303fff;
+        -2px -2px 0 var(--shadow),
+         2px -2px 0 var(--shadow),
+        -2px  2px 0 var(--shadow),
+         2px  2px 0 var(--shadow);
     `
   }
 `;
@@ -345,13 +345,13 @@ export const DrawerContainer = styled.div`
   }
   ${SearchInput} {
     font: normal normal normal 16px/19px Montserrat;
-    color: #ffffff;
+    color: var(--text-color);
     ::placeholder {
-      color: white;
+      color: var(--text-color);
     }
   }
   ${SearchBarContainer} {
-    border-bottom-color: white;
+    border-bottom-color: var(--text-color);
     margin: 0 20px;
   }
   ${TagBarContainer} {
@@ -391,14 +391,14 @@ export const DrawerSeparator = styled.span`
   text-align: left;
   font: normal normal 300 16px/19px Montserrat;
   letter-spacing: 0;
-  color: white;
+  color: var(--text-color);
   opacity: 1;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid var(--text-color);
   display: block;
 `;
 
 export const DrawerToggleI = styled.i`
-  color: white;
+  color: var(--text-color);
   padding-right: 15px;
   &:hover {
     cursor: pointer;
@@ -442,10 +442,10 @@ export const EventModalContainer = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1000;
   background: var(--ika-purple);
-  color: #fff;
+  color: var(--text-color);
   border: 2px solid var(--ina-orange);
   border-radius: 12px;
-  box-shadow: 0 4px 16px #0003;
+  box-shadow: 0 4px 16px var(--shadow);
   padding: 24px 32px;
   max-width: 90vw;
   max-height: 90vh;
@@ -460,17 +460,17 @@ export const EventModalContainer = styled.div`
 `;
 export const ModalVideo = styled.iframe`
   width: 100%;
-  box-shadow: 0px 5px 5px #0000003d;
+  box-shadow: 0px 5px 5px var(--shadow);
 `;
 
 export const ModalMedia = styled.img`
   width: 100%;
-  box-shadow: 0px 5px 5px #0000003d;
+  box-shadow: 0px 5px 5px var(--shadow);
 `;
 export const EventModalDescription = styled.p`
   font: normal normal 300 15px/18px Roboto;
   width: 335px;
-  border-left: 2px solid #fff;
+  border-left: 2px solid var(--text-color);
   padding-left: 20px;
   flex: 3;
   &.mobile {
@@ -484,8 +484,8 @@ export const EventModalHeading = styled.a`
   font: normal normal normal 30px/40px Montserrat;
   letter-spacing: 0;
   padding-top: 10px;
-  color: #ffffff;
-  text-shadow: 0 5px 6px #00000029;
+  color: var(--text-color);
+  text-shadow: 0 5px 6px var(--shadow);
   overflow: hidden;
   //text-overflow: ellipsis;
   //white-space: nowrap;
@@ -502,9 +502,9 @@ export const EventModalDate = styled.span`
   text-align: right;
   font: normal normal 300 25px/30px Roboto;
   letter-spacing: 1.25px;
-  color: #ffffff;
+  color: var(--text-color);
   padding-top: 10px;
-  text-shadow: 0px 5px 6px #00000029;
+  text-shadow: 0px 5px 6px var(--shadow);
   &.mobile {
     font: normal normal 300 13px/15px Roboto;
     letter-spacing: 0.65px;
@@ -519,10 +519,10 @@ export const TimelineDialogueBox = styled.div`
   min-width: 250px;
   max-width: 300px;
   background: var(--ika-purple);
-  color: #fff;
+  color: var(--text-color);
   border: 2px solid var(--ina-orange);
   border-radius: 12px;
-  box-shadow: 0 4px 16px #0003;
+  box-shadow: 0 4px 16px var(--shadow);
   padding: 16px 22px;
   font-size: 16px;
   z-index: 20;
