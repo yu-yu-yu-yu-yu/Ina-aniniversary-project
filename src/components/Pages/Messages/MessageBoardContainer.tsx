@@ -1,29 +1,23 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState} from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {TakoLoading} from "../TakoLoading/TakoLoading";
+import {TakoLoading} from "../../Common/TakoLoading";
 import {Submission} from "./Submission";
 import {NavLink} from "react-router-dom";
 import ScrollArrow from "./BackToTop";
 
-import {Switch} from "../Common/Switch";
+import {Switch} from "../../Common/Switch";
 import {debounce} from "lodash";
 import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
-import { Navbar } from "../Common/Navbar";
-import { useMute } from "../MuteButton";
+import { Navbar } from "../../Common/Navbar";
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const { muted } = useMute ? useMute() : { muted: false };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = muted;
-      audioRef.current.volume = 0.1;
-    }
-  }, [muted]);
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
 
   const [sourceData, setSourceData] = useState([] );
   const [data, setData] = useState([] );

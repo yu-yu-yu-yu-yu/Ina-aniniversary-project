@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useTheme } from "../ThemeProvider";
-import { ThemeName, themes } from "../themes";
+import { useTheme } from "./ThemeProvider";
+import { ThemeName, themes } from "./themes";
 
 const themeNames: ThemeName[] = ["Standard", "Violet", "Meconopsis", "Temari"];
 

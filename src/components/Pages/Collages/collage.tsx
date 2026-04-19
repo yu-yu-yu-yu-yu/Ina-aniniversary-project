@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-
+import { useAudio } from "../../../hooks/useAudio";
+import { useMute } from "../../Common/MuteButton";
+import { Navbar } from "../../Common/Navbar";
 import {
   Title,
   Grid,
@@ -11,8 +13,6 @@ import {
   ModalBackdrop,
   ModalImg
 } from "./styles";
-
-import { Navbar } from "../Common/Navbar";
 
 const collages = [
   {
@@ -30,14 +30,8 @@ const collages = [
 
 const CollagePage = () => {
   const [modalSrc, setModalSrc] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-    }
-  }, []);
-
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
   return (
     <div>
       <Navbar>
@@ -49,7 +43,6 @@ const CollagePage = () => {
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/ensolarado.mp3"}
-        autoPlay
         loop
         preload="auto"
         style={{ display: "none" }}

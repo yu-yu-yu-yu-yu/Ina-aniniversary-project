@@ -1,8 +1,8 @@
 import { upperCase, zipObject } from "lodash";
 import { Milestone, Tags } from "./Milestone";
 import { MutableRefObject, RefObject } from "react";
-import milestoneJson from "../../static/Ina Anniversary Milestones.json";
-import timelineMessages from "../../static/TimelineMessages.json";
+import milestoneJson from "../../../static/Ina Anniversary Milestones.json";
+import timelineMessages from "../../../static/TimelineMessages.json";
 
 export const months = [
   "January",

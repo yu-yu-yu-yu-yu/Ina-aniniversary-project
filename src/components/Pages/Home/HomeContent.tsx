@@ -5,7 +5,8 @@ import Logo from "./Logo";
 import Lore from "./Lore";
 import Quote from "./Quote";
 import Menu from "./Menu";
-import { useMute } from "../MuteButton";
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 
 const floatUp = keyframes`
   0% {
@@ -85,9 +86,9 @@ const ANIMATION_DURATION = 9000;
 const HomeContent = (): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const sfxRef = useRef<HTMLAudioElement>(null);
   const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -123,19 +124,6 @@ const HomeContent = (): JSX.Element => {
     return () => clearInterval(cleanupInterval);
   }, []);
 
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = muted;
-    }
-  }, [muted]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-    }
-  }, []);
-
   const handleTakoClick = () => {
     if (sfxRef.current) {
       sfxRef.current.volume = 0.2;
@@ -144,28 +132,14 @@ const HomeContent = (): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (audioRef.current && !muted) {
-        audioRef.current.muted = false;
-        audioRef.current.play();
-      }
-      window.removeEventListener("click", handleFirstInteraction);
-    };
-    window.addEventListener("click", handleFirstInteraction);
-    return () => window.removeEventListener("click", handleFirstInteraction);
-  }, [muted]);
-
   return (
     <>
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/明日も晴れるといいね.mp3"}
-        autoPlay
         loop
         preload="auto"
         style={{ display: "none" }}
-        muted={muted}
       />
       <audio
         ref={sfxRef}

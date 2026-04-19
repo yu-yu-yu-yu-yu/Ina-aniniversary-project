@@ -1,5 +1,5 @@
 import { Milestone } from "./Milestone";
-import milestoneJson from "../../static/Ina Anniversary Milestones.json";
+import milestoneJson from "../../../static/Ina Anniversary Milestones.json";
 
 const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
   const formatDate = (string: string) => {

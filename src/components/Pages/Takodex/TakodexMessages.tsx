@@ -12,7 +12,7 @@ import {
     AddTakoButton
 } from "./styles";
 import {MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
-import { Navbar } from "../Common/Navbar";
+import { Navbar } from "../../Common/Navbar";
 
 const iconImages = [
     "8-bit Tako.png",

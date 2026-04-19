@@ -1,27 +1,18 @@
 import React from "react";
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MessageBoardContainer from "./components/Messages/MessageBoardContainer";
-import HomeContent from "./components/Main/HomeContent";
-import { Timeline } from "./components/Timeline/Timeline";
-import { milestones } from "./components/Timeline/Milestones";
-import VideoBoardContainer from "./components/Messages/VideoBoardContainer";
-import { TakodexList } from "./components/Takodex/TakodexList";
-import { ThemeSwitcher } from "./components/ThemeSwitcher";
-import { MuteProvider } from "./components/MuteButton";
-import CollagePage from "./components/Collages/collage";
+import MessageBoardContainer from "./components/Pages/Messages/MessageBoardContainer";
+import HomeContent from "./components/Pages/Home/HomeContent";
+import { Timeline } from "./components/Pages/Timeline/Timeline";
+import { milestones } from "./components/Pages/Timeline/Milestones";
+import VideoBoardContainer from "./components/Pages/Messages/VideoBoardContainer";
+import { TakodexList } from "./components/Pages/Takodex/TakodexList";
+import { ThemeSwitcher } from "./components/Common/ThemeSwitcher";
+import { MuteProvider } from "./components/Common/MuteButton";
+import CollagePage from "./components/Pages/Collages/collage";
 
 const App = (): JSX.Element => (
   <Router>
     <div className="App">
-      {/* <nav className="Header">
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-        <NavLink to="/messages">Messages</NavLink>
-        <NavLink to="/timeline">Timeline</NavLink>
-      </nav> */}
-
       <div className="Content">
         <Switch>
           <Route exact path="/">

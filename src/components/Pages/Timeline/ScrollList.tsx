@@ -1,6 +1,6 @@
 import { Milestone, Tags } from "./Milestone";
 import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
-import { Switch } from "../Common/Switch";
+import { Switch } from "../../Common/Switch";
 import { upperCase } from "lodash";
 import {
   Backdrop,
@@ -52,8 +52,8 @@ import {
 } from "./ScrollListUtils";
 import { TimelineDialogueBox } from "./styles/List";
 import ReactDOM from "react-dom";
-import { useMute } from "../MuteButton";
-
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 
 const SearchBar = ({
   searchString,
@@ -766,21 +766,15 @@ export const ScrollList = ({
   drawerVisible: boolean;
   toggleDrawer: () => void;
 }): JSX.Element => {
-  const audioRef = useRef<HTMLAudioElement>(null);
   const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
+  
   const [month, setMonth] = useState<Month>("September");
   const [year, setYear] = useState<Year>(years[0] as Year);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
   const [scroll] = useState<[number, number]>([0, 0]);
   const [selectedTitleTag, setSelectedTitleTag] = useState<string>("");
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-    }
-  }, []);
-
 
   const selected = filterMilestonesWithTitleTag(
     selectedTags,

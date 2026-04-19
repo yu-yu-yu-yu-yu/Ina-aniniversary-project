@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { TakodexMessages } from "./TakodexMessages";
-import { useMute } from "../MuteButton"; 
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 
 interface TakodexEntry {
   name: string;
@@ -13,21 +14,8 @@ interface TakodexEntry {
 
 const TakodexList = () => {
   const [entries, setEntries] = React.useState<TakodexEntry[]>([]);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const { muted } = useMute ? useMute() : { muted: false };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = muted;
-      audioRef.current.volume = 0.1;
-    }
-  }, [muted]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-    }
-  }, []);
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
 
   useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/data/TakoEntries.json`)

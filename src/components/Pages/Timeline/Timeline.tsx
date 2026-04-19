@@ -5,7 +5,7 @@ import { Milestone } from "./Milestone";
 import { NavLink } from "react-router-dom";
 import { NavLinkContainer } from "./styles/List";
 import { Banner } from "./Banner";
-import { Navbar } from "../Common/Navbar";
+import { Navbar } from "../../Common/Navbar";
 
 const Container = styled.div`
   flex-direction: column;

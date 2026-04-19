@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {TakoLoading} from "../TakoLoading/TakoLoading";
+import {TakoLoading} from "../../Common/TakoLoading";
 import {Submission} from "./Submission";
 import {NavLink} from "react-router-dom";
 import ScrollArrow from "./BackToTop";
 import {debounce} from "lodash";
 import {FiltersContainer, Loader, MessageBoard, SearchBar} from "./styles";
-import { Navbar } from "../Common/Navbar";
+import { Navbar } from "../../Common/Navbar";
 import TakoVideos from "./TakoVideos";
 
 
