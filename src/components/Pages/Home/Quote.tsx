@@ -9,14 +9,12 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   text-align: center;
   padding: 80px 20px;
   margin-top: 30px;
-  margin-bottom: 10px;
   box-shadow: 0px 10px 6px var(--shadow);
   z-index: 3;
   position: relative;
 
   @media only screen and (max-width: 701px) {
     margin-top: 10px;
-    margin-bottom: 20px;
     padding: 50px 20px;
   }
 `;

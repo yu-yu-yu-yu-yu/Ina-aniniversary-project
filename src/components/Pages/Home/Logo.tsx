@@ -141,7 +141,7 @@ const Logo = (): JSX.Element => {
       <CenterContainer>
         <TitleHeader>Tentacult Temple Fan Site</TitleHeader>
         <LogoImg alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
-        <LogoHeader>INA&apos;S 5TH ANNIVERSARY CELEBRATION FAN PROJECT</LogoHeader>
+        <LogoHeader>INA&apos;S 6TH BIRTHDAY CELEBRATION</LogoHeader>
       </CenterContainer>
       <ScrollIndicator>
         <h3>

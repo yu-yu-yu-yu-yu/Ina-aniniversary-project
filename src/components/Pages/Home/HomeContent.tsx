@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import Lore from "./Lore";
 import Quote from "./Quote";
 import Menu from "./Menu";
+import Divider from "./Divider";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 
@@ -44,7 +45,8 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
   left: ${({ left }) => left}vw;
   bottom: ${({ bottom }) => bottom}px;
   width: 5vmax;
-  z-index: 1;
+  max-width: 100px;
+  z-index: 3;
   pointer-events: none;
   animation: ${floatUp} 9s linear forwards;
 `;
@@ -52,12 +54,12 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
 const TakoFloatBg = styled.div`
   position: absolute;
   pointer-events: none;
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  width: 95vw; 
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 95vw;
   height: 100%;
-  z-index: 1;
+  z-index: 3;
   overflow: visible;
   overflow-x: hidden;
   pointer-events: none;
@@ -82,7 +84,6 @@ interface FloatingTakoData {
 
 const ANIMATION_DURATION = 9000;
 
-
 const HomeContent = (): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -97,7 +98,7 @@ const HomeContent = (): JSX.Element => {
       for (let i = 0; i < spawnCount; i++) {
         if (Math.random() < 0.6) {
           const randomTako = Math.floor(Math.random() * takoCount);
-          const spawnBottom = Math.random() * (spawnHeight);
+          const spawnBottom = Math.random() * spawnHeight;
           const newTako: FloatingTakoData = {
             key: Date.now() + Math.random() + i,
             left: Math.random() * 90,
@@ -117,7 +118,7 @@ const HomeContent = (): JSX.Element => {
   useEffect(() => {
     const cleanup = () => {
       setFloatingTakos((prev) =>
-        prev.filter((tako) => Date.now() - tako.createdAt < ANIMATION_DURATION)
+        prev.filter((tako) => Date.now() - tako.createdAt < ANIMATION_DURATION),
       );
     };
     const cleanupInterval = setInterval(cleanup, 1000);
@@ -147,23 +148,24 @@ const HomeContent = (): JSX.Element => {
         preload="auto"
         style={{ display: "none" }}
       />
-      <TakoFloatBg>
-        {floatingTakos.map((tako) => (
-          <FloatingTako
-            key={tako.key}
-            left={tako.left}
-            bottom={tako.bottom}
-            src={`${process.env.PUBLIC_URL}/takos/${tako.tako}.png`}
-            alt="floating takodachi"
-            onClick={handleTakoClick}
-            style={{ pointerEvents: "auto", cursor: "pointer" }}
-          />
-        ))}
-      </TakoFloatBg>
       <Home>
+        <TakoFloatBg>
+          {floatingTakos.map((tako) => (
+            <FloatingTako
+              key={tako.key}
+              left={tako.left}
+              bottom={tako.bottom}
+              src={`${process.env.PUBLIC_URL}/takos/${tako.tako}.png`}
+              alt="floating takodachi"
+              onClick={handleTakoClick}
+              style={{ pointerEvents: "auto", cursor: "pointer" }}
+            />
+          ))}
+        </TakoFloatBg>
         <Logo />
         <Quote />
         <Lore />
+        <Divider />
         <Menu />
         <HomeFooter />
       </Home>
