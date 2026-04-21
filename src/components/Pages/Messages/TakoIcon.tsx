@@ -8,7 +8,6 @@ const TakoImg = styled.img`
     opacity: 1;
 `;
 
-
 const TakoImgContainer = styled.div`
   display: flex;
 `;
@@ -53,9 +52,6 @@ interface TakoIconProps {
 const PunDisplay = styled.span`
   color: var(--ika-purple);
 `
-
-
-
 const PunHint = styled.div`
   color: var(--text-color);
   font-size: 14px;
@@ -90,7 +86,6 @@ const PunHint = styled.div`
 `
 
 const prng = (seed: number) => seed * 16807 % 2147483647
-
 
 export const TakoIcon = ({ id, pun, index }: TakoIconProps): JSX.Element => {
     const useRandom = !id

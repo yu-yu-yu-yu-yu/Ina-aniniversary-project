@@ -9,49 +9,41 @@ import ScrollArrow from "./BackToTop";
 import {Switch} from "../../Common/Switch";
 import {debounce} from "lodash";
 import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
-import { Navbar } from "../../Common/Navbar";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
+import {Navbar} from "../../Common/Navbar";
+import {useMute} from "../../Common/MuteButton";
+import {useAudio} from "../../../hooks/useAudio";
+import {useFetch} from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
+  const { data: rawData, loading, error } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
 
-  const [sourceData, setSourceData] = useState([] );
-  const [data, setData] = useState([] );
+  const [sourceData, setSourceData] = useState<Submission[]>([]);
+  const [data, setData] = useState<Submission[]>([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(
-        `${process.env.PUBLIC_URL}/data/messageData.json`
-      );
-      const data = (await response.json()).reverse();
-
-      setSourceData(data);
-
-      const rows = data.slice(offset, LIMIT);
-
-      await awaitImgs(rows);
-
-      setData(rows);
-
-      setOffset(LIMIT + offset);
-    };
-    getData();
-  }, []);
+    if (rawData) {
+      const processedData = rawData.reverse();
+      setSourceData(processedData);
+      const rows = processedData.slice(0, LIMIT);
+      awaitImgs(rows).then(() => {
+        setData(rows);
+        setOffset(LIMIT);
+      });
+    }
+  }, [rawData]);
 
   const fetchMore = async () => {
     if (data.length !== 0) {
       const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => {
-            if (row.image != "") return row;
-          })
+        ? sourceData.filter((row: Submission) => row.image !== "")
         : sourceData;
 
       const rows = resultData.slice(offset, LIMIT + offset);
@@ -69,7 +61,7 @@ const MessageBoardContainer = (): JSX.Element => {
 
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value != "") {
+      if (event.target.value !== "") {
         const resultData = sourceData.filter((row: Submission) => {
           return (
             row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
@@ -77,17 +69,14 @@ const MessageBoardContainer = (): JSX.Element => {
           );
         });
         setHasMore(false);
-
         setData(resultData);
         setOffset(0);
       } else {
-        const rows = sourceData.slice(offset, LIMIT);
+        const rows = sourceData.slice(0, LIMIT);
         setHasMore(true);
-
         await awaitImgs(rows);
-
         setData(rows);
-        setOffset(offset + LIMIT);
+        setOffset(LIMIT);
       }
     },
     1000
@@ -96,19 +85,12 @@ const MessageBoardContainer = (): JSX.Element => {
   const OnlyImgToggle = async (value: boolean) => {
     if (value) {
       setData([]);
-
-      const resultData = sourceData.filter((row: Submission) => {
-        if (row.image != "") return row;
-      });
-
+      const resultData = sourceData.filter((row: Submission) => row.image !== "");
       const rows = resultData.slice(0, LIMIT);
-
       setHasMore(true);
       await awaitImgs(rows);
       setData(rows);
-
       setOffset(LIMIT);
-
       setIsToggledOnlyImg(true);
       setisToggledTextOnly(false);
     } else {
@@ -133,7 +115,6 @@ const MessageBoardContainer = (): JSX.Element => {
         setOffset(LIMIT);
         setIsToggledOnlyImg(false);
       }
-
       setisToggledTextOnly(true);
       setIsToggledOnlyImg(false);
     } else {
@@ -142,8 +123,7 @@ const MessageBoardContainer = (): JSX.Element => {
   };
 
   const awaitImgs = async (data: Submission[]) => {
-    const promises: Promise<unknown>[] =  [] ;
-
+    const promises: Promise<unknown>[] = [];
     data.forEach((row: Submission) => {
       if (row.image && !row.image.includes("youtube")) {
         promises.push(
@@ -156,7 +136,6 @@ const MessageBoardContainer = (): JSX.Element => {
         );
       }
     });
-
     await Promise.allSettled(promises);
   };
 
@@ -165,64 +144,67 @@ const MessageBoardContainer = (): JSX.Element => {
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
-        autoPlay
         loop
         preload="auto"
         style={{ display: "none" }}
-        muted={muted}
       />
       <Navbar>
         <NavLink exact to="/">
-        <i className="fa fa-angle-left" /> {`Return`}
+          <i className="fa fa-angle-left" /> {`Return`}
         </NavLink>
         <Title>Messages from Takos</Title>
       </Navbar>
-      <MessageBoard>
-        <FiltersContainer>
-          <SearchBar onChange={handleFilter} placeholder="Search..." />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              overflow: "hidden",
-            }}
+      {loading ? (
+        <TakoLoading />
+      ) : error ? (
+        <div>Error loading messages: {error.message}</div>
+      ) : (
+        <MessageBoard>
+          <FiltersContainer>
+            <SearchBar onChange={handleFilter} placeholder="Search..." />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                overflow: "hidden",
+              }}
+            >
+              <Switch
+                label="Only Images"
+                value={isToggledOnlyImg}
+                onChange={(value) => OnlyImgToggle(value)}
+              />
+              <Switch
+                label="Only messages"
+                value={isToggledTextOnly}
+                onChange={(value) => OnlyTextToggle(value)}
+              />
+            </div>
+          </FiltersContainer>
+          <InfiniteScroll
+            style={{ overflow: "hidden" }}
+            scrollThreshold={"50px"}
+            dataLength={data.length}
+            next={fetchMore}
+            hasMore={hasMore}
+            loader={
+              <Loader>
+                <TakoLoading />
+              </Loader>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
+            }
           >
-            <Switch
-              label="Only Images"
-              value={isToggledOnlyImg}
-              onChange={(value) => OnlyImgToggle(value)}
+            <TakoMessages
+              submissions={data}
+              isToggledOnlyImg={isToggledOnlyImg}
+              isToggledTextOnly={isToggledTextOnly}
             />
-
-            <Switch
-              label="Only messages"
-              value={isToggledTextOnly}
-              onChange={(value) => OnlyTextToggle(value)}
-            />
-          </div>
-        </FiltersContainer>
-        <InfiniteScroll
-          style={{ overflow: "hidden" }}
-          scrollThreshold={"50px"}
-          dataLength={data.length}
-          next={fetchMore}
-          hasMore={hasMore}
-          loader={
-            <Loader>
-              <TakoLoading />
-            </Loader>
-          }
-          endMessage={
-            <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
-          }
-        >
-          <TakoMessages
-            submissions={data}
-            isToggledOnlyImg={isToggledOnlyImg}
-            isToggledTextOnly={isToggledTextOnly}
-          />
-        </InfiniteScroll>
-        <ScrollArrow />
-      </MessageBoard>
+          </InfiniteScroll>
+          <ScrollArrow />
+        </MessageBoard>
+      )}
     </div>
   );
 };
