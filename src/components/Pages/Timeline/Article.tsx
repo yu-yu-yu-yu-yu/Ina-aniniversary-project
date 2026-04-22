@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Milestone } from "./Milestone";
+import { Milestone } from "../../../types";
 import { groupBy } from "lodash";
 import {
   Column,

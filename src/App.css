@@ -38,8 +38,6 @@ nav a.active{
 }
 
 :root {
-
-    /* Colors: */
     --unnamed-color-ffda9a: #FFDA9A;
     --lightdark: #F3EDFF;
     --inai-purple: #A198B3;
@@ -50,7 +48,6 @@ nav a.active{
         --background-image: url('./Pattern.png');
     }
 
-/* Standard site title and icon styles to keep consistency across pages */
 .site-title {
     font-family: Montserrat, sans-serif;
     color: var(--ika-purple);

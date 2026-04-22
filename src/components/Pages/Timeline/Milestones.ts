@@ -1,4 +1,4 @@
-import { Milestone } from "./Milestone";
+import { Milestone } from "../../../types";
 import milestoneJson from "../../../static/Ina Anniversary Milestones.json";
 
 const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {

@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from "react";
-import {Submission} from "./Submission";
+import {Submission} from "../../../types";
 import Masonry from "react-masonry-component";
 import {TakoIcon} from "./TakoIcon";
 import {

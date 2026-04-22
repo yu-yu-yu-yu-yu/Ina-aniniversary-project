@@ -8,3 +8,8 @@ export interface Submission {
   wah?: string;
   wah_sub?: string;
 }
+
+export interface VideoEntry extends Submission {
+  vodtitle?: string;
+  video?: string;
+}

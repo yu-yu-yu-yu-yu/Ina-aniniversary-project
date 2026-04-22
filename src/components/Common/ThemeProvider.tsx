@@ -1,10 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes, ThemeName } from "./themes";
-
-interface ThemeContextType {
-  theme: ThemeName;
-  setTheme: (theme: ThemeName) => void;
-}
+import { ThemeContextType } from "../../types/theme";
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: "Standard",
@@ -21,7 +17,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     const themeVars = themes[theme];
     Object.entries(themeVars).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(key, value);
+      document.documentElement.style.setProperty(key, value as string);
     });
     localStorage.setItem("theme", theme);
   }, [theme]);

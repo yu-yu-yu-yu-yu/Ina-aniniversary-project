@@ -8,6 +8,7 @@ import Menu from "./Menu";
 import Divider from "./Divider";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
+import { FloatingTakoData } from "../../../types";
 
 const floatUp = keyframes`
   0% {
@@ -73,14 +74,6 @@ const Home = styled.div`
 `;
 
 const takoCount = 137;
-
-interface FloatingTakoData {
-  key: number;
-  left: number;
-  tako: number;
-  bottom: number;
-  createdAt: number;
-}
 
 const ANIMATION_DURATION = 9000;
 

@@ -1,27 +1,11 @@
 import React, {
   createRef,
   ForwardedRef,
-  MutableRefObject,
   RefObject,
   useRef,
 } from "react";
-import { Milestone } from "./Milestone";
+import { INodeProps, ISeekerBarProps } from "../../../types/timeline";
 import styled from "styled-components";
-
-interface INodeProps {
-  active: boolean;
-  passed: boolean;
-  label: string;
-  ref: MutableRefObject<HTMLInputElement>;
-  setIndex: () => void;
-}
-
-interface ISeekerBarProps {
-  milestones: Milestone[];
-  curIndex: number;
-  setIndex: (index: number) => void;
-  progress: number;
-}
 
 export const SeekerBar = ({
   milestones,
@@ -35,10 +19,9 @@ export const SeekerBar = ({
 
   return (
     <NodeContainer>
-      {milestones.map(({ label }, index) => (
+      {milestones.map((_, index) => (
         <SeekerNode
           key={index}
-          label={label}
           ref={nodeMapRef.current[index]}
           active={index === curIndex}
           passed={index < curIndex}
@@ -78,11 +61,11 @@ const ProgressBar = styled.div<{ progress: number }>`
 
 const SeekerNode = React.forwardRef<HTMLInputElement, INodeProps>(
   function SeekerNode(
-    { setIndex, ...props }: INodeProps,
+    { setIndex, active, passed }: INodeProps,
     ref: ForwardedRef<HTMLInputElement>
   ) {
     return (
-      <StyledNode {...props} onClick={setIndex} ref={ref}>
+      <StyledNode active={active} passed={passed} onClick={setIndex} ref={ref}>
         {/*<span>{label}</span>*/}
       </StyledNode>
     );

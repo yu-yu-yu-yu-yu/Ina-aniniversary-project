@@ -1,14 +1,5 @@
 import { useState, useEffect } from 'react';
-
-interface UseFetchOptions extends RequestInit {
-}
-
-interface UseFetchResult<T> {
-  data: T | null;
-  loading: boolean;
-  error: Error | null;
-  refetch: () => void;
-}
+import { UseFetchOptions, UseFetchResult } from '../types/hooks';
 
 export const useFetch = <T = unknown>(
   url: string,

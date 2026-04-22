@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { DrawerToggle, ScrollList } from "./ScrollList";
-import { Milestone } from "./Milestone";
+import { Milestone } from "../../../types";
 import { NavLink } from "react-router-dom";
 import { NavLinkContainer } from "./styles/List";
 import { Banner } from "./Banner";

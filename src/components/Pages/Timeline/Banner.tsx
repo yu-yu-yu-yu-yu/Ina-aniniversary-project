@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import outfits from "./outfits.json";
 import { BannerImg, BannerImgWrapper, BannerWrapper, Container, DialogueBox, VodLink } from "./styles/BannerStyle";
-
-interface Outfit {
-  title: string;
-  artist: string;
-  handle: string;
-  username: string;
-  filename: string;
-  vodtitle?: string;
-  video?: string;
-  date?: string;
-}
+import { Outfit } from "../../../types";
 
 const images = outfits.map((item: Outfit) => ({
   ...item,

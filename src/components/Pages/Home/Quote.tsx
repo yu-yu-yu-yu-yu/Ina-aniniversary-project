@@ -110,7 +110,7 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <GrayscaleButton onClick={() => setGrayscale((g) => !g)}>
-        {grayscale ? "Revive Ina" : "Ina asked for this button but did't see it so it's now other color www "}
+        {grayscale ? "Revive Ina" : "Ina asked for this button but did't see it last time lol"}
       </GrayscaleButton>
     </QuoteContainer>
   );

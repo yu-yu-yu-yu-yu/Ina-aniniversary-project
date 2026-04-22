@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {TakoLoading} from "../../Common/TakoLoading";
-import {Submission} from "./Submission";
+import {Submission} from "../../../types";
 import {NavLink} from "react-router-dom";
 import ScrollArrow from "./BackToTop";
 

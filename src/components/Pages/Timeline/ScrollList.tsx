@@ -1,4 +1,4 @@
-import { Milestone, Tags } from "./Milestone";
+import { Milestone, Tags, IScrollListProps, Month, MonthWithYear, Year } from "../../../types/timeline";
 import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
 import { Switch } from "../../Common/Switch";
 import { upperCase } from "lodash";
@@ -38,11 +38,8 @@ import {
 } from "./styles/List";
 import {
   getMediaLink,
-  IScrollListProps,
   mappedMonths,
-  Month,
-  months, monthsWithYears, MonthWithYear,
-  Year,
+  months, monthsWithYears,
   years,
   getMilestoneOutline,
   tagColors,
@@ -60,7 +57,7 @@ const SearchBar = ({
   setSearchString,
 }: {
   searchString: string;
-  setSearchString: (searchValue: string) => void;
+  setSearchString: (_searchValue: string) => void;
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
@@ -83,7 +80,7 @@ const TagBar = ({
   mobile,
 }: {
   tags: Tags;
-  setSelectedTags: (tags: Tags) => void;
+  setSelectedTags: (_tags: Tags) => void;
   mobile?: boolean;
 }) => (
   <TagBarContainer>
@@ -176,13 +173,13 @@ const TopControls = ({
   </TopControlsContainer>
 );
 
-interface IMonthAnchorProps {
+interface IMonthAnchorPropsLocal {
   date: Milestone["date"];
   mobile?: boolean;
 }
 
-const MonthAnchor = React.forwardRef<HTMLSpanElement, IMonthAnchorProps>(
-  function MonthAnchor({ date, mobile }: IMonthAnchorProps, ref): JSX.Element {
+const MonthAnchor = React.forwardRef<HTMLSpanElement, IMonthAnchorPropsLocal>(
+  function MonthAnchor({ date, mobile }: IMonthAnchorPropsLocal, ref): JSX.Element {
     return (
       <MonthAnchorHeader className={mobile ? "mobile" : ""} ref={ref}>
         {mappedMonths[date.split(/\W/)[1]]}
@@ -205,17 +202,17 @@ const Thumb = ({
   />
 );
 
-interface EventBaseProps {
+interface EventBasePropsLocal {
   event: Milestone;
   monthStart: boolean;
   onClick: () => void;
   refMap: IScrollListProps["refMap"];
 }
 
-interface EventMobileProps extends EventBaseProps {
+interface EventMobilePropsLocal extends EventBasePropsLocal {
 }
 
-interface EventProps extends EventBaseProps {
+interface EventProps extends EventBasePropsLocal {
 }
 
 const EventMobile = ({
@@ -223,7 +220,7 @@ const EventMobile = ({
   monthStart,
   refMap,
   onClick,
-}: EventMobileProps & { event: Milestone & { isLast?: boolean } }) => {
+}: EventMobilePropsLocal & { event: Milestone & { isLast?: boolean } }) => {
   const { highlight, label, date } = event;
   const [, month, year] = date.split(/\W/);
   const monthWithYear = `${year}_${mappedMonths[month]}`
@@ -513,7 +510,7 @@ const List = ({
   scrollPos: IScrollListProps["scrollPos"];
   mobile?: boolean;
   setMonth: IScrollListProps["setMonth"];
-  setYear: (year: Year) => void;
+  setYear: (_year: Year) => void;
 }) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
@@ -625,7 +622,7 @@ const BottomControls = ({
   selectedMonth: IScrollListProps["monthProps"]["selectedMonth"];
   setMonth: IScrollListProps["setMonth"];
   year: Year;
-  setYear: (year: Year) => void;
+  setYear: (_year: Year) => void;
 }) => {
   const selectedIndex = months.findIndex(
     (month) =>

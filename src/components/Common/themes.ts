@@ -1,6 +1,7 @@
-export type ThemeName = "Standard" | "Violet" | "Meconopsis" | "Temari";
+import { ThemeName, Themes } from "../../types/theme";
 
-export const themes: Record<ThemeName, Record<string, string>> = {
+export type { ThemeName };
+export const themes: Themes = {
   Standard: {
     "--lightdark": "#F3EDFF",
     "--inai-purple": "#A198B3",
