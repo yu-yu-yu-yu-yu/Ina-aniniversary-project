@@ -45,7 +45,7 @@ const TakoMessages = ({
 
               {<TakoIcon id={icon} pun={pun} index={i} />}
 
-              <HeaderText>{user || "Anonymous Tako"}:</HeaderText>
+              <HeaderText>{user || "Anonymous Tako"}</HeaderText>
             </BubbleHeader>
             <hr />
 

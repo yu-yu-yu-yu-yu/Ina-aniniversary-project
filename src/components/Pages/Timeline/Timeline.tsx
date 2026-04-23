@@ -128,7 +128,7 @@ export const Timeline = ({
       <Navbar ref={navBarRef} className={mobile ? "mobile" : ""} style={{ alignItems: "center"}}>
         <NavLinkContainer style={{ flex: "0 0 auto" }}>
           <NavLink exact to="/">
-            <i className="fa fa-angle-left" /> Return
+            <i className="fa fa-home" />
           </NavLink>
         </NavLinkContainer>
         <TimelineTitle>Timeline</TimelineTitle>

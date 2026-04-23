@@ -4,16 +4,18 @@ import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, 
 const TAKO_COUNT = 72;
 
 const buttons = [
+  { to: "/letters", label: "Letters for Ina" },
+  { to: "/playlist", label: "The Ultimate Ina Playlist" },
   { to: "/timeline", label: "Ina's Timeline" },
   { to: "/takodex", label: "Takodex" },
-  { to: "/messages", label: "Messages" },
+  { to: "/messages", label: "Messages and Artworks" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
   { to: "/collages", label: "Takollages" },
   { to: "/moments", label: `Ina Moments (2024)` },
   { to: "/wah", label: "WAH (2024)" },
 ];
 
-const newButtons = ["Ina's Timeline", "Takodex", "Messages"];
+const newButtons = ["Letters for Ina", "The Ultimate Ina Playlist", "Ina's Timeline", "Messages and Artworks"];
 
 const Menu = (): JSX.Element => {
   const [peekIndex, setPeekIndex] = useState<number | null>(null);

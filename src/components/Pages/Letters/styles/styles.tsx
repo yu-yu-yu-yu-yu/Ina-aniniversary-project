@@ -11,4 +11,4 @@ export {
   Loader,
   SearchBar,
   Title,
-} from "../../../styles/globalStyles";
+} from "../../../../styles/globalStyles";

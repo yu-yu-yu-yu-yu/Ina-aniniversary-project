@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
-import TakoMessages from "./TakoMessages";
+import TakoLetters from "./TakoLetters";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {TakoLoading} from "../../Common/TakoLoading";
 import {Submission} from "../../../types";
 import {NavLink} from "react-router-dom";
 import ScrollArrow from "../../Common/BackToTop";
-
 import {Switch} from "../../Common/Switch";
 import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
+import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles/styles";
 import {Navbar} from "../../Common/Navbar";
 import {useMute} from "../../Common/MuteButton";
 import {useAudio} from "../../../hooks/useAudio";
@@ -16,7 +15,7 @@ import {useFetch} from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
-const MessageBoardContainer = (): JSX.Element => {
+const BoardContainer = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
   const { data: rawData, loading, error } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
@@ -152,12 +151,12 @@ const MessageBoardContainer = (): JSX.Element => {
         <NavLink exact to="/">
           <i className="fa fa-home" />
         </NavLink>
-        <Title>Messages from Takos</Title>
+        <Title>Letters for Ina</Title>
       </Navbar>
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading messages: {error.message}</div>
+        <div>Error loading Letters: {error.message}</div>
       ) : (
         <MessageBoard>
           <FiltersContainer>
@@ -175,7 +174,7 @@ const MessageBoardContainer = (): JSX.Element => {
                 onChange={(value) => OnlyImgToggle(value)}
               />
               <Switch
-                label="Only messages"
+                label="Only Letters"
                 value={isToggledTextOnly}
                 onChange={(value) => OnlyTextToggle(value)}
               />
@@ -196,7 +195,7 @@ const MessageBoardContainer = (): JSX.Element => {
               <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
             }
           >
-            <TakoMessages
+            <TakoLetters
               submissions={data}
               isToggledOnlyImg={isToggledOnlyImg}
               isToggledTextOnly={isToggledTextOnly}
@@ -209,4 +208,4 @@ const MessageBoardContainer = (): JSX.Element => {
   );
 };
 
-export default MessageBoardContainer;
+export default BoardContainer;

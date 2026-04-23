@@ -3,9 +3,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {TakoLoading} from "../../Common/TakoLoading";
 import {Submission} from "../../../types";
 import {NavLink} from "react-router-dom";
-import ScrollArrow from "./BackToTop";
+import ScrollArrow from "../../Common/BackToTop";
 import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, SearchBar} from "./styles";
+import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
 import {Navbar} from "../../Common/Navbar";
 import TakoVideos from "./TakoVideos";
 import {useFetch} from "../../../hooks/useFetch";
@@ -86,8 +86,9 @@ const VideoBoardContainer = ({mode}: {mode:string}): JSX.Element => {
     <div>
       <Navbar>
         <NavLink exact to="/">
-          <i className="fa fa-angle-left" /> {mode === 'moments' ? `Moments` : 'WAH'}
+          <i className="fa fa-home" />
         </NavLink>
+        <Title>Moments and WAH</Title>
       </Navbar>
       {loading ? (
         <TakoLoading />

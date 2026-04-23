@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-// import {FaAr} from 'react-icons/fa';
-
 
 const ScrollBtn = styled.button`
 

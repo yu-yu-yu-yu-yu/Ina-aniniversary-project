@@ -70,7 +70,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
         <>
             <Navbar>
                 <NavLink exact to="/">
-                    <i className="fa fa-angle-left" /> Return
+                    <i className="fa fa-home" /> 
                 </NavLink>
                 <Title>Takodex</Title>
                 <div style={{ marginLeft: "auto" }}>

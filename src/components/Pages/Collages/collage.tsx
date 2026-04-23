@@ -36,7 +36,7 @@ const CollagePage = () => {
     <div>
       <Navbar>
         <NavLink exact to="/">
-          <i className="fa fa-angle-left" /> {`Return`}
+          <i className="fa fa-home" />
         </NavLink>
         <Title>Collages</Title>
       </Navbar>

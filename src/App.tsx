@@ -8,6 +8,7 @@ import VideoBoardContainer from "./components/Pages/Messages/VideoBoardContainer
 import { TakodexList } from "./components/Pages/Takodex/TakodexList";
 import { ThemeSwitcher } from "./components/Common/ThemeSwitcher";
 import { MuteProvider } from "./components/Common/MuteButton";
+import BoardContainer  from "./components/Pages/Letters/BoardContainer";
 import CollagePage from "./components/Pages/Collages/collage";
 
 const App = (): JSX.Element => (
@@ -20,6 +21,9 @@ const App = (): JSX.Element => (
           </Route>
           <Route path="/messages">
             <MessageBoardContainer />
+          </Route>
+          <Route path="/letters">
+            <BoardContainer />
           </Route>
           <Route path="/moments">
             <VideoBoardContainer mode="moments" />
