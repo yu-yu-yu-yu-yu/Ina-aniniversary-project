@@ -64,7 +64,7 @@ export const getMediaLink = (src: Milestone["media"]) => {
 export const monthsWithYears = years.flatMap(year => months.map(month => `${year}_${month}`))
 
 export const tagColors = {
-  highlight: "var(--ina-orange)",
+  highlight: "var(--light-highlight)",
   important: "#FFD700",
   gaming: "#3B7BFF",
   drawing: "#A259E6",

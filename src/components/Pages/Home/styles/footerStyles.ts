@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Footer = styled.footer`
   position: relative;  
   z-index: 2;
-  background: var(--ina-orange) 0% 0% no-repeat padding-box;
+  background: var(--light-highlight) 0% 0% no-repeat padding-box;
   padding: 25px 0px;
   opacity: 1;
   display: flex;
@@ -188,7 +188,7 @@ const CreditsModal = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--inai-purple);
+  background-color: var(--light-background);
   border-radius: 15px;
   z-index: 69;
   color: #ffffff;

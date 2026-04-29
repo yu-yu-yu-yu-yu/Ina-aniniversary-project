@@ -2,16 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { DrawerToggle, ScrollList } from "./ScrollList";
 import { Milestone } from "../../../types";
-import { NavLink } from "react-router-dom";
-import { NavLinkContainer } from "./styles/List";
 import { Banner } from "./Banner";
-import { Navbar } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton, HintPopover} from "../../Common/Navbar";
 
 const Container = styled.div`
   flex-direction: column;
   display: flex;
   flex: 1;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
 `;
 
 const Content = styled.div`
@@ -21,7 +19,7 @@ const Content = styled.div`
 
 const TimelineTitle = styled.h2`
   margin: 0;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: center;
   font: normal normal bold 48px/56px Montserrat;
   flex: 1;
@@ -33,44 +31,6 @@ const TimelineTitle = styled.h2`
     font: normal normal bold 24px/30px Montserrat;
     letter-spacing: 1px;
   }
-`;
-
-const HintButton = styled.button`
-  background: var(--ina-orange);
-  border: none;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  color: var(--ika-purple);
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-left: 16px;
-  margin-right: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  &:hover {
-    background: var(--ika-purple);
-    color: var(--ina-orange);
-  }
-`;
-
-const HintPopover = styled.div`
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  background: var(--ika-purple);
-  color: var(--text-color);
-  border: 2px solid var(--ina-orange);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px var(--shadow);
-  padding: 16px 22px;
-  font-size: 0.5em;
-  z-index: 100;
-  min-width: 220px;
-  max-width: 400px;
 `;
 
 const flavorSwitch = (
@@ -126,11 +86,7 @@ export const Timeline = ({
   return (
     <Container>
       <Navbar ref={navBarRef} className={mobile ? "mobile" : ""} style={{ alignItems: "center"}}>
-        <NavLinkContainer style={{ flex: "0 0 auto" }}>
-          <NavLink exact to="/">
-            <i className="fa fa-home" />
-          </NavLink>
-        </NavLinkContainer>
+          <NavHome />
         <TimelineTitle>Timeline</TimelineTitle>
         <div style={{ flex: "0 0 auto", position: "relative" }}>
           <HintButton
@@ -153,8 +109,8 @@ export const Timeline = ({
         )}
       </Navbar>
       <Banner />
-      <div style={{ width: "90%", margin: "0 auto", borderTop: "3px solid var(--ika-purple)", marginBottom: "18px", marginTop: "18px" }} />
-      <h2 style={{ textAlign: "center", color: "var(--ika-purple)", margin: "0 0 18px 0", fontWeight: 700, fontSize: "2.5em", letterSpacing: "1.5px" }}>
+      <div style={{ width: "90%", margin: "0 auto", borderTop: "3px solid var(--dark-highlight)", marginBottom: "18px", marginTop: "18px" }} />
+      <h2 style={{ textAlign: "center", color: "var(--dark-highlight)", margin: "0 0 18px 0", fontWeight: 700, fontSize: "2.5em", letterSpacing: "1.5px" }}>
         Streams and Milestones
       </h2>
       <Content>

@@ -51,7 +51,7 @@ const LoreTextContainer = styled.div`
     padding: 10px 35px;
     margin: 0 auto;
     max-width: 650px;
-    background: var(--ika-purple);
+    background: var(--dark-highlight);
     border-radius: 32px;
     opacity: 1;
     color: var(--text-color);

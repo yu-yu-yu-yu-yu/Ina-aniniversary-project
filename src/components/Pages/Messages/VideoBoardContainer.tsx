@@ -1,19 +1,28 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {TakoLoading} from "../../Common/TakoLoading";
-import {Submission} from "../../../types";
-import {NavLink} from "react-router-dom";
+import { TakoLoading } from "../../Common/TakoLoading";
+import { Submission } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
-import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
-import {Navbar} from "../../Common/Navbar";
+import { debounce } from "lodash";
+import {
+  FiltersContainer,
+  Loader,
+  MessageBoard,
+  SearchBar,
+  NavTitle,
+} from "./styles";
+import { Navbar, NavHome } from "../../Common/Navbar";
 import TakoVideos from "./TakoVideos";
-import {useFetch} from "../../../hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
-const VideoBoardContainer = ({mode}: {mode:string}): JSX.Element => {
-  const {data: rawData, loading, error} = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/video.json`);
+const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
+  const {
+    data: rawData,
+    loading,
+    error,
+  } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/video.json`);
   const [sourceData, setSourceData] = useState([]);
   const [data, setData] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -22,18 +31,20 @@ const VideoBoardContainer = ({mode}: {mode:string}): JSX.Element => {
   useEffect(() => {
     if (rawData) {
       const data = rawData.map((row) => {
-        const key = mode === 'moments' ? 'moment' : 'wah';
+        const key = mode === "moments" ? "moment" : "wah";
         let link = row[key];
-        if (link.includes('http') && !link.includes('clip')) {
-          const match = /(?:\/|v=)([a-z_0-9-]{6,16}).*?(?:t=(\d+))?.*$/gmi.exec(link);
-          const video_id = match ? match[1] : '';
-          const timestamp = match ? match[2] : '';
+        if (link.includes("http") && !link.includes("clip")) {
+          const match = /(?:\/|v=)([a-z_0-9-]{6,16}).*?(?:t=(\d+))?.*$/gim.exec(
+            link,
+          );
+          const video_id = match ? match[1] : "";
+          const timestamp = match ? match[2] : "";
           if (!video_id) console.log(link);
           link = `https://www.youtube.com/embed/${video_id}?start${timestamp}`;
         }
-        if (mode === 'wah') {
+        if (mode === "wah") {
           row.sub = row.wah_sub;
-          row.message = '';
+          row.message = "";
         }
         row.image = link;
         return row;
@@ -79,16 +90,14 @@ const VideoBoardContainer = ({mode}: {mode:string}): JSX.Element => {
         setOffset(LIMIT);
       }
     },
-    1000
+    1000,
   );
 
   return (
     <div>
       <Navbar>
-        <NavLink exact to="/">
-          <i className="fa fa-home" />
-        </NavLink>
-        <Title>Moments and WAH</Title>
+        <NavHome />
+        <NavTitle>Moments and WAH</NavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />

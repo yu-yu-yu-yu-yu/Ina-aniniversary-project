@@ -10,5 +10,5 @@ export {
   FiltersContainer,
   Loader,
   SearchBar,
-  Title,
+  NavTitle,
 } from "../../../../styles/globalStyles";

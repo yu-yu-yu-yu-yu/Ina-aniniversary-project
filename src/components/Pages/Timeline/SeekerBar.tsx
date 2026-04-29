@@ -55,7 +55,7 @@ const BarContainer = styled.div`
 const ProgressBar = styled.div<{ progress: number }>`
   width: ${({ progress }) => progress}px;
   transition: width 0.25s linear;
-  background-color: var(--ina-orange);
+  background-color: var(--light-highlight);
   height: 100%;
 `;
 
@@ -76,7 +76,7 @@ const StyledNode = styled.div<{ active: boolean; passed: boolean }>`
   background: #fff;
   border: 0.35rem solid
     ${({ active, passed }) =>
-      active ? "var(--ina-orange)" : passed ? "var(--lightdark)" : "var(--ika-purple)"};
+      active ? "var(--light-highlight)" : passed ? "var(--lightdark)" : "var(--dark-highlight)"};
   border-radius: 50%;
   margin: 1rem 0;
   min-width: 0.7rem;

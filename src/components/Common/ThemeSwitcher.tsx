@@ -7,7 +7,7 @@ const themeNames: ThemeName[] = ["Standard", "Violet", "Meconopsis", "Temari"];
 
 const ThemeButton = styled.button<{ bg: string; color: string; border: string }>`
   position: fixed;
-  right: 84px;
+  left: 84px;
   bottom: 24px;
   z-index: 1001;
   background: ${({ bg }) => bg};
@@ -33,9 +33,9 @@ export const ThemeSwitcher = () => {
 
   return (
     <ThemeButton
-      bg={themeVars["--inai-purple"] || "#A198B3"}
-      color={themeVars["--ina-orange"] || "#F8BF04"}
-      border={themeVars["--ika-purple"] || "#564F68"}
+      bg={themeVars["--light-background"] || "#A198B3"}
+      color={themeVars["--light-highlight"] || "#F8BF04"}
+      border={themeVars["--dark-highlight"] || "#564F68"}
       title={`Switch theme (${theme})`}
       onClick={() => setTheme(nextTheme)}
     >

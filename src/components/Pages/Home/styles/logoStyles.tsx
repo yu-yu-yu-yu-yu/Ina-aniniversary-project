@@ -33,7 +33,7 @@ const LogoContainer = styled.div`
 const TitleHeader = styled.h2`
 
   margin: 8px;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: center;
 
   font: normal normal bold 48px/56px Montserrat;  
@@ -67,7 +67,7 @@ const TitleHeader = styled.h2`
 const LogoHeader = styled.h1`
 
   margin: 8px;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: center;
 
   font: normal normal bold 60px/72px Montserrat;  
@@ -109,7 +109,7 @@ const ScrollIndicator = styled.div`
   right: 0;
   bottom: 25px;
   text-align: center;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   z-index: 2;
 
   h3 {

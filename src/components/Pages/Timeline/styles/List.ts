@@ -2,13 +2,13 @@ import styled from "styled-components";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 export const Line = styled.span`
-  border-top: 5px solid var(--ika-purple);
+  border-top: 5px solid var(--dark-highlight);
   position: relative;
   bottom: 16px;
   width: 500px;
   left: 245px;
   &.mobile {
-    border-left: 4px solid var(--ika-purple);
+    border-left: 4px solid var(--dark-highlight);
     position: relative;
     bottom: unset;
     height: 240px;
@@ -36,10 +36,10 @@ export const TopControlsContainer = styled.div`
   }
 `;
 export const SearchBarContainer = styled.div`
-  border-bottom: 1px solid var(--ika-purple);
+  border-bottom: 1px solid var(--dark-highlight);
 `;
 export const SearchInput = styled.input`
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: left;
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
@@ -77,7 +77,7 @@ export const Circle = styled.span`
 `;
 
 export const EventPreview = styled.img<{ outline: string }>`
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   width: 410px;
   height: 229px;
   border-radius: 5px;
@@ -102,7 +102,7 @@ export const EventPreview = styled.img<{ outline: string }>`
 
 export const EventContainer = styled.div<{ highlight: boolean }>`
   --color: ${({ highlight }) =>
-    highlight ? "var(--ina-orange)" : "var(--ika-purple)"};
+    highlight ? "var(--light-highlight)" : "var(--dark-highlight)"};
   display: flex;
   flex-direction: column;
   margin-right: 90px;
@@ -172,7 +172,7 @@ export const ListScrollable = styled(ScrollContainer)`
 export const MonthListContainer = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: var(--ika-purple);
+  background-color: var(--dark-highlight);
   height: 111px;
   padding: 19px 35px;
   border-radius: 15px 15px 0 0;
@@ -190,7 +190,7 @@ export const MonthListContainer = styled.div`
 export const YearContainer = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: var(--ika-purple);
+  background-color: var(--dark-highlight);
   border-radius: 10px;
   border: 3px solid var(--ink-black);
   padding: 0 12px;
@@ -204,7 +204,7 @@ export const YearDisplay = styled.div<{
     selected: boolean;
 }>`
   padding: 5px;
-  color: ${({ selected }) => selected ? "var(--ina-orange)" : "var(--text-color)"};
+  color: ${({ selected }) => selected ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
   letter-spacing: 0;
   font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
@@ -229,7 +229,7 @@ export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
 }>`
-  color: ${({ highlight }) => highlight ? "var(--ina-orange)" : "var(--text-color)"};
+  color: ${({ highlight }) => highlight ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
   font: normal normal ${({ highlight, passed }) =>
     highlight ? "normal" : passed ? "light" : "100"} 30px/37px Roboto;
@@ -252,8 +252,8 @@ export const MonthDisplay = styled.span<{
 
 export const MonthAnchorHeader = styled.span`
   font: normal normal 300 2em Roboto;
-  color: var(--ina-orange);
-  border-left: 2px solid var(--ina-orange);
+  color: var(--light-highlight);
+  border-left: 2px solid var(--light-highlight);
   padding-left: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
@@ -286,14 +286,14 @@ export const EventLabel = styled.span`
   text-overflow: unset;
 
   scrollbar-width: thin;
-  scrollbar-color: var(--ika-purple) transparent;
+  scrollbar-color: var(--dark-highlight) transparent;
 
   &::-webkit-scrollbar {
     width: 8px;
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: var(--ika-purple);
+    background: var(--dark-highlight);
     border-radius: 8px;
     min-height: 16px;
     box-shadow: none;
@@ -337,7 +337,7 @@ export const DrawerContainer = styled.div`
   top: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
-  background-color: var(--inai-purple);
+  background-color: var(--light-background);
   border-radius: 15px;
   z-index: 69;
   > ${TopControlsContainer} {
@@ -441,9 +441,9 @@ export const EventModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   color: var(--text-color);
-  border: 2px solid var(--ina-orange);
+  border: 2px solid var(--light-highlight);
   border-radius: 12px;
   box-shadow: 0 4px 16px var(--shadow);
   padding: 24px 32px;
@@ -518,9 +518,9 @@ export const TimelineDialogueBox = styled.div`
   transform: translateX(-50%) translateY(-100%);
   min-width: 250px;
   max-width: 300px;
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   color: var(--text-color);
-  border: 2px solid var(--ina-orange);
+  border: 2px solid var(--light-highlight);
   border-radius: 12px;
   box-shadow: 0 4px 16px var(--shadow);
   padding: 16px 22px;
@@ -535,9 +535,9 @@ export const TimelineDialogueBox = styled.div`
 `;
 
 export const TagDropdownSelect = styled.select<{ mobile?: boolean }>`
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   color: white;
-  border: 2px solid var(--ina-orange);
+  border: 2px solid var(--light-highlight);
   border-radius: 8px;
   font-size: ${({ mobile }) => (mobile ? 16 : 22)}px;
   padding: 6px 16px;

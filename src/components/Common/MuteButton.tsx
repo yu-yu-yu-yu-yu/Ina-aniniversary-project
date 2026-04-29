@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 export const MuteButton = styled.button`
   position: fixed;
-  right: 24px;
+  left: 24px;
   bottom: 24px;
   z-index: 1000;
   background: rgba(255,255,255,0.8);
-  border: none;
+  border: var(--ink-black) 2px solid;
   border-radius: 50%;
   width: 48px;
   height: 48px;

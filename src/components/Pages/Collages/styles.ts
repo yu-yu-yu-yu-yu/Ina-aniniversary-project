@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
-export const NavLinkContainer = styled.div`
-  flex-grow: 2;
-`;
-
-export const Title = styled.h2`
+export const NavTitle = styled.h2`
   margin: 0;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: center;
   font: normal normal bold 48px/56px Montserrat;
   flex: 1;
@@ -29,7 +25,7 @@ export const Grid = styled.div`
 `;
 
 export const Card = styled.div`
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   border-radius: 12px;
   box-shadow: 0 4px 16px #0003;
   padding: 18px;
@@ -45,7 +41,7 @@ export const Thumbnail = styled.img`
 
 export const CollageTitle = styled.h3`
   margin: 16px 0 8px 0;
-  color: var(--ina-orange);
+  color: var(--light-highlight);
   font-size: 1.25em;
 `;
 

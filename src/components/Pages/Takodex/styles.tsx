@@ -13,13 +13,13 @@ export {
   FiltersContainer,
   Loader,
   SearchBar,
-  Title,
+  NavTitle,
 } from "../../../styles/globalStyles";
 
 // Takodex-specific button with custom styling
 export const AddTakoButton = styled.a`
-  background: var(--ina-orange);
-  color: var(--ika-purple);
+  background: var(--light-highlight);
+  color: var(--dark-highlight);
   border-radius: 8px;
   padding: 8px 18px;
   font-weight: 500;
@@ -28,8 +28,8 @@ export const AddTakoButton = styled.a`
   margin-left: 16px;
   transition: background 0.2s, color 0.2s, filter 0.2s;
   &:hover {
-    background: var(--ika-purple);
-    color: var(--ina-orange);
+    background: var(--dark-highlight);
+    color: var(--light-highlight);
   }
 
   @media only screen and (max-width: 768px) {

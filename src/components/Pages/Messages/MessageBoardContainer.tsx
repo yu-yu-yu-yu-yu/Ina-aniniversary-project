@@ -1,25 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {TakoLoading} from "../../Common/TakoLoading";
-import {Submission} from "../../../types";
-import {NavLink} from "react-router-dom";
+import { TakoLoading } from "../../Common/TakoLoading";
+import { Submission } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
-
-import {Switch} from "../../Common/Switch";
-import {debounce} from "lodash";
-import {FiltersContainer, Loader, MessageBoard, SearchBar, Title} from "./styles";
-import {Navbar} from "../../Common/Navbar";
-import {useMute} from "../../Common/MuteButton";
-import {useAudio} from "../../../hooks/useAudio";
-import {useFetch} from "../../../hooks/useFetch";
+import { Switch } from "../../Common/Switch";
+import { debounce } from "lodash";
+import {
+  FiltersContainer,
+  Loader,
+  MessageBoard,
+  SearchBar,
+  NavTitle,
+} from "./styles";
+import { Navbar, NavHome } from "../../Common/Navbar";
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
+import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
 const MessageBoardContainer = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
-  const { data: rawData, loading, error } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
+  const {
+    data: rawData,
+    loading,
+    error,
+  } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
 
   const [sourceData, setSourceData] = useState<Submission[]>([]);
   const [data, setData] = useState<Submission[]>([]);
@@ -79,13 +87,15 @@ const MessageBoardContainer = (): JSX.Element => {
         setOffset(LIMIT);
       }
     },
-    1000
+    1000,
   );
 
   const OnlyImgToggle = async (value: boolean) => {
     if (value) {
       setData([]);
-      const resultData = sourceData.filter((row: Submission) => row.image !== "");
+      const resultData = sourceData.filter(
+        (row: Submission) => row.image !== "",
+      );
       const rows = resultData.slice(0, LIMIT);
       setHasMore(true);
       await awaitImgs(rows);
@@ -132,7 +142,7 @@ const MessageBoardContainer = (): JSX.Element => {
             img.src = process.env.PUBLIC_URL + "/Images/" + row.image;
             img.onerror = resolve;
             img.onload = resolve;
-          })
+          }),
         );
       }
     });
@@ -149,10 +159,8 @@ const MessageBoardContainer = (): JSX.Element => {
         style={{ display: "none" }}
       />
       <Navbar>
-        <NavLink exact to="/">
-          <i className="fa fa-home" />
-        </NavLink>
-        <Title>Messages from Takos</Title>
+        <NavHome />
+        <NavTitle>Messages from Takos</NavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />

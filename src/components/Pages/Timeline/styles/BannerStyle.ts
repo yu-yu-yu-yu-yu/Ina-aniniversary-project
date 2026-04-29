@@ -32,13 +32,13 @@ export const Container = styled(ScrollContainer)`
 `;
 
 export const VodLink = styled.a`
-  color: var(--ina-orange);
+  color: var(--light-highlight);
   font-style: italic;
   font-weight: bold;
   transition: color 0.2s;
   &:hover {
     color: var(--text-color);
-    background: var(--ina-orange);
+    background: var(--light-highlight);
     text-decoration: underline;
     border-radius: 4px;
     padding: 0 4px;
@@ -58,7 +58,7 @@ export const BannerImgWrapper = styled.div<{ imgSrc: string }>`
     width: 50%;
     height: 50%;
     transform: translate(50%, 50%);
-    background: var(--ika-purple);
+    background: var(--dark-highlight);
     filter: blur(50px) brightness(2) saturate(1.2);
     opacity: 0.8;
     z-index: 0;
@@ -87,9 +87,9 @@ export const DialogueBox = styled.div<{ $active: boolean }>`
   bottom: 90px;
   transform: translateX(-50%);
   min-width: 180px;
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   color: var(--text-color);
-  border: 2px solid var(--ina-orange);
+  border: 2px solid var(--light-highlight);
   border-radius: 12px;
   box-shadow: 0 4px 16px var(--shadow);
   padding: 12px 18px;

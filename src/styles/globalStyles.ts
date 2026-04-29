@@ -16,15 +16,15 @@ export const TextBubbleContainer = styled.div`
   font-size: 18px;
   line-height: 24px;
   padding: 15px;
-  border: 3px solid var(--inai-purple);
-  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 3px solid var(--light-background);
+  background: #ffffff7bfff 0% 0% no-repeat padding-box;
   border-radius: 15px;
   opacity: 1;
 
   hr {
     height: 1px;
-    color: var(--inai-purple);
-    background-color: var(--inai-purple);
+    color: var(--light-background);
+    background-color: var(--light-background);
     border: none;
   }
 `;
@@ -32,7 +32,7 @@ export const TextBubbleContainer = styled.div`
 export const BubbleMessage = styled.div`
   padding-top: 5px;
   overflow-wrap: break-word;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: left;
   font: normal normal 300 20px/25px Mulish;
   letter-spacing: 0px;
@@ -44,7 +44,7 @@ export const BubbleImage = styled.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
-  border: 2px solid var(--inai-purple);
+  border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
   max-width: 400px;
@@ -56,7 +56,7 @@ export const BubbleImage = styled.img`
 `;
 
 export const BubbleHeader = styled.div`
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: center;
   font: normal normal 600 30px/40px Montserrat;
 
@@ -74,11 +74,11 @@ export const BubbleHeader = styled.div`
 
 export const HeaderText = styled.div`
   overflow-wrap: break-word;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
 `;
 
 export const IFrame = styled.iframe`
-  border: 2px solid var(--inai-purple);
+  border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
 `;
@@ -133,17 +133,28 @@ export const SearchBar = styled.input`
   margin-bottom: 20px;
   outline: none;
 
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: left;
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
   opacity: 1;
 `;
 
-export const Title = styled.h2`
+export const NavTitle = styled.h2`
   margin: 0;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
+  text-shadow:
+    0 0 0.03em #ffffff7b,
+    0.03em 0 0 #ffffff7b,
+    -0.03em 0 0 #ffffff7b,
+    0 0.03em 0 #ffffff7b,
+    0 -0.03em 0 #ffffff7b,
+    0.03em 0.03em 0 #ffffff7b,
+    -0.03em -0.03em 0 #ffffff7b,
+    0.03em -0.03em 0 #ffffff7b,
+    -0.03em 0.03em 0 #ffffff7b;
   text-align: center;
+  text-border: 2px solid var(--light-highlight);
   font: normal normal bold 48px/56px Montserrat;
   flex: 1;
   @media only screen and (max-width: 1000px) {
@@ -159,15 +170,15 @@ export const Title = styled.h2`
 export const SectionTitle = styled.h2`
   font-size: 2.5em;
   text-align: center;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   margin: 0 0 18px 0;
   font-weight: 700;
   letter-spacing: 1.5px;
 `;
 
 export const Button = styled.a`
-  background: var(--ina-orange);
-  color: var(--ika-purple);
+  background: var(--light-highlight);
+  color: var(--dark-highlight);
   border-radius: 8px;
   padding: 8px 18px;
   font-weight: 500;
@@ -183,8 +194,8 @@ export const Button = styled.a`
 
 export const SecondaryButton = styled(Button)`
   background: transparent;
-  border: 2px solid var(--ina-orange);
-  color: var(--ina-orange);
+  border: 2px solid var(--light-highlight);
+  color: var(--light-highlight);
 `;
 
 export const HiddenAudio = styled.audio`

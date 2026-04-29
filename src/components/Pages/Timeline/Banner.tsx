@@ -49,13 +49,13 @@ export const Banner = () => {
           marginBottom: "12px",
           marginTop: "-18px",
           fontSize: "1.25em",
-          color: "var(--ika-purple)",
+          color: "var(--dark-highlight)",
           fontWeight: 600,
           userSelect: "none",
         }}
       >
         <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8592;</span>
-        <span style={{ background: "var(--ika-purple)", color: "white", borderRadius: 12, padding: "6px 18px", boxShadow: "0 2px 8px #0002" }}>
+        <span style={{ background: "var(--dark-highlight)", color: "white", borderRadius: 12, padding: "6px 18px", boxShadow: "0 2px 8px #0002" }}>
           Drag to scroll
         </span>
         <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8594;</span>
@@ -88,7 +88,7 @@ export const Banner = () => {
                       href={`https://x.com/${outfit.username}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ color: "var(--ina-orange)", textDecoration: "underline" }}
+                      style={{ color: "var(--light-highlight)", textDecoration: "underline" }}
                     >
                       @{outfit.username}
                     </a>

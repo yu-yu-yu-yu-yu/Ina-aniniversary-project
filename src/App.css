@@ -14,7 +14,7 @@ html,body, #root {
 }
 
 .Header {
-    background: var(--inai-purple);
+    background: var(--light-background);
     display: flex;
     position: relative;
     flex: 0 1
@@ -28,7 +28,7 @@ nav a{
 
 nav a.active{
     background: var(--text-color);
-    color: var(--ina-orange);
+    color: var(--light-highlight);
 }
 
 .Content {
@@ -40,9 +40,9 @@ nav a.active{
 :root {
     --unnamed-color-ffda9a: #FFDA9A;
     --lightdark: #F3EDFF;
-    --inai-purple: #A198B3;
-    --ina-orange: #F8BF04;
-    --ika-purple: #564F68;
+    --light-background: #A198B3;
+    --light-highlight: #F8BF04;
+    --dark-highlight: #564F68;
         --ink-black: #000000;
         --text-color: #ffffff;
         --background-image: url('./Pattern.png');
@@ -50,11 +50,11 @@ nav a.active{
 
 .site-title {
     font-family: Montserrat, sans-serif;
-    color: var(--ika-purple);
+    color: var(--dark-highlight);
     font-weight: 700;
 }
 .topbar-icon {
-    color: var(--ina-orange);
+    color: var(--light-highlight);
     width: 32px;
     height: 32px;
 }

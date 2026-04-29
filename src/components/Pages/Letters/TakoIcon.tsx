@@ -21,7 +21,7 @@ const PunContainer = styled.div`
     width: 0;
     height: 0;
     border: 20px solid transparent;
-    border-bottom-color: var(--ika-purple);
+    border-bottom-color: var(--dark-highlight);
     border-top: 0;
     margin-left: -20px;
     margin-top: -20px;
@@ -29,7 +29,7 @@ const PunContainer = styled.div`
   }
   font: normal normal 300 20px/25px Mulish;
   min-height: 50px;
-  border: 2px solid var(--ika-purple);
+  border: 2px solid var(--dark-highlight);
   border-radius: .4em;
   position: absolute;
   background: var(--text-color);
@@ -50,7 +50,7 @@ interface TakoIconProps {
 }
 
 const PunDisplay = styled.span`
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
 `
 const PunHint = styled.div`
   color: var(--text-color);
@@ -67,7 +67,7 @@ const PunHint = styled.div`
   border-radius: 5em;
   display: flex;
   align-items: center;
-  background: var(--inai-purple);
+  background: var(--light-background);
   position: absolute;
   &:before {
     content: "";

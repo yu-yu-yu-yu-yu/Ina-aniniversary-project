@@ -65,6 +65,7 @@ export const SectionButton = styled.div<{ selected: boolean }>`
     cursor: pointer;
   }
 `;
+
 export const SectionContainer = styled.div`
   flex-direction: row;
   display: flex;

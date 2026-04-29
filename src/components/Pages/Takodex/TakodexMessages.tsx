@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
 import Masonry from "react-masonry-component";
-import { NavLink } from "react-router-dom";
 import {
     SubmissionContainer,
     TextBubbleContainer,
@@ -8,11 +7,11 @@ import {
     BubbleHeader,
     HeaderText,
     BubbleMessage,
-    Title,
+    NavTitle,
     AddTakoButton
 } from "./styles";
 import {MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
-import { Navbar } from "../../Common/Navbar";
+import { Navbar, NavHome } from "../../Common/Navbar";
 
 const iconImages = [
     "8-bit Tako.png",
@@ -69,10 +68,8 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
     return (
         <>
             <Navbar>
-                <NavLink exact to="/">
-                    <i className="fa fa-home" /> 
-                </NavLink>
-                <Title>Takodex</Title>
+                <NavHome />
+                <NavTitle>Takodex</NavTitle>
                 <div style={{ marginLeft: "auto" }}>
                   <AddTakoButton
                     href="https://forms.gle/qnrMrk2z6QaRHsdZ7"

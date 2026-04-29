@@ -17,7 +17,7 @@ const Bar = styled.div<{ active: boolean; color: string }>`
   min-width: 38px;
   height: 24px;
   background-color: ${({ active, color }) =>
-    active ? color : "var(--ika-purple)"};
+    active ? color : "var(--dark-highlight)"};
   flex-direction: row;
   transition: 0.2s linear;
   &.mobile {
@@ -49,7 +49,7 @@ const Circle = styled.div<{ active: boolean; color: string }>`
 
 const Label = styled.span`
   margin: auto 0 auto 0.2em;
-  color: var(--ika-purple);
+  color: var(--dark-highlight);
   text-align: left;
   font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
@@ -63,7 +63,7 @@ export const Switch = ({
   label,
   value,
   onChange,
-  color = "var(--ika-purple)",
+  color = "var(--dark-highlight)",
   mobile,
 }: {
   label: string;

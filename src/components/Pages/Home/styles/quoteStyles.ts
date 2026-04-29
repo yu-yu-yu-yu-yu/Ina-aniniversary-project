@@ -4,7 +4,7 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   background: ${({ $grayscale }) =>
     $grayscale
       ? "linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(40,40,40,0.95) 100%)"
-      : "transparent linear-gradient(180deg, var(--inai-purple) 0%, var(--ika-purple) 100%) 0% 0% no-repeat padding-box"};
+      : "transparent linear-gradient(180deg, var(--light-background) 0%, var(--dark-highlight) 100%) 0% 0% no-repeat padding-box"};
   text-align: center;
   padding: 80px 20px;
   margin-top: 30px;
@@ -68,7 +68,7 @@ const GrayscaleButton = styled.button`
   position: absolute;
   bottom: 18px;
   right: 18px;
-  background: var(--ina-orange);
+  background: var(--light-highlight);
   color: var(--text-color);
   border: none;
   border-radius: 8px;
@@ -81,8 +81,8 @@ const GrayscaleButton = styled.button`
   transition: background 0.2s, color 0.2s;
   z-index: 10;
   &:hover {
-    background: var(--ika-purple);
-    color: var(--ina-orange);
+    background: var(--dark-highlight);
+    color: var(--light-highlight);
   }
 `;
 

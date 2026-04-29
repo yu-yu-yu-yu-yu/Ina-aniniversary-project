@@ -5,7 +5,7 @@ export const NewTag = styled.div`
   position: absolute;
   top: 50px;
   left: 10px;
-  background: var(--ika-purple);
+  background: var(--dark-highlight);
   color: var(--text-color);
   font-size: 12px;
   font-weight: bold;
@@ -76,7 +76,7 @@ export const MenuTextContainer = styled.div`
     display: block;
     width: 60px;
     height: 4px;
-    background-color: var(--inai-purple);
+    background-color: var(--light-background);
     margin: 0 auto 20px auto;
     border-radius: 2px;
   }
@@ -85,7 +85,7 @@ export const MenuTextContainer = styled.div`
     padding: 10px 35px;
     margin: 0 auto 35px auto;
     max-width: 600px;
-    background: var(--ika-purple) 0% 0% no-repeat padding-box;
+    background: var(--dark-highlight) 0% 0% no-repeat padding-box;
     border-radius: 32px;
     opacity: 1;
 

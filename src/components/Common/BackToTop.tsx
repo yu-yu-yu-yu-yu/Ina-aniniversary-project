@@ -4,7 +4,7 @@ import styled from "styled-components";
 const ScrollBtn = styled.button`
 
     display: none;
-    background: var(--ika-purple) 0% 0% no-repeat padding-box;
+    background: var(--dark-highlight) 0% 0% no-repeat padding-box;
     position: fixed;
     cursor: pointer;
     bottom: 20px;

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useAudio } from "../../../hooks/useAudio";
 import { useMute } from "../../Common/MuteButton";
-import { Navbar } from "../../Common/Navbar";
+import { Navbar, NavHome } from "../../Common/Navbar";
 import {
-  Title,
+  NavTitle,
   Grid,
   Card,
   Thumbnail,
@@ -35,10 +34,8 @@ const CollagePage = () => {
   return (
     <div>
       <Navbar>
-        <NavLink exact to="/">
-          <i className="fa fa-home" />
-        </NavLink>
-        <Title>Collages</Title>
+        <NavHome/>
+        <NavTitle>Collages</NavTitle>
       </Navbar>
       <audio
         ref={audioRef}

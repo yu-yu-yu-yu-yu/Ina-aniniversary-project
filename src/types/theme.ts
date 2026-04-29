@@ -7,9 +7,9 @@ export interface ThemeContextType {
 
 export interface ThemeVariables {
   "--lightdark": string;
-  "--inai-purple": string;
-  "--ina-orange": string;
-  "--ika-purple": string;
+  "--light-background": string;
+  "--light-highlight": string;
+  "--dark-highlight": string;
   "--ink-black": string;
   "--background-image": string;
   "--text-color": string;
