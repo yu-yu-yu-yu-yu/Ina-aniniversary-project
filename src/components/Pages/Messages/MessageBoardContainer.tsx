@@ -9,7 +9,7 @@ import { debounce } from "lodash";
 import {
   FiltersContainer,
   Loader,
-  MessageBoard,
+  SiteBoard,
   SearchBar,
   NavTitle,
 } from "./styles";
@@ -20,7 +20,7 @@ import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
-const MessageBoardContainer = (): JSX.Element => {
+const MessageBoard = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
   const {
@@ -167,7 +167,7 @@ const MessageBoardContainer = (): JSX.Element => {
       ) : error ? (
         <div>Error loading messages: {error.message}</div>
       ) : (
-        <MessageBoard>
+        <SiteBoard>
           <FiltersContainer>
             <SearchBar onChange={handleFilter} placeholder="Search..." />
             <div
@@ -211,10 +211,10 @@ const MessageBoardContainer = (): JSX.Element => {
             />
           </InfiniteScroll>
           <ScrollArrow />
-        </MessageBoard>
+        </SiteBoard>
       )}
     </div>
   );
 };
 
-export default MessageBoardContainer;
+export default MessageBoard;

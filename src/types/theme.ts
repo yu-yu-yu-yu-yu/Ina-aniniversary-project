@@ -8,6 +8,7 @@ export interface ThemeContextType {
 export interface ThemeVariables {
   "--lightdark": string;
   "--light-background": string;
+  "--dark-background": string;
   "--light-highlight": string;
   "--dark-highlight": string;
   "--ink-black": string;

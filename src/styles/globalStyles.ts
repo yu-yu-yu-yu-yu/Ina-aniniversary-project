@@ -83,7 +83,7 @@ export const IFrame = styled.iframe`
   opacity: 1;
 `;
 
-export const MessageBoard = styled.div`
+export const SiteBoard = styled.div`
   width: 90%;
   margin-right: auto;
   margin-left: auto;

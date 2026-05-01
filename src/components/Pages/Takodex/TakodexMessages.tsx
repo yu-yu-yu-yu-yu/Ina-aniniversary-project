@@ -10,7 +10,7 @@ import {
     NavTitle,
     AddTakoButton
 } from "./styles";
-import {MessageBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
+import {SiteBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
 import { Navbar, NavHome } from "../../Common/Navbar";
 
 const iconImages = [
@@ -80,7 +80,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                   </AddTakoButton>
                 </div>
             </Navbar>
-            <MessageBoard>
+            <SiteBoard>
                 <MessagesSearchBar
                     type="text"
                     value={search}
@@ -132,7 +132,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                         );
                     })}
                 </Masonry>
-            </MessageBoard>
+            </SiteBoard>
         </>
     );
 };

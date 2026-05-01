@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import TakoLetters from "./TakoLetters";
+import TakoMessages from "./SongContainer";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
-import { Submission } from "../../../types";
+import { SongData } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
 import { Switch } from "../../Common/Switch";
 import { debounce } from "lodash";
@@ -20,17 +20,17 @@ import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 10;
 
-const BoardContainer = (): JSX.Element => {
+const PlaylistBoard = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
   const {
     data: rawData,
     loading,
     error,
-  } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
+  } = useFetch<SongData[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
 
-  const [sourceData, setSourceData] = useState<Submission[]>([]);
-  const [data, setData] = useState<Submission[]>([]);
+  const [sourceData, setSourceData] = useState<SongData[]>([]);
+  const [data, setData] = useState<SongData[]>([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
@@ -51,7 +51,7 @@ const BoardContainer = (): JSX.Element => {
   const fetchMore = async () => {
     if (data.length !== 0) {
       const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => row.image !== "")
+        ? sourceData.filter((row: SongData) => row.image !== "")
         : sourceData;
 
       const rows = resultData.slice(offset, LIMIT + offset);
@@ -70,7 +70,7 @@ const BoardContainer = (): JSX.Element => {
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: Submission) => {
+        const resultData = sourceData.filter((row: SongData) => {
           return (
             row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
             row.message.toLowerCase().includes(event.target.value.toLowerCase())
@@ -94,7 +94,7 @@ const BoardContainer = (): JSX.Element => {
     if (value) {
       setData([]);
       const resultData = sourceData.filter(
-        (row: Submission) => row.image !== "",
+        (row: SongData) => row.image !== "",
       );
       const rows = resultData.slice(0, LIMIT);
       setHasMore(true);
@@ -132,9 +132,9 @@ const BoardContainer = (): JSX.Element => {
     }
   };
 
-  const awaitImgs = async (data: Submission[]) => {
+  const awaitImgs = async (data: SongData[]) => {
     const promises: Promise<unknown>[] = [];
-    data.forEach((row: Submission) => {
+    data.forEach((row: SongData) => {
       if (row.image && !row.image.includes("youtube")) {
         promises.push(
           new Promise((resolve) => {
@@ -160,12 +160,12 @@ const BoardContainer = (): JSX.Element => {
       />
       <Navbar>
       <NavHome />
-        <NavTitle>Letters for Ina</NavTitle>
+        <NavTitle>Ultimate Ina Playlist</NavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading Letters: {error.message}</div>
+        <div>Error loading: {error.message}</div>
       ) : (
         <SiteBoard>
           <FiltersContainer>
@@ -183,7 +183,7 @@ const BoardContainer = (): JSX.Element => {
                 onChange={(value) => OnlyImgToggle(value)}
               />
               <Switch
-                label="Only Letters"
+                label="Only messages"
                 value={isToggledTextOnly}
                 onChange={(value) => OnlyTextToggle(value)}
               />
@@ -204,8 +204,8 @@ const BoardContainer = (): JSX.Element => {
               <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
             }
           >
-            <TakoLetters
-              submissions={data}
+            <TakoMessages
+              SongDatas={data}
               isToggledOnlyImg={isToggledOnlyImg}
               isToggledTextOnly={isToggledTextOnly}
             />
@@ -217,4 +217,4 @@ const BoardContainer = (): JSX.Element => {
   );
 };
 
-export default BoardContainer;
+export default PlaylistBoard;

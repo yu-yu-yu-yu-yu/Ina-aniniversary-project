@@ -5,7 +5,8 @@ export const themes: Themes = {
   Standard: {
     "--lightdark": "#F3EDFF",
     "--light-background": "#A198B3",
-    "--light-highlight": "#ffdd77",
+    "--dark-background": "#726195",
+    "--light-highlight": "#ffc977",
     "--dark-highlight": "#564F68",
     "--ink-black": "#000000",
     "--background-image": "url('./Pattern.png')",
@@ -17,7 +18,8 @@ export const themes: Themes = {
   Violet: {
     "--lightdark": "#f0eeffff",
     "--light-background": "#31303A",
-    "--light-highlight": "#E2B34C",
+    "--dark-background": "#295d90",
+    "--light-highlight": "#ffecc4",
     "--dark-highlight": "#1D1B20",
     "--ink-black": "#2D1B3B",
     "--background-image": "url('./Pattern2.png')",
@@ -29,6 +31,7 @@ export const themes: Themes = {
   Meconopsis: {
     "--lightdark": "#23242B",
     "--light-background": "#23242B",
+    "--dark-background": "#220066",
     "--light-highlight": "#0066ccff",
     "--dark-highlight": "#304759",
     "--ink-black": "#000000",
@@ -36,11 +39,12 @@ export const themes: Themes = {
     "--text-color": "#ffffffff",
     "--background": "#0100D1",
     "--shadow": "#0000001C",
-    "--logo-filter": "brightness(0) invert(1) sepia(1) hue-rotate(180deg) saturate(5)",
+    "--logo-filter": "sepia(100%) hue-rotate(190deg) brightness(0.8) contrast(1.2)",
   },
   Temari: {
     "--lightdark": "#181818",
     "--light-background": "#E53935",
+    "--dark-background": "#656565",
     "--light-highlight": "#23242B",
     "--dark-highlight": "#ff5555ff",
     "--ink-black": "#000000",
@@ -48,6 +52,6 @@ export const themes: Themes = {
     "--text-color": "#000000ff",
     "--background": "#5a5a5aff",
     "--shadow": "#0000001C",
-    "--logo-filter": "invert(18%) sepia(98%) saturate(7492%) hue-rotate(357deg) brightness(0.9)",
+    "--logo-filter": "invert(18%) sepia(98%) saturate(0) hue-rotate(357deg) brightness(0.9)",
   },
 };

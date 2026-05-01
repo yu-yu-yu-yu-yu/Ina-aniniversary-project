@@ -6,7 +6,7 @@ export {
   BubbleHeader,
   HeaderText,
   IFrame,
-  MessageBoard,
+  SiteBoard,
   FiltersContainer,
   Loader,
   SearchBar,

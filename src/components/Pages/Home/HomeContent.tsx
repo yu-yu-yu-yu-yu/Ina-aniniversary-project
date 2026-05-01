@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import Lore from "./Lore";
 import Quote from "./Quote";
 import Menu from "./Menu";
-import Divider from "./Divider";
+import Divider from "../../Common/Divider";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { FloatingTakoData } from "../../../types";

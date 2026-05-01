@@ -10,7 +10,7 @@ import {
   SiteBoard,
   SearchBar,
   NavTitle,
-} from "./styles";
+} from "./styles/styles";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import TakoVideos from "./TakoVideos";
 import { useFetch } from "../../../hooks/useFetch";
