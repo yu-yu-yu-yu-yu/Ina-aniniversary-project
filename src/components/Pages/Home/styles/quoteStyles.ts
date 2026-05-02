@@ -7,7 +7,7 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
       : "transparent linear-gradient(180deg, var(--light-background) 0%, var(--dark-highlight) 100%) 0% 0% no-repeat padding-box"};
   text-align: center;
   padding: 80px 20px;
-  margin-top: 30px;
+  
   box-shadow: 0px 10px 6px var(--shadow);
   z-index: 3;
   position: relative;

@@ -24,7 +24,7 @@ export const themes: Themes = {
     "--ink-black": "#2D1B3B",
     "--background-image": "url('./Pattern2.png')",
     "--text-color": "#ffffffff",
-    "--background": "#76BAD7",
+    "--background": "#d1f1ff",
     "--shadow": "#0000001C",
     "--logo-filter": "invert(60%) sepia(80%) saturate(400%) hue-rotate(180deg)",
   },

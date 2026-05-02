@@ -3,14 +3,15 @@ import styled from "styled-components";
 const LogoContainer = styled.div`
   min-height: 100vh;
   position: relative;
-  z-index: 3;
+  z-index: 1;
+  
+  background: var(--background);
 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
-  padding-bottom: 20px; 
   box-sizing: border-box;
 `;
   

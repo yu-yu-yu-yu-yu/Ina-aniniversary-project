@@ -4,8 +4,7 @@
     flex-direction: column;
     position: relative;
     min-height: 100%;
-    background: var(--background) url(./Pattern.png) 0 0;
-    background-size: 100px;
+    background: var(--background);
     background-attachment: fixed;
 }
 
@@ -45,7 +44,6 @@ nav a.active{
     --dark-highlight: #564F68;
         --ink-black: #000000;
         --text-color: #ffffff;
-        --background-image: url('./Pattern.png');
     }
 
 .site-title {

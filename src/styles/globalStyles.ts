@@ -84,10 +84,12 @@ export const IFrame = styled.iframe`
 `;
 
 export const SiteBoard = styled.div`
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 25px;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+  box-sizing: border-box;
+  background: var(--background);
 `;
 
 export const FiltersContainer = styled.div`

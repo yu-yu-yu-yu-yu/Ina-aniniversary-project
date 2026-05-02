@@ -8,6 +8,7 @@ const Container = styled.div`
   :hover {
     cursor: pointer;
   }
+  padding: 0.1em;
 `;
 
 const Bar = styled.div<{ active: boolean; color: string }>`
