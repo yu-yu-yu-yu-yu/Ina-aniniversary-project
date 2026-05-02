@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import TakoMessages from "./SongContainer";
+import SongContainer from "./SongContainer";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
-import { SongData } from "../../../types";
+import { SongData } from "../../../types/song";
 import ScrollArrow from "../../Common/BackToTop";
 import { Switch } from "../../Common/Switch";
 import { debounce } from "lodash";
@@ -18,7 +18,48 @@ import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
 
-const LIMIT = 10;
+const LIMIT = 20;
+
+const getFiltered = (
+  source: SongData[],
+  filters: {
+    typeFilter: SongData["type"] | null;
+    archiveFilter: SongData["archived"] | null;
+    duoOnly: boolean;
+    groupOnly: boolean;
+  },
+  query: string,
+): SongData[] => {
+  let result = source;
+  if (filters.typeFilter) result = result.filter((s) => s.type === filters.typeFilter);
+  if (filters.archiveFilter) result = result.filter((s) => s.archived === filters.archiveFilter);
+  if (filters.duoOnly) result = result.filter((s) => s.collab === "duo");
+  if (filters.groupOnly) result = result.filter((s) => s.collab === "group");
+  if (query) {
+    const q = query.toLowerCase();
+    result = result.filter(
+      (s) =>
+        s.songName?.toLowerCase().includes(q) ||
+        s.songInfo?.toLowerCase().includes(q),
+    );
+  }
+  return result;
+};
+
+const awaitImgs = async (items: SongData[]) => {
+  const promises = items
+    .filter((row) => row.songLink && !row.songLink.includes("youtube"))
+    .map(
+      (row) =>
+        new Promise<void>((resolve) => {
+          const img = new Image();
+          img.src = `${process.env.PUBLIC_URL}/songLinks/${row.songLink}`;
+          img.onerror = () => resolve();
+          img.onload = () => resolve();
+        }),
+    );
+  await Promise.allSettled(promises);
+};
 
 const PlaylistBoard = (): JSX.Element => {
   const { muted } = useMute();
@@ -27,127 +68,62 @@ const PlaylistBoard = (): JSX.Element => {
     data: rawData,
     loading,
     error,
-  } = useFetch<SongData[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
+  } = useFetch<SongData[]>(`${process.env.PUBLIC_URL}/data/songInfoData.json`);
 
   const [sourceData, setSourceData] = useState<SongData[]>([]);
   const [data, setData] = useState<SongData[]>([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
-  const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [typeFilter, setTypeFilter] = useState<SongData["type"] | null>(null);
+  const [archiveFilter, setArchiveFilter] = useState<SongData["archived"] | null>(null);
+  const [duoOnly, setDuoOnly] = useState(false);
+  const [groupOnly, setGroupOnly] = useState(false);
 
   useEffect(() => {
     if (rawData) {
-      const processedData = rawData.reverse();
-      setSourceData(processedData);
-      const rows = processedData.slice(0, LIMIT);
-      awaitImgs(rows).then(() => {
-        setData(rows);
-        setOffset(LIMIT);
-      });
+      setSourceData([...rawData].reverse());
     }
   }, [rawData]);
 
+  useEffect(() => {
+    if (!sourceData.length) return;
+    const filters = { typeFilter, archiveFilter, duoOnly, groupOnly };
+    const filtered = getFiltered(sourceData, filters, searchQuery);
+    const rows = filtered.slice(0, LIMIT);
+    awaitImgs(rows).then(() => {
+      setData(rows);
+      setOffset(LIMIT);
+      setHasMore(filtered.length > LIMIT);
+    });
+  }, [sourceData, typeFilter, archiveFilter, duoOnly, groupOnly, searchQuery]);
+
   const fetchMore = async () => {
-    if (data.length !== 0) {
-      const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: SongData) => row.image !== "")
-        : sourceData;
-
-      const rows = resultData.slice(offset, LIMIT + offset);
-
-      if (rows.length === 0) {
-        setHasMore(false);
-      }
-
-      await awaitImgs(rows);
-
-      setData(data.concat(rows));
-      setOffset(LIMIT + offset);
+    const filters = { typeFilter, archiveFilter, duoOnly, groupOnly };
+    const filtered = getFiltered(sourceData, filters, searchQuery);
+    const rows = filtered.slice(offset, LIMIT + offset);
+    if (rows.length === 0) {
+      setHasMore(false);
+      return;
     }
+    await awaitImgs(rows);
+    setData((prev) => prev.concat(rows));
+    setOffset((prev) => prev + LIMIT);
   };
 
   const handleFilter = debounce(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: SongData) => {
-          return (
-            row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.message.toLowerCase().includes(event.target.value.toLowerCase())
-          );
-        });
-        setHasMore(false);
-        setData(resultData);
-        setOffset(0);
-      } else {
-        const rows = sourceData.slice(0, LIMIT);
-        setHasMore(true);
-        await awaitImgs(rows);
-        setData(rows);
-        setOffset(LIMIT);
-      }
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(event.target.value);
     },
-    1000,
+    500,
   );
 
-  const OnlyImgToggle = async (value: boolean) => {
-    if (value) {
-      setData([]);
-      const resultData = sourceData.filter(
-        (row: SongData) => row.image !== "",
-      );
-      const rows = resultData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
-      setIsToggledOnlyImg(true);
-      setisToggledTextOnly(false);
-    } else {
-      setOffset(0);
-      const rows = sourceData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
-      setIsToggledOnlyImg(false);
-    }
-  };
+  const setType = (value: SongData["type"]) => (active: boolean) =>
+    setTypeFilter(active ? value : null);
 
-  const OnlyTextToggle = async (value: boolean) => {
-    if (value) {
-      if (isToggledOnlyImg) {
-        setOffset(0);
-        const rows = sourceData.slice(0, LIMIT);
-        setHasMore(true);
-        await awaitImgs(rows);
-        setData(rows);
-        setOffset(LIMIT);
-        setIsToggledOnlyImg(false);
-      }
-      setisToggledTextOnly(true);
-      setIsToggledOnlyImg(false);
-    } else {
-      setisToggledTextOnly(false);
-    }
-  };
-
-  const awaitImgs = async (data: SongData[]) => {
-    const promises: Promise<unknown>[] = [];
-    data.forEach((row: SongData) => {
-      if (row.image && !row.image.includes("youtube")) {
-        promises.push(
-          new Promise((resolve) => {
-            const img = new Image();
-            img.src = process.env.PUBLIC_URL + "/Images/" + row.image;
-            img.onerror = resolve;
-            img.onload = resolve;
-          }),
-        );
-      }
-    });
-    await Promise.allSettled(promises);
-  };
+  const setArchive = (value: SongData["archived"]) => (active: boolean) =>
+    setArchiveFilter(active ? value : null);
 
   return (
     <div>
@@ -159,7 +135,7 @@ const PlaylistBoard = (): JSX.Element => {
         style={{ display: "none" }}
       />
       <Navbar>
-      <NavHome />
+        <NavHome />
         <NavTitle>Ultimate Ina Playlist</NavTitle>
       </Navbar>
       {loading ? (
@@ -170,28 +146,23 @@ const PlaylistBoard = (): JSX.Element => {
         <SiteBoard>
           <FiltersContainer>
             <SearchBar onChange={handleFilter} placeholder="Search..." />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                overflow: "hidden",
-              }}
-            >
-              <Switch
-                label="Only Images"
-                value={isToggledOnlyImg}
-                onChange={(value) => OnlyImgToggle(value)}
-              />
-              <Switch
-                label="Only messages"
-                value={isToggledTextOnly}
-                onChange={(value) => OnlyTextToggle(value)}
-              />
+            <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "8px" }}>
+              <Switch label="Covers"            value={typeFilter === "cover"}            onChange={setType("cover")} />
+              <Switch label="Ina's Originals"   value={typeFilter === "Ina's original"}   onChange={setType("Ina's original")} />
+              <Switch label="Artist's Originals" value={typeFilter === "Artist's original"} onChange={setType("Artist's original")} />
+              <Switch label="Karaoke"           value={typeFilter === "karaoke"}          onChange={setType("karaoke")} />
+              <Switch label="Concert"           value={typeFilter === "concert"}          onChange={setType("concert")} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>
+              <Switch label="Archived"          value={archiveFilter === "archived"}           onChange={setArchive("archived")} />
+              <Switch label="Unofficial Archive" value={archiveFilter === "unofficial archive"} onChange={setArchive("unofficial archive")} />
+              <Switch label="Duo"               value={duoOnly}  onChange={setDuoOnly} />
+              <Switch label="Group"             value={groupOnly} onChange={setGroupOnly} />
             </div>
           </FiltersContainer>
           <InfiniteScroll
             style={{ overflow: "hidden" }}
-            scrollThreshold={"50px"}
+            scrollThreshold="50px"
             dataLength={data.length}
             next={fetchMore}
             hasMore={hasMore}
@@ -204,11 +175,7 @@ const PlaylistBoard = (): JSX.Element => {
               <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
             }
           >
-            <TakoMessages
-              SongDatas={data}
-              isToggledOnlyImg={isToggledOnlyImg}
-              isToggledTextOnly={isToggledTextOnly}
-            />
+            <SongContainer SongData={data} />
           </InfiniteScroll>
           <ScrollArrow />
         </SiteBoard>

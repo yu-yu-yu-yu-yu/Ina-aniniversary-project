@@ -27,3 +27,5 @@ export type {
   PaginationState,
   SearchFilterState,
 } from "./hooks";
+
+export type { SongData } from "./song";

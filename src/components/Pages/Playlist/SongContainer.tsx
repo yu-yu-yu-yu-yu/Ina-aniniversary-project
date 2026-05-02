@@ -1,113 +1,70 @@
-import React, { useLayoutEffect } from "react";
-import { SongData } from "../../../types";
-import Masonry from "react-masonry-component";
-import { TakoIcon } from "./TakoIcon";
-import { SRLWrapper } from "simple-react-lightbox";
+import React from "react";
+import { SongData } from "../../../types/song";
 import {
   BubbleHeader,
   BubbleImage,
   BubbleSong,
   HeaderText,
   IFrame,
-  SubmissionContainer,
-  TextBubbleContainer,
+  SongGrid,
+  SongCard,
+  SongCardMedia,
+  SongCardInfo,
+  SongTag,
+  SongTagRow,
 } from "./styles/styles";
 
-interface SongDataProps {
+interface SongContainerProps {
   SongData: SongData[];
-  isToggledOnlyImg: boolean;
-  isToggledTextOnly: boolean;
 }
 
-const options = {
-  settings: {
-    disablePanzoom: false,
-  },
-  buttons: {
-    showAutoplayButton: false,
-    showCloseButton: false,
-    showDownloadButton: false,
-    showFullscreenButton: false,
-    showNextButton: false,
-    showPrevButton: false,
-    showThumbnailsButton: false,
-  },
-  thumbnails: {
-    showThumbnails: false,
-  },
-};
-
-const SongData = ({
-  SongData,
-  isToggledOnlyImg,
-  isToggledTextOnly,
-}: SongDataProps): JSX.Element => {
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  if (isToggledOnlyImg) {
-    SongData = SongData.filter((sub) => {
-      return sub.image;
-    });
-  }
-
+const SongContainer = ({ SongData }: SongContainerProps): JSX.Element => {
   return (
-    <Masonry
-      options={{
-        gutter: 40,
-        columnWidth: 1,
-        fitWidth: true,
-        transitionDuration: 0,
-      }}
-      style={{ margin: "0 auto" }}
-    >
-      {SongData.map(({ songData, songName, icon, image }, i) => (
-        <SubmissionContainer key={i}>
-          <TextBubbleContainer>
-            {!isToggledTextOnly &&
-              image &&
-              (!image.includes("youtube") ? (
-                <SRLWrapper options={options}>
-                  {image.includes("mp4") ? (
-                    <video width={420} controls>
-                      <source
-                        src={process.env.PUBLIC_URL + "/Images/" + image}
-                        type="video/mp4"
-                      />
-                    </video>
-                  ) : (
-                    <BubbleImage
-                      src={process.env.PUBLIC_URL + "/Images/" + image}
+    <SongGrid>
+      {SongData.map(({ songLink, songInfo, coverInfo, songName, type, archived, collab }, i) => (
+        <SongCard key={i}>
+          {songLink && (
+            <SongCardMedia>
+              {!songLink.includes("youtube") ? (
+                songLink.includes("mp4") ? (
+                  <video style={{ width: "100%", height: "100%", objectFit: "cover" }} controls>
+                    <source
+                      src={process.env.PUBLIC_URL + "/songLinks/" + songLink}
+                      type="video/mp4"
                     />
-                  )}
-                </SRLWrapper>
+                  </video>
+                ) : (
+                  <BubbleImage
+                    src={process.env.PUBLIC_URL + "/songLinks/" + songLink}
+                    alt={songName}
+                  />
+                )
               ) : (
                 <IFrame
-                  width="100%"
-                  height="315"
-                  src={image}
-                  title="YouTube video player"
+                  src={songLink}
+                  title={songName || "YouTube video player"}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={true}
-                ></IFrame>
-              ))}
-            {(!isToggledOnlyImg || image.includes("mp4")) && (
-              <BubbleSong>{songData}</BubbleSong>
-            )}
-
-            <hr />
-
+                />
+              )}
+            </SongCardMedia>
+          )}
+          <SongCardInfo>
             <BubbleHeader>
-              <TakoIcon id={icon} index={i} />
-
-              <HeaderText>{songName || "Anonymous Tako"}</HeaderText>
+              <HeaderText>{songName || "Song Placeholder"}</HeaderText>
             </BubbleHeader>
-          </TextBubbleContainer>
-        </SubmissionContainer>
+            {songInfo && <BubbleSong>{songInfo}</BubbleSong>}
+            {coverInfo && <BubbleSong>{coverInfo}</BubbleSong>}
+            <SongTagRow>
+              {type && <SongTag>{type}</SongTag>}
+              {archived && archived !== "unarchived" && <SongTag>{archived}</SongTag>}
+              {collab && <SongTag>{collab}</SongTag>}
+            </SongTagRow>
+          </SongCardInfo>
+        </SongCard>
       ))}
-    </Masonry>
+    </SongGrid>
   );
 };
 
-export default SongData;
+export default SongContainer;

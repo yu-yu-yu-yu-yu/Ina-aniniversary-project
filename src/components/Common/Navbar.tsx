@@ -20,18 +20,18 @@ export const Navbar = styled.nav`
 `;
 
 export const StyleHome = styled.button`
-  position: fixed;
+  possition: fixed;
+  font-size: inherit;
   background: var(--dark-highlight);
   border: 2px solid var(--light-highlight);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  width: 1.4em;
+  height: 1.4em;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  font-size: 1.7rem;
 
   transition:
     background 0.2s,

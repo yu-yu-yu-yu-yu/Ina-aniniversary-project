@@ -1,9 +1,11 @@
 export interface SongData {
   songName?: string;
   songLink?: string;
-  coverName?: string;
-  coverLink?: string;
-  image?: string;
+  songInfo?: string;
+  coverInfo?: string;
+  type?: "Artist's original" | "Ina's original" | "cover" | "karaoke" | "concert";
+  archived?: "archived" | "unarchived" | "unofficial archive";
+  collab?: "duo" | "group";
 }
 
 export interface VideoEntry extends SongData {
