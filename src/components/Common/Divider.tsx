@@ -7,12 +7,17 @@ const NUM_GIFS = 8;
 const GIF_SIZE = 60;
 const SPEED = 10;
 
-const travel = keyframes`
+// Dynamic animation based on mirror mode
+const travel = (mirror?: boolean) => keyframes`
   from {
-    transform: translateX(-${GIF_SIZE}px);
+    transform: translateX(${
+      mirror ? `calc(100vw + ${GIF_SIZE}px)` : `-${GIF_SIZE}px`
+    }) scaleX(${mirror ? -1 : 1});
   }
   to {
-    transform: translateX(calc(100vw + ${GIF_SIZE}px));
+    transform: translateX(${
+      mirror ? `-${GIF_SIZE}px` : `calc(100vw + ${GIF_SIZE}px)`
+    }) scaleX(${mirror ? -1 : 1});
   }
 `;
 
@@ -21,23 +26,26 @@ const Wrapper = styled.div`
   height: ${GIF_SIZE}px;
   overflow: hidden;
   position: relative;
-  background: var(--background) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background: var(--background)
+    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
+  padding-top: 20px;
+  padding-bottom: 10px;
 `;
 
-const Gif = styled.img<{ delay: number }>`
+const Gif = styled.img<{ delay: number; mirror?: boolean }>`
   width: ${GIF_SIZE}px;
   height: ${GIF_SIZE}px;
   position: absolute;
   top: 0;
   left: 0;
 
-  animation: ${travel} ${SPEED}s linear infinite;
+  animation: ${({ mirror }) => travel(mirror)} ${SPEED}s linear infinite;
   animation-delay: ${({ delay }) => delay}s;
 `;
 
-const Divider: React.FC = () => {
+const Divider: React.FC<{ mirror?: boolean }> = ({ mirror }) => {
   const spacing = SPEED / NUM_GIFS;
 
   return (
@@ -50,6 +58,7 @@ const Divider: React.FC = () => {
             src={GIF_SRC}
             alt="gif"
             delay={-(i * spacing)}
+            mirror={mirror}
             draggable="false"
           />
         ))}

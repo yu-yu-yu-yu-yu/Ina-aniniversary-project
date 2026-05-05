@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const LoreContainer = styled.div`
   text-align: center;
-  padding-top: 90px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background: var(--background)
   url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;

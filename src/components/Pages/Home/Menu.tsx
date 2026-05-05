@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, TakoPeek } from "./styles/menuStyles";
 import { TextBoxContainer } from "../../../styles/globalStyles";
 
-const TAKO_COUNT = 72;
+const TAKO_COUNT = 137;
 
 const buttons = [
   { to: "/letters", label: "Letters for Ina" },
@@ -41,7 +41,7 @@ const Menu = (): JSX.Element => {
               This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s milestones</b>!
             </p>
             <p>
-              This time we honor her <b>5th anniversary since debut</b>!
+              This time we celebrate <b>her 6th birthday with us since debut</b>!
             </p>
             <p>
               We&apos;ve collected <b>congratulatory messages</b> and <b>artworks</b> from Takodachis around the world.

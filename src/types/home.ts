@@ -9,8 +9,9 @@ export interface FloatingTakoData {
 export interface FloatingBalloonData {
   key: number;
   left: number;
-  balloonFile: string;
+  src: string;
   bottom: number;
   createdAt: number;
   swayOffset: number;
+  heightScale: number;
 }

@@ -9,12 +9,17 @@ import Divider from "../../Common/Divider";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import FloatingTakos from "./FloatingTakos";
+import FloatingBalloons from "./FloatingBalloons";
 
 const Home = styled.div`
   position: relative;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+`;
+
+const MirroredDivider = styled(Divider)`
+  transform: scaleX(-1);
 `;
 
 const HomeContent = (): JSX.Element => {
@@ -31,9 +36,11 @@ const HomeContent = (): JSX.Element => {
         style={{ display: "none" }}
       />
       <Home>
+        <FloatingBalloons />
         <FloatingTakos />
         <Logo />
         <Quote />
+        <Divider mirror />
         <Lore />
         <Divider />
         <Menu />

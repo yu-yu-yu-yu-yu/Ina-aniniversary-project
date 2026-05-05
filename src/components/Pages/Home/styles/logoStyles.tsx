@@ -108,7 +108,7 @@ const ScrollIndicator = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 25px;
+  bottom: 10px;
   text-align: center;
   color: var(--dark-highlight);
   z-index: 2;
