@@ -114,7 +114,7 @@ const FloatingBalloons = (): JSX.Element => {
       const spawnHeight = document.documentElement.scrollHeight;
 
       for (let i = 0; i < spawnCount; i++) {
-        if (Math.random() < 0.65) {
+        if (Math.random() < 0.80) {
           const def = pool[Math.floor(Math.random() * pool.length)];
           const newBalloon: FloatingBalloonData = {
             key: Date.now() + Math.random() + i,

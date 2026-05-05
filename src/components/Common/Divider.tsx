@@ -21,7 +21,9 @@ const travel = (mirror?: boolean) => keyframes`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $topGap?: string }>`
+  --divider-top-gap: ${({ $topGap }) => $topGap ?? "0px"};
+
   width: 100%;
   height: ${GIF_SIZE}px;
   overflow: hidden;
@@ -30,7 +32,7 @@ const Wrapper = styled.div`
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
-  padding-top: 20px;
+  padding-top: calc(var(--divider-top-gap) + 20px);
   padding-bottom: 10px;
 `;
 
@@ -38,18 +40,21 @@ const Gif = styled.img<{ delay: number; mirror?: boolean }>`
   width: ${GIF_SIZE}px;
   height: ${GIF_SIZE}px;
   position: absolute;
-  top: 0;
+  top: var(--divider-top-gap);
   left: 0;
 
   animation: ${({ mirror }) => travel(mirror)} ${SPEED}s linear infinite;
   animation-delay: ${({ delay }) => delay}s;
 `;
 
-const Divider: React.FC<{ mirror?: boolean }> = ({ mirror }) => {
+const Divider: React.FC<{ mirror?: boolean; topGap?: string }> = ({
+  mirror,
+  topGap,
+}) => {
   const spacing = SPEED / NUM_GIFS;
 
   return (
-    <Wrapper>
+    <Wrapper $topGap={topGap}>
       {Array(NUM_GIFS)
         .fill(0)
         .map((_, i) => (

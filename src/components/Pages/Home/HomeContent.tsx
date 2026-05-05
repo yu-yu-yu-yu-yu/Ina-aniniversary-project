@@ -18,10 +18,6 @@ const Home = styled.div`
   overflow-x: hidden;
 `;
 
-const MirroredDivider = styled(Divider)`
-  transform: scaleX(-1);
-`;
-
 const HomeContent = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
@@ -40,9 +36,9 @@ const HomeContent = (): JSX.Element => {
         <FloatingTakos />
         <Logo />
         <Quote />
-        <Divider mirror />
+        <Divider mirror topGap="48px" />
         <Lore />
-        <Divider />
+        <Divider  topGap="48px"/>
         <Menu />
         <HomeFooter />
       </Home>
