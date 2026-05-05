@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
-import { Switch } from "../../Common/Switch";
 import { debounce } from "lodash";
 import {
   FiltersContainer,
@@ -33,8 +32,6 @@ const BoardContainer = (): JSX.Element => {
   const [data, setData] = useState<Submission[]>([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
-  const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
 
   useEffect(() => {
     if (rawData) {
@@ -50,18 +47,11 @@ const BoardContainer = (): JSX.Element => {
 
   const fetchMore = async () => {
     if (data.length !== 0) {
-      const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => row.image !== "")
-        : sourceData;
-
-      const rows = resultData.slice(offset, LIMIT + offset);
-
+      const rows = sourceData.slice(offset, LIMIT + offset);
       if (rows.length === 0) {
         setHasMore(false);
       }
-
       await awaitImgs(rows);
-
       setData(data.concat(rows));
       setOffset(LIMIT + offset);
     }
@@ -70,12 +60,9 @@ const BoardContainer = (): JSX.Element => {
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: Submission) => {
-          return (
-            row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.message.toLowerCase().includes(event.target.value.toLowerCase())
-          );
-        });
+        const resultData = sourceData.filter((row: Submission) =>
+          row.user.toLowerCase().includes(event.target.value.toLowerCase())
+        );
         setHasMore(false);
         setData(resultData);
         setOffset(0);
@@ -89,48 +76,6 @@ const BoardContainer = (): JSX.Element => {
     },
     1000,
   );
-
-  const OnlyImgToggle = async (value: boolean) => {
-    if (value) {
-      setData([]);
-      const resultData = sourceData.filter(
-        (row: Submission) => row.image !== "",
-      );
-      const rows = resultData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
-      setIsToggledOnlyImg(true);
-      setisToggledTextOnly(false);
-    } else {
-      setOffset(0);
-      const rows = sourceData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
-      setIsToggledOnlyImg(false);
-    }
-  };
-
-  const OnlyTextToggle = async (value: boolean) => {
-    if (value) {
-      if (isToggledOnlyImg) {
-        setOffset(0);
-        const rows = sourceData.slice(0, LIMIT);
-        setHasMore(true);
-        await awaitImgs(rows);
-        setData(rows);
-        setOffset(LIMIT);
-        setIsToggledOnlyImg(false);
-      }
-      setisToggledTextOnly(true);
-      setIsToggledOnlyImg(false);
-    } else {
-      setisToggledTextOnly(false);
-    }
-  };
 
   const awaitImgs = async (data: Submission[]) => {
     const promises: Promise<unknown>[] = [];
@@ -159,7 +104,7 @@ const BoardContainer = (): JSX.Element => {
         style={{ display: "none" }}
       />
       <Navbar>
-      <NavHome />
+        <NavHome />
         <NavTitle>Letters for Ina</NavTitle>
       </Navbar>
       {loading ? (
@@ -169,25 +114,7 @@ const BoardContainer = (): JSX.Element => {
       ) : (
         <SiteBoard>
           <FiltersContainer>
-            <SearchBar onChange={handleFilter} placeholder="Search..." />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                overflow: "hidden",
-              }}
-            >
-              <Switch
-                label="Only Images"
-                value={isToggledOnlyImg}
-                onChange={(value) => OnlyImgToggle(value)}
-              />
-              <Switch
-                label="Only Letters"
-                value={isToggledTextOnly}
-                onChange={(value) => OnlyTextToggle(value)}
-              />
-            </div>
+            <SearchBar onChange={handleFilter} placeholder="Search by name..." />
           </FiltersContainer>
           <InfiniteScroll
             style={{ overflow: "hidden" }}
@@ -204,11 +131,7 @@ const BoardContainer = (): JSX.Element => {
               <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
             }
           >
-            <TakoLetters
-              submissions={data}
-              isToggledOnlyImg={isToggledOnlyImg}
-              isToggledTextOnly={isToggledTextOnly}
-            />
+            <TakoLetters submissions={data} />
           </InfiniteScroll>
           <ScrollArrow />
         </SiteBoard>

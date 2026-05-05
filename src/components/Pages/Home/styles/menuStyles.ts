@@ -27,7 +27,7 @@ export const shake = keyframes`
 export const MenuContainer = styled.div`
   text-align: center;
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 10rem;
   background: var(--background)
     url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
@@ -53,72 +53,6 @@ export const MenuFlexRow = styled.div`
     align-items: center;
     gap: 24px;
     max-width: 100%;
-  }
-`;
-
-export const MenuTextContainer = styled.div`
-  position: relative;
-  text-align: center;
-  padding-top: 50px;
-  z-index: 3;
-  flex: 1 1 0;
-  min-width: 320px;
-  max-width: 600px;
-  @media only screen and (max-width: 1100px) {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    padding-top: 25px;
-  }
-
-  &:before {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 4px;
-    background-color: var(--light-background);
-    margin: 0 auto 20px auto;
-    border-radius: 2px;
-  }
-
-  .Menu-text {
-    padding: 10px 35px;
-    margin: 0 auto 35px auto;
-    max-width: 600px;
-    background: var(--dark-highlight) 0% 0% no-repeat padding-box;
-    border-radius: 32px;
-    opacity: 1;
-
-    color: var(--text-color);
-    text-align: justify;
-    font-family: "Mulish", sans-serif;
-    font-size: 25px;
-    font-weight: 300;
-
-    b {
-      font-weight: 800;
-    }
-
-    hr {
-      border-bottom: 0.5px solid var(--lightdark);
-    }
-
-    @media only screen and (max-width: 1400px) {
-      max-width: 400px;
-      font-size: 20px;
-    }
-
-    @media only screen and (max-width: 1100px) {
-      display: inline-block;
-      max-width: 550px;
-      width: 70%;
-      text-align: left;
-      font-size: 17px;
-    }
-
-    @media only screen and (max-width: 701px) {
-      padding: 25px;
-    }
   }
 `;
 

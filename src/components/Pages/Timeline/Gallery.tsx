@@ -5,7 +5,7 @@ import { Milestone } from "../../../types";
 import styled from "styled-components";
 
 const Gallery = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
-  // const { events } = props;
+
   const timelineRef = useRef(0);
 
   const [cur, setCur] = useState(0);

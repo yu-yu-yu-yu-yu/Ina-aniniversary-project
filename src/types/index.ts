@@ -17,15 +17,10 @@ export type {
 
 export type { ThemeName, ThemeContextType, ThemeVariables, Themes } from "./theme";
 
-export type { FloatingTakoData, AudioContextType } from "./home";
+export type { FloatingTakoData, FloatingBalloonData } from "./home";
 
 export type { Submission, VideoEntry } from "./messages";
 
-export type {
-  UseFetchOptions,
-  UseFetchResult,
-  PaginationState,
-  SearchFilterState,
-} from "./hooks";
+export type { UseFetchOptions, UseFetchResult } from "./hooks";
 
 export type { SongData } from "./song";

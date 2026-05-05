@@ -33,55 +33,6 @@ const FlexRow = styled.div`
   }
 `;
 
-const LoreTextContainer = styled.div`
-  flex: 0 0 auto;
-  min-width: 320px;
-  max-width: 600px;
-  z-index: 5;
-  position: relative;
-
-  @media only screen and (max-width: 1100px) {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    z-index: 3;
-  }
-
-  .lore-text {
-    padding: 10px 35px;
-    margin: 0 auto;
-    max-width: 650px;
-    background: var(--dark-highlight);
-    border-radius: 32px;
-    opacity: 1;
-    color: var(--text-color);
-    text-align: left;
-    font-family: "Mulish", sans-serif;
-    font-size: 25px;
-    font-weight: 300;
-    b {
-      font-weight: 800;
-    }
-    hr {
-      border-bottom: 0.5px solid var(--text-color);
-    }
-    @media (max-width: 1400px) {
-      max-width: 500px;
-      font-size: 20px;
-    }
-    @media (max-width: 1100px) {
-      max-width: 550px;
-      width: 90%;
-      font-size: 17px;
-    }
-    @media (max-width: 701px) {
-      padding: 25px;
-      width: 90%;
-      font-size: 16px;
-    }
-  }
-`;
-
 const InaVideoContainer = styled.div`
   flex: 1;
   min-width: 300px;
@@ -142,4 +93,4 @@ const AnimationCredits = styled.p`
   }
 `;
 
-export { LoreContainer, FlexRow, LoreTextContainer, InaVideoContainer, InaVideo, AnimationCreditsContainer, AnimationCredits };
+export { LoreContainer, FlexRow, InaVideoContainer, InaVideo, AnimationCreditsContainer, AnimationCredits };

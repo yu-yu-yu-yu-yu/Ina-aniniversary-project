@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useTheme } from "./ThemeProvider";
 import { ThemeName, themes } from "./themes";
 
-const themeNames: ThemeName[] = ["Standard", "Violet", "Meconopsis", "Temari"];
+const themeNames: ThemeName[] = ["Standard", "Violet", "Meconopsis", "Temari", "TakoTakover"];
 
 const ThemeButton = styled.button<{ bg: string; color: string; border: string }>`
   position: fixed;

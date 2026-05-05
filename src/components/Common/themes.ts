@@ -54,4 +54,17 @@ export const themes: Themes = {
     "--shadow": "#0000001C",
     "--logo-filter": "invert(18%) sepia(98%) saturate(0) hue-rotate(357deg) brightness(0.9)",
   },
+  TakoTakover: {
+    "--lightdark": "#1e0a3c",
+    "--light-background": "#6b2fa0",
+    "--dark-background": "#3d0a6e",
+    "--light-highlight": "#ff69b4",
+    "--dark-highlight": "#9b30ff",
+    "--ink-black": "#000000",
+    "--background-image": "none",
+    "--text-color": "#f0d6ff",
+    "--background": "#12003e",
+    "--shadow": "#0000005C",
+    "--logo-filter": "sepia(100%) hue-rotate(270deg) saturate(300%) brightness(0.8)",
+  },
 };

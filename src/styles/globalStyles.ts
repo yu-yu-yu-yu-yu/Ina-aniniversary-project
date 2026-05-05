@@ -1,5 +1,55 @@
 import styled from "styled-components";
 
+export const TextBoxContainer = styled.div`
+  flex: 0 0 auto;
+  min-width: 320px;
+  max-width: 600px;
+  z-index: 5;
+  position: relative;
+
+  @media only screen and (max-width: 1100px) {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    z-index: 3;
+  }
+
+  .lore-text,
+  .Menu-text {
+    padding: 10px 35px;
+    margin: 0 auto;
+    max-width: 650px;
+    background: var(--dark-highlight);
+    border-radius: 32px;
+    opacity: 1;
+    color: var(--text-color);
+    text-align: left;
+    font-family: "Mulish", sans-serif;
+    font-size: 25px;
+    font-weight: 300;
+    b {
+      font-weight: 800;
+    }
+    hr {
+      border-bottom: 0.5px solid var(--text-color);
+    }
+    @media (max-width: 1400px) {
+      max-width: 500px;
+      font-size: 20px;
+    }
+    @media (max-width: 1100px) {
+      max-width: 550px;
+      width: 90%;
+      font-size: 17px;
+    }
+    @media (max-width: 701px) {
+      padding: 25px;
+      width: 90%;
+      font-size: 16px;
+    }
+  }
+`;
+
 export const SubmissionContainer = styled.div`
   margin: 10px;
   width: 450px;
@@ -102,28 +152,9 @@ export const Loader = styled.div`
   align-items: center;
 `;
 
-export const CenteredContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const CenteredText = styled.p`
-  text-align: center;
-`;
-
-export const AutoMargin = styled.div`
-  margin: 0 auto;
 `;
 
 export const SearchBar = styled.input`
@@ -194,56 +225,3 @@ export const Button = styled.a`
   }
 `;
 
-export const SecondaryButton = styled(Button)`
-  background: transparent;
-  border: 2px solid var(--light-highlight);
-  color: var(--light-highlight);
-`;
-
-export const HiddenAudio = styled.audio`
-  display: none;
-`;
-
-export const PointerAuto = styled.div`
-  pointer-events: auto;
-  cursor: pointer;
-`;
-
-export const NoPointer = styled.div`
-  pointer-events: none;
-`;
-
-export const OverflowHidden = styled.div`
-  overflow: hidden;
-`;
-
-export const OverflowAuto = styled.div`
-  overflow: auto;
-`;
-
-export const MasonryGrid = styled.div`
-  margin: 0 auto;
-`;
-
-export const LoadingOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 315px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-`;
-
-export const BackdropStyle = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-`;

@@ -6,7 +6,11 @@ export interface FloatingTakoData {
   createdAt: number;
 }
 
-export interface AudioContextType {
-  isMuted: boolean;
-  setMuted: (muted: boolean) => void;
+export interface FloatingBalloonData {
+  key: number;
+  left: number;
+  balloonFile: string;
+  bottom: number;
+  createdAt: number;
+  swayOffset: number;
 }

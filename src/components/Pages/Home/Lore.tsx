@@ -1,10 +1,11 @@
 import React from "react";
-import { LoreContainer, FlexRow, LoreTextContainer, InaVideoContainer, InaVideo, AnimationCreditsContainer, AnimationCredits } from "./styles/loreStyles";
+import { LoreContainer, FlexRow, InaVideoContainer, InaVideo, AnimationCreditsContainer, AnimationCredits } from "./styles/loreStyles";
+import { TextBoxContainer } from "../../../styles/globalStyles";
 
 const Lore = (): JSX.Element => (
   <LoreContainer>
     <FlexRow>
-      <LoreTextContainer>
+      <TextBoxContainer>
         <div className="lore-text">
           <hr />
           <p>
@@ -22,7 +23,7 @@ const Lore = (): JSX.Element => (
           </p>
           <hr />
         </div>
-      </LoreTextContainer>
+      </TextBoxContainer>
       <InaVideoContainer>
         <InaVideo
           autoPlay

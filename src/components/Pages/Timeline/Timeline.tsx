@@ -62,10 +62,6 @@ export const Timeline = ({
   const [hintOpen, setHintOpen] = useState(false);
   const navBarRef = useRef(null);
 
-  // const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setFlavour(event.target.value);
-  // };
-
   const checkMobile = () => {
     setMobile(window.innerWidth < 768);
     setModalControls(window.innerWidth < 1200);

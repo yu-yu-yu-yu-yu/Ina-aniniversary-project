@@ -17,6 +17,7 @@ export const Navbar = styled.nav`
   &.mobile {
     font: normal normal normal 20px/25px Montserrat;
   }
+  bottom-shadow: 0px 4px 4px var(--shadow);
 `;
 
 export const StyleHome = styled.button`

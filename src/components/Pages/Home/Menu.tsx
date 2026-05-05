@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, MenuTextContainer, TakoPeek } from "./styles/menuStyles";
+import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, TakoPeek } from "./styles/menuStyles";
+import { TextBoxContainer } from "../../../styles/globalStyles";
 
 const TAKO_COUNT = 72;
 
@@ -34,7 +35,7 @@ const Menu = (): JSX.Element => {
   return (
     <MenuContainer>
       <MenuFlexRow>
-        <MenuTextContainer>
+        <TextBoxContainer>
           <div className="Menu-text">
             <p>
               This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s milestones</b>!
@@ -59,8 +60,7 @@ const Menu = (): JSX.Element => {
             </p>
             <sub>And Happy Birthday Takos!</sub>
           </div>
-
-        </MenuTextContainer>
+        </TextBoxContainer>
         <ButtonsDiv>
           {buttons.map((btn, i) => (
             <ButtonContainer
