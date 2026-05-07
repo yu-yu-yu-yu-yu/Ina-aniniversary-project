@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FloatingTakoData } from "../../../types";
-
-const takoCount = 137;
+import { TAKO_COUNT } from "../../../constants/takos";
 const ANIMATION_DURATION = 9000;
 
 const floatUp = keyframes`
@@ -63,11 +62,11 @@ const TakoFloatBg = styled.div`
   pointer-events: none;
 `;
 
-const FloatingTakos = (): JSX.Element => {
+const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const sfxRef = useRef<HTMLAudioElement>(null);
-  const [columnMode] = useState(true);
+  const [columnMode] = useState(!freeFloat);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -75,7 +74,7 @@ const FloatingTakos = (): JSX.Element => {
       const spawnHeight = document.documentElement.scrollHeight;
       for (let i = 0; i < spawnCount; i++) {
         if (Math.random() < 0.6) {
-          const randomTako = Math.floor(Math.random() * takoCount);
+          const randomTako = Math.floor(Math.random() * TAKO_COUNT);
           const spawnBottom = Math.random() * spawnHeight;
           const newTako: FloatingTakoData = {
             key: Date.now() + Math.random() + i,

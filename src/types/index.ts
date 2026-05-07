@@ -24,3 +24,5 @@ export type { Submission, VideoEntry } from "./messages";
 export type { UseFetchOptions, UseFetchResult } from "./hooks";
 
 export type { SongData } from "./song";
+
+export type { CreditPerson, CreditEntry } from "./credits";

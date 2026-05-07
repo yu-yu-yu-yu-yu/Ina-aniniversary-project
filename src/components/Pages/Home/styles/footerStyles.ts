@@ -1,4 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const idleShake = keyframes`
+  0%, 75%, 100% { transform: rotate(0deg); }
+  78%  { transform: rotate(-5deg); }
+  81%  { transform: rotate(5deg); }
+  84%  { transform: rotate(-4deg); }
+  87%  { transform: rotate(4deg); }
+  90%  { transform: rotate(-2deg); }
+  93%  { transform: rotate(0deg); }
+`;
 
 const Footer = styled.footer`
   position: relative;  
@@ -114,32 +124,37 @@ const Footer = styled.footer`
 
   .footer-img-container{
     flex-grow: 2;
+    display: flex;
+
+    a {
+      margin: auto;
+      margin-right: 30px;
+      display: block;
+    }
 
     img{
       cursor: pointer;
     }
-    
-    display: flex;
   }
 
   .footer-img {
-    margin: auto;
-    max-width: 500px;
-    width: 20vw;
-    margin-right: 30px;
+    max-width: 560px;
+    width: 23vw;
+    display: block;
+    animation: ${idleShake} 5s ease-in-out infinite;
 
     @media only screen and (max-width: 950px) {
       width: 100%;
-      max-width: 30vw;
+      max-width: 33vw;
     }
 
     @media only screen and (max-width: 750px) {
-      max-width: 250px;
-      width: 40vw;
+      max-width: 275px;
+      width: 44vw;
     }
 
     @media only screen and (max-width: 350px) {
-      max-width: 150px;
+      max-width: 165px;
     }
 
     @media only screen and (max-width: 270px) {

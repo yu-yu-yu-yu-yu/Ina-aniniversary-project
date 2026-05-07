@@ -11,6 +11,7 @@ import { MuteProvider } from "./components/Common/MuteButton";
 import BoardContainer  from "./components/Pages/Letters/BoardContainer";
 import PlaylistBoard from "./components/Pages/Playlist/PlaylistBoard";
 import CollagePage from "./components/Pages/Collages/collage";
+import CreditsPage from "./components/Pages/Credits/CreditsPage";
 
 const App = (): JSX.Element => (
   <Router>
@@ -41,6 +42,9 @@ const App = (): JSX.Element => (
           <Route path="/takodex" component={TakodexList} />
           <Route path="/collages">
             <CollagePage />
+          </Route>
+          <Route path="/credits">
+            <CreditsPage />
           </Route>
         </Switch>
       </div>
