@@ -3,6 +3,7 @@ import { useAudio } from "../../../hooks/useAudio";
 import { useMute } from "../../Common/MuteButton";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import {
+  PageContainer,
   NavTitle,
   Grid,
   Card,
@@ -32,7 +33,7 @@ const CollagePage = () => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
   return (
-    <div>
+    <PageContainer>
       <Navbar>
         <NavHome/>
         <NavTitle>Collages</NavTitle>
@@ -59,7 +60,7 @@ const CollagePage = () => {
           <ModalImg src={modalSrc} alt="Collage" onClick={() => setModalSrc(null)} />
         </>
       )}
-    </div>
+    </PageContainer>
   );
 };
 

@@ -198,6 +198,13 @@ export const NavTitle = styled.h2`
     font: normal normal bold 24px/30px Montserrat;
     letter-spacing: 1px;
   }
+  @media only screen and (max-width: 700px) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+  }
 `;
 
 export const SectionTitle = styled.h2`

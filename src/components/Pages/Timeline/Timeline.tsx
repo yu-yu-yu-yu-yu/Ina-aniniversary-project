@@ -9,6 +9,8 @@ const Container = styled.div`
   flex-direction: column;
   display: flex;
   flex: 1;
+  min-height: 100vh;
+  background: var(--background);
   color: var(--dark-highlight);
 `;
 
@@ -20,6 +22,16 @@ const Content = styled.div`
 const TimelineTitle = styled.h2`
   margin: 0;
   color: var(--dark-highlight);
+  text-shadow:
+    0 0 0.03em #ffffff7b,
+    0.03em 0 0 #ffffff7b,
+    -0.03em 0 0 #ffffff7b,
+    0 0.03em 0 #ffffff7b,
+    0 -0.03em 0 #ffffff7b,
+    0.03em 0.03em 0 #ffffff7b,
+    -0.03em -0.03em 0 #ffffff7b,
+    0.03em -0.03em 0 #ffffff7b,
+    -0.03em 0.03em 0 #ffffff7b;
   text-align: center;
   font: normal normal bold 48px/56px Montserrat;
   flex: 1;
@@ -105,7 +117,7 @@ export const Timeline = ({
         )}
       </Navbar>
       <Banner />
-      <div style={{ width: "90%", margin: "0 auto", borderTop: "3px solid var(--dark-highlight)", marginBottom: "18px", marginTop: "18px" }} />
+      <div style={{ width: "90%", borderTop: "3px solid var(--dark-highlight)", margin: "48px auto 18px", position: "relative", zIndex: 2 }} />
       <h2 style={{ textAlign: "center", color: "var(--dark-highlight)", margin: "0 0 18px 0", fontWeight: 700, fontSize: "2.5em", letterSpacing: "1.5px" }}>
         Streams and Milestones
       </h2>

@@ -61,6 +61,30 @@ const BalloonAnchor = styled.img<{
   }
 `;
 
+const MobileMVRow = styled.div`
+  display: none;
+  @media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin: 4px 0;
+  }
+`;
+
+const MOBILE_SIZES  = [31, 36, 29, 33];
+const MOBILE_LIFTS  = [6,  22, 0,  14];
+
+const MobileMVBalloon = styled.img<{ $delay: number; $index: number }>`
+  height: ${({ $index }) => MOBILE_SIZES[$index]}vw;
+  width: auto;
+  pointer-events: none;
+  margin-bottom: ${({ $index }) => MOBILE_LIFTS[$index]}px;
+  animation: ${bob} ${({ $delay }) => 2.6 + $delay * 0.35}s ease-in-out infinite;
+  animation-delay: ${({ $delay }) => $delay * 0.45}s;
+`;
+
 const Logo = (): JSX.Element => {
   const { theme } = useTheme();
 
@@ -104,6 +128,11 @@ const Logo = (): JSX.Element => {
     <LogoContainer>
       <CenterContainer>
         <TitleHeader>Tentacult Temple Fan Site</TitleHeader>
+        <MobileMVRow>
+          {mvFiles.map((name, i) => (
+            <MobileMVBalloon key={i} src={mvSrc(name)} alt="" $delay={i} $index={i} />
+          ))}
+        </MobileMVRow>
         <LogoImageRow>
           <BalloonAnchor $side="left"  $top={`calc(0%  + ${pos.mvLT})`} $gap={pos.mvGapLT} $delay={0} src={mvSrc(mvFiles[0])} alt="" />
           <BalloonAnchor $side="left"  $top={`calc(45% + ${pos.mvLB})`} $gap={pos.mvGapLB} $delay={1} src={mvSrc(mvFiles[1])} alt="" />

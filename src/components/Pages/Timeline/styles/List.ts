@@ -11,8 +11,8 @@ export const Line = styled.span`
     border-left: 4px solid var(--dark-highlight);
     position: relative;
     bottom: unset;
-    height: 240px;
-    top: 120px;
+    height: 160px;
+    top: 80px;
     left: -16px;
     width: 0;
   }
@@ -207,11 +207,27 @@ export const YearDisplay = styled.div<{
   color: ${({ selected }) => selected ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
   letter-spacing: 0;
-  font: normal normal ${({selected}) => selected ? "normal" : "light"} 30px Roboto;
+  font: normal normal ${({selected}) => selected ? "bold" : "light"} 30px Roboto;
+  font-size: ${({ selected }) => selected ? "30px" : "26px"};
   opacity: 1;
   margin: auto 0;
+  position: relative;
   :hover {
     cursor: pointer;
+  }
+  & + & {
+    padding-left: 14px;
+  }
+  & + &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 55%;
+    width: 1px;
+    background: var(--text-color);
+    opacity: 0.35;
   }
   ${({ selected }) =>
     selected &&
@@ -232,11 +248,27 @@ export const MonthDisplay = styled.span<{
   color: ${({ highlight }) => highlight ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
   font: normal normal ${({ highlight, passed }) =>
-    highlight ? "normal" : passed ? "light" : "100"} 30px/37px Roboto;
+    highlight ? "bold" : passed ? "light" : "100"} 30px/37px Roboto;
+  font-size: ${({ highlight }) => highlight ? "30px" : "27px"};
   opacity: 1;
   margin: auto 0;
+  position: relative;
   :hover {
     cursor: pointer;
+  }
+  & + & {
+    padding-left: 14px;
+  }
+  & + &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 55%;
+    width: 1px;
+    background: var(--text-color);
+    opacity: 0.35;
   }
   ${({ highlight }) =>
     highlight &&
@@ -545,4 +577,29 @@ export const TagDropdownSelect = styled.select<{ mobile?: boolean }>`
   font-weight: 500;
   width: 100%;
   outline: none;
+`;
+
+export const PageArrowButton = styled.button`
+  background: var(--dark-highlight);
+  border: 2px solid var(--light-highlight);
+  border-radius: 50%;
+  width: 2.2em;
+  height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  color: var(--light-highlight);
+  font-size: 1.1em;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  &:not(:disabled):hover {
+    background: var(--light-highlight);
+    color: var(--dark-highlight);
+  }
 `;

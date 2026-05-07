@@ -1,5 +1,5 @@
 import { Milestone, Tags, IScrollListProps, Month, MonthWithYear, Year } from "../../../types/timeline";
-import React, { ChangeEvent, createRef, RefObject, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, createRef, RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { Switch } from "../../Common/Switch";
 import { upperCase } from "lodash";
 import {
@@ -26,6 +26,7 @@ import {
   MonthAnchorHeader,
   MonthDisplay,
   MonthListContainer,
+  PageArrowButton,
   ScrollListContainer,
   SearchBarContainer,
   SearchInput,
@@ -497,20 +498,61 @@ function filterMilestonesWithTitleTag(
   });
 }
 
+const MonthNavItem = ({
+  entry,
+  direction,
+  onNavigate,
+  mobile,
+}: {
+  entry: { year: Year; month: Month };
+  direction: "prev" | "next";
+  onNavigate: (month: Month, year: Year) => void;
+  mobile: boolean;
+}) => {
+  const isPrev = direction === "prev";
+  const icon = mobile
+    ? (isPrev ? "fa fa-chevron-up" : "fa fa-chevron-down")
+    : (isPrev ? "fa fa-chevron-left" : "fa fa-chevron-right");
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: mobile ? "row" : "column",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        padding: mobile ? "16px 0" : "0 40px",
+        gap: 8,
+        ...(mobile ? { width: "100%" } : {}),
+      }}
+    >
+      <PageArrowButton onClick={() => onNavigate(entry.month, entry.year as Year)}>
+        <i className={icon} aria-hidden="true" />
+      </PageArrowButton>
+      <span style={{ color: "var(--light-highlight)", fontSize: "0.85em", textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
+        {entry.month}<br />{entry.year}
+      </span>
+    </div>
+  );
+};
+
 const List = ({
   milestones,
   refMap,
   scrollPos,
   mobile,
-  setMonth,
-  setYear,
+  prevMonthEntry,
+  nextMonthEntry,
+  onNavigate,
 }: {
   milestones: Milestone[];
   refMap: IScrollListProps["refMap"];
   scrollPos: IScrollListProps["scrollPos"];
   mobile?: boolean;
-  setMonth: IScrollListProps["setMonth"];
-  setYear: (_year: Year) => void;
+  prevMonthEntry?: { year: Year; month: Month } | null;
+  nextMonthEntry?: { year: Year; month: Month } | null;
+  onNavigate?: (month: Month, year: Year) => void;
 }) => {
   const isFirstEventOfTheMonth = (index: number, list: Milestone[]) => {
     const prevMonth = list[index - 1].date.split(/\W/)[1];
@@ -528,8 +570,12 @@ const List = ({
     );
   }, [milestones.length]);
 
-  const className = mobile ? "mobile" : "";
-  const Element = mobile ? EventMobile : Event;
+  // Scroll to start whenever the displayed month changes
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo({ left: 0, top: 0, behavior: "instant" as ScrollBehavior });
+    }
+  }, [milestones]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -537,37 +583,11 @@ const List = ({
     }
   }, [scrollPos]);
 
-  const checkMonthScroll = () => {
-    let bestIndex = 0;
-    let bestValue = Infinity;
-    milestoneRefs.current.forEach((ref, i) => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-
-        const value = mobile ? Math.abs(rect.top) : Math.abs(rect.left);
-
-        if (
-          (mobile && rect.bottom > 0 && rect.top < window.innerHeight) ||
-          (!mobile && rect.right > 0 && rect.left < window.innerWidth)
-        ) {
-          if (value < bestValue) {
-            bestValue = value;
-            bestIndex = i;
-          }
-        }
-      }
-    });
-    const milestone = milestones[bestIndex];
-    if (milestone) {
-      const [, m, y] = milestone.date.split(/\W/);
-      setYear(y);
-      setMonth(mappedMonths[m]);
-    }
-  };
+  const className = mobile ? "mobile" : "";
+  const Element = mobile ? EventMobile : Event;
 
   return (
     <ListScrollable
-      onScroll={checkMonthScroll}
       className={className}
       innerRef={listRef}
     >
@@ -576,6 +596,14 @@ const List = ({
         mobile={!!mobile}
         setEvent={() => setModalEvent(null)}
       />
+      {prevMonthEntry && onNavigate && (
+        <MonthNavItem
+          entry={prevMonthEntry}
+          direction="prev"
+          onNavigate={onNavigate}
+          mobile={!!mobile}
+        />
+      )}
       {milestones.map((milestone, index) => (
         <div ref={milestoneRefs.current[index]} key={milestone.label}>
           <Element
@@ -589,10 +617,17 @@ const List = ({
           />
         </div>
       ))}
+      {nextMonthEntry && onNavigate && (
+        <MonthNavItem
+          entry={nextMonthEntry}
+          direction="next"
+          onNavigate={onNavigate}
+          mobile={!!mobile}
+        />
+      )}
     </ListScrollable>
   );
 };
-
 
 
 function YearPicker({ setYear, selected }: { setYear: (year: Year) => void; selected: Year }) {
@@ -600,7 +635,6 @@ function YearPicker({ setYear, selected }: { setYear: (year: Year) => void; sele
 
   const handleYearClick = (year: Year) => {
     setYear(year);
-    // setOpen(false)
   }
   return (
     <YearContainer onClick={() => setOpen(!open)}>
@@ -609,7 +643,6 @@ function YearPicker({ setYear, selected }: { setYear: (year: Year) => void; sele
           {year}
         </YearDisplay>
       )}
-
     </YearContainer>)
 }
 
@@ -617,32 +650,42 @@ const BottomControls = ({
   selectedMonth,
   setMonth,
   year,
-  setYear
+  setYear,
+  allMilestones,
 }: {
-  selectedMonth: IScrollListProps["monthProps"]["selectedMonth"];
-  setMonth: IScrollListProps["setMonth"];
+  selectedMonth: Month;
+  setMonth: (m: Month) => void;
   year: Year;
-  setYear: (_year: Year) => void;
+  setYear: (y: Year) => void;
+  allMilestones: Milestone[];
 }) => {
-  const selectedIndex = months.findIndex(
-    (month) =>
-      month == selectedMonth);
+  const monthsWithEntries = useMemo(() => {
+    const monthSet = new Set<string>();
+    allMilestones.forEach(m => {
+      const [, mMonth, mYear] = m.date.split(/\W/);
+      if (mYear === year) monthSet.add(mappedMonths[mMonth]);
+    });
+    return months.filter(m => monthSet.has(m));
+  }, [allMilestones, year]);
 
-  return (<>
-    <YearPicker selected={year} setYear={setYear} />
-    <MonthListContainer>
-      {months.map((month, index) => (
-        <MonthDisplay
-          highlight={index === selectedIndex}
-          passed={index < selectedIndex}
-          key={month}
-          onClick={() => setMonth(month)}
-        >
-          {month}
-        </MonthDisplay>
-      ))}
-    </MonthListContainer>
-  </>
+  const selectedIndex = monthsWithEntries.findIndex(m => m === selectedMonth);
+
+  return (
+    <>
+      <YearPicker selected={year} setYear={setYear} />
+      <MonthListContainer>
+        {monthsWithEntries.map((month, index) => (
+          <MonthDisplay
+            highlight={index === selectedIndex}
+            passed={index < selectedIndex}
+            key={month}
+            onClick={() => setMonth(month as Month)}
+          >
+            {month}
+          </MonthDisplay>
+        ))}
+      </MonthListContainer>
+    </>
   );
 };
 
@@ -652,10 +695,13 @@ const Drawer = ({
   monthProps,
   toggleDrawer,
   milestones,
-}: { visible: boolean; toggleDrawer: () => void; milestones: Milestone[] } & Pick<
-  IScrollListProps,
-  "searchProps" | "monthProps"
->) => {
+  filteredMilestones,
+}: {
+  visible: boolean;
+  toggleDrawer: () => void;
+  milestones: Milestone[];
+  filteredMilestones: Milestone[];
+} & Pick<IScrollListProps, "searchProps" | "monthProps">) => {
   if (!visible) return null;
   return ReactDOM.createPortal(
     <>
@@ -669,7 +715,7 @@ const Drawer = ({
           milestones={milestones}
         />
         <DrawerSeparator>Jump To</DrawerSeparator>
-        <BottomControls {...monthProps} />
+        <BottomControls {...monthProps} allMilestones={filteredMilestones} />
       </DrawerContainer>
     </>,
     document.getElementById("root") as HTMLElement
@@ -682,22 +728,31 @@ export const ScrollListWide = ({
   monthProps,
   modalControls,
   refMap,
-  setMonth,
-  setYear,
   scrollPos,
-}: IScrollListProps) => {
+  allFilteredMilestones,
+  prevMonthEntry,
+  nextMonthEntry,
+  onNavigate,
+}: IScrollListProps & {
+  allFilteredMilestones: Milestone[];
+  prevMonthEntry: { year: Year; month: Month } | null;
+  nextMonthEntry: { year: Year; month: Month } | null;
+  onNavigate: (month: Month, year: Year) => void;
+}) => {
   return (
     <ScrollListContainer>
       {modalControls ? null : <TopControls {...searchProps} />}
       <List
-        setMonth={setMonth}
         milestones={milestones}
         refMap={refMap}
-        setYear={setYear}
         scrollPos={scrollPos}
+        prevMonthEntry={prevMonthEntry}
+        nextMonthEntry={nextMonthEntry}
+        onNavigate={onNavigate}
       />
-
-      {modalControls ? null : <BottomControls {...monthProps} />}
+      {modalControls ? null : (
+        <BottomControls {...monthProps} allMilestones={allFilteredMilestones} />
+      )}
     </ScrollListContainer>
   );
 };
@@ -706,11 +761,13 @@ const ScrollListNonWide = ({
   milestones,
   refMap,
   scrollPos,
-  setMonth,
-  setYear
+  prevMonthEntry,
+  nextMonthEntry,
+  onNavigate,
 }: Pick<IScrollListProps, "milestones" | "refMap" | "scrollPos"> & {
-  setMonth: IScrollListProps["setMonth"]
-  setYear: IScrollListProps["setYear"]
+  prevMonthEntry: { year: Year; month: Month } | null;
+  nextMonthEntry: { year: Year; month: Month } | null;
+  onNavigate: (month: Month, year: Year) => void;
 }) => {
   const listRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef<[number, number]>([0, 0]);
@@ -733,12 +790,13 @@ const ScrollListNonWide = ({
   return (
     <ScrollListContainer className={"mobile"} ref={listRef} onScroll={handleScroll}>
       <List
-        setMonth={setMonth}
         milestones={milestones}
         mobile
         refMap={refMap}
-        setYear={setYear}
         scrollPos={scrollPos}
+        prevMonthEntry={prevMonthEntry}
+        nextMonthEntry={nextMonthEntry}
+        onNavigate={onNavigate}
       />
     </ScrollListContainer>
   );
@@ -765,66 +823,85 @@ export const ScrollList = ({
 }): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
-  
-  const [month, setMonth] = useState<Month>("September");
-  const [year, setYear] = useState<Year>(years[0] as Year);
+
+  const [month, setMonthState] = useState<Month>(() => {
+    const first = milestones[0];
+    return first ? mappedMonths[first.date.split(/\W/)[1]] as Month : "September";
+  });
+  const [year, setYearState] = useState<Year>(() => {
+    const first = milestones[0];
+    return first ? first.date.split(/\W/)[2] as Year : years[0] as Year;
+  });
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState<Tags>({} as Tags);
   const [scroll] = useState<[number, number]>([0, 0]);
   const [selectedTitleTag, setSelectedTitleTag] = useState<string>("");
 
-  const selected = filterMilestonesWithTitleTag(
-    selectedTags,
-    milestones,
-    searchString,
-    selectedTitleTag
+  // Tag/search filtered milestones (all months)
+  const selected = useMemo(
+    () => filterMilestonesWithTitleTag(selectedTags, milestones, searchString, selectedTitleTag),
+    [selectedTags, milestones, searchString, selectedTitleTag]
   );
+
+  // All month+year combos with entries, in chronological order from data
+  const allMonthsWithEntries = useMemo(() => {
+    const seen = new Set<string>();
+    const result: Array<{ year: Year; month: Month }> = [];
+    selected.forEach(m => {
+      const [, mMonth, mYear] = m.date.split(/\W/);
+      const key = `${mYear}_${mMonth}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push({ year: mYear as Year, month: mappedMonths[mMonth] as Month });
+      }
+    });
+    return result;
+  }, [selected]);
+
+  // Only current month+year entries
+  const monthFiltered = useMemo(
+    () => selected.filter(m => {
+      const [, mMonth, mYear] = m.date.split(/\W/);
+      return mappedMonths[mMonth] === month && mYear === year;
+    }),
+    [selected, month, year]
+  );
+
+  const currentIdx = allMonthsWithEntries.findIndex(x => x.year === year && x.month === month);
+  const prevMonthEntry = currentIdx > 0 ? allMonthsWithEntries[currentIdx - 1] : null;
+  const nextMonthEntry = currentIdx < allMonthsWithEntries.length - 1
+    ? allMonthsWithEntries[currentIdx + 1]
+    : null;
+
+  // When filters change and current month has no entries, jump to first available
+  useEffect(() => {
+    if (allMonthsWithEntries.length > 0 && currentIdx === -1) {
+      const first = allMonthsWithEntries[0];
+      setMonthState(first.month);
+      setYearState(first.year as Year);
+    }
+  }, [allMonthsWithEntries, currentIdx]);
 
   const monthRefMap = useRef(
     monthsWithYears.reduce(
-      (acc: Record<MonthWithYear, RefObject<HTMLSpanElement> | null>, month) => {
-        acc[month as MonthWithYear] = createRef();
+      (acc: Record<MonthWithYear, RefObject<HTMLSpanElement> | null>, m) => {
+        acc[m as MonthWithYear] = createRef();
         return acc;
       },
       {} as Record<MonthWithYear, RefObject<HTMLSpanElement> | null>
     )
   );
 
-  const getFirstMonthInYear = (milestones: Milestone[], targetYear: Year): Month | null => {
-    const found = milestones.find(m => m.date.split(/\W/)[2] === targetYear);
-    if (found) {
-      const [, month] = found.date.split(/\W/);
-      return mappedMonths[month] as Month;
-    }
-    return null;
-  };
-
-  const getFirstMonthWithYear = (milestones: Milestone[], targetMonth: Month, targetYear: Year): MonthWithYear | null => {
-    const found = milestones.find(m => {
-      const [, mMonth, mYear] = m.date.split(/\W/);
-      return mappedMonths[mMonth] === targetMonth && mYear === targetYear;
-    });
-    if (found) {
-      return `${targetYear}_${targetMonth}` as MonthWithYear;
-    }
-    return null;
-  };
-
   const scrollToMonth = (targetMonth: Month, targetYear: Year = year) => {
-    const monthWithYear = getFirstMonthWithYear(selected, targetMonth, targetYear);
-    if (!monthWithYear) return;
-    const anchor = monthRefMap.current?.[monthWithYear]?.current;
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: mobile ? "start" : "nearest", inline: "start" });
-    }
-    setYear(targetYear);
-    setMonth(targetMonth);
+    setMonthState(targetMonth);
+    setYearState(targetYear);
   };
 
   const handleYear = (targetYear: Year) => {
-    const firstMonth = getFirstMonthInYear(selected, targetYear);
-    if (firstMonth) {
-      scrollToMonth(firstMonth, targetYear);
+    const first = allMonthsWithEntries.find(x => x.year === targetYear);
+    if (first) {
+      setMonthState(first.month);
+      setYearState(first.year as Year);
     }
   };
 
@@ -837,7 +914,12 @@ export const ScrollList = ({
     setSelectedTitleTag,
     milestones,
   };
-  const monthProps = { selectedMonth: month, setMonth: scrollToMonth, year, setYear: handleYear };
+  const monthProps = {
+    selectedMonth: month,
+    setMonth: (m: Month) => scrollToMonth(m),
+    year,
+    setYear: handleYear,
+  };
 
   return (
     <>
@@ -856,25 +938,31 @@ export const ScrollList = ({
         monthProps={monthProps}
         toggleDrawer={toggleDrawer}
         milestones={milestones}
+        filteredMilestones={selected}
       />
       {mobile ? (
         <ScrollListNonWide
-          setMonth={setMonth}
-          setYear={setYear}
           scrollPos={scroll}
-          milestones={selected}
+          milestones={monthFiltered}
           refMap={monthRefMap}
+          prevMonthEntry={prevMonthEntry}
+          nextMonthEntry={nextMonthEntry}
+          onNavigate={scrollToMonth}
         />
       ) : (
         <ScrollListWide
-          setMonth={setMonth}
-          setYear={setYear}
+          setMonth={setMonthState}
+          setYear={setYearState}
           refMap={monthRefMap}
           scrollPos={scroll}
           searchProps={searchProps}
-          milestones={selected}
+          milestones={monthFiltered}
           monthProps={monthProps}
           modalControls={modalControls}
+          allFilteredMilestones={selected}
+          prevMonthEntry={prevMonthEntry}
+          nextMonthEntry={nextMonthEntry}
+          onNavigate={scrollToMonth}
         />
       )}
     </>

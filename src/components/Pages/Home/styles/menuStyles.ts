@@ -73,10 +73,12 @@ export const ButtonsDiv = styled.div`
     margin-top: 25px;
   }
   @media only screen and (max-width: 700px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 150px);
     gap: 16px;
+    width: fit-content;
     max-width: 100%;
-    margin-top: 15px;
+    margin: 15px auto 0;
+    justify-items: center;
   }
 `;
 
@@ -145,8 +147,8 @@ export const CookieButton = styled.button<{ $shaking?: boolean }>`
     max-height: 180px;
   }
   @media only screen and (max-width: 700px) {
-    width: 160px;
-    height: 160px;
+    width: 150px;
+    height: 150px;
   }
 `;
 
@@ -159,8 +161,8 @@ export const CookieImg = styled.img`
     height: min(50vw, 180px);
   }
   @media only screen and (max-width: 700px) {
-    width: min(50vw, 160px);
-    height: min(50vw, 160px);
+    width: 150px;
+    height: 150px;
   }
 `;
 

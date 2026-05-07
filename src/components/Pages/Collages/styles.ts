@@ -1,20 +1,11 @@
 import styled from "styled-components";
 
-export const NavTitle = styled.h2`
-  margin: 0;
-  color: var(--dark-highlight);
-  text-align: center;
-  font: normal normal bold 48px/56px Montserrat;
-  flex: 1;
-  @media only screen and (max-width: 1000px) {
-    font: normal normal bold 32px/40px Montserrat;
-    letter-spacing: 1.25px;
-  }
-  @media only screen and (max-width: 768px) {
-    font: normal normal bold 24px/30px Montserrat;
-    letter-spacing: 1px;
-  }
+export const PageContainer = styled.div`
+  min-height: 100vh;
+  background: var(--background);
 `;
+
+export { NavTitle } from "../../../styles/globalStyles";
 
 export const Grid = styled.div`
   display: grid;

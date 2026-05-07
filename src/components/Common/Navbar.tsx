@@ -9,15 +9,20 @@ export const Navbar = styled.nav`
   top: 0;
   z-index: 100;
   flex: 0 1;
-  padding: 0.3rem 1.25rem;
+  padding: 0.25rem 1rem;
   text-align: left;
-  font: normal normal normal 35px/40px montserrat;
+  font: normal normal normal 30px/34px montserrat;
   letter-spacing: 0;
   justify-content: space-between;
+  align-items: center;
   &.mobile {
     font: normal normal normal 20px/25px Montserrat;
   }
   bottom-shadow: 0px 4px 4px var(--shadow);
+
+  @media only screen and (max-width: 700px) {
+    font: normal normal normal 22px/26px montserrat;
+  }
 `;
 
 export const StyleHome = styled.button`
@@ -53,10 +58,10 @@ export const HintButton = styled.button`
   background: var(--dark-highlight);
   border: 2px solid var(--light-highlight);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  width: 41px;
+  height: 41px;
   color: var(--light-highlight);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin-left: 16px;
   margin-right: 10px;

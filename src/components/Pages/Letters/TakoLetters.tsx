@@ -195,14 +195,16 @@ const TakoLetters = ({ submissions }: { submissions: Submission[] }): JSX.Elemen
   useLayoutEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
-    <Masonry
-      options={{ gutter: 40, columnWidth: 1, fitWidth: true, transitionDuration: 0 }}
-      style={{ margin: "0 auto", paddingTop: "80px" }}
-    >
-      {submissions.map((submission, i) => (
-        <EnvelopeCard key={i} index={i} submission={submission} />
-      ))}
-    </Masonry>
+    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+      <Masonry
+        options={{ gutter: 40, columnWidth: 1, fitWidth: true, transitionDuration: 0 }}
+        style={{ margin: "0 auto", paddingTop: "80px" }}
+      >
+        {submissions.map((submission, i) => (
+          <EnvelopeCard key={i} index={i} submission={submission} />
+        ))}
+      </Masonry>
+    </div>
   );
 };
 

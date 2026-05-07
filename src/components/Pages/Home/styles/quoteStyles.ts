@@ -13,8 +13,8 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   position: relative;
 
   @media only screen and (max-width: 701px) {
-    margin-top: 10px;
-    padding: 50px 20px;
+    margin-top: 0;
+    padding: 40px 20px 60px;
   }
 `;
 
@@ -83,6 +83,14 @@ const GrayscaleButton = styled.button`
   &:hover {
     background: var(--dark-highlight);
     color: var(--light-highlight);
+  }
+
+  @media only screen and (max-width: 701px) {
+    position: static;
+    display: block;
+    margin: 18px auto 0;
+    font-size: 0.8em;
+    padding: 8px 14px;
   }
 `;
 

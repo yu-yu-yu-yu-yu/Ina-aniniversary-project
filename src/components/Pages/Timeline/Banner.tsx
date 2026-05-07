@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import outfits from "./outfits.json";
-import { BannerImg, BannerImgWrapper, BannerWrapper, Container, DialogueBox, VodLink } from "./styles/BannerStyle";
+import {
+  BannerImg,
+  BannerImgWrapper,
+  BannerWrapper,
+  Container,
+  DialogueBox,
+  OutfitSkeleton,
+  PageArrowButton,
+  VodLink,
+} from "./styles/BannerStyle";
 import { Outfit } from "../../../types";
 
 const images = outfits.map((item: Outfit) => ({
@@ -15,10 +24,96 @@ images.forEach(img => {
   grouped[img.title].push(img);
 });
 
+const groupedEntries = Object.entries(grouped);
+const TOTAL = groupedEntries.length;
+
+const LOAD_RADIUS = 2;
+
+const initialLoaded = new Set(
+  Array.from({ length: Math.min(LOAD_RADIUS + 1, TOTAL) }, (_, i) => i)
+);
+
 export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
   const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
+  const [pivotIndex, setPivotIndex] = useState(0);
+  const [loadedSet, setLoadedSet] = useState<Set<number>>(initialLoaded);
+
+  const containerRef = useRef<HTMLElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const debounceTimer = useRef<number>(0);
+  const pivotRef = useRef(pivotIndex);
+  const lastSnapTo = useRef(0);
+  pivotRef.current = pivotIndex;
+
+  const expandLoad = useCallback((center: number) => {
+    setLoadedSet(prev => {
+      const next = new Set(prev);
+      for (
+        let i = Math.max(0, center - LOAD_RADIUS);
+        i <= Math.min(TOTAL - 1, center + LOAD_RADIUS);
+        i++
+      ) {
+        next.add(i);
+      }
+      return next;
+    });
+  }, []);
+
+  const scrollToPivot = useCallback((index: number) => {
+    const el = itemRefs.current[index];
+    const container = containerRef.current;
+    if (!el || !container) return;
+    lastSnapTo.current = index;
+    const elRect = el.getBoundingClientRect();
+    const cRect = container.getBoundingClientRect();
+    const target =
+      container.scrollLeft +
+      (elRect.left + elRect.width / 2) -
+      (cRect.left + cRect.width / 2);
+    container.scrollTo({ left: target, behavior: "smooth" });
+  }, []);
+
+  const goTo = useCallback(
+    (index: number) => {
+      const clamped = Math.max(0, Math.min(index, TOTAL - 1));
+      setPivotIndex(clamped);
+      expandLoad(clamped);
+    },
+    [expandLoad]
+  );
+
+  useEffect(() => {
+    const id = window.setTimeout(() => scrollToPivot(pivotIndex), 60);
+    return () => clearTimeout(id);
+  }, [pivotIndex, scrollToPivot]);
+
+  const handleScroll = useCallback(() => {
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = window.setTimeout(() => {
+      const container = containerRef.current;
+      if (!container) return;
+      const cRect = container.getBoundingClientRect();
+      const centerX = cRect.left + cRect.width / 2;
+      let bestIdx = pivotRef.current;
+      let bestDist = Infinity;
+      itemRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const dist = Math.abs((rect.left + rect.width / 2) - centerX);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = i;
+        }
+      });
+      if (bestIdx === lastSnapTo.current) return;
+      lastSnapTo.current = bestIdx;
+      setPivotIndex(bestIdx);
+      expandLoad(bestIdx);
+      scrollToPivot(bestIdx);
+    }, 150);
+  }, [expandLoad, scrollToPivot]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,86 +132,148 @@ export const Banner = () => {
 
   return (
     <>
-      <h2 style={{ fontSize: "3em", textAlign: "center", margin: "0.5em"}}>
-        Ina&apos;s Outfits Across Time
-      </h2>
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 16,
-          marginBottom: "12px",
-          marginTop: "-18px",
-          fontSize: "1.25em",
-          color: "var(--dark-highlight)",
-          fontWeight: 600,
-          userSelect: "none",
+          gap: "0.5rem",
+          padding: "0.75rem 0",
         }}
       >
-        <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8592;</span>
-        <span style={{ background: "var(--dark-highlight)", color: "white", borderRadius: 12, padding: "6px 18px", boxShadow: "0 2px 8px #0002" }}>
-          Drag to scroll
+        <h2 style={{ fontSize: "clamp(1.2rem, 4vh, 2.5rem)", textAlign: "center", margin: 0 }}>
+          Ina&apos;s Outfits Across Time
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 16,
+            fontSize: "1.25em",
+            fontWeight: 600,
+            userSelect: "none",
+          }}
+        >
+        <PageArrowButton
+          onClick={() => goTo(pivotIndex - 1)}
+          disabled={pivotIndex === 0}
+          aria-label="Previous outfit"
+        >
+          <i className="fa fa-chevron-left" aria-hidden="true" />
+        </PageArrowButton>
+        <span
+          style={{
+            background: "var(--dark-highlight)",
+            color: "white",
+            borderRadius: 12,
+            padding: "6px 18px",
+            boxShadow: "0 2px 8px #0002",
+            minWidth: 160,
+            textAlign: "center",
+          }}
+        >
+          Ina No. {pivotIndex + 1} / {TOTAL} 
         </span>
-        <span style={{ fontSize: "1.5em", opacity: 0.7 }}>&#8594;</span>
+        <PageArrowButton
+          onClick={() => goTo(pivotIndex + 1)}
+          disabled={pivotIndex >= TOTAL - 1}
+          aria-label="Next outfit"
+        >
+          <i className="fa fa-chevron-right" aria-hidden="true" />
+        </PageArrowButton>
+        </div>
       </div>
+
       <BannerWrapper>
-        <Container horizontal>
-          {Object.entries(grouped).map(([title, arr], i) => {
+        <Container horizontal innerRef={containerRef} onScroll={handleScroll}>
+          {groupedEntries.map(([title, arr], i) => {
             const outfit = arr.length > 1 ? arr[dupIdx[title] || 0] : arr[0];
+            const isPivot = i === pivotIndex;
+            const isLoaded = loadedSet.has(i);
+
             return (
               <BannerImgWrapper
-                key={title + i}
+                key={title}
+                $isPivot={isPivot}
+                ref={(el: HTMLDivElement | null) => {
+                  itemRefs.current[i] = el;
+                }}
                 imgSrc={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`}
-                style={{ transform: `translateY(0px) scale(1)` }}
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
               >
-                <span
-                  style={{ display: "block", cursor: "pointer" }}
-                  onClick={() => setModalImgSrc(`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`)}
-                >
-                  <BannerImg src={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`} alt={outfit.title}/>
-                </span>
-                <DialogueBox $active={activeIdx === i}>
-                  <div style={{ textAlign: "center" }}>
-                    <b style={{ fontSize: "1.25em" }}>{outfit.title}</b>
-                  </div>
-                  <div style={{ textAlign: "center" }}>
-                    {"By:"} {outfit.artist} (
-                    <a
-                      href={`https://x.com/${outfit.username}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "var(--light-highlight)", textDecoration: "underline" }}
+                {isLoaded ? (
+                  <>
+                    <span
+                      style={{ display: "block", cursor: "pointer", position: "relative", zIndex: 1 }}
+                      onClick={() =>
+                        setModalImgSrc(
+                          `${process.env.PUBLIC_URL}/outfits/${outfit.filename}`
+                        )
+                      }
                     >
-                      @{outfit.username}
-                    </a>
-                    )
-                  </div>
-                  <br />
-                  {outfit.vodtitle && outfit.video ? (
-                    <div style={{ textAlign: "center" }}>
-                      <VodLink href={outfit.video} target="_blank" rel="noopener noreferrer">
-                        {outfit.vodtitle}
-                      </VodLink>
-                    </div>
-                  ) : outfit.vodtitle ? (
-                    <div>
-                      <i>{outfit.vodtitle}</i>
-                    </div>
-                  ) : null}
-                  {outfit.date && (
-                    <div style={{ textAlign: "center" }}>
-                      <small>{outfit.date}</small>
-                    </div>
-                  )}
-                </DialogueBox>
+                      <BannerImg
+                        $loaded
+                        src={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`}
+                        alt={outfit.title}
+                      />
+                    </span>
+                    <DialogueBox $active={activeIdx === i}>
+                      <div style={{ textAlign: "center" }}>
+                        <b style={{ fontSize: "1.25em" }}>{outfit.title}</b>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        {"By:"} {outfit.artist} (
+                        <a
+                          href={`https://x.com/${outfit.username}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            color: "var(--light-highlight)",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          @{outfit.username}
+                        </a>
+                        )
+                      </div>
+                      <br />
+                      {outfit.vodtitle && outfit.video ? (
+                        <div style={{ textAlign: "center" }}>
+                          <VodLink
+                            href={outfit.video}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {outfit.vodtitle}
+                          </VodLink>
+                        </div>
+                      ) : outfit.vodtitle ? (
+                        <div>
+                          <i>{outfit.vodtitle}</i>
+                        </div>
+                      ) : null}
+                      {outfit.date && (
+                        <div style={{ textAlign: "center" }}>
+                          <small>{outfit.date}</small>
+                        </div>
+                      )}
+                    </DialogueBox>
+                  </>
+                ) : (
+                  <OutfitSkeleton
+                    title="Click or scroll to load"
+                    onClick={() => goTo(i)}
+                  />
+                )}
               </BannerImgWrapper>
             );
           })}
         </Container>
       </BannerWrapper>
+
       {modalImgSrc && (
         <div
           style={{
@@ -136,11 +293,7 @@ export const Banner = () => {
           <img
             src={modalImgSrc}
             alt="Artwork"
-            style={{
-              maxWidth: "90vw",
-              maxHeight: "90vh",
-              borderRadius: "12px",
-            }}
+            style={{ maxWidth: "90vw", maxHeight: "90vh", borderRadius: "12px" }}
             onClick={e => e.stopPropagation()}
           />
         </div>
