@@ -182,7 +182,7 @@ export const Backdrop = styled.div`
 `;
 
 export const ModalCard = styled.div`
-  background: var(--text-color, #fff);
+  background: var(--background);
   border-radius: 12px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   max-width: 540px;

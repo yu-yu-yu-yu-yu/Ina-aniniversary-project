@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import SongContainer from "./SongContainer";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
@@ -12,6 +13,11 @@ import {
   SiteBoard,
   SearchBar,
   NavTitle,
+  PlaylistBackdrop,
+  PlaylistDrawerContainer,
+  PlaylistDrawerToggle,
+  PlaylistDrawerSeparator,
+  playlistFilterColors,
 } from "./styles/styles";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import { useMute } from "../../Common/MuteButton";
@@ -19,6 +25,7 @@ import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 20;
+const MOBILE_BREAKPOINT = 700;
 
 const getFiltered = (
   source: SongData[],
@@ -40,7 +47,10 @@ const getFiltered = (
     result = result.filter(
       (s) =>
         s.songName?.toLowerCase().includes(q) ||
-        s.songInfo?.toLowerCase().includes(q),
+        s.songInfo?.toLowerCase().includes(q) ||
+        s.coverInfo?.toLowerCase().includes(q) ||
+        s.type?.toLowerCase().includes(q) ||
+        s.collab?.toLowerCase().includes(q),
     );
   }
   return result;
@@ -61,6 +71,49 @@ const awaitImgs = async (items: SongData[]) => {
   await Promise.allSettled(promises);
 };
 
+interface FilterSwitchesProps {
+  typeFilter: SongData["type"] | null;
+  setType: (value: SongData["type"]) => (active: boolean) => void;
+  archiveFilter: SongData["archived"] | null;
+  setArchive: (value: SongData["archived"]) => (active: boolean) => void;
+  duoOnly: boolean;
+  setDuoOnly: (v: boolean) => void;
+  groupOnly: boolean;
+  setGroupOnly: (v: boolean) => void;
+  mobile?: boolean;
+}
+
+const FilterSwitches = ({
+  typeFilter,
+  setType,
+  archiveFilter,
+  setArchive,
+  duoOnly,
+  setDuoOnly,
+  groupOnly,
+  setGroupOnly,
+  mobile,
+}: FilterSwitchesProps) => {
+  const direction = mobile ? "column" : "row";
+  return (
+    <>
+      <div style={{ display: "flex", flexDirection: direction, flexWrap: "wrap", gap: "8px" }}>
+        <Switch label="Covers"             value={typeFilter === "cover"}             onChange={setType("cover")}             color={playlistFilterColors["cover"]}              mobile={mobile} />
+        <Switch label="Ina's Originals"    value={typeFilter === "Ina's original"}    onChange={setType("Ina's original")}    color={playlistFilterColors["Ina's original"]}  mobile={mobile} />
+        <Switch label="Artist's Originals" value={typeFilter === "Artist's original"} onChange={setType("Artist's original")} color={playlistFilterColors["Artist's original"]} mobile={mobile} />
+        <Switch label="Karaoke"            value={typeFilter === "karaoke"}           onChange={setType("karaoke")}           color={playlistFilterColors["karaoke"]}            mobile={mobile} />
+        <Switch label="Concert"            value={typeFilter === "concert"}           onChange={setType("concert")}           color={playlistFilterColors["concert"]}            mobile={mobile} />
+      </div>
+      <div style={{ display: "flex", flexDirection: direction, flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>
+        <Switch label="Archived"           value={archiveFilter === "archived"}           onChange={setArchive("archived")}           color={playlistFilterColors["archived"]}            mobile={mobile} />
+        <Switch label="Unofficial Archive" value={archiveFilter === "unofficial archive"} onChange={setArchive("unofficial archive")} color={playlistFilterColors["unofficial archive"]} mobile={mobile} />
+        <Switch label="Duo"                value={duoOnly}   onChange={setDuoOnly}   color={playlistFilterColors["duo"]}   mobile={mobile} />
+        <Switch label="Group"              value={groupOnly}  onChange={setGroupOnly}  color={playlistFilterColors["group"]}  mobile={mobile} />
+      </div>
+    </>
+  );
+};
+
 const PlaylistBoard = (): JSX.Element => {
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
@@ -77,9 +130,19 @@ const PlaylistBoard = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [typeFilter, setTypeFilter] = useState<SongData["type"] | null>(null);
-  const [archiveFilter, setArchiveFilter] = useState<SongData["archived"] | null>(null);
+  const [archiveFilter, setArchiveFilter] = useState<SongData["archived"] | null>("archived");
   const [duoOnly, setDuoOnly] = useState(false);
   const [groupOnly, setGroupOnly] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     if (rawData) {
@@ -125,6 +188,17 @@ const PlaylistBoard = (): JSX.Element => {
   const setArchive = (value: SongData["archived"]) => (active: boolean) =>
     setArchiveFilter(active ? value : null);
 
+  const filterProps: FilterSwitchesProps = {
+    typeFilter,
+    setType,
+    archiveFilter,
+    setArchive,
+    duoOnly,
+    setDuoOnly,
+    groupOnly,
+    setGroupOnly,
+  };
+
   return (
     <div>
       <audio
@@ -137,29 +211,36 @@ const PlaylistBoard = (): JSX.Element => {
       <Navbar>
         <NavHome />
         <NavTitle>Ultimate Ina Playlist</NavTitle>
+        {isMobile && (
+          <PlaylistDrawerToggle
+            className="fa fa-search"
+            onClick={() => setDrawerOpen(true)}
+          />
+        )}
       </Navbar>
+      {isMobile && drawerOpen && ReactDOM.createPortal(
+        <>
+          <PlaylistBackdrop onClick={() => setDrawerOpen(false)} />
+          <PlaylistDrawerContainer>
+            <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0 }} />
+            <PlaylistDrawerSeparator>Filters</PlaylistDrawerSeparator>
+            <FilterSwitches {...filterProps} mobile />
+          </PlaylistDrawerContainer>
+        </>,
+        document.getElementById("root") as HTMLElement,
+      )}
       {loading ? (
         <TakoLoading />
       ) : error ? (
         <div>Error loading: {error.message}</div>
       ) : (
         <SiteBoard>
-          <FiltersContainer>
-            <SearchBar onChange={handleFilter} placeholder="Search..." />
-            <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "8px" }}>
-              <Switch label="Covers"            value={typeFilter === "cover"}            onChange={setType("cover")} />
-              <Switch label="Ina's Originals"   value={typeFilter === "Ina's original"}   onChange={setType("Ina's original")} />
-              <Switch label="Artist's Originals" value={typeFilter === "Artist's original"} onChange={setType("Artist's original")} />
-              <Switch label="Karaoke"           value={typeFilter === "karaoke"}          onChange={setType("karaoke")} />
-              <Switch label="Concert"           value={typeFilter === "concert"}          onChange={setType("concert")} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>
-              <Switch label="Archived"          value={archiveFilter === "archived"}           onChange={setArchive("archived")} />
-              <Switch label="Unofficial Archive" value={archiveFilter === "unofficial archive"} onChange={setArchive("unofficial archive")} />
-              <Switch label="Duo"               value={duoOnly}  onChange={setDuoOnly} />
-              <Switch label="Group"             value={groupOnly} onChange={setGroupOnly} />
-            </div>
-          </FiltersContainer>
+          {!isMobile && (
+            <FiltersContainer>
+              <SearchBar onChange={handleFilter} placeholder="Search..." />
+              <FilterSwitches {...filterProps} />
+            </FiltersContainer>
+          )}
           <InfiniteScroll
             style={{ overflow: "hidden" }}
             scrollThreshold="50px"
@@ -172,7 +253,7 @@ const PlaylistBoard = (): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
             }
           >
             <SongContainer SongData={data} />
