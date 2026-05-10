@@ -570,7 +570,6 @@ const List = ({
     );
   }, [milestones.length]);
 
-  // Scroll to start whenever the displayed month changes
   useEffect(() => {
     if (listRef.current) {
       listRef.current.scrollTo({ left: 0, top: 0, behavior: "instant" as ScrollBehavior });
@@ -837,13 +836,11 @@ export const ScrollList = ({
   const [scroll] = useState<[number, number]>([0, 0]);
   const [selectedTitleTag, setSelectedTitleTag] = useState<string>("");
 
-  // Tag/search filtered milestones (all months)
   const selected = useMemo(
     () => filterMilestonesWithTitleTag(selectedTags, milestones, searchString, selectedTitleTag),
     [selectedTags, milestones, searchString, selectedTitleTag]
   );
 
-  // All month+year combos with entries, in chronological order from data
   const allMonthsWithEntries = useMemo(() => {
     const seen = new Set<string>();
     const result: Array<{ year: Year; month: Month }> = [];
@@ -858,7 +855,6 @@ export const ScrollList = ({
     return result;
   }, [selected]);
 
-  // Only current month+year entries
   const monthFiltered = useMemo(
     () => selected.filter(m => {
       const [, mMonth, mYear] = m.date.split(/\W/);
@@ -873,7 +869,6 @@ export const ScrollList = ({
     ? allMonthsWithEntries[currentIdx + 1]
     : null;
 
-  // When filters change and current month has no entries, jump to first available
   useEffect(() => {
     if (allMonthsWithEntries.length > 0 && currentIdx === -1) {
       const first = allMonthsWithEntries[0];

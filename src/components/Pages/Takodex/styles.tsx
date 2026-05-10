@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// Re-export shared styles from globalStyles
 export {
   SubmissionContainer,
   TextBubbleContainer,
@@ -16,7 +15,6 @@ export {
   NavTitle,
 } from "../../../styles/globalStyles";
 
-// Takodex-specific button with custom styling
 export const AddTakoButton = styled.a`
   background: var(--light-highlight);
   color: var(--dark-highlight);

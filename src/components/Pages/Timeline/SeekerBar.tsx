@@ -89,7 +89,6 @@ const NodeContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  //position: relative;
   background: #666666;
   padding: 0 1em;
   position: relative;

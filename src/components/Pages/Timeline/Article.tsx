@@ -20,7 +20,6 @@ const EventMedia = ({
   big?: boolean;
 }): JSX.Element | null => {
   if (!media) return null;
-  //We're only expecting local files or YT links
   if (media?.startsWith("http"))
     return (
       <iframe

@@ -23,7 +23,6 @@ export const Column = styled.div`
 export const EventText = styled.p`
   font-size: 1.25vw;
   line-height: 2vw;
-  //margin: 0 2em;
   text-align: justify;
   @media (max-width: 950px) {
     font-size: 13px;
@@ -43,7 +42,6 @@ export const EventMediaContainer = styled.div<{
   flex: 1;
 `;
 export const NewsPaperContainer = styled.div`
-  //overflow: scroll;
   margin: 2vw 5em;
   > ${Row} {
     padding: 2vw 0;
@@ -60,7 +58,6 @@ export const SectionButton = styled.div<{ selected: boolean }>`
   text-align: center;
   padding: 0.2em 1em;
   background-color: ${({ selected }) => (selected ? "#777" : "#888")};
-  //background-color: #fff;
   :hover {
     cursor: pointer;
   }

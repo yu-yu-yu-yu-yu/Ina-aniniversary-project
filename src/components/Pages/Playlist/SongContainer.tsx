@@ -12,6 +12,7 @@ import {
   SongCardInfo,
   SongTag,
   SongTagRow,
+  playlistFilterColors,
 } from "./styles/styles";
 
 interface SongContainerProps {
@@ -21,7 +22,7 @@ interface SongContainerProps {
 const SongContainer = ({ SongData }: SongContainerProps): JSX.Element => {
   return (
     <SongGrid>
-      {SongData.map(({ songLink, songInfo, coverInfo, songName, type, archived, collab }, i) => (
+      {SongData.map(({ songLink, songInfo, originalSongLink, coverInfo, songName, type, archived, collab }, i) => (
         <SongCard key={i}>
           {songLink && (
             <SongCardMedia>
@@ -53,12 +54,18 @@ const SongContainer = ({ SongData }: SongContainerProps): JSX.Element => {
             <BubbleHeader>
               <HeaderText>{songName || "Song Placeholder"}</HeaderText>
             </BubbleHeader>
-            {songInfo && <BubbleSong>{songInfo}</BubbleSong>}
+            {songInfo && (
+              <BubbleSong>
+                {originalSongLink
+                  ? <a href={originalSongLink} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>{songInfo}</a>
+                  : songInfo}
+              </BubbleSong>
+            )}
             {coverInfo && <BubbleSong>{coverInfo}</BubbleSong>}
             <SongTagRow>
-              {type && <SongTag>{type}</SongTag>}
-              {archived && archived !== "unarchived" && <SongTag>{archived}</SongTag>}
-              {collab && <SongTag>{collab}</SongTag>}
+              {type && <SongTag tagColor={playlistFilterColors[type]}>{type}</SongTag>}
+              {archived && archived !== "unarchived" && <SongTag tagColor={playlistFilterColors[archived]}>{archived}</SongTag>}
+              {collab && <SongTag tagColor={playlistFilterColors[collab]}>{collab}</SongTag>}
             </SongTagRow>
           </SongCardInfo>
         </SongCard>

@@ -51,7 +51,7 @@ const CreditsPage = (): JSX.Element => {
           </React.Fragment>
         ))}
         <CreditsNote>
-          And thanks to all the amazing takos that contributed in one way or another to this project, whether by sharing their art, sending messages, or just being part of the community!
+          Thanks to all the amazing takos who shared their art, sent messages, wrote letters, or simply cheered from the sidelines!
         </CreditsNote>
       </CreditsBoard>
     </div>

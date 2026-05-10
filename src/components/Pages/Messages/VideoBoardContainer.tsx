@@ -69,6 +69,15 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    if (hasMore && data.length > 0) {
+      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      if (!isScrollable) {
+        fetchMore();
+      }
+    }
+  }, [data.length, hasMore]);
+
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value) {
@@ -120,7 +129,7 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
             }
           >
             <TakoVideos

@@ -17,7 +17,7 @@ import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
 
-const LIMIT = 10;
+const LIMIT = 4;
 
 const BoardContainer = (): JSX.Element => {
   const { muted } = useMute();
@@ -56,6 +56,17 @@ const BoardContainer = (): JSX.Element => {
       setOffset(LIMIT + offset);
     }
   };
+
+  // On large monitors the page may not scroll, so InfiniteScroll never fires.
+  // Keep loading until the page is tall enough to scroll or all items are shown.
+  useEffect(() => {
+    if (hasMore && data.length > 0) {
+      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      if (!isScrollable) {
+        fetchMore();
+      }
+    }
+  }, [data.length, hasMore]);
 
   const handleFilter = debounce(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +139,7 @@ const BoardContainer = (): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center" }}>Yay! You have seen it all</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
             }
           >
             <TakoLetters submissions={data} />

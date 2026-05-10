@@ -71,7 +71,6 @@ export const Circle = styled.span`
   border-radius: 50%;
   width: 22px;
   height: 22px;
-  //padding: 5px;
   flex-shrink: 0;
   z-index: 2;
 `;
@@ -361,19 +360,24 @@ export const EventThumbMobile = styled.div`
 `;
 
 export const DrawerContainer = styled.div`
-  width: 341px;
-  height: auto;
-  margin: 0;
-  right: unset;
-  left: 50%;
-  top: 50%;
   position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--light-background);
   border-radius: 15px;
   z-index: 69;
+  width: min(90vw, 380px);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
   > ${TopControlsContainer} {
-    margin: 15px auto;
+    margin: 0;
+    padding: 0;
   }
   ${SearchInput} {
     font: normal normal normal 16px/19px Montserrat;
@@ -384,27 +388,49 @@ export const DrawerContainer = styled.div`
   }
   ${SearchBarContainer} {
     border-bottom-color: var(--text-color);
-    margin: 0 20px;
+    margin: 0;
   }
   ${TagBarContainer} {
-    margin-top: 15px;
-    margin-left: 20px;
+    margin: 0;
   }
   ${TagsContainer} {
     flex-direction: column;
   }
   ${MonthListContainer} {
+    height: auto;
+    min-height: unset;
     margin: 0;
-    background: unset;
-    flex-direction: column;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    flex-direction: row;
     flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
   }
   ${MonthDisplay} {
-    font-size: 16px;
-    line-height: 19px;
-    :not(:nth-child(4n)) {
-      padding-bottom: 8px;
+    font-size: 13px;
+    line-height: 15px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--dark-highlight);
+    text-shadow: none;
+    & + & {
+      padding-left: 10px;
     }
+    & + &::before {
+      display: none;
+    }
+  }
+  ${YearContainer} {
+    border-width: 1px;
+    margin: 0 auto 4px;
+    padding: 0 8px;
+  }
+  ${YearDisplay} {
+    font-size: 18px;
+    padding: 4px 6px;
   }
 `;
 
@@ -419,21 +445,23 @@ export const Backdrop = styled.span`
 `;
 
 export const DrawerSeparator = styled.span`
-  margin: 0 20px;
-  text-align: left;
-  font: normal normal 300 16px/19px Montserrat;
-  letter-spacing: 0;
-  color: var(--text-color);
-  opacity: 1;
-  border-bottom: 2px solid var(--text-color);
   display: block;
+  font: normal normal 300 13px/16px Montserrat;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--text-color);
+  padding-bottom: 4px;
 `;
 
 export const DrawerToggleI = styled.i`
   color: var(--text-color);
   padding-right: 15px;
+  font-size: 1.2em;
+  flex-shrink: 0;
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
+    opacity: 0.7;
   }
 `;
 
@@ -519,8 +547,6 @@ export const EventModalHeading = styled.a`
   color: var(--text-color);
   text-shadow: 0 5px 6px var(--shadow);
   overflow: hidden;
-  //text-overflow: ellipsis;
-  //white-space: nowrap;
   width: 300px;
   &.mobile {
     font: normal normal normal 22px/27px Montserrat;

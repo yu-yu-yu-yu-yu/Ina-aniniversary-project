@@ -14,7 +14,7 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
     return {
       label: jmilestone.label,
       media: jmilestone.media,
-      date: formatDate(jmilestone.date), // i may be dumb
+      date: formatDate(jmilestone.date),
       longText: jmilestone.longText,
       highlight: jmilestone.highlight,
       tags: {

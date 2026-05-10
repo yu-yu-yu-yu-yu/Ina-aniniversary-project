@@ -7,7 +7,6 @@ const NUM_GIFS = 8;
 const GIF_SIZE = 60;
 const SPEED = 10;
 
-// Dynamic animation based on mirror mode
 const travel = (mirror?: boolean) => keyframes`
   from {
     transform: translateX(${

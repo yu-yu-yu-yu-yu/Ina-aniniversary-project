@@ -2,6 +2,7 @@ export interface SongData {
   songName?: string;
   songLink?: string;
   songInfo?: string;
+  originalSongLink?: string;
   coverInfo?: string;
   type?: "Artist's original" | "Ina's original" | "cover" | "karaoke" | "concert";
   archived?: "archived" | "unarchived" | "unofficial archive";

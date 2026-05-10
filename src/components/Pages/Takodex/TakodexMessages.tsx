@@ -108,7 +108,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                                         <b>Category:</b> {category ? category : "Uncategorized"}
                                     </BubbleMessage>
                                     <BubbleMessage>
-                                        <b>Attributes:</b> {attributes ? attributes : "Unkwnown"}
+                                        <b>Attributes:</b> {attributes ? attributes : "Unknown"}
                                     </BubbleMessage>
                                     {(image && !failedImages[i]) ? (
                                         <BubbleImage

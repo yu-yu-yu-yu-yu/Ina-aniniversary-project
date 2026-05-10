@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, TakoPeek } from "./styles/menuStyles";
 import { TextBoxContainer } from "../../../styles/globalStyles";
-
-const TAKO_COUNT = 137;
+import { TAKO_COUNT } from "../../../constants/takos";
 
 const buttons = [
   { to: "/letters", label: "Letters for Ina" },
@@ -52,11 +51,11 @@ const Menu = (): JSX.Element => {
               And now we are introducing the <b>TakoDex</b> with entries from the community, explaining the many Takodachi variants there are.
             </p>
             <p>
-              We are so proud and extremely happy for how much she has achieved in these five years.
+              We are so proud and extremely happy for how much she has achieved in these six years.
             </p>
             <p>
               <b>From the bottom of our hearts, thank you so much!</b><br />
-              <b>With all our love, Happy 5th Anniversary, Ina! 💜🐙</b>
+              <b>With all our love, Happy 6th Anniversary, Ina! 💜🐙</b>
             </p>
             <sub>And Happy Birthday Takos!</sub>
           </div>

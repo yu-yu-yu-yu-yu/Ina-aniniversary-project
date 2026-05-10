@@ -24,7 +24,7 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <GrayscaleButton onClick={() => setGrayscale((g) => !g)}>
-        {grayscale ? "Give her an elixir of the undying" : "Ina asked for this button but did't saw it last time lol"}
+        {grayscale ? "Give her an elixir of the undying" : "Ina asked for this button but didn't see it last time lol"}
       </GrayscaleButton>
     </QuoteContainer>
   );
