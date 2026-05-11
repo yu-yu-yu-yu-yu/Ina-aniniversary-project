@@ -52,11 +52,9 @@
     ]
   },
   {
-    "title": "Art Assets",
+    "title": "Letter and Balloon Assets",
     "people": [
-      { "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" },
-      { "name": "Losfroger", "url": "https://twitter.com/losfroger" },
-      { "name": "Swoog", "url": "https://twitter.com/swoog10" }
+      { "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" }
     ]
   },
   {
@@ -77,6 +75,25 @@
       { "name": "NxKarim", "url": "https://twitter.com/NexoZerok" },
       { "name": "Yuyu" },
       { "name": "Kinji", "url": "https://twitter.com/KinjiDD" }
+    ]
+  },
+  {
+    "title": "Testing",
+    "people": [
+      { "name": "NxKarim", "url": "https://twitter.com/NexoZerok" },
+      { "name": "Takkito", "url": "https://twitter.com/takkito_tyr" },
+      { "name": "Ryusei", "url": "https://x.com/Ryusei_Kiiro" }
+    ]
+  },
+  {
+    "title": "Submission Manager",
+    "people": [
+      { "name": "Takkito", "url": "https://twitter.com/takkito_tyr" },
+      { "name": "NxKarim", "url": "https://twitter.com/NexoZerok" },
+      { "name": "Uni88", "url": "https://twitter.com/YesThatUni" },
+      { "name": "1st Killer", "url": "https://twitter.com/wololoSensei" },
+      { "name": "Lyudmilia", "url": "https://twitter.com/lyudmilia" },
+      { "name": "Airi" }
     ]
   },
   {
@@ -104,7 +121,7 @@
     ]
   },
   {
-    "title": "Messages, Artworks, Letters, Puns, Comments and more",
+    "title": "Messages, Artworks, Custom Takos, Letters, Puns, Comments and more",
     "people": [{ "name": "By lots of cute Takodachis!" }],
     "showTakoCount": true
   },
@@ -114,12 +131,12 @@
   },
   {
     "title": "That cookie",
-    "people": [{ "name": "man that cookie was so good" }]
+    "people": [{ "name": "was so good" }]
   },
   {
     "title": "Special Thanks",
     "people": [
-      { "name": "The one and only Ninomae Ina'nis", "url": "https://twitter.com/ninomaeinanis" }
+      { "name": "Our Priestess: Ninomae Ina'nis", "url": "https://twitter.com/ninomaeinanis" }
     ]
   }
 ]

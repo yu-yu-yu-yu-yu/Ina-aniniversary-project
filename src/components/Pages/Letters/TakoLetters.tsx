@@ -25,6 +25,7 @@ import {
   FlapFrontImg,
   FlapBackImg,
   SealImg,
+  ReadSealImg,
   Backdrop,
   ModalCard,
   CloseButton,
@@ -96,7 +97,7 @@ const LetterModal = ({ submission, index, onClose }: LetterModalProps) => {
                 <IFrame
                   width="100%"
                   height="315"
-                  src={image}
+                  src={`${image}${image.includes("?") ? "&" : "?"}enablejsapi=1`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={true}
@@ -118,10 +119,13 @@ interface EnvelopeCardProps {
   index: number;
 }
 
+const LS_KEY = (index: number) => `letter_read_${index}`;
+
 const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
   const [state, setState]         = useState<EnvelopeState>("idle");
   const [hover, setHover]         = useState<HoverState>("idle");
   const [modalOpen, setModalOpen] = useState(false);
+  const [isRead, setIsRead]       = useState(() => localStorage.getItem(LS_KEY(index)) === "1");
   const leaveTimer = useRef<number | null>(null);
   const { user } = submission;
 
@@ -140,19 +144,24 @@ const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
     }, 500);
   }, [state]);
 
+  const markRead = useCallback(() => {
+    localStorage.setItem(LS_KEY(index), "1");
+    setIsRead(true);
+  }, [index]);
+
   const handleClick = useCallback(() => {
     if (state !== "idle") return;
     if (leaveTimer.current) { clearTimeout(leaveTimer.current); leaveTimer.current = null; }
     if (hover === "hovering") {
       setState("opening");
-      setTimeout(() => { setState("open"); setModalOpen(true); }, OPEN_MS);
+      setTimeout(() => { setState("open"); setModalOpen(true); markRead(); }, OPEN_MS);
     } else {
       setState("flipping");
       setTimeout(() => setState("opening"), FLIP_MS);
-      setTimeout(() => { setState("open"); setModalOpen(true); }, FLIP_MS + OPEN_MS);
+      setTimeout(() => { setState("open"); setModalOpen(true); markRead(); }, FLIP_MS + OPEN_MS);
     }
     setHover("idle");
-  }, [state, hover]);
+  }, [state, hover, markRead]);
 
   const handleClose = useCallback(() => {
     setModalOpen(false);
@@ -170,6 +179,11 @@ const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
         <FrontFace $state={state} $hover={hover}>
           <img src={LETTER("letter-front.png")} alt="envelope front" />
           <NameOverlay>{user || "Anonymous Tako"}</NameOverlay>
+          <ReadSealImg
+            src={LETTER("letter-back-seal.png")}
+            $visible={isRead}
+            alt="read seal"
+          />
         </FrontFace>
 
         <BackFace $state={state} $hover={hover}>
@@ -180,7 +194,7 @@ const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
             <FlapBackImg  src={LETTER("letter-back-top-back.png")}  alt="" />
           </FlapContainer>
 
-          <SealImg src={LETTER("letter-back-seal.png")} $opening={state === "opening"} alt="" />
+          {!isRead && <SealImg src={LETTER("letter-back-seal.png")} $opening={state === "opening"} alt="" />}
         </BackFace>
       </CardScene>
 
@@ -195,7 +209,7 @@ const TakoLetters = ({ submissions }: { submissions: Submission[] }): JSX.Elemen
   useLayoutEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "100%", padding: "0 20px", boxSizing: "border-box" }}>
       <Masonry
         options={{ gutter: 40, columnWidth: 1, fitWidth: true, transitionDuration: 0 }}
         style={{ margin: "0 auto", paddingTop: "80px" }}

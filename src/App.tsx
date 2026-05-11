@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import MessageBoard from "./components/Pages/Messages/MessageBoardContainer";
 import HomeContent from "./components/Pages/Home/HomeContent";
 import { Timeline } from "./components/Pages/Timeline/Timeline";
@@ -13,8 +13,15 @@ import PlaylistBoard from "./components/Pages/Playlist/PlaylistBoard";
 import CollagePage from "./components/Pages/Collages/collage";
 import CreditsPage from "./components/Pages/Credits/CreditsPage";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
 const App = (): JSX.Element => (
   <Router>
+    <ScrollToTop />
     <div className="App">
       <div className="Content">
         <Switch>

@@ -35,6 +35,7 @@ const MessageBoard = (): JSX.Element => {
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
+  const searchRef = React.useRef("");
 
   useEffect(() => {
     if (rawData) {
@@ -99,26 +100,45 @@ const MessageBoard = (): JSX.Element => {
     1000,
   );
 
+  const applySearch = (base: Submission[], search: string) =>
+    base.filter(
+      (row) =>
+        row.user.toLowerCase().includes(search.toLowerCase()) ||
+        row.message.toLowerCase().includes(search.toLowerCase()),
+    );
+
   const OnlyImgToggle = async (value: boolean) => {
+    const search = searchRef.current;
     if (value) {
       setData([]);
-      const resultData = sourceData.filter(
-        (row: Submission) => row.image !== "",
-      );
-      const rows = resultData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
+      const imgData = sourceData.filter((row: Submission) => row.image !== "");
+      if (search !== "") {
+        const resultData = applySearch(imgData, search);
+        setHasMore(false);
+        setData(resultData);
+        setOffset(0);
+      } else {
+        const rows = imgData.slice(0, LIMIT);
+        setHasMore(true);
+        await awaitImgs(rows);
+        setData(rows);
+        setOffset(LIMIT);
+      }
       setIsToggledOnlyImg(true);
       setisToggledTextOnly(false);
     } else {
-      setOffset(0);
-      const rows = sourceData.slice(0, LIMIT);
-      setHasMore(true);
-      await awaitImgs(rows);
-      setData(rows);
-      setOffset(LIMIT);
+      if (search !== "") {
+        const resultData = applySearch(sourceData, search);
+        setHasMore(false);
+        setData(resultData);
+        setOffset(0);
+      } else {
+        const rows = sourceData.slice(0, LIMIT);
+        setHasMore(true);
+        await awaitImgs(rows);
+        setData(rows);
+        setOffset(LIMIT);
+      }
       setIsToggledOnlyImg(false);
     }
   };
@@ -178,7 +198,10 @@ const MessageBoard = (): JSX.Element => {
       ) : (
         <SiteBoard>
           <FiltersContainer>
-            <SearchBar onChange={handleFilter} placeholder="Search..." />
+            <SearchBar
+              onChange={(e) => { searchRef.current = e.target.value; handleFilter(e); }}
+              placeholder="Search..."
+            />
             <div
               style={{
                 display: "flex",

@@ -77,7 +77,7 @@ export const FrontFace = styled.div<{ $state: EnvelopeState; $hover: HoverState 
     filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.28));
   }
 
-  img {
+  > img:first-child {
     width: 100%;
     display: block;
     border-radius: 6px;
@@ -166,6 +166,25 @@ export const SealImg = styled.img<{ $opening: boolean }>`
 
   ${({ $opening }) =>
     $opening && css`animation: ${sealPop} 0.45s ease forwards;`}
+`;
+
+export const readSealAppear = keyframes`
+  0%   { opacity: 0; transform: scale(0.5); }
+  60%  { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+`;
+
+export const ReadSealImg = styled.img<{ $visible: boolean }>`
+  position: absolute;
+  width: 22.2%;
+  bottom: 6%;
+  right: 4%;
+  pointer-events: none;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 0.2s ease;
+
+  ${({ $visible }) =>
+    $visible && css`animation: ${readSealAppear} 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;`}
 `;
 
 export const Backdrop = styled.div`

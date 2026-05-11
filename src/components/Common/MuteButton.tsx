@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 
 export const MuteButton = styled.button`
@@ -27,8 +27,24 @@ const MuteContext = createContext<{
 export const useMute = () => useContext(MuteContext);
 
 export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [muted, setMuted] = useState(false);
-  const toggleMute = () => setMuted((m) => !m);
+  const [userMuted, setUserMuted] = useState(false);
+  const [ytPlaying, setYtPlaying] = useState(false);
+
+  const muted = userMuted || ytPlaying;
+  const toggleMute = () => setUserMuted((m) => !m);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data?.event === "onStateChange") {
+          setYtPlaying(data.info === 1);
+        }
+      } catch {}
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   return (
     <MuteContext.Provider value={{ muted, toggleMute }}>
