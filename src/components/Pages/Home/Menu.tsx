@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, TakoPeek } from "./styles/menuStyles";
 import { TextBoxContainer } from "../../../styles/globalStyles";
-import { TAKO_COUNT } from "../../../constants/takos";
+import { TAKO_FILES } from "../../../constants/takos";
 
 const buttons = [
   { to: "/letters", label: "Letters for Ina" },
@@ -27,7 +27,8 @@ const Menu = (): JSX.Element => {
     setTimeout(() => setShakingIndex(null), 400);
     setPeekTako("");
     setTimeout(() => {
-      setPeekTako(`${process.env.PUBLIC_URL}/takos/${Math.floor(Math.random() * TAKO_COUNT)}.png`);
+      const file = TAKO_FILES[Math.floor(Math.random() * TAKO_FILES.length)];
+      setPeekTako(`${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`);
     }, 120);
   };
 
