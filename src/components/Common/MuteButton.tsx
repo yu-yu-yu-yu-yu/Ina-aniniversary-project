@@ -40,7 +40,7 @@ export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (data?.event === "onStateChange") {
           setYtPlaying(data.info === 1);
         }
-      } catch {}
+      } catch (_) { /* non-YouTube messages are not valid JSON or have no event field */ }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
