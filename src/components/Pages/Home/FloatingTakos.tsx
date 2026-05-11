@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FloatingTakoData } from "../../../types";
-import { TAKO_COUNT } from "../../../constants/takos";
+import { TAKO_FILES } from "../../../constants/takos";
 const ANIMATION_DURATION = 9000;
 
 const floatUp = keyframes`
@@ -77,7 +77,7 @@ const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Elem
           newTakos.push({
             key: Date.now() + Math.random() + i,
             left: columnMode ? getColumnLeft() : Math.random() * 90,
-            tako: Math.floor(Math.random() * TAKO_COUNT),
+            tako: TAKO_FILES[Math.floor(Math.random() * TAKO_FILES.length)],
             bottom: Math.random() * spawnHeight,
             createdAt: Date.now(),
           });
@@ -134,7 +134,7 @@ const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Elem
             key={tako.key}
             left={tako.left}
             bottom={tako.bottom}
-            src={`${process.env.PUBLIC_URL}/takos/${tako.tako}.png`}
+            src={`${process.env.PUBLIC_URL}/takos/${encodeURIComponent(tako.tako)}`}
             alt="floating takodachi"
             onClick={handleTakoClick}
             style={{ pointerEvents: "auto", cursor: "pointer" }}

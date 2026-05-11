@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TakoPeek } from "./styles/menuStyles";
-
-const TAKO_COUNT = 72;
+import { TAKO_FILES } from "../../../constants/takos";
 
 type PeekRequest = {
   x: number;
@@ -23,11 +22,10 @@ export const useTakoPeek = () => {
 
     const takos = Array.from({ length: count }, (_, i) => {
       const offset = (i + 1) / (count + 1);
+      const file = TAKO_FILES[Math.floor(Math.random() * TAKO_FILES.length)];
       return {
         id: Math.random(),
-        src: `${process.env.PUBLIC_URL}/takos/${Math.floor(
-          Math.random() * TAKO_COUNT,
-        )}.png`,
+        src: `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`,
         left: x + width * offset,
       };
     });

@@ -1,7 +1,7 @@
 export interface FloatingTakoData {
   key: number;
   left: number;
-  tako: number;
+  tako: string;
   bottom: number;
   createdAt: number;
 }
