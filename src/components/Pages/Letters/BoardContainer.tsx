@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import TakoLetters from "./TakoLetters";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
-import { Submission } from "../../../types";
+import { LetterEntry } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
 import { debounce } from "lodash";
 import {
@@ -26,39 +27,40 @@ const BoardContainer = (): JSX.Element => {
     data: rawData,
     loading,
     error,
-  } = useFetch<Submission[]>(`${process.env.PUBLIC_URL}/data/messageData.json`);
+  } = useFetch<LetterEntry[]>(`${process.env.PUBLIC_URL}/data/letterData.json`);
 
-  const [sourceData, setSourceData] = useState<Submission[]>([]);
-  const [data, setData] = useState<Submission[]>([]);
-  const [offset, setOffset] = useState(0);
+  const [sourceData, setSourceData] = useState<LetterEntry[]>([]);
+  const [data, setData] = useState<LetterEntry[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const offsetRef = useRef(0);
 
   useEffect(() => {
     if (rawData) {
-      const processedData = rawData.reverse();
+      const processedData = [...rawData].reverse();
       setSourceData(processedData);
       const rows = processedData.slice(0, LIMIT);
       awaitImgs(rows).then(() => {
-        setData(rows);
-        setOffset(LIMIT);
+        ReactDOM.unstable_batchedUpdates(() => {
+          offsetRef.current = LIMIT;
+          setData(rows);
+          setHasMore(processedData.length > LIMIT);
+        });
       });
     }
   }, [rawData]);
 
   const fetchMore = async () => {
-    if (data.length !== 0) {
-      const rows = sourceData.slice(offset, LIMIT + offset);
-      if (rows.length === 0) {
-        setHasMore(false);
-      }
-      await awaitImgs(rows);
-      setData(data.concat(rows));
-      setOffset(LIMIT + offset);
+    if (data.length === 0) return;
+    const rows = sourceData.slice(offsetRef.current, LIMIT + offsetRef.current);
+    if (rows.length === 0) {
+      setHasMore(false);
+      return;
     }
+    await awaitImgs(rows);
+    offsetRef.current += LIMIT;
+    setData((prev) => prev.concat(rows));
   };
 
-  // On large monitors the page may not scroll, so InfiniteScroll never fires.
-  // Keep loading until the page is tall enough to scroll or all items are shown.
   useEffect(() => {
     if (hasMore && data.length > 0) {
       const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
@@ -68,34 +70,34 @@ const BoardContainer = (): JSX.Element => {
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = debounce(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilter = useCallback(
+    debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: Submission) =>
-          row.user.toLowerCase().includes(event.target.value.toLowerCase())
+        const resultData = sourceData.filter((row: LetterEntry) =>
+          row.user?.toLowerCase().includes(event.target.value.toLowerCase())
         );
+        offsetRef.current = 0;
         setHasMore(false);
         setData(resultData);
-        setOffset(0);
       } else {
         const rows = sourceData.slice(0, LIMIT);
-        setHasMore(true);
         await awaitImgs(rows);
+        offsetRef.current = LIMIT;
         setData(rows);
-        setOffset(LIMIT);
+        setHasMore(true);
       }
-    },
-    1000,
+    }, 1000),
+    [],
   );
 
-  const awaitImgs = async (data: Submission[]) => {
+  const awaitImgs = async (data: LetterEntry[]) => {
     const promises: Promise<unknown>[] = [];
-    data.forEach((row: Submission) => {
+    data.forEach((row: LetterEntry) => {
       if (row.image && !row.image.includes("youtube")) {
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
-            img.src = process.env.PUBLIC_URL + "/Images/" + row.image;
+            img.src = process.env.PUBLIC_URL + "/letters/" + row.image;
             img.onerror = resolve;
             img.onload = resolve;
           }),

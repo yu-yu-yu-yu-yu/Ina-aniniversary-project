@@ -1,17 +1,13 @@
-import React, { useLayoutEffect, useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import ReactDOM from "react-dom";
-import { Submission } from "../../../types";
+import { LetterEntry } from "../../../types";
 import Masonry from "react-masonry-component";
 import { TakoIcon } from "./TakoIcon";
 import { SRLWrapper } from "simple-react-lightbox";
 import {
   BubbleHeader,
   BubbleImage,
-  BubbleMessage,
   HeaderText,
-  IFrame,
-  SubmissionContainer,
-  TextBubbleContainer,
 } from "./styles/styles";
 import {
   EnvelopeState,
@@ -28,13 +24,17 @@ import {
   ReadSealImg,
   Backdrop,
   ModalCard,
-  CloseButton,
+  CloseLetterButton,
+  ZoomBar,
+  ZoomButton,
+  ZoomLabel,
 } from "./styles/letterStyles";
 
-const LETTER = (file: string) => `${process.env.PUBLIC_URL}/letter/${file}`;
+const LETTER = (file: string) => `${process.env.PUBLIC_URL}/letterAssets/${file}`;
 
 const FLIP_MS = 500;
 const OPEN_MS = 650;
+const ANIM_TOTAL_MS = 950;
 
 const srlOptions = {
   settings: { disablePanzoom: false },
@@ -50,64 +50,98 @@ const srlOptions = {
   thumbnails: { showThumbnails: false },
 };
 
+const ZOOM_MIN = 100;
+const ZOOM_MAX = 200;
+const ZOOM_STEP = 25;
+
+const LS_KEY = (index: number) => `letter_read_${index}`;
+
+const CenterAnimOverlay = ({ submission }: { submission: LetterEntry }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  return ReactDOM.createPortal(
+    <Backdrop style={{ cursor: "default" }}>
+      <div style={{ width: "280px", position: "relative", pointerEvents: "none" }}>
+        <img src={LETTER("letter-back.png")} style={{ width: "100%", display: "block", borderRadius: "6px" }} alt="" />
+        <FlapContainer $state="opening">
+          <FlapFrontImg src={LETTER("letter-back-top-front.png")} alt="" />
+          <FlapBackImg  src={LETTER("letter-back-top-back.png")}  alt="" />
+        </FlapContainer>
+        <SealImg src={LETTER("letter-back-seal.png")} $opening={true} alt="" />
+      </div>
+    </Backdrop>,
+    document.body
+  );
+};
+
 interface LetterModalProps {
-  submission: Submission;
+  submission: LetterEntry;
   index: number;
+  total: number;
+  zoom: number;
+  onZoomChange: (z: number) => void;
   onClose: () => void;
+  onNavigate: (from: number, delta: number) => void;
 }
 
-const LetterModal = ({ submission, index, onClose }: LetterModalProps) => {
-  const { message, user, icon, image, pun } = submission;
+const LetterModal = ({ submission, index, total, zoom, onZoomChange, onClose, onNavigate }: LetterModalProps) => {
+  const { user, icon, image } = submission;
+  const hasPrev = index > 0;
+  const hasNext = index < total - 1;
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape")      onClose();
+      if (e.key === "ArrowLeft")   onNavigate(index, -1);
+      if (e.key === "ArrowRight")  onNavigate(index,  1);
+    };
     document.addEventListener("keydown", handler);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handler);
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, [onClose, onNavigate, index]);
 
   return ReactDOM.createPortal(
     <Backdrop onClick={onClose}>
       <ModalCard onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose} aria-label="Close letter">✕</CloseButton>
+        <ZoomBar>
+          <ZoomButton onClick={() => onNavigate(index, -1)} disabled={!hasPrev} title="Previous letter">←</ZoomButton>
+          <ZoomButton onClick={() => onZoomChange(Math.max(ZOOM_MIN, zoom - ZOOM_STEP))} disabled={zoom <= ZOOM_MIN} title="Zoom out">−</ZoomButton>
+          <ZoomLabel>Zoom {zoom}%</ZoomLabel>
+          <ZoomButton onClick={() => onZoomChange(Math.min(ZOOM_MAX, zoom + ZOOM_STEP))} disabled={zoom >= ZOOM_MAX} title="Zoom in">+</ZoomButton>
+          <ZoomButton onClick={() => onNavigate(index, 1)} disabled={!hasNext} title="Next letter">→</ZoomButton>
+        </ZoomBar>
 
-        <SubmissionContainer>
-          <TextBubbleContainer>
-            <BubbleHeader>
-              <TakoIcon id={icon} pun={pun} index={index} />
-              <HeaderText>{user || "Anonymous Tako"}</HeaderText>
-            </BubbleHeader>
-            <hr />
+        <hr style={{ margin: "4px 0 8px" }} />
 
-            {image && (
-              !image.includes("youtube") ? (
-                <SRLWrapper options={srlOptions}>
-                  {image.includes("mp4") ? (
-                    <video width="100%" controls style={{ display: "block" }}>
-                      <source src={`${process.env.PUBLIC_URL}/Images/${image}`} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <BubbleImage src={`${process.env.PUBLIC_URL}/Images/${image}`} />
-                  )}
-                </SRLWrapper>
-              ) : (
-                <IFrame
-                  width="100%"
-                  height="315"
-                  src={`${image}${image.includes("?") ? "&" : "?"}enablejsapi=1`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen={true}
-                />
-              )
+        {image && (
+          <SRLWrapper options={srlOptions}>
+            {image.includes("mp4") ? (
+              <video style={{ display: "block", width: `${zoom / 2}vw`, margin: "0 auto" }} controls>
+                <source src={`${process.env.PUBLIC_URL}/letters/${image}`} type="video/mp4" />
+              </video>
+            ) : (
+              <BubbleImage
+                src={`${process.env.PUBLIC_URL}/letters/${image}`}
+                style={{ width: `${zoom / 2}vw`, maxWidth: "100%" }}
+              />
             )}
+          </SRLWrapper>
+        )}
 
-            {message && <BubbleMessage>{message}</BubbleMessage>}
-          </TextBubbleContainer>
-        </SubmissionContainer>
+        <hr style={{ margin: "8px 0 4px" }} />
+
+        <BubbleHeader>
+          <TakoIcon id={icon} index={index} />
+          <HeaderText>{user || "Anonymous Tako"}</HeaderText>
+        </BubbleHeader>
+
+        <CloseLetterButton onClick={onClose}>Close letter</CloseLetterButton>
       </ModalCard>
     </Backdrop>,
     document.body
@@ -115,19 +149,26 @@ const LetterModal = ({ submission, index, onClose }: LetterModalProps) => {
 };
 
 interface EnvelopeCardProps {
-  submission: Submission;
+  submission: LetterEntry;
   index: number;
+  isOpen: boolean;
+  onOpen: (index: number) => void;
 }
 
-const LS_KEY = (index: number) => `letter_read_${index}`;
-
-const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
-  const [state, setState]         = useState<EnvelopeState>("idle");
-  const [hover, setHover]         = useState<HoverState>("idle");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isRead, setIsRead]       = useState(() => localStorage.getItem(LS_KEY(index)) === "1");
+const EnvelopeCard = ({ submission, index, isOpen, onOpen }: EnvelopeCardProps) => {
+  const [state, setState]   = useState<EnvelopeState>("idle");
+  const [hover, setHover]   = useState<HoverState>("idle");
+  const [isRead, setIsRead] = useState(() => localStorage.getItem(LS_KEY(index)) === "1");
   const leaveTimer = useRef<number | null>(null);
   const { user } = submission;
+
+  useEffect(() => {
+    if (isOpen && localStorage.getItem(LS_KEY(index)) === "1") setIsRead(true);
+  }, [isOpen, index]);
+
+  useEffect(() => {
+    if (!isOpen && state === "open") setState("idle");
+  }, [isOpen]);
 
   const handleMouseEnter = useCallback(() => {
     if (state !== "idle") return;
@@ -154,20 +195,14 @@ const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
     if (leaveTimer.current) { clearTimeout(leaveTimer.current); leaveTimer.current = null; }
     if (hover === "hovering") {
       setState("opening");
-      setTimeout(() => { setState("open"); setModalOpen(true); markRead(); }, OPEN_MS);
+      setTimeout(() => { setState("open"); onOpen(index); markRead(); }, OPEN_MS);
     } else {
       setState("flipping");
       setTimeout(() => setState("opening"), FLIP_MS);
-      setTimeout(() => { setState("open"); setModalOpen(true); markRead(); }, FLIP_MS + OPEN_MS);
+      setTimeout(() => { setState("open"); onOpen(index); markRead(); }, FLIP_MS + OPEN_MS);
     }
     setHover("idle");
-  }, [state, hover, markRead]);
-
-  const handleClose = useCallback(() => {
-    setModalOpen(false);
-    setState("idle");
-    setHover("idle");
-  }, []);
+  }, [state, hover, onOpen, index, markRead]);
 
   return (
     <EnvelopeWrapper
@@ -188,37 +223,87 @@ const EnvelopeCard = ({ submission, index }: EnvelopeCardProps) => {
 
         <BackFace $state={state} $hover={hover}>
           <img className="base" src={LETTER("letter-back.png")} alt="envelope back" />
-
           <FlapContainer $state={state}>
             <FlapFrontImg src={LETTER("letter-back-top-front.png")} alt="" />
             <FlapBackImg  src={LETTER("letter-back-top-back.png")}  alt="" />
           </FlapContainer>
-
           {!isRead && <SealImg src={LETTER("letter-back-seal.png")} $opening={state === "opening"} alt="" />}
         </BackFace>
       </CardScene>
-
-      {modalOpen && (
-        <LetterModal submission={submission} index={index} onClose={handleClose} />
-      )}
     </EnvelopeWrapper>
   );
 };
 
-const TakoLetters = ({ submissions }: { submissions: Submission[] }): JSX.Element => {
-  useLayoutEffect(() => { window.scrollTo(0, 0); }, []);
+const TakoLetters = ({ submissions }: { submissions: LetterEntry[] }): JSX.Element => {
+  const [zoom, setZoom]           = useState(100);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [animIndex, setAnimIndex] = useState<number | null>(null);
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const handleOpen = useCallback((idx: number) => {
+    setOpenIndex(idx);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setOpenIndex(null);
+  }, []);
+
+  const handleNavigate = useCallback((from: number, delta: number) => {
+    const next = from + delta;
+    if (next < 0 || next >= submissions.length) return;
+
+    const alreadyRead = localStorage.getItem(LS_KEY(next)) === "1";
+    setOpenIndex(null);
+
+    if (alreadyRead) {
+      setOpenIndex(next);
+    } else {
+      localStorage.setItem(LS_KEY(next), "1");
+      setAnimIndex(next);
+      setTimeout(() => {
+        setAnimIndex(null);
+        setOpenIndex(next);
+      }, ANIM_TOTAL_MS);
+    }
+  }, [submissions.length]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%", padding: "0 20px", boxSizing: "border-box" }}>
-      <Masonry
-        options={{ gutter: 40, columnWidth: 1, fitWidth: true, transitionDuration: 0 }}
-        style={{ margin: "0 auto", paddingTop: "80px" }}
-      >
-        {submissions.map((submission, i) => (
-          <EnvelopeCard key={i} index={i} submission={submission} />
-        ))}
-      </Masonry>
-    </div>
+    <>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%", padding: "0 20px", boxSizing: "border-box" }}>
+        <Masonry
+          options={{ gutter: 40, columnWidth: 1, fitWidth: true, transitionDuration: 0 }}
+          style={{ margin: "0 auto", paddingTop: "80px" }}
+        >
+          {submissions.map((submission, i) => (
+            <EnvelopeCard
+              key={i}
+              index={i}
+              submission={submission}
+              isOpen={openIndex === i}
+              onOpen={handleOpen}
+            />
+          ))}
+        </Masonry>
+      </div>
+
+      {openIndex !== null && (
+        <LetterModal
+          key={openIndex}
+          submission={submissions[openIndex]}
+          index={openIndex}
+          total={submissions.length}
+          zoom={zoom}
+          onZoomChange={setZoom}
+          onClose={handleClose}
+          onNavigate={handleNavigate}
+        />
+      )}
+
+      {animIndex !== null && (
+        <CenterAnimOverlay submission={submissions[animIndex]} />
+      )}
+    </>
   );
 };
 

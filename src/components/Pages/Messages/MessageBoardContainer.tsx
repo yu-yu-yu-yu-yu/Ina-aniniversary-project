@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
@@ -39,12 +39,13 @@ const MessageBoard = (): JSX.Element => {
 
   useEffect(() => {
     if (rawData) {
-      const processedData = rawData.reverse();
+      const processedData = [...rawData].reverse();
       setSourceData(processedData);
       const rows = processedData.slice(0, LIMIT);
       awaitImgs(rows).then(() => {
         setData(rows);
         setOffset(LIMIT);
+        setHasMore(processedData.length > LIMIT);
       });
     }
   }, [rawData]);
@@ -63,8 +64,8 @@ const MessageBoard = (): JSX.Element => {
 
       await awaitImgs(rows);
 
-      setData(data.concat(rows));
-      setOffset(LIMIT + offset);
+      setData((prev) => prev.concat(rows));
+      setOffset((prev) => prev + LIMIT);
     }
   };
 
@@ -77,8 +78,8 @@ const MessageBoard = (): JSX.Element => {
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = debounce(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilter = useCallback(
+    debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value !== "") {
         const resultData = sourceData.filter((row: Submission) => {
           return (
@@ -96,8 +97,8 @@ const MessageBoard = (): JSX.Element => {
         setData(rows);
         setOffset(LIMIT);
       }
-    },
-    1000,
+    }, 1000),
+    [],
   );
 
   const applySearch = (base: Submission[], search: string) =>

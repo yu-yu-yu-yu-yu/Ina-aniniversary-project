@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from "react";
+import React, { useEffect, useMemo } from "react";
 import {Submission} from "../../../types";
 import Masonry from "react-masonry-component";
 import {TakoIcon} from "./TakoIcon";
@@ -43,15 +43,14 @@ const TakoMessages = ({
   isToggledOnlyImg,
   isToggledTextOnly,
 }: TakoMessagesProps): JSX.Element => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (isToggledOnlyImg) {
-    submissions = submissions.filter((sub) => {
-      return sub.image;
-    });
-  }
+  const visibleSubmissions = useMemo(
+    () => isToggledOnlyImg ? submissions.filter((sub) => sub.image) : submissions,
+    [submissions, isToggledOnlyImg],
+  );
 
   return (
     <Masonry
@@ -63,7 +62,7 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {submissions.map(({ message, user, icon, image, pun }, i) => (
+      {visibleSubmissions.map(({ message, user, icon, image, pun }, i) => (
         <SubmissionContainer key={i}>
           <TextBubbleContainer>
             <BubbleHeader>

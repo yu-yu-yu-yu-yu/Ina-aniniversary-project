@@ -201,15 +201,25 @@ export const Backdrop = styled.div`
 `;
 
 export const ModalCard = styled.div`
+  border: 3px solid var(--light-background);
   background: var(--background);
-  border-radius: 12px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-  max-width: 540px;
-  width: 100%;
-  max-height: 85vh;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+
+  width: 70vw;
+  max-width: 900px;
+  height: 90vh;
   overflow-y: auto;
-  position: relative;
+  display: flex;
+  flex-direction: column;
   animation: ${modalSlideIn} 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+  img {
+    max-width: 100%;
+  }
 
   scrollbar-width: thin;
   scrollbar-color: #bb6ad4 transparent;
@@ -217,22 +227,77 @@ export const ModalCard = styled.div`
   &::-webkit-scrollbar-thumb { background: #b66ad4; border-radius: 3px; }
 `;
 
-export const CloseButton = styled.button`
-  position: sticky;
-  top: 12px;
-  float: right;
-  margin: 12px 12px 0 0;
+export const ZoomHint = styled.p`
+  font-size: 12px;
+  color: var(--ink-black);
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+  opacity: 0.6;
+`;
+
+export const CloseLetterButton = styled.button`
+  margin-top: auto;
+  padding: 16px;
+  width: 100%;
   background: none;
   border: none;
+  border-top: 1px solid rgba(180, 106, 212, 0.25);
   cursor: pointer;
-  font-size: 22px;
-  line-height: 1;
+  font-size: 15px;
   color: #795a9b;
-  transition: color 0.15s ease, transform 0.15s ease;
-  z-index: 10;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
 
   &:hover {
+    background: rgba(180, 106, 212, 0.1);
     color: #c0392b;
-    transform: scale(1.15);
   }
+`;
+
+export const ZoomBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 0;
+  flex-shrink: 0;
+`;
+
+export const ZoomButton = styled.button`
+  background: var(--dark-highlight);
+  border: 2px solid var(--light-highlight);
+  border-radius: 50%;
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--light-highlight);
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: var(--light-highlight);
+    color: var(--dark-highlight);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+    &:hover { background: var(--dark-highlight); color: var(--light-highlight); }
+  }
+`;
+
+export const ZoomLabel = styled.span`
+  font-size: 13px;
+  color: var(--ink-black);
+  min-width: 52px;
+  text-align: center;
+  opacity: 0.7;
+  user-select: none;
 `;

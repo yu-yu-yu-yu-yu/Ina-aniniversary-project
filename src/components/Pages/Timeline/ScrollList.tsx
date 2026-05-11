@@ -1,7 +1,7 @@
 import { Milestone, Tags, IScrollListProps, Month, MonthWithYear, Year } from "../../../types/timeline";
 import React, { ChangeEvent, createRef, RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { Switch } from "../../Common/Switch";
-import { upperCase } from "lodash";
+import { upperCase, throttle } from "lodash";
 import {
   Backdrop,
   Circle,
@@ -271,9 +271,10 @@ const Event = ({
     setMousePos(null);
     setHoverMessage(null);
   };
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-  };
+  const handleMouseMove = useMemo(
+    () => throttle((e: React.MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY }), 32),
+    [],
+  );
 
   return (
     <EventContainer
@@ -447,7 +448,7 @@ const TagDropdown = ({
   setSelectedTag: (tag: string) => void;
   mobile?: boolean;
 }) => {
-  const tags = getUniqueTitleTags(milestones);
+  const tags = useMemo(() => getUniqueTitleTags(milestones), [milestones]);
   return (
     <div style={{ marginLeft: 24, display: "inline-block" }}>
       <TagDropdownSelect
