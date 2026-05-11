@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
-import MessageBoard from "./components/Pages/Messages/MessageBoardContainer";
-import HomeContent from "./components/Pages/Home/HomeContent";
-import { Timeline } from "./components/Pages/Timeline/Timeline";
 import { milestones } from "./components/Pages/Timeline/Milestones";
-import VideoBoardContainer from "./components/Pages/Messages/VideoBoardContainer";
-import { TakodexList } from "./components/Pages/Takodex/TakodexList";
 import { ThemeSwitcher } from "./components/Common/ThemeSwitcher";
 import { MuteProvider } from "./components/Common/MuteButton";
-import BoardContainer  from "./components/Pages/Letters/BoardContainer";
-import PlaylistBoard from "./components/Pages/Playlist/PlaylistBoard";
-import CollagePage from "./components/Pages/Collages/collage";
-import CreditsPage from "./components/Pages/Credits/CreditsPage";
+import { TakoLoading } from "./components/Common/TakoLoading";
+
+const HomeContent     = lazy(() => import("./components/Pages/Home/HomeContent"));
+const MessageBoard    = lazy(() => import("./components/Pages/Messages/MessageBoardContainer"));
+const BoardContainer  = lazy(() => import("./components/Pages/Letters/BoardContainer"));
+const PlaylistBoard   = lazy(() => import("./components/Pages/Playlist/PlaylistBoard"));
+const VideoBoardContainer = lazy(() => import("./components/Pages/Messages/VideoBoardContainer"));
+const Timeline        = lazy(() => import("./components/Pages/Timeline/Timeline").then((m) => ({ default: m.Timeline })));
+const TakodexList     = lazy(() => import("./components/Pages/Takodex/TakodexList").then((m) => ({ default: m.TakodexList })));
+const CollagePage     = lazy(() => import("./components/Pages/Collages/collage"));
+const CreditsPage     = lazy(() => import("./components/Pages/Credits/CreditsPage"));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -24,46 +26,24 @@ const App = (): JSX.Element => (
     <ScrollToTop />
     <div className="App">
       <div className="Content">
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/messages">
-            <MessageBoard />
-          </Route>
-          <Route path="/letters">
-            <BoardContainer />
-          </Route>
-          <Route path="/playlist">
-            <PlaylistBoard />
-          </Route>
-          <Route path="/moments">
-            <VideoBoardContainer mode="moments" />
-          </Route>
-          <Route path="/wah">
-            <VideoBoardContainer mode="wah" />
-          </Route>
-          <Route path="/timeline">
-            <Timeline milestones={milestones} />
-          </Route>
-          <Route path="/takodex" component={TakodexList} />
-          <Route path="/collages">
-            <CollagePage />
-          </Route>
-          <Route path="/credits">
-            <CreditsPage />
-          </Route>
-        </Switch>
+        <Suspense fallback={<TakoLoading />}>
+          <Switch>
+            <Route exact path="/"><HomeContent /></Route>
+            <Route path="/messages"><MessageBoard /></Route>
+            <Route path="/letters"><BoardContainer /></Route>
+            <Route path="/playlist"><PlaylistBoard /></Route>
+            <Route path="/moments"><VideoBoardContainer mode="moments" /></Route>
+            <Route path="/wah"><VideoBoardContainer mode="wah" /></Route>
+            <Route path="/timeline"><Timeline milestones={milestones} /></Route>
+            <Route path="/takodex"><TakodexList /></Route>
+            <Route path="/collages"><CollagePage /></Route>
+            <Route path="/credits"><CreditsPage /></Route>
+          </Switch>
+        </Suspense>
       </div>
       <ThemeSwitcher />
     </div>
   </Router>
-);
-
-const Home = () => (
-  <div>
-    <HomeContent />
-  </div>
 );
 
 function AppWrapper() {

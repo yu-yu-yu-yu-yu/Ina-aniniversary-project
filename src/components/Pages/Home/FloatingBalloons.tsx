@@ -113,10 +113,11 @@ const FloatingBalloons = (): JSX.Element => {
       const spawnCount = Math.floor(Math.random() * 2) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
 
+      const newBalloons: FloatingBalloonData[] = [];
       for (let i = 0; i < spawnCount; i++) {
-        if (Math.random() < 0.80) {
+        if (Math.random() < 0.96) {
           const def = pool[Math.floor(Math.random() * pool.length)];
-          const newBalloon: FloatingBalloonData = {
+          newBalloons.push({
             key: Date.now() + Math.random() + i,
             left: Math.random() * 88,
             src: def.src,
@@ -125,9 +126,11 @@ const FloatingBalloons = (): JSX.Element => {
             heightScale: Math.random() * 0.6 + 0.4,
             swayOffset:
               (Math.random() * 30 + 10) * (Math.random() < 0.5 ? 1 : -1),
-          };
-          setBalloons((prev) => [...prev, newBalloon]);
+          });
         }
+      }
+      if (newBalloons.length > 0) {
+        setBalloons((prev) => [...prev, ...newBalloons]);
       }
     }, 2000);
 

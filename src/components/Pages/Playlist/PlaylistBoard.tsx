@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom";
 import SongContainer from "./SongContainer";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -150,22 +150,23 @@ const PlaylistBoard = (): JSX.Element => {
     }
   }, [rawData]);
 
+  const filteredData = useMemo(
+    () => getFiltered(sourceData, { typeFilter, archiveFilter, duoOnly, groupOnly }, searchQuery),
+    [sourceData, typeFilter, archiveFilter, duoOnly, groupOnly, searchQuery],
+  );
+
   useEffect(() => {
     if (!sourceData.length) return;
-    const filters = { typeFilter, archiveFilter, duoOnly, groupOnly };
-    const filtered = getFiltered(sourceData, filters, searchQuery);
-    const rows = filtered.slice(0, LIMIT);
+    const rows = filteredData.slice(0, LIMIT);
     awaitImgs(rows).then(() => {
       setData(rows);
       setOffset(LIMIT);
-      setHasMore(filtered.length > LIMIT);
+      setHasMore(filteredData.length > LIMIT);
     });
-  }, [sourceData, typeFilter, archiveFilter, duoOnly, groupOnly, searchQuery]);
+  }, [filteredData]); // filteredData already encapsulates sourceData as a dep
 
   const fetchMore = async () => {
-    const filters = { typeFilter, archiveFilter, duoOnly, groupOnly };
-    const filtered = getFiltered(sourceData, filters, searchQuery);
-    const rows = filtered.slice(offset, LIMIT + offset);
+    const rows = filteredData.slice(offset, LIMIT + offset);
     if (rows.length === 0) {
       setHasMore(false);
       return;
@@ -175,11 +176,11 @@ const PlaylistBoard = (): JSX.Element => {
     setOffset((prev) => prev + LIMIT);
   };
 
-  const handleFilter = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilter = useCallback(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchQuery(event.target.value);
-    },
-    500,
+    }, 500),
+    [],
   );
 
   const setType = (value: SongData["type"]) => (active: boolean) =>

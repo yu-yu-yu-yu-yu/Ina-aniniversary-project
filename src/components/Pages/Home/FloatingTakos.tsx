@@ -71,19 +71,20 @@ const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Elem
     intervalRef.current = setInterval(() => {
       const spawnCount = Math.floor(Math.random() * 3) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
+      const newTakos: FloatingTakoData[] = [];
       for (let i = 0; i < spawnCount; i++) {
         if (Math.random() < 0.6) {
-          const randomTako = Math.floor(Math.random() * TAKO_COUNT);
-          const spawnBottom = Math.random() * spawnHeight;
-          const newTako: FloatingTakoData = {
+          newTakos.push({
             key: Date.now() + Math.random() + i,
             left: columnMode ? getColumnLeft() : Math.random() * 90,
-            tako: randomTako,
-            bottom: spawnBottom,
+            tako: Math.floor(Math.random() * TAKO_COUNT),
+            bottom: Math.random() * spawnHeight,
             createdAt: Date.now(),
-          };
-          setFloatingTakos((prev) => [...prev, newTako]);
+          });
         }
+      }
+      if (newTakos.length > 0) {
+        setFloatingTakos((prev) => [...prev, ...newTakos]);
       }
     }, 1000);
     return () => {

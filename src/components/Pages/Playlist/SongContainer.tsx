@@ -23,7 +23,7 @@ const SongContainer = ({ SongData }: SongContainerProps): JSX.Element => {
   return (
     <SongGrid>
       {SongData.map(({ songLink, songInfo, originalSongLink, coverInfo, songName, type, archived, collab }, i) => (
-        <SongCard key={i}>
+        <SongCard key={`${songName ?? ""}${songLink ?? ""}${i}`}>
           {songLink && (
             <SongCardMedia>
               {!songLink.includes("youtube") ? (

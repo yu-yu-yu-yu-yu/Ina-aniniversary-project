@@ -7,6 +7,7 @@ import styled from "styled-components";
 const Gallery = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
 
   const timelineRef = useRef(0);
+  const curRef = useRef(0);
 
   const [cur, setCur] = useState(0);
   const isFirst = cur === 0;
@@ -22,24 +23,28 @@ const Gallery = ({ milestones }: { milestones: Milestone[] }): JSX.Element => {
     scrollProgress = Math.max(0, scrollProgress);
     scrollProgress = Math.min(scrollProgress, (milestones.length - 1) * 100);
 
-    if (Math.floor(scrollProgress / 100) !== cur || !scrollProgress)
-      setCur(Math.floor(scrollProgress / 100));
+    const nextCur = Math.floor(scrollProgress / 100);
+    if (nextCur !== curRef.current || !scrollProgress) {
+      curRef.current = nextCur;
+      setCur(nextCur);
+    }
 
     timelineRef.current = scrollProgress;
   };
 
   const setIndex = (index: number) => {
     timelineRef.current = index * 100;
+    curRef.current = index;
     setCur(index);
   };
 
   useEffect(() => {
     const throttledScroll = throttle(trackScroll, 50);
 
-    window.addEventListener("mousewheel", throttledScroll);
+    window.addEventListener("wheel", throttledScroll);
 
     return () => {
-      window.removeEventListener("mousewheel", throttledScroll);
+      window.removeEventListener("wheel", throttledScroll);
     };
   }, []);
 
