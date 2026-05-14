@@ -26,7 +26,7 @@ const App = (): JSX.Element => (
     <ScrollToTop />
     <div className="App">
       <div className="Content">
-        <Suspense fallback={<TakoLoading />}>
+        <Suspense fallback={<TakoLoading fullPage />}>
           <Switch>
             <Route exact path="/"><HomeContent /></Route>
             <Route path="/messages"><MessageBoard /></Route>

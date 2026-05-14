@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   background: ${({ $grayscale }) =>
@@ -94,4 +94,33 @@ const GrayscaleButton = styled.button`
   }
 `;
 
-export { QuoteContainer, QuoteInaImg, QuoteContent, GrayscaleButton };
+const elixirFade = keyframes`
+  0%   { opacity: 0; transform: translateY(8px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  70%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); }
+`;
+
+const InaImageWrapper = styled.div`
+  display: inline-block;
+  position: relative;
+`;
+
+const ElixirText = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 3.3rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px #a78bfa, 0 2px 8px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  animation: ${elixirFade} 2.5s ease forwards;
+`;
+
+export { QuoteContainer, QuoteInaImg, QuoteContent, GrayscaleButton, InaImageWrapper, ElixirText };

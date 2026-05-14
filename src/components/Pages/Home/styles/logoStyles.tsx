@@ -118,11 +118,29 @@ const ScrollIndicator = styled.div`
     font-size: 18px;
   }
 
+  @media only screen and (min-width: 1200px) and (max-height: 800px) {
+    h3 {
+      font-size: 14px;
+    }
+  }
+
+  @media only screen and (max-width: 1000px) {
+    h3 {
+      font-size: 11px;
+    }
+  }
+
   @media only screen and (max-width: 800px) {
     bottom: 18px;
 
     h3 {
-      font-size: 16px;
+      font-size: 8px;
+    }
+  }
+
+  @media only screen and (max-width: 300px) {
+    h3 {
+      font-size: 6px;
     }
   }
 `;
