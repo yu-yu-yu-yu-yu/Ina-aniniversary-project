@@ -427,6 +427,16 @@
     "collab": "solo",
     "performances": [
       {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/uLD10BI53QQ?start=1723",
+        "status": "archived"
+      },
+      {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/HJ5Zwzd6h18?start=3498",
+        "status": "archived"
+      },
+      {
         "context": "concert",
         "link": "",
         "status": "",
@@ -723,6 +733,11 @@
     "collab": "solo",
     "performances": [
       {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/uLD10BI53QQ?start=2466",
+        "status": "archived"
+      },
+      {
         "context": "concert",
         "link": "https://www.youtube.com/embed/ksAJIsl047w",
         "name": "Drawn to Dawn"
@@ -796,7 +811,9 @@
     "collab": "solo",
     "performances": [
       {
-        "context": "karaoke"
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/HJ5Zwzd6h18?start=2223",
+        "status": "archived"
       }
     ]
   },
@@ -1044,6 +1061,16 @@
         "context": "karaoke",
         "link": "https://www.youtube.com/embed/tRUqPo0k_NA",
         "status": "unofficially archived"
+      },
+      {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/HJ5Zwzd6h18?start=1182",
+        "status": "archived"
+      },
+      {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/fUEnTLLN9sQ?start=1752",
+        "status": "archived"
       }
     ]
   },
@@ -1470,6 +1497,16 @@
     "performances": [
       {
         "context": "karaoke",
+        "link": "https://www.youtube.com/embed/ACV-i-b10io?start=2518",
+        "status": "archived"
+      },
+      {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/fUEnTLLN9sQ?start=665",
+        "status": "archived"
+      },
+      {
+        "context": "karaoke",
         "link": "https://www.youtube.com/embed/PzkqEfCX0O8?start=3251",
         "status": "archived"
       }
@@ -1812,6 +1849,11 @@
     "origin": "Artist's original",
     "collab": "solo",
     "performances": [
+      {
+        "context": "karaoke",
+        "link": "https://www.youtube.com/embed/5ZQhK4CNXpU?start=2805",
+        "status": "archived"
+      },
       {
         "context": "concert",
         "link": "https://www.youtube.com/embed/yT2ety9RfIo",
