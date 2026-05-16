@@ -15,7 +15,7 @@ export const playlistFilterColors: Record<string, string> = {
   cover: "#9B59B6",
   "Ina's original": "#E91E8C",
   "Hololive's original": "#8E44AD",
-  "Artist's original": "#3498DB",
+  "3rd Party": "#3498DB",
   karaoke: "#F39C12",
   concert: "#E74C3C",
   archived: "#95A5A6",
@@ -90,12 +90,12 @@ export const SectionHeader = styled.h3`
 `;
 
 
-export const ModalButton = styled.button`
+export const ModalButton = styled.button<{ active?: boolean }>`
   font: normal normal 700 13px/18px Montserrat;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  background: var(--dark-highlight);
-  color: var(--text-color);
+  background: ${({ active }) => active ? "var(--light-highlight)" : "var(--dark-highlight)"};
+  color: ${({ active }) => active ? "var(--dark-highlight)" : "var(--text-color)"};
   border: 2px solid var(--light-highlight);
   border-radius: 10px;
   padding: 8px 16px;

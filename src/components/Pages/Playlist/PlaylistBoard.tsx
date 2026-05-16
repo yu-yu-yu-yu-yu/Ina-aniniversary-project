@@ -71,11 +71,11 @@ const groupSongs = (songs: SongData[], by: GroupBy): { label: string; songs: Son
   if (by === "origin") {
     const ina    = songs.filter((s) => s.origin === "Ina's original");
     const holo   = songs.filter((s) => s.origin === "Hololive's original");
-    const artist = songs.filter((s) => s.origin === "Artist's original");
+    const artist = songs.filter((s) => s.origin === "3rd Party");
     return [
       ...(ina.length    ? [{ label: "Ina's Original",      songs: ina    }] : []),
       ...(holo.length   ? [{ label: "Hololive's Original", songs: holo   }] : []),
-      ...(artist.length ? [{ label: "Artist's Original",   songs: artist }] : []),
+      ...(artist.length ? [{ label: "3rd Party",   songs: artist }] : []),
     ];
   }
   if (by === "archive") {
@@ -207,7 +207,7 @@ const FiltersPanel = ({
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
       <Switch label="Ina's Originals"      value={originFilter === "Ina's original"}      onChange={setOrigin("Ina's original")}      color={playlistFilterColors["Ina's original"]}      mobile />
       <Switch label="Hololive's Originals" value={originFilter === "Hololive's original"} onChange={setOrigin("Hololive's original")} color={playlistFilterColors["Hololive's original"]} mobile />
-      <Switch label="Artist's Originals"  value={originFilter === "Artist's original"}  onChange={setOrigin("Artist's original")}  color={playlistFilterColors["Artist's original"]}  mobile />
+      <Switch label="3rd Partys"  value={originFilter === "3rd Party"}  onChange={setOrigin("3rd Party")}  color={playlistFilterColors["3rd Party"]}  mobile />
       <Switch label="Covers"             value={contextFilter === "cover"}            onChange={setContext("cover")}            color={playlistFilterColors["cover"]}              mobile />
       <Switch label="Karaoke"            value={contextFilter === "karaoke"}          onChange={setContext("karaoke")}          color={playlistFilterColors["karaoke"]}            mobile />
       <Switch label="Concert"            value={contextFilter === "concert"}          onChange={setContext("concert")}          color={playlistFilterColors["concert"]}            mobile />
@@ -265,6 +265,7 @@ const PlaylistBoard = (): JSX.Element => {
   const offsetRef = useRef(0);
   const filteredDataRef = useRef<SongData[]>([]);
 
+  const [showOriginal, setShowOriginal] = useState(false);
   const [originFilter, setOriginFilter] = useState<SongOrigin | null>(null);
   const [contextFilter, setContextFilter] = useState<PerformanceContext | null>(null);
   const [sourceFilter, setSourceFilter] = useState<string | null>(null);
@@ -346,6 +347,13 @@ const PlaylistBoard = (): JSX.Element => {
     </DropdownPanel>
   );
 
+  const versionToggle = (
+    <ModalButton active={showOriginal} onClick={() => setShowOriginal((v) => !v)}>
+      <i className="fa fa-exchange" />
+      {showOriginal ? "Orig. ver." : "Ina ver."}
+    </ModalButton>
+  );
+
   return (
     <div>
       <audio
@@ -361,6 +369,7 @@ const PlaylistBoard = (): JSX.Element => {
         <NavButtonGroup>
           {filterDropdown}
           {groupDropdown}
+          {versionToggle}
         </NavButtonGroup>
       </Navbar>
 
@@ -374,6 +383,7 @@ const PlaylistBoard = (): JSX.Element => {
             <SearchRowButtons>
               {filterDropdown}
               {groupDropdown}
+              {versionToggle}
             </SearchRowButtons>
             <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0, flex: "1 1 0", maxWidth: "50%", marginLeft: "auto" }} />
           </SearchRow>
@@ -382,7 +392,7 @@ const PlaylistBoard = (): JSX.Element => {
             grouped.map(({ label, songs }) => (
               <React.Fragment key={label}>
                 <SectionHeader>{label}</SectionHeader>
-                <SongContainer SongData={songs} />
+                <SongContainer SongData={songs} showOriginal={showOriginal} />
               </React.Fragment>
             ))
           ) : (
@@ -397,7 +407,7 @@ const PlaylistBoard = (): JSX.Element => {
                 <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
               }
             >
-              <SongContainer SongData={data} />
+              <SongContainer SongData={data} showOriginal={showOriginal} />
             </InfiniteScroll>
           )}
           <ScrollArrow />

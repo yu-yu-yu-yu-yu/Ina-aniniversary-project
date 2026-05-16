@@ -1,6 +1,6 @@
 export type PerformanceContext = "release" | "cover" | "karaoke" | "concert";
 export type PerformanceStatus = "archived" | "unofficially archived";
-export type SongOrigin = "Ina's original" | "Hololive's original" | "Artist's original";
+export type SongOrigin = "Ina's original" | "Hololive's original" | "3rd Party";
 export type CollabType = "solo" | "duo" | "group";
 
 export interface Performance {
