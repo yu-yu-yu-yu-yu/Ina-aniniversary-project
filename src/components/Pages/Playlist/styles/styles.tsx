@@ -11,13 +11,15 @@ export {
 } from "../../../../styles/globalStyles";
 
 export const playlistFilterColors: Record<string, string> = {
+  release: "#E91E8C",
   cover: "#9B59B6",
   "Ina's original": "#E91E8C",
+  "Hololive's original": "#8E44AD",
   "Artist's original": "#3498DB",
   karaoke: "#F39C12",
   concert: "#E74C3C",
   archived: "#95A5A6",
-  "unofficial archive": "#E67E22",
+  "unofficially archived": "#E67E22",
   duo: "#1ABC9C",
   group: "#27AE60",
 };
@@ -44,6 +46,101 @@ export const PlaylistDrawerContainer = styled.div`
   width: min(90vw, 360px);
   max-height: 85vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const NavButtonGroup = styled.div`
+  display: none;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+
+  @media only screen and (max-width: 700px) {
+    display: flex;
+  }
+`;
+
+export const SearchRow = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+export const SearchRowButtons = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
+`;
+
+export const SectionHeader = styled.h3`
+  font: normal normal 700 18px/24px Montserrat;
+  color: var(--dark-highlight);
+  letter-spacing: 0.5px;
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--dark-highlight);
+`;
+
+
+export const ModalButton = styled.button`
+  font: normal normal 700 13px/18px Montserrat;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid var(--light-highlight);
+  border-radius: 10px;
+  padding: 8px 16px;
+  min-width: 120px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const VersionSubtitle = styled.button<{ canToggle?: boolean }>`
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  text-align: center;
+  font: normal normal 500 9px/13px Montserrat;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: ${({ canToggle }) => (canToggle ? 0.85 : 0.45)};
+  cursor: ${({ canToggle }) => (canToggle ? "pointer" : "default")};
+  padding: 5px 0 2px;
+  margin-top: 4px;
+  display: block;
+  &:hover {
+    opacity: ${({ canToggle }) => (canToggle ? 1 : 0.45)};
+  }
+`;
+
+export const DropdownContent = styled.div`
+  z-index: 201;
+  background: var(--light-background);
+  border-radius: 12px;
+  padding: 16px;
+  width: 260px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--dark-highlight);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -163,6 +260,42 @@ export const SongTagRow = styled.div`
   gap: 6px;
   margin-top: auto;
   padding-top: 8px;
+`;
+
+export const PerformanceControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  flex-wrap: wrap;
+`;
+
+export const ControlButton = styled.button<{ active?: boolean }>`
+  font: normal normal 600 10px/13px Montserrat;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: 1px solid var(--dark-highlight);
+  border-radius: 5px;
+  padding: 2px 7px;
+  cursor: pointer;
+  background: ${({ active }) => (active ? "var(--dark-highlight)" : "transparent")};
+  color: ${({ active }) => (active ? "var(--text-color)" : "var(--dark-highlight)")};
+  &:hover {
+    opacity: 0.75;
+  }
+`;
+
+export const CyclerLabel = styled.span`
+  font: normal normal 600 10px/13px Montserrat;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--dark-highlight);
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const SongTag = styled.span<{ tagColor?: string }>`

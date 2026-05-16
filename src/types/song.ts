@@ -1,15 +1,33 @@
+export type PerformanceContext = "release" | "cover" | "karaoke" | "concert";
+export type PerformanceStatus = "archived" | "unofficially archived";
+export type SongOrigin = "Ina's original" | "Hololive's original" | "Artist's original";
+export type CollabType = "solo" | "duo" | "group";
+
+export interface Performance {
+  context: PerformanceContext;
+  link?: string;
+  status?: PerformanceStatus;
+  name?: string;
+  label?: string;
+}
+
 export interface SongData {
-  songName?: string;
-  songLink?: string;
-  songInfo?: string;
+  songName: string;
+  origin: SongOrigin;
+  collab: CollabType;
+  performances: Performance[];
   originalSongLink?: string;
+  songInfo?: string;
   coverInfo?: string;
-  type?: "Artist's original" | "Ina's original" | "cover" | "karaoke" | "concert";
-  archived?: "archived" | "unarchived" | "unofficial archive";
-  collab?: "duo" | "group";
 }
 
 export interface VideoEntry extends SongData {
   vodtitle?: string;
   video?: string;
 }
+
+export const deriveArchiveStatus = (song: SongData): "archived" | "unofficially archived" | "unarchived" => {
+  if (song.performances.some((p) => p.status === "archived")) return "archived";
+  if (song.performances.some((p) => p.status === "unofficially archived")) return "unofficially archived";
+  return "unarchived";
+};

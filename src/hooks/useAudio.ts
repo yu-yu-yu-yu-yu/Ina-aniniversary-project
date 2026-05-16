@@ -17,16 +17,26 @@ export const useAudio = ({ muted, volume = 0.1, autoPlay = false }: UseAudioOpti
   }, [muted, volume]);
 
   useEffect(() => {
-    if (autoPlay) {
-      const handleFirstInteraction = () => {
-        if (audioRef.current && !muted) {
-          audioRef.current.play();
-        }
-        window.removeEventListener("click", handleFirstInteraction);
-      };
-      window.addEventListener("click", handleFirstInteraction);
-      return () => window.removeEventListener("click", handleFirstInteraction);
+    if (!autoPlay) return;
+
+    let handler: (() => void) | null = null;
+    let cancelled = false;
+
+    if (audioRef.current && !muted) {
+      audioRef.current.play().catch(() => {
+        if (cancelled) return;
+        handler = () => {
+          if (audioRef.current && !muted) audioRef.current.play().catch(() => {});
+          if (handler) window.removeEventListener("click", handler);
+        };
+        window.addEventListener("click", handler);
+      });
     }
+
+    return () => {
+      cancelled = true;
+      if (handler) window.removeEventListener("click", handler);
+    };
   }, [autoPlay, muted]);
 
   return audioRef;
