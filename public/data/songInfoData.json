@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "songName": "A Thousand Miles",
     "songInfo": "Original: Vanessa Carlton",
@@ -27,6 +27,18 @@
       {
         "context": "concert",
         "name": "Drawn to Dawn"
+      }
+    ]
+  },
+  {
+    "songName": "Aishite Aishite Aishite",
+    "songInfo": "Original: Kikuo feat. Hatsune Miku (Vocaloid)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Color Rise Harmony"
       }
     ]
   },
@@ -281,8 +293,7 @@
       {
         "context": "concert",
         "link": "https://www.youtube.com/embed/HT_HUFi8DJ4?start=1497",
-        "status": "archived",
-        "name": "Takanashi Kiara"
+        "status": "archived"
       }
     ]
   },
@@ -488,7 +499,7 @@
         "context": "concert",
         "link": "https://www.youtube.com/embed/CDljbqawDkw?start=2477",
         "status": "archived",
-        "name": "Ninomae Ina'nis, Watson Amelia, Gawr Gura"
+        "name": "The Show Goes On!"
       }
     ]
   },
@@ -992,6 +1003,10 @@
         "context": "release",
         "link": "https://www.youtube.com/embed/t7lNu-p_ANs",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Ridin' on Dreams"
       }
     ]
   },
@@ -1119,6 +1134,10 @@
         "link": "https://www.youtube.com/embed/yT2ety9RfIo",
         "name": "Neverland Paradox",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Capture the Moment"
       }
     ]
   },
@@ -1446,6 +1465,19 @@
     ]
   },
   {
+    "songName": "Saigo no Hanabira (最後の花弁)",
+    "songInfo": "Original: EGOIST",
+    "origin": "3rd Party",
+    "collab": "group",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Our Bright Parade"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/qMx_Mrta-yQ"
+  },
+  {
     "songName": "Sakase ya Sakase (咲かせや咲かせ)",
     "songInfo": "Original: EGOIST",
     "origin": "3rd Party",
@@ -1507,8 +1539,7 @@
       {
         "context": "concert",
         "link": "https://www.youtube.com/embed/HT_HUFi8DJ4?start=1097",
-        "status": "archived",
-        "name": "Mori Calliope"
+        "status": "archived"
       }
     ]
   },
@@ -1724,6 +1755,10 @@
         "context": "concert",
         "name": "Anime Boston 2026",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Ridin' on Dreams"
       }
     ]
   },
@@ -1961,6 +1996,10 @@
         "context": "karaoke",
         "link": "https://www.youtube.com/embed/uLD10BI53QQ?start=2828",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Link Your Wish"
       }
     ]
   },
@@ -2027,6 +2066,19 @@
     "originalSongLink": "https://www.youtube.com/embed/AL70Yyt8jNI"
   },
   {
+    "songName": "アイディスマイル (ID Smile)",
+    "songInfo": "toa",
+    "origin": "3rd Party",
+    "collab": "group",
+    "coverInfo": "Ninomae Ina'nis, Gawr Gura, Ouro Kronii, Nanashi Mumei",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Color Rise Harmony"
+      }
+    ]
+  },
+  {
     "songName": "い〜やい〜やい〜や",
     "songInfo": "Original: Neru & z'5 feat. Kagamine Rin & Kagamine Len",
     "origin": "3rd Party",
@@ -2091,6 +2143,19 @@
     ]
   },
   {
+    "songName": "ジャックポットサッドガール (Jackpot Sad Girl)",
+    "songInfo": "Mafumafu",
+    "origin": "3rd Party",
+    "collab": "group",
+    "coverInfo": "Ayunda Risu, Ninomae Ina'nis, Pavolia Reine, Hakos Baelz",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Capture the Moment"
+      }
+    ]
+  },
+  {
     "songName": "スイートマジック",
     "songInfo": "Original: Junky feat. Kagamine Rin (Vocaloid)",
     "origin": "3rd Party",
@@ -2101,6 +2166,19 @@
         "context": "cover",
         "link": "https://www.youtube.com/embed/5EimdErvUh8",
         "status": "archived"
+      }
+    ]
+  },
+  {
+    "songName": "スキちゃん (Suki-chan)",
+    "songInfo": "MikitoP feat. Hatsune Miku",
+    "origin": "3rd Party",
+    "collab": "group",
+    "coverInfo": "Takanashi Kiara, Ninomae Ina'nis, Watson Amelia, Nanashi Mumei",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Our Bright Parade"
       }
     ]
   },
@@ -2287,6 +2365,19 @@
     "originalSongLink": "https://www.youtube.com/embed/8nQm9RN9J7w"
   },
   {
+    "songName": "ホロぐら (VR Dance)",
+    "songInfo": "Hololive",
+    "origin": "Hololive's original",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "cover",
+        "link": "https://www.youtube.com/embed/5KCpe82_jW4",
+        "status": "archived"
+      }
+    ]
+  },
+  {
     "songName": "モザイクロール (Mozaik Role)",
     "songInfo": "Original: DECO*27 feat. GUMI (Vocaloid)",
     "origin": "3rd Party",
@@ -2299,6 +2390,20 @@
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/DnLFVUi3oOU"
+  },
+  {
+    "songName": "りゅーーっときてきゅーーっ!!! (It Comes Ryuuu And It Goes Kyuuu!!!)",
+    "songInfo": "UMISEA — Camellia",
+    "origin": "Hololive's original",
+    "collab": "group",
+    "performances": [
+      {
+        "context": "release",
+        "link": "https://www.youtube.com/embed/VOFOmeHAmfk",
+        "status": "archived"
+      }
+    ],
+    "coverInfo": "Minato Aqua, Houshou Marine, Sakamata Chloe, Ninomae Ina'nis, Gawr Gura"
   },
   {
     "songName": "レイメイ",

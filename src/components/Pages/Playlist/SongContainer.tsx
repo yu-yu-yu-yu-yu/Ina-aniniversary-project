@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { SongData, Performance, deriveArchiveStatus } from "../../../types/song";
 import {
   BubbleHeader,
@@ -21,6 +21,11 @@ interface SongContainerProps {
   showOriginal?: boolean;
 }
 
+const toEmbed = (url: string): string => {
+  const match = url.match(/[?&]v=([^&]+)/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+};
+
 const perfLabel = (p: Performance): string => {
   if (p.label) return p.label;
   const contextLabel =
@@ -36,34 +41,35 @@ const perfTagColor = (p: Performance): string =>
 
 const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; globalShowOriginal?: boolean }): JSX.Element => {
   const linkedPerfs = song.performances.filter((p) => p.link);
-  const [localOverride, setLocalOverride] = useState<boolean | null>(null);
 
-  useEffect(() => { setLocalOverride(null); }, [globalShowOriginal]);
+  const slots = useMemo(() => [
+    ...linkedPerfs.map((p) => ({ link: p.link!, label: perfLabel(p), isOriginal: false })),
+    ...(song.originalSongLink
+      ? [{ link: toEmbed(song.originalSongLink), label: "Original ver.", isOriginal: true }]
+      : []),
+  ], [song]);
 
-  const hasInaVersion      = linkedPerfs.length > 0;
-  const hasOriginalVersion = !!song.originalSongLink;
-  const canToggle          = hasInaVersion && hasOriginalVersion;
+  const [slotIndex, setSlotIndex] = useState(0);
 
-  const showOriginal = localOverride ?? globalShowOriginal;
-  const effectiveShowOriginal = showOriginal || !hasInaVersion;
-  const currentPerf = linkedPerfs[0];
+  useEffect(() => {
+    if (globalShowOriginal) {
+      const idx = slots.findIndex((s) => s.isOriginal);
+      setSlotIndex(idx >= 0 ? idx : 0);
+    } else {
+      const idx = slots.findIndex((s) => !s.isOriginal);
+      setSlotIndex(idx >= 0 ? idx : 0);
+    }
+  }, [globalShowOriginal, slots]);
 
-  const toEmbed = (url: string): string => {
-    const match = url.match(/[?&]v=([^&]+)/);
-    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+  const currentSlot  = slots[slotIndex] ?? null;
+  const canCycle     = slots.length > 1;
+  const currentLink  = currentSlot?.link ?? null;
+  const versionLabel = currentSlot?.label ?? "";
+
+  const handleVersionClick = () => {
+    if (!canCycle) return;
+    setSlotIndex((prev) => (prev + 1) % slots.length);
   };
-
-  const inaLink  = currentPerf?.link;
-  const origLink = song.originalSongLink ? toEmbed(song.originalSongLink) : undefined;
-  const currentLink = effectiveShowOriginal
-    ? (origLink ?? inaLink)
-    : (inaLink ?? origLink);
-
-  const showVersionButton = hasInaVersion || hasOriginalVersion;
-
-  const versionLabel = canToggle
-    ? (effectiveShowOriginal ? "Original ver." : "Ina ver.")
-    : (hasOriginalVersion ? "Original ver." : "Ina ver.");
 
   const archiveStatus = deriveArchiveStatus(song);
   const displayPerfs = (() => {
@@ -104,12 +110,12 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
       <SongCardInfo>
         <BubbleHeader>
           <HeaderText>{song.songName}</HeaderText>
-          {showVersionButton && (
+          {slots.length > 0 && (
             <VersionSubtitle
-              canToggle={canToggle}
-              onClick={canToggle ? () => setLocalOverride(!effectiveShowOriginal) : undefined}
+              canToggle={canCycle}
+              onClick={canCycle ? handleVersionClick : undefined}
             >
-              {versionLabel}
+              {canCycle ? <><i className="fa fa-chevron-left" /> {versionLabel} <i className="fa fa-chevron-right" /></> : versionLabel}
             </VersionSubtitle>
           )}
         </BubbleHeader>

@@ -16,6 +16,7 @@ import {
   NavButtonGroup,
   ModalButton,
   DropdownContent,
+  FilterGroup,
   SearchRow,
   SearchRowButtons,
   SectionHeader,
@@ -26,7 +27,7 @@ import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
 
-const LIMIT = 20;
+const LIMIT = 10;
 
 type ArchiveFilterValue = "archived" | "unofficially archived" | "unarchived";
 type GroupBy = "origin" | "archive" | "collab" | "performance";
@@ -204,23 +205,23 @@ const FiltersPanel = ({
   sources,
 }: FiltersPanelProps) => (
   <>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+    <FilterGroup>
       <Switch label="Ina's Originals"      value={originFilter === "Ina's original"}      onChange={setOrigin("Ina's original")}      color={playlistFilterColors["Ina's original"]}      mobile />
       <Switch label="Hololive's Originals" value={originFilter === "Hololive's original"} onChange={setOrigin("Hololive's original")} color={playlistFilterColors["Hololive's original"]} mobile />
       <Switch label="3rd Partys"  value={originFilter === "3rd Party"}  onChange={setOrigin("3rd Party")}  color={playlistFilterColors["3rd Party"]}  mobile />
       <Switch label="Covers"             value={contextFilter === "cover"}            onChange={setContext("cover")}            color={playlistFilterColors["cover"]}              mobile />
       <Switch label="Karaoke"            value={contextFilter === "karaoke"}          onChange={setContext("karaoke")}          color={playlistFilterColors["karaoke"]}            mobile />
       <Switch label="Concert"            value={contextFilter === "concert"}          onChange={setContext("concert")}          color={playlistFilterColors["concert"]}            mobile />
-    </div>
+    </FilterGroup>
     <PlaylistDrawerSeparator>Archive</PlaylistDrawerSeparator>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+    <FilterGroup>
       <Switch label="Archived"   value={archiveFilter === "archived"}             onChange={setArchive("archived")}             color={playlistFilterColors["archived"]}              mobile />
       <Switch label="Unofficial" value={archiveFilter === "unofficially archived"} onChange={setArchive("unofficially archived")} color={playlistFilterColors["unofficially archived"]} mobile />
-    </div>
+    </FilterGroup>
     {sources.length > 0 && (
       <>
         <PlaylistDrawerSeparator>Source</PlaylistDrawerSeparator>
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <FilterGroup>
           {sources.map((src) => (
             <Switch
               key={src}
@@ -231,7 +232,7 @@ const FiltersPanel = ({
               mobile
             />
           ))}
-        </div>
+        </FilterGroup>
       </>
     )}
   </>
@@ -243,11 +244,32 @@ interface GroupPanelProps {
 }
 
 const GroupPanel = ({ groupBy, setGroupBy }: GroupPanelProps) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+  <FilterGroup>
     <Switch label="By Origin"      value={groupBy === "origin"}      onChange={setGroupBy("origin")}      color={playlistFilterColors["Ina's original"]}   mobile />
     <Switch label="By Archive"     value={groupBy === "archive"}     onChange={setGroupBy("archive")}     color={playlistFilterColors["archived"]}          mobile />
     <Switch label="By Collab"      value={groupBy === "collab"}      onChange={setGroupBy("collab")}      color={playlistFilterColors["duo"]}               mobile />
     <Switch label="By Performance" value={groupBy === "performance"} onChange={setGroupBy("performance")} color={playlistFilterColors["concert"]}           mobile />
+  </FilterGroup>
+);
+
+const HelpPanel = () => (
+  <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px", color: "var(--text-color)", maxWidth: "280px" }}>
+    <div>
+      <strong style={{ color: "var(--dark-highlight)" }}>Search</strong>
+      <p style={{ margin: "4px 0 0" }}>Type to filter by song name, artist, or performance source.</p>
+    </div>
+    <div>
+      <strong style={{ color: "var(--dark-highlight)" }}>Filters</strong>
+      <p style={{ margin: "4px 0 0" }}>Filter by origin (Ina&apos;s, Hololive&apos;s, 3rd Party), performance type (Cover, Karaoke, Concert), or archive status.</p>
+    </div>
+    <div>
+      <strong style={{ color: "var(--dark-highlight)" }}>Group</strong>
+      <p style={{ margin: "4px 0 0" }}>Group all songs by origin, archive status, collab type, or performance venue.</p>
+    </div>
+    <div>
+      <strong style={{ color: "var(--dark-highlight)" }}>Ina ver. / Orig. ver.</strong>
+      <p style={{ margin: "4px 0 0" }}>Globally switches all cards to show the original song version. Click the subtitle on any individual card to cycle through all available performances for that song.</p>
+    </div>
   </div>
 );
 
@@ -347,6 +369,12 @@ const PlaylistBoard = (): JSX.Element => {
     </DropdownPanel>
   );
 
+  const helpButton = (
+    <DropdownPanel label="Help" icon="fa-question-circle">
+      <HelpPanel />
+    </DropdownPanel>
+  );
+
   const versionToggle = (
     <ModalButton active={showOriginal} onClick={() => setShowOriginal((v) => !v)}>
       <i className="fa fa-exchange" />
@@ -355,7 +383,7 @@ const PlaylistBoard = (): JSX.Element => {
   );
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
@@ -370,6 +398,7 @@ const PlaylistBoard = (): JSX.Element => {
           {filterDropdown}
           {groupDropdown}
           {versionToggle}
+          {helpButton}
         </NavButtonGroup>
       </Navbar>
 
@@ -384,6 +413,7 @@ const PlaylistBoard = (): JSX.Element => {
               {filterDropdown}
               {groupDropdown}
               {versionToggle}
+              {helpButton}
             </SearchRowButtons>
             <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0, flex: "1 1 0", maxWidth: "50%", marginLeft: "auto" }} />
           </SearchRow>

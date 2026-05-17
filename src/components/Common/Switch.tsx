@@ -3,53 +3,50 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  margin-right: 57px;
   flex-direction: row;
-  :hover {
-    cursor: pointer;
-  }
+  align-items: center;
+  gap: 6px;
   padding: 0.1em;
+  cursor: pointer;
 `;
 
 const Bar = styled.div<{ active: boolean; color: string }>`
-  display: flex;
+  position: relative;
   border-radius: 100px;
   width: 38px;
   min-width: 38px;
   height: 24px;
-  background-color: ${({ active, color }) =>
-    active ? color : "var(--dark-highlight)"};
-  flex-direction: row;
-  transition: 0.2s linear;
+  flex-shrink: 0;
+  background-color: ${({ active, color }) => active ? color : "var(--dark-highlight)"};
+  transition: background-color 0.2s linear;
   &.mobile {
-    width: 20px;
-    min-width: 20px;
-    height: 12px;
-    align-self: center;
+    width: 28px;
+    min-width: 28px;
+    height: 16px;
   }
 `;
 
 const Circle = styled.div<{ active: boolean; color: string }>`
+  position: absolute;
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  background: white;
-  margin: auto 1px;
+  box-sizing: border-box;
   background: var(--text-color);
   border: 2px solid ${({ color }) => color};
-
-  transform: translateX(${({ active }) => (active ? "15px" : "0")});
-  transition: 0.2s linear;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%) translateX(${({ active }) => (active ? "14px" : "0px")});
+  transition: transform 0.2s linear;
   &.mobile {
-    width: 10px;
-    height: 10px;
-    margin: auto 1px;
-    transform: translateX(${({ active }) => (active ? "8px" : "0")});
+    width: 12px;
+    height: 12px;
+    left: 2px;
+    transform: translateY(-50%) translateX(${({ active }) => (active ? "12px" : "0px")});
   }
 `;
 
 const Label = styled.span`
-  margin: auto 0 auto 0.2em;
   color: var(--dark-highlight);
   text-align: left;
   font: normal normal 300 25px/26px Montserrat;
@@ -73,15 +70,13 @@ export const Switch = ({
   color?: string;
   mobile?: boolean;
 }): JSX.Element => {
-  const handleClick = () => {
-    onChange(!value);
-  };
+  const cls = mobile ? "mobile" : "";
   return (
-    <Container onClick={handleClick} className={mobile ? "mobile" : ""}>
-      <Bar active={value} color={color} className={mobile ? "mobile" : ""}>
-        <Circle active={value} color={color} className={mobile ? "mobile" : ""} />
+    <Container onClick={() => onChange(!value)}>
+      <Bar active={value} color={color} className={cls}>
+        <Circle active={value} color={color} className={cls} />
       </Bar>
-      <Label className={mobile ? "mobile" : ""}>{label}</Label>
+      <Label className={cls}>{label}</Label>
     </Container>
   );
 };

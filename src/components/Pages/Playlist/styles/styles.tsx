@@ -126,8 +126,13 @@ export const VersionSubtitle = styled.button<{ canToggle?: boolean }>`
   padding: 5px 0 2px;
   margin-top: 4px;
   display: block;
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
   &:hover {
     opacity: ${({ canToggle }) => (canToggle ? 1 : 0.45)};
+    ${({ canToggle }) => canToggle && `
+      background: var(--text-color);
+      color: var(--dark-highlight);
+    `}
   }
 `;
 
@@ -144,6 +149,24 @@ export const DropdownContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  @media only screen and (min-width: 701px) {
+    width: auto;
+    max-width: min(90vw, 680px);
+    max-height: unset;
+    overflow-y: visible;
+  }
+`;
+
+export const FilterGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media only screen and (min-width: 701px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 `;
 
 export const PlaylistDrawerToggle = styled.i`
