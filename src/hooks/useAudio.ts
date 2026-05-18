@@ -4,17 +4,31 @@ interface UseAudioOptions {
   muted: boolean;
   volume?: number;
   autoPlay?: boolean;
+  videoPaused?: boolean;
 }
 
-export const useAudio = ({ muted, volume = 0.1, autoPlay = false }: UseAudioOptions) => {
+export const useAudio = ({ muted, volume = 0.1, autoPlay = false, videoPaused = false }: UseAudioOptions) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.muted = muted;
       audioRef.current.volume = volume;
     }
-  }, [muted, volume]);
+  }, [volume]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (videoPaused) {
+      audio.pause();
+    } else if (!muted && !audio.paused) {
+      // already playing, nothing to do
+    } else if (!muted) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }, [muted, videoPaused]);
 
   useEffect(() => {
     if (!autoPlay) return;

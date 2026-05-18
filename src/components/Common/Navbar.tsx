@@ -72,6 +72,11 @@ export const HintButton = styled.button`
   gap: 6px;
   flex-shrink: 0;
   transition: opacity 0.2s;
+  @media only screen and (max-width: 700px) {
+    padding: 8px 10px;
+    gap: 0;
+    .btn-text { display: none; }
+  }
   &:hover {
     opacity: 0.8;
   }

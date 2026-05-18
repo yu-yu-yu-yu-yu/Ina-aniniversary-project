@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { SongData, Performance, deriveArchiveStatus } from "../../../types/song";
+import { useMute } from "../../Common/MuteButton";
 import {
   BubbleHeader,
   BubbleImage,
@@ -53,6 +54,7 @@ const perfTagColor = (p: Performance): string =>
   playlistFilterColors[p.name ? "concert" : p.context] ?? playlistFilterColors["concert"];
 
 const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; globalShowOriginal?: boolean }): JSX.Element => {
+  const { reportVideoPlaying } = useMute();
   const linkedPerfs = song.performances.filter((p) => p.link);
 
   const slots = useMemo(() => [
@@ -96,11 +98,20 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
     });
   })();
 
+  const withJsApi = (url: string): string =>
+    url.includes("?") ? `${url}&enablejsapi=1` : `${url}?enablejsapi=1`;
+
   const renderMedia = (link: string) => {
     if (!link.includes("youtube")) {
       if (link.includes("mp4")) {
         return (
-          <video style={{ width: "100%", height: "100%", objectFit: "cover" }} controls>
+          <video
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            controls
+            onPlay={() => reportVideoPlaying(true)}
+            onPause={() => reportVideoPlaying(false)}
+            onEnded={() => reportVideoPlaying(false)}
+          >
             <source src={process.env.PUBLIC_URL + "/songLinks/" + link} type="video/mp4" />
           </video>
         );
@@ -109,7 +120,7 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
     }
     return (
       <IFrame
-        src={link}
+        src={withJsApi(link)}
         title={song.songName}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={true}

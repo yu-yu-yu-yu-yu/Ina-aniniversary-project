@@ -15,20 +15,20 @@
   },
   {
     "songName": "Abyssal Hymn",
-    "songInfo": "Original song by Ninomae Ina\u0027nis (from re:VISION EP)",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis (from re:VISION EP)",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/J3XlXbuHc84",
         "status": "archived"
       },
       {
         "context": "concert",
         "name": "Drawn to Dawn"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/J3XlXbuHc84"
   },
   {
     "songName": "愛して愛して愛して (Aishite Aishite Aishite)",
@@ -46,15 +46,15 @@
   {
     "songName": "All for One",
     "songInfo": "Original song by hololive English",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/ok24HgzbeLs",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/ok24HgzbeLs"
   },
   {
     "songName": "ANIMA",
@@ -84,7 +84,6 @@
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -93,7 +92,7 @@
     "songName": "Bad ∞ End ∞ Night",
     "songInfo": "Original: Hitoshizuku-P × Yama△ (Vocaloid)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by hololive English \u0026 Indonesia",
+    "coverInfo": "Covered by hololive English & Indonesia",
     "originalSongLink": "https://www.youtube.com/embed/WDUA7z3703g",
     "collab": "group",
     "performances": [
@@ -149,7 +148,7 @@
   {
     "songName": "BIBBIDIBA",
     "songInfo": "Original: Hoshimachi Suisei",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "solo",
     "performances": [
       {
@@ -189,7 +188,7 @@
     "songName": "Bling-Bang-Bang-Born",
     "songInfo": "Original: Creepy Nuts (Mashle: Magic and Muscles OP2)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis \u0026 Hakos Baelz",
+    "coverInfo": "Covered by Ninomae Ina'nis & Hakos Baelz",
     "originalSongLink": "https://www.youtube.com/embed/5NzfqW_Yt6Y",
     "collab": "duo",
     "performances": [
@@ -236,17 +235,15 @@
   {
     "songName": "Breaking Dimensions",
     "songInfo": "Original song by hololive English",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
-         {
+      {
         "context": "concert",
-        
         "name": "Breaking Dimensions"
       },
       {
         "context": "concert",
-
         "name": "Drawn to Dawn"
       }
     ],
@@ -283,7 +280,7 @@
   },
   {
     "songName": "caramel ribbon cursetard",
-    "songInfo": "Original: Kana Hanazawa \u0026 Saori Hayami",
+    "songInfo": "Original: Kana Hanazawa & Saori Hayami",
     "origin": "3rd Party",
     "originalSongLink": "https://www.youtube.com/embed/KrKmSwSuKlE",
     "collab": "duo",
@@ -326,7 +323,7 @@
   {
     "songName": "Connect the World",
     "songInfo": "Original song by hololive English",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
@@ -401,24 +398,23 @@
     "originalSongLink": "https://www.youtube.com/embed/2Od7QCsyqkE"
   },
   {
-    "songName": "Dead Ma\u0027am\u0027s Chest",
-    "songInfo": "Original: Houshou Marine (prod. Camellia \u0026 Toby Fox)",
-    "origin": "Hololive\u0027s original",
+    "songName": "Dead Ma'am's Chest",
+    "songInfo": "Original: Houshou Marine (prod. Camellia & Toby Fox)",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/QfGuQELt1Tk",
     "collab": "solo",
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
   },
   {
     "songName": "Deep in Abyss",
-    "songInfo": "Original: Miyu Tomita \u0026 Mariya Ise (Made in Abyss OP)",
+    "songInfo": "Original: Miyu Tomita & Mariya Ise (Made in Abyss OP)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis \u0026 Nanashi Mumei",
+    "coverInfo": "Covered by Ninomae Ina'nis & Nanashi Mumei",
     "collab": "duo",
     "performances": [
       {
@@ -447,22 +443,22 @@
   {
     "songName": "Domination! All the World Is an Ocean",
     "songInfo": "Original song — JP-EN Ocean Unit",
-    "origin": "Hololive\u0027s original",
-    "coverInfo": "Shirakami Fubuki, Houshou Marine, Ninomae Ina\u0027nis, Gawr Gura",
+    "origin": "Hololive's original",
+    "coverInfo": "Shirakami Fubuki, Houshou Marine, Ninomae Ina'nis, Gawr Gura",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/MKEb-Ox1KEw",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/MKEb-Ox1KEw"
   },
   {
     "songName": "Drenched in Air",
     "songInfo": "Original: Camellia (From Ashed Wings / 灰の羽搏)",
     "origin": "3rd Party",
-    "coverInfo": "Camellia feat. Ninomae Ina\u0027nis",
+    "coverInfo": "Camellia feat. Ninomae Ina'nis",
     "collab": "duo",
     "performances": [
       {
@@ -470,7 +466,8 @@
         "link": "https://www.youtube.com/embed/9w4X67atXEo",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/5k6IQQdgfnE"
   },
   {
     "songName": "dummy dummy",
@@ -484,12 +481,13 @@
         "name": "Neverland Paradox",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/t9CyWGjdTDk"
   },
   {
     "songName": "End of a Life",
     "songInfo": "Original: Mori Calliope",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/BXB26PzV31k",
     "collab": "group",
     "performances": [
@@ -518,8 +516,8 @@
   {
     "songName": "FACT",
     "songInfo": "Original: Tokoyami Towa",
-    "origin": "Hololive\u0027s original",
-    "coverInfo": "Tokoyami Towa, Shiori Novella, Ouro Kronii, Ninomae Ina\u0027nis",
+    "origin": "Hololive's original",
+    "coverInfo": "Tokoyami Towa, Shiori Novella, Ouro Kronii, Ninomae Ina'nis",
     "collab": "group",
     "performances": [
       {
@@ -533,7 +531,7 @@
   {
     "songName": "Fortune Spinner",
     "songInfo": "Original: hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/TCRg30fGsXU",
     "collab": "group",
     "performances": [
@@ -554,7 +552,7 @@
   {
     "songName": "Future Island",
     "songInfo": "Original: Mori Calliope",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/eWNn24KHPRQ",
     "collab": "solo",
     "performances": [
@@ -568,9 +566,9 @@
   },
   {
     "songName": "GETCHA!",
-    "songInfo": "Original: Giga \u0026 KIRA ft. Hatsune Miku \u0026 GUMI (Vocaloid)",
+    "songInfo": "Original: Giga & KIRA ft. Hatsune Miku & GUMI (Vocaloid)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis \u0026 Takanashi Kiara",
+    "coverInfo": "Covered by Ninomae Ina'nis & Takanashi Kiara",
     "originalSongLink": "https://www.youtube.com/embed/KRVFPPYcJUc",
     "collab": "duo",
     "performances": [
@@ -581,7 +579,6 @@
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -589,7 +586,7 @@
   {
     "songName": "GHOST",
     "songInfo": "Original: Hoshimachi Suisei",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "solo",
     "performances": [
       {
@@ -667,7 +664,7 @@
   },
   {
     "songName": "Hana no Uta",
-    "songInfo": "Original: Aimer (Fate/stay night [Heaven\u0027s Feel] I theme)",
+    "songInfo": "Original: Aimer (Fate/stay night [Heaven's Feel] I theme)",
     "origin": "3rd Party",
     "originalSongLink": "https://www.youtube.com/embed/JR8F-Eov418",
     "collab": "solo",
@@ -766,20 +763,6 @@
     ]
   },
   {
-    "songName": "hololive English Medley!",
-    "songInfo": "Original: hololive English",
-    "origin": "Hololive\u0027s original",
-    "collab": "group",
-    "performances": [
-      {
-        "context": "concert",
-        "link": "https://www.youtube.com/embed/HT_HUFi8DJ4?start=211",
-        "status": "archived",
-        "name": "hololive English -Myth-"
-      }
-    ]
-  },
-  {
     "songName": "Hyakka Ryouran (百花繚乱)",
     "songInfo": "Original: Lilas Ikuta (The Apothecary Diaries S2 OP)",
     "origin": "3rd Party",
@@ -800,7 +783,7 @@
   },
   {
     "songName": "I Beg You",
-    "songInfo": "Original: Aimer (Fate/stay night: Heaven\u0027s Feel III)",
+    "songInfo": "Original: Aimer (Fate/stay night: Heaven's Feel III)",
     "origin": "3rd Party",
     "collab": "solo",
     "performances": [
@@ -823,7 +806,7 @@
     "originalSongLink": "https://www.youtube.com/embed/pCC6qbAnX00"
   },
   {
-    "songName": "I\u0027m Yours",
+    "songName": "I'm Yours",
     "songInfo": "Original: Jason Mraz",
     "origin": "3rd Party",
     "collab": "solo",
@@ -877,7 +860,7 @@
   {
     "songName": "Journey Like a Thousand Years",
     "songInfo": "Original song by hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
@@ -960,7 +943,7 @@
     "songName": "Kirameki Rider - English ver.",
     "songInfo": "Original: hololive Japan (キラメキライダー☆)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by hololive English -Myth- \u0026 -Promise-",
+    "coverInfo": "Covered by hololive English -Myth- & -Promise-",
     "originalSongLink": "https://www.youtube.com/embed/vE4L1IWLeag",
     "collab": "group",
     "performances": [
@@ -971,7 +954,6 @@
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -992,26 +974,26 @@
   },
   {
     "songName": "Kurukuru Cruise",
-    "songInfo": "Original song by Ninomae Ina\u0027nis \u0026 Nekomata Okayu",
-    "origin": "Hololive\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis & Nekomata Okayu",
+    "origin": "Hololive's original",
     "collab": "duo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/t7lNu-p_ANs",
         "status": "archived"
       },
       {
         "context": "concert",
-        "name": "Ridin\u0027 on Dreams"
+        "name": "Ridin' on Dreams"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/t7lNu-p_ANs"
   },
   {
     "songName": "Legends Never Die",
     "songInfo": "Original: Against the Current (League of Legends Worlds 2017)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis",
+    "coverInfo": "Covered by Ninomae Ina'nis",
     "originalSongLink": "https://www.youtube.com/embed/r6zIGXun57U",
     "collab": "solo",
     "performances": [
@@ -1028,7 +1010,7 @@
     "origin": "3rd Party",
     "originalSongLink": "https://www.youtube.com/embed/SX7-Vj3hha4",
     "collab": "group",
-    "coverInfo": "Ninomae Ina\u0027nis, Nanashi Mumei \u0026 IRyS",
+    "coverInfo": "Ninomae Ina'nis, Nanashi Mumei & IRyS",
     "performances": [
       {
         "context": "karaoke",
@@ -1055,10 +1037,10 @@
   },
   {
     "songName": "magnet",
-    "songInfo": "Original: minato feat. Hatsune Miku \u0026 Megurine Luka (Vocaloid)",
+    "songInfo": "Original: minato feat. Hatsune Miku & Megurine Luka (Vocaloid)",
     "origin": "3rd Party",
     "collab": "duo",
-    "coverInfo": "Ninomae Ina\u0027nis \u0026 Takanashi Kiara",
+    "coverInfo": "Ninomae Ina'nis & Takanashi Kiara",
     "performances": [
       {
         "context": "concert",
@@ -1112,18 +1094,16 @@
   },
   {
     "songName": "MECONOPSIS",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/XzkNg89Cq9Y",
         "status": "archived"
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       },
       {
@@ -1136,7 +1116,8 @@
         "context": "concert",
         "name": "Capture the Moment"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/XzkNg89Cq9Y"
   },
   {
     "songName": "Melancholic",
@@ -1203,13 +1184,12 @@
   {
     "songName": "MONSTER",
     "songInfo": "Original song — ENigmatic Recollection Chapter 2 Theme",
-    "origin": "Hololive\u0027s original",
-    "coverInfo": "Ouro Kronii, Shiori Novella, Gigi Murin, Ninomae Ina\u0027nis",
+    "origin": "Hololive's original",
+    "coverInfo": "Ouro Kronii, Shiori Novella, Gigi Murin, Ninomae Ina'nis",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/nUrITFpI85A",
         "status": "archived"
       },
       {
@@ -1217,33 +1197,34 @@
         "name": "ALL FOR ONE",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/nUrITFpI85A"
   },
   {
     "songName": "Myth or Treat",
     "songInfo": "Original song by hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/VupT9JCJaOY",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/VupT9JCJaOY"
   },
   {
     "songName": "Non-Fiction",
     "songInfo": "Original song by hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/zbgWUK_tidI",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/zbgWUK_tidI"
   },
   {
     "songName": "Ochame Kinou",
@@ -1266,7 +1247,7 @@
     ]
   },
   {
-    "songName": "ODDS \u0026 ENDS",
+    "songName": "ODDS & ENDS",
     "songInfo": "Original: ryo (supercell)",
     "origin": "3rd Party",
     "originalSongLink": "https://www.youtube.com/embed/28Iz4yYCIqM",
@@ -1283,15 +1264,15 @@
   {
     "songName": "Odyssey",
     "songInfo": "Original song by hololive English",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/0wO8d70KSXw",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/0wO8d70KSXw"
   },
   {
     "songName": "One Last Kiss",
@@ -1302,7 +1283,6 @@
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1331,12 +1311,11 @@
   {
     "songName": "Our Bright Parade",
     "songInfo": "Original song by hololive Idol Project",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ],
@@ -1345,13 +1324,12 @@
   {
     "songName": "Palette",
     "songInfo": "Original: Tokoyami Towa",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/Ud73fm4Uoq0",
     "collab": "solo",
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1417,7 +1395,7 @@
   {
     "songName": "ReUnion",
     "songInfo": "Original song by hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
@@ -1535,10 +1513,10 @@
   {
     "songName": "Sepia",
     "songInfo": "Original: Mori Calliope",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/ozH28qYrMy4",
     "collab": "duo",
-    "coverInfo": "Ninomae Ina\u0027nis, Mori Calliope",
+    "coverInfo": "Ninomae Ina'nis, Mori Calliope",
     "performances": [
       {
         "context": "concert",
@@ -1579,8 +1557,8 @@
   {
     "songName": "Shallys",
     "songInfo": "Original: Aki Rosenthal (Aria the Natural ED)",
-    "origin": "Hololive\u0027s original",
-    "coverInfo": "Aki Rosenthal, Ninomae Ina\u0027nis",
+    "origin": "Hololive's original",
+    "coverInfo": "Aki Rosenthal, Ninomae Ina'nis",
     "collab": "duo",
     "performances": [
       {
@@ -1624,13 +1602,12 @@
   {
     "songName": "Stellar Stellar",
     "songInfo": "Original: Hoshimachi Suisei",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/a51VH9BYzZA",
     "collab": "solo",
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1639,7 +1616,7 @@
     "songName": "storia",
     "songInfo": "Original: Kalafina",
     "origin": "3rd Party",
-    "coverInfo": "Tsunomaki Watame, Shishiro Botan, Ninomae Ina\u0027nis",
+    "coverInfo": "Tsunomaki Watame, Shishiro Botan, Ninomae Ina'nis",
     "collab": "group",
     "performances": [
       {
@@ -1747,7 +1724,7 @@
     "songName": "Take Me Out to the Ball Game",
     "songInfo": "Traditional baseball song",
     "origin": "3rd Party",
-    "coverInfo": "Ninomae Ina\u0027nis, IRyS \u0026 Koseki Bijou",
+    "coverInfo": "Ninomae Ina'nis, IRyS & Koseki Bijou",
     "collab": "group",
     "performances": [
       {
@@ -1758,18 +1735,16 @@
   },
   {
     "songName": "TAKO∞TAKOVER",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/6sAQ1wuYzxk",
         "status": "archived"
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       },
       {
@@ -1779,24 +1754,23 @@
       },
       {
         "context": "concert",
-        "name": "Ridin\u0027 on Dreams"
+        "name": "Ridin' on Dreams"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/6sAQ1wuYzxk"
   },
   {
     "songName": "Takodachi no Uta",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/g4b28_6lwKY",
         "status": "archived"
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       },
       {
@@ -1804,17 +1778,17 @@
         "name": "Anime Boston 2026",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/g4b28_6lwKY"
   },
   {
     "songName": "TEMARI",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/LtTO1HMGjqA",
         "status": "archived"
       },
       {
@@ -1830,15 +1804,15 @@
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/LtTO1HMGjqA"
   },
   {
     "songName": "The Show Goes On!",
     "songInfo": "Original song by hololive English -Myth-",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
@@ -1995,18 +1969,16 @@
   },
   {
     "songName": "VIOLET",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/8ZdLXELdF9Q",
         "status": "archived"
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       },
       {
@@ -2022,25 +1994,25 @@
         "context": "concert",
         "name": "Link Your Wish"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/8ZdLXELdF9Q"
   },
   {
     "songName": "VIOLET (Acoustic ver.)",
-    "songInfo": "Original song by Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
     "collab": "solo",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/Nu-t2HVUqDA",
         "status": "archived"
       },
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/Nu-t2HVUqDA"
   },
   {
     "songName": "Wonderland",
@@ -2060,7 +2032,7 @@
   {
     "songName": "Yggdrasil (ユグドラシル)",
     "songInfo": "Original: Shiranui Flare",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "originalSongLink": "https://www.youtube.com/embed/IChdFtgb47o",
     "collab": "duo",
     "performances": [
@@ -2091,7 +2063,7 @@
     "songInfo": "toa",
     "origin": "3rd Party",
     "collab": "group",
-    "coverInfo": "Ninomae Ina\u0027nis, Gawr Gura, Ouro Kronii, Nanashi Mumei",
+    "coverInfo": "Ninomae Ina'nis, Gawr Gura, Ouro Kronii, Nanashi Mumei",
     "performances": [
       {
         "context": "concert",
@@ -2102,9 +2074,9 @@
   },
   {
     "songName": "い〜やい〜やい〜や",
-    "songInfo": "Original: Neru \u0026 z\u00275 feat. Kagamine Rin \u0026 Kagamine Len",
+    "songInfo": "Original: Neru & z'5 feat. Kagamine Rin & Kagamine Len",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis \u0026 Takanashi Kiara",
+    "coverInfo": "Covered by Ninomae Ina'nis & Takanashi Kiara",
     "originalSongLink": "https://www.youtube.com/embed/y8-6QPEes1k",
     "collab": "duo",
     "performances": [
@@ -2129,7 +2101,7 @@
     "songName": "おどれ！VRダンス！",
     "songInfo": "Original: KurageP feat. Otomachi Una",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis",
+    "coverInfo": "Covered by Ninomae Ina'nis",
     "originalSongLink": "https://www.youtube.com/embed/9cOltK14h54",
     "collab": "solo",
     "performances": [
@@ -2174,19 +2146,20 @@
     "songInfo": "Mafumafu",
     "origin": "3rd Party",
     "collab": "group",
-    "coverInfo": "Ayunda Risu, Ninomae Ina\u0027nis, Pavolia Reine, Hakos Baelz",
+    "coverInfo": "Ayunda Risu, Ninomae Ina'nis, Pavolia Reine, Hakos Baelz",
     "performances": [
       {
         "context": "concert",
         "name": "Capture the Moment"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/YL9MfyEDy9M"
   },
   {
     "songName": "スイートマジック",
     "songInfo": "Original: Junky feat. Kagamine Rin (Vocaloid)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis",
+    "coverInfo": "Covered by Ninomae Ina'nis",
     "collab": "solo",
     "performances": [
       {
@@ -2194,20 +2167,22 @@
         "link": "https://www.youtube.com/embed/5EimdErvUh8",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/YLiiyIKW-l0"
   },
   {
     "songName": "スキちゃん (Suki-chan)",
     "songInfo": "MikitoP feat. Hatsune Miku",
     "origin": "3rd Party",
     "collab": "group",
-    "coverInfo": "Takanashi Kiara, Ninomae Ina\u0027nis, Watson Amelia, Nanashi Mumei",
+    "coverInfo": "Takanashi Kiara, Ninomae Ina'nis, Watson Amelia, Nanashi Mumei",
     "performances": [
       {
         "context": "concert",
         "name": "Our Bright Parade"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/tNsRdxnID5E"
   },
   {
     "songName": "ただ君に晴れ (Tada Kimi ni Hare)",
@@ -2269,7 +2244,7 @@
     "songName": "ないない",
     "songInfo": "Original: ReoNa (Shadows House ED)",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis",
+    "coverInfo": "Covered by Ninomae Ina'nis",
     "originalSongLink": "https://www.youtube.com/embed/M8LwhRkNaSQ",
     "collab": "solo",
     "performances": [
@@ -2284,7 +2259,7 @@
     "songName": "ねこかぶりーな (Neko Kaburi-Na)",
     "songInfo": "Original: Nekomata Okayu",
     "origin": "3rd Party",
-    "coverInfo": "Nekomata Okayu, Shiori Novella, Raora Panthera, Oozora Subaru, Ninomae Ina\u0027nis",
+    "coverInfo": "Nekomata Okayu, Shiori Novella, Raora Panthera, Oozora Subaru, Ninomae Ina'nis",
     "collab": "group",
     "performances": [
       {
@@ -2336,9 +2311,9 @@
   },
   {
     "songName": "フタリボシ",
-    "songInfo": "Original: 40mP feat. Hatsune Miku \u0026 GUMI",
+    "songInfo": "Original: 40mP feat. Hatsune Miku & GUMI",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis \u0026 Tsukumo Sana",
+    "coverInfo": "Covered by Ninomae Ina'nis & Tsukumo Sana",
     "originalSongLink": "https://www.youtube.com/embed/f5r5vB_oawU",
     "collab": "duo",
     "performances": [
@@ -2422,22 +2397,22 @@
   {
     "songName": "りゅーーっときてきゅーーっ!!! (It Comes Ryuuu And It Goes Kyuuu!!!)",
     "songInfo": "UMISEA — Camellia",
-    "origin": "Hololive\u0027s original",
+    "origin": "Hololive's original",
     "collab": "group",
     "performances": [
       {
         "context": "release",
-        "link": "https://www.youtube.com/embed/VOFOmeHAmfk",
         "status": "archived"
       }
     ],
-    "coverInfo": "Minato Aqua, Houshou Marine, Sakamata Chloe, Ninomae Ina\u0027nis, Gawr Gura"
+    "coverInfo": "Minato Aqua, Houshou Marine, Sakamata Chloe, Ninomae Ina'nis, Gawr Gura",
+    "originalSongLink": "https://www.youtube.com/embed/VOFOmeHAmfk"
   },
   {
     "songName": "レイメイ",
     "songInfo": "Original: さユり × MY FIRST STORY (Golden Kamuy S2 OP)",
     "origin": "3rd Party",
-    "coverInfo": "Concert by Ninomae Ina\u0027nis",
+    "coverInfo": "Concert by Ninomae Ina'nis",
     "originalSongLink": "https://www.youtube.com/embed/msLkh1fE8Os",
     "collab": "solo",
     "performances": [
@@ -2582,7 +2557,7 @@
     "songName": "旅の途中",
     "songInfo": "Original: Yui Aragaki",
     "origin": "3rd Party",
-    "coverInfo": "Covered by Ninomae Ina\u0027nis (self-made MV)",
+    "coverInfo": "Covered by Ninomae Ina'nis (self-made MV)",
     "collab": "solo",
     "performances": [
       {
@@ -2590,7 +2565,8 @@
         "link": "https://www.youtube.com/embed/NIv_yYKl9tQ",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/9ydC2pUQpNQ"
   },
   {
     "songName": "月と花束 (Tsuki to Hanatabe)",
@@ -2615,7 +2591,6 @@
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -2671,7 +2646,6 @@
     "performances": [
       {
         "context": "concert",
-        
         "name": "Drawn to Dawn"
       }
     ]
@@ -2763,10 +2737,10 @@
   },
   {
     "songName": "青空のラプソディ (Aozora no Rhapsody)",
-    "songInfo": "Original: fhána (Miss Kobayashi\u0027s Dragon Maid OP)",
+    "songInfo": "Original: fhána (Miss Kobayashi's Dragon Maid OP)",
     "origin": "3rd Party",
     "collab": "duo",
-    "coverInfo": "Ninomae Ina\u0027nis \u0026 Takanashi Kiara",
+    "coverInfo": "Ninomae Ina'nis & Takanashi Kiara",
     "performances": [
       {
         "context": "concert",
@@ -2787,12 +2761,13 @@
         "status": "archived",
         "name": "Hakos Baelz DREAMCATCHER Birthday 2024"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/mj3S8FL7whI"
   },
   {
     "songName": "ブライダルドリーム (Bridal Dream)",
-    "songInfo": "Original: 兎田ぺこら \u0026 宝鐘マリン",
-    "origin": "Hololive\u0027s original",
+    "songInfo": "Original: 兎田ぺこら & 宝鐘マリン",
+    "origin": "Hololive's original",
     "collab": "duo",
     "performances": [
       {
@@ -2801,7 +2776,8 @@
         "status": "archived",
         "name": "不知火フレア Birthday 3D 2025"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/UA5JjEePTwU"
   },
   {
     "songName": "だいしきゅーだいしゅき (Daishikyuu Daishuki)",
@@ -2815,7 +2791,8 @@
         "status": "archived",
         "name": "不知火フレア Birthday 3D 2025"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/Uywq8FzxWiU"
   },
   {
     "songName": "イノセント・ブルー ～ version de l'apprivoiser",

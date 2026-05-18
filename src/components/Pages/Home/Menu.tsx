@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { NewTag, ButtonContainer, ButtonsDiv, CookieA, CookieButton, CookieImg, CookieLabel, CookieLink, MenuContainer, MenuFlexRow, TakoPeek } from "./styles/menuStyles";
+import {
+  NewTag,
+  ButtonContainer,
+  ButtonsDiv,
+  CookieA,
+  CookieButton,
+  CookieImg,
+  CookieLabel,
+  CookieLink,
+  MenuContainer,
+  MenuFlexRow,
+  TakoPeek,
+} from "./styles/menuStyles";
 import { TextBoxContainer } from "../../../styles/globalStyles";
 import { TAKO_FILES } from "../../../constants/takos";
 
@@ -15,7 +27,12 @@ const buttons = [
   { to: "/wah", label: "WAH (2024)" },
 ];
 
-const newButtons = ["Letters for Ina", "The Ultimate Ina Playlist", "Ina's Timeline", "Messages and Artworks"];
+const newButtons = [
+  "Letters for Ina",
+  "The Ultimate Ina Playlist",
+  "Ina's Timeline",
+  "Messages and Artworks",
+];
 
 const Menu = (): JSX.Element => {
   const [peekIndex, setPeekIndex] = useState<number | null>(null);
@@ -28,7 +45,9 @@ const Menu = (): JSX.Element => {
     setPeekTako("");
     setTimeout(() => {
       const file = TAKO_FILES[Math.floor(Math.random() * TAKO_FILES.length)];
-      setPeekTako(`${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`);
+      setPeekTako(
+        `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`,
+      );
     }, 120);
   };
 
@@ -38,27 +57,33 @@ const Menu = (): JSX.Element => {
         <TextBoxContainer>
           <div className="Menu-text">
             <p>
-              This site was developed by the <b>Tentacult</b> to celebrate <b>Ina&apos;s milestones</b>!
+              This site was developed by the <b>Tentacult</b> to celebrate{" "}
+              <b>Ina&apos;s milestones</b>!
             </p>
             <p>
-              This time we celebrate <b>her 6th birthday with us since debut</b>!
+              This time we celebrate your <b>birthday</b>!
             </p>
             <p>
-              We&apos;ve collected <b>congratulatory messages</b> and <b>artworks</b> from Takodachis around the world.
+              We&apos;ve collected <b>artworks and fan letters</b> from
+              Takodachis around the world. Takos picked up pen and paper to pour
+              their hearts out and send their love directly to you, and we are
+              also keeping their letters here on the site for you to come back
+              to whenever you want. We also put together the{" "}
+              <b>ultimate Ninomae Ina&apos;nis playlist</b> with every single
+              song you have ever sung over the years. The <b>outfit timeline</b>{" "}
+              has been updated too, with even more of your huge wardrobe on
+              display across the years!
             </p>
             <p>
-              We also updated the <b>timeline</b> with her cute outfits across the years, all her streams and milestones.
-              Takodachis also shared their memories of their favorite streams!
-              And now we are introducing the <b>TakoDex</b> with entries from the community, explaining the many Takodachi variants there are.
+              We are so proud and extremely happy for how much you have achieved
+              and how much love you continue to share with all of us.
             </p>
             <p>
-              We are so proud and extremely happy for how much she has achieved in these six years.
+              <b>From the bottom of our hearts, thank you so much!</b>
+              <br />
+              <b>With all our love, Happy Birthday, Ina! 💜🐙</b>
             </p>
-            <p>
-              <b>From the bottom of our hearts, thank you so much!</b><br />
-              <b>With all our love, Happy 6th Anniversary, Ina! 💜🐙</b>
-            </p>
-            <sub>And Happy Birthday Takos!</sub>
+            <sub>And Happy Anniversary, Takos!</sub>
           </div>
         </TextBoxContainer>
         <ButtonsDiv>
@@ -72,22 +97,17 @@ const Menu = (): JSX.Element => {
               onMouseLeave={() => setPeekIndex(null)}
               style={{ position: "relative" }}
             >
-              {newButtons.includes(btn.label) && (
-                <NewTag>New</NewTag>
-              )}
+              {newButtons.includes(btn.label) && <NewTag>New</NewTag>}
               <TakoPeek
                 className="tako-peek"
                 src={peekTako}
                 alt="peeking tako"
                 active={peekIndex === i && !!peekTako}
-                style={{ visibility: peekTako ? 'visible' : 'hidden' }}
+                style={{ visibility: peekTako ? "visible" : "hidden" }}
               />
               {"to" in btn ? (
                 <CookieLink to={btn.to} role="button">
-                  <CookieButton
-                    title={btn.label}
-                    $shaking={shakingIndex === i}
-                  >
+                  <CookieButton title={btn.label} $shaking={shakingIndex === i}>
                     <CookieImg
                       src={process.env.PUBLIC_URL + "/cookie.png"}
                       alt="cookie"
@@ -100,12 +120,13 @@ const Menu = (): JSX.Element => {
                   href={btn.href}
                   role="button"
                   target={btn.label === "Takollages" ? "_blank" : undefined}
-                  rel={btn.label === "Takollages" ? "noopener noreferrer" : undefined}
+                  rel={
+                    btn.label === "Takollages"
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                 >
-                  <CookieButton
-                    title={btn.label}
-                    $shaking={shakingIndex === i}
-                  >
+                  <CookieButton title={btn.label} $shaking={shakingIndex === i}>
                     <CookieImg
                       src={process.env.PUBLIC_URL + "/cookie.png"}
                       alt="cookie"

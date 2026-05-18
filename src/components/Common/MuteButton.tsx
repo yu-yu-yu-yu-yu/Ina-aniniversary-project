@@ -22,7 +22,9 @@ export const MuteButton = styled.button`
 const MuteContext = createContext<{
   muted: boolean;
   toggleMute: () => void;
-}>({ muted: false, toggleMute: () => {} });
+  videoPlaying: boolean;
+  reportVideoPlaying: (playing: boolean) => void;
+}>({ muted: false, toggleMute: () => {}, videoPlaying: false, reportVideoPlaying: () => {} });
 
 export const useMute = () => useContext(MuteContext);
 
@@ -47,7 +49,7 @@ export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <MuteContext.Provider value={{ muted, toggleMute }}>
+    <MuteContext.Provider value={{ muted, toggleMute, videoPlaying: ytPlaying, reportVideoPlaying: setYtPlaying }}>
       {children}
       <MuteButton onClick={toggleMute} title={muted ? "Unmute BGM" : "Mute BGM"}>
         {muted ? "🔇" : "🔊"}

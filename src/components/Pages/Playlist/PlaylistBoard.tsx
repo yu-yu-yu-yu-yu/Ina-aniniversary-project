@@ -288,8 +288,8 @@ const HelpPanel = () => (
 );
 
 const PlaylistBoard = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
+  const { muted, videoPlaying } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true, videoPaused: videoPlaying });
   const { data: rawData, loading, error } = useFetch<SongData[]>(
     `${process.env.PUBLIC_URL}/data/songInfoData.json`,
   );
@@ -461,7 +461,7 @@ const PlaylistBoard = (): JSX.Element => {
         <NavTitle>Ultimate Ina Playlist</NavTitle>
         <NavButtonGroup>
           <HintButton onClick={() => setDrawerOpen(true)}>
-            <i className="fa fa-filter" /> Filters
+            <i className="fa fa-filter" /><span className="btn-text"> Filters</span>
           </HintButton>
         </NavButtonGroup>
       </Navbar>

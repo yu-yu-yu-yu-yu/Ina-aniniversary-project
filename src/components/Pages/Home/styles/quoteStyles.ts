@@ -125,6 +125,7 @@ const ElixirText = styled.span`
   @media only screen and (max-width: 701px) {
     font-size: 1.5rem;
     letter-spacing: 1px;
+    width: min-content;
   }
 `;
 

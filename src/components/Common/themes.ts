@@ -20,7 +20,7 @@ export const themes: Themes = {
     "--light-background": "#d1f1ff",
     "--dark-background": "#295d90",
     "--light-highlight": "#bf00ff",
-    "--dark-highlight": "#a4e4ff",
+    "--dark-highlight": "#86dbff",
     "--ink-black": "#2D1B3B",
     "--background-image": "url('./Pattern2.png')",
     "--text-color": "#000000",
