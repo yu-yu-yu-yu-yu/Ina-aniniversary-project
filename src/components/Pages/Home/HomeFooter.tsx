@@ -13,15 +13,16 @@ const HomeFooter = (): JSX.Element => {
       </AoLogo>
       <div className="footer-social-container">
         <div className="social-links">
-          <a href="https://twitter.com/ninomaeinanis">
+          <a href="https://twitter.com/ninomaeinanis" target="_blank" rel="noopener noreferrer">
             <p>
               <i className="fa fa-twitter"></i> @ninomaeinanis
             </p>
           </a>
           <br />
           <a
-            rel="stylesheet"
             href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <p>
               <i className="fa fa-youtube-play"></i> Ninomae Ina&apos;nis Ch.

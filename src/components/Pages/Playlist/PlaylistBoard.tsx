@@ -13,6 +13,8 @@ import {
   SearchBar,
   NavTitle,
   PlaylistDrawerSeparator,
+  PlaylistBackdrop,
+  PlaylistDrawerContainer,
   NavButtonGroup,
   ModalButton,
   DropdownContent,
@@ -22,7 +24,7 @@ import {
   SectionHeader,
   playlistFilterColors,
 } from "./styles/styles";
-import { Navbar, NavHome } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton } from "../../Common/Navbar";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
@@ -290,6 +292,7 @@ const PlaylistBoard = (): JSX.Element => {
   const filteredDataRef = useRef<SongData[]>([]);
 
   const [showOriginal, setShowOriginal] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [originFilter, setOriginFilter] = useState<SongOrigin | null>(null);
   const [contextFilter, setContextFilter] = useState<PerformanceContext | null>(null);
   const [sourceFilter, setSourceFilter] = useState<string | null>(null);
@@ -447,12 +450,40 @@ const PlaylistBoard = (): JSX.Element => {
         <NavHome />
         <NavTitle>Ultimate Ina Playlist</NavTitle>
         <NavButtonGroup>
-          {filterDropdown}
-          {groupDropdown}
-          {versionToggle}
-          {helpButton}
+          <HintButton onClick={() => setDrawerOpen(true)}>
+            <i className="fa fa-filter" /> Filters
+          </HintButton>
         </NavButtonGroup>
       </Navbar>
+
+      {drawerOpen && ReactDOM.createPortal(
+        <>
+          <PlaylistBackdrop onClick={() => setDrawerOpen(false)} />
+          <PlaylistDrawerContainer>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ font: "normal normal 700 16px/20px Montserrat", color: "var(--text-color)" }}>
+                Filters &amp; Search
+              </span>
+              <ModalButton onClick={() => setDrawerOpen(false)} style={{ minWidth: "unset", padding: "6px 12px" }}>
+                <i className="fa fa-times" />
+              </ModalButton>
+            </div>
+            <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0 }} />
+            <PlaylistDrawerSeparator>Filters</PlaylistDrawerSeparator>
+            <FiltersPanel {...filterProps} />
+            <PlaylistDrawerSeparator>Group</PlaylistDrawerSeparator>
+            <GroupPanel {...groupProps} />
+            <PlaylistDrawerSeparator>Version</PlaylistDrawerSeparator>
+            <ModalButton active={showOriginal} onClick={() => setShowOriginal((v) => !v)} style={{ width: "100%" }}>
+              <i className="fa fa-exchange" />
+              {showOriginal ? "Orig. ver." : "Ina ver."}
+            </ModalButton>
+            <PlaylistDrawerSeparator>Help</PlaylistDrawerSeparator>
+            <HelpPanel />
+          </PlaylistDrawerContainer>
+        </>,
+        document.body,
+      )}
 
       {loading ? (
         <TakoLoading />

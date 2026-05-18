@@ -40,11 +40,15 @@ export const Banner = () => {
   const [pivotIndex, setPivotIndex] = useState(0);
   const [loadedSet, setLoadedSet] = useState<Set<number>>(initialLoaded);
 
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const debounceTimer = useRef<number>(0);
   const pivotRef = useRef(pivotIndex);
-  const lastSnapTo = useRef(0);
+  const programmaticRef = useRef(false);
+  const programmaticTimer = useRef<number>(0);
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartScroll = useRef(0);
   pivotRef.current = pivotIndex;
 
   const expandLoad = useCallback((center: number) => {
@@ -64,7 +68,12 @@ export const Banner = () => {
   const scrollToPivot = useCallback((index: number) => {
     const el = itemRefs.current[index];
     if (!el) return;
-    lastSnapTo.current = index;
+    programmaticRef.current = true;
+    clearTimeout(programmaticTimer.current);
+    programmaticTimer.current = window.setTimeout(() => {
+      programmaticRef.current = false;
+      if (containerRef.current) containerRef.current.style.scrollSnapType = "";
+    }, 700);
     el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, []);
 
@@ -73,16 +82,13 @@ export const Banner = () => {
       const clamped = Math.max(0, Math.min(index, TOTAL - 1));
       setPivotIndex(clamped);
       expandLoad(clamped);
+      scrollToPivot(clamped);
     },
-    [expandLoad]
+    [expandLoad, scrollToPivot]
   );
 
-  useEffect(() => {
-    const id = window.setTimeout(() => scrollToPivot(pivotIndex), 60);
-    return () => clearTimeout(id);
-  }, [pivotIndex, scrollToPivot]);
-
   const handleScroll = useCallback(() => {
+    if (programmaticRef.current) return;
     clearTimeout(debounceTimer.current);
     debounceTimer.current = window.setTimeout(() => {
       const container = containerRef.current;
@@ -100,13 +106,51 @@ export const Banner = () => {
           bestIdx = i;
         }
       });
-      if (bestIdx === lastSnapTo.current) return;
-      lastSnapTo.current = bestIdx;
+      if (bestIdx === pivotRef.current) return;
       setPivotIndex(bestIdx);
       expandLoad(bestIdx);
-      scrollToPivot(bestIdx);
-    }, 150);
-  }, [expandLoad, scrollToPivot]);
+    }, 250);
+  }, [expandLoad]);
+
+  const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
+    const el = containerRef.current;
+    if (!el) return;
+    isDragging.current = true;
+    dragStartX.current = e.clientX;
+    dragStartScroll.current = el.scrollLeft;
+    el.setPointerCapture(e.pointerId);
+    el.style.scrollSnapType = "none";
+    el.style.cursor = "grabbing";
+  }, []);
+
+  const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current || !containerRef.current) return;
+    containerRef.current.scrollLeft = dragStartScroll.current - (e.clientX - dragStartX.current);
+  }, []);
+
+  const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current || !containerRef.current) return;
+    isDragging.current = false;
+    const el = containerRef.current;
+    el.style.cursor = "";
+    const dragDistance = Math.abs(e.clientX - dragStartX.current);
+    if (dragDistance < 5) {
+      el.style.scrollSnapType = "";
+      return;
+    }
+    const cRect = el.getBoundingClientRect();
+    const centerX = cRect.left + cRect.width / 2;
+    let bestIdx = pivotRef.current;
+    let bestDist = Infinity;
+    itemRefs.current.forEach((item, i) => {
+      if (!item) return;
+      const rect = item.getBoundingClientRect();
+      const dist = Math.abs((rect.left + rect.width / 2) - centerX);
+      if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+    });
+    goTo(bestIdx);
+  }, [goTo]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -180,7 +224,14 @@ export const Banner = () => {
       </div>
 
       <BannerWrapper>
-        <Container horizontal innerRef={containerRef} onScroll={handleScroll}>
+        <Container
+          ref={containerRef}
+          onScroll={handleScroll}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
           {groupedEntries.map(([title, arr], i) => {
             const outfit = arr.length > 1 ? arr[dupIdx[title] || 0] : arr[0];
             const isPivot = i === pivotIndex;
@@ -209,6 +260,7 @@ export const Banner = () => {
                     >
                       <BannerImg
                         $loaded
+                        draggable={false}
                         src={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`}
                         alt={outfit.title}
                       />

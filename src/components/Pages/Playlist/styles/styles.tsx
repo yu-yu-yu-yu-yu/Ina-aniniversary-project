@@ -67,6 +67,9 @@ export const SearchRow = styled.div`
   align-items: flex-end;
   gap: 10px;
   margin-bottom: 20px;
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const SearchRowButtons = styled.div`
@@ -192,7 +195,7 @@ export const PlaylistDrawerSeparator = styled.div`
 export const BubbleSong = styled.div`
   padding-top: 5px;
   overflow-wrap: break-word;
-  color: var(--dark-highlight);
+   color: var(--text-color);
   text-align: left;
   font: normal normal 300 16px/22px Mulish;
   letter-spacing: 0px;

@@ -846,6 +846,12 @@
     "image": "HuyK02.png"
   },
   {
+    "user": "HuyK",
+    "icon": "",
+    "message": "",
+    "image": "HuyK03.png"
+  },
+  {
     "user": "drizzle",
     "icon": "",
     "message": "",
@@ -1176,7 +1182,7 @@
     "image": "RogueTakolyte01.png"
   },
   {
-    "user": "lam",
+    "user": "Lamylia",
     "icon": "",
     "message": "",
     "image": "lam01.png"
@@ -1186,5 +1192,11 @@
     "icon": "",
     "message": "",
     "image": "Amacatnyaa01.png"
+  },
+  {
+    "user": "NowaruArt",
+    "icon": "",
+    "message": "",
+    "image": "nowaruart01.png"
   }
 ]

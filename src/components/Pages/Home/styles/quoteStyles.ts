@@ -109,9 +109,10 @@ const InaImageWrapper = styled.div`
 const ElixirText = styled.span`
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 100%;
-  transform: translateY(-50%);
+  left: 50%;
+  width: max-content;
+  max-width: 90vw;
+  transform: translate(-50%, -50%);
   text-align: center;
   color: #fff;
   font-family: "Montserrat", sans-serif;
@@ -121,6 +122,10 @@ const ElixirText = styled.span`
   text-shadow: 0 0 12px #a78bfa, 0 2px 8px rgba(0, 0, 0, 0.8);
   pointer-events: none;
   animation: ${elixirFade} 2.5s ease forwards;
+  @media only screen and (max-width: 701px) {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
 `;
 
 export { QuoteContainer, QuoteInaImg, QuoteContent, GrayscaleButton, InaImageWrapper, ElixirText };

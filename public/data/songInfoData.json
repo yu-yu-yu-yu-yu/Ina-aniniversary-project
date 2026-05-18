@@ -568,7 +568,8 @@
       {
         "context": "concert",
         "link": "https://www.youtube.com/embed/CDljbqawDkw?start=1856",
-        "status": "archived"
+        "status": "archived",
+        "name": "The Show Goes On!"
       }
     ]
   },
@@ -675,7 +676,7 @@
     "songName": "Hana no Uta",
     "songInfo": "Original: Aimer (Fate/stay night [Heaven\u0027s Feel] I theme)",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/0F9RHJfiR9I",
+    "originalSongLink": "https://www.youtube.com/embed/JR8F-Eov418",
     "collab": "solo",
     "performances": [
       {
@@ -887,18 +888,13 @@
     "collab": "group",
     "performances": [
       {
-        "context": "release",
-        "link": "https://www.youtube.com/embed/pKJErsN-ylU",
-        "status": "archived"
-      },
-      {
         "context": "concert",
         "link": "https://www.youtube.com/embed/CDljbqawDkw?start=459",
         "status": "archived",
         "name": "hololive English -Myth-"
       }
     ],
-    "originalSongLink": "https://www.youtube.com/embed/Jb1AtJYD7Pc"
+    "originalSongLink": "https://www.youtube.com/embed/pKJErsN-ylU"
   },
   {
     "songName": "Kainé / Salvation",
@@ -1280,7 +1276,7 @@
     "songName": "ODDS \u0026 ENDS",
     "songInfo": "Original: ryo (supercell)",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/6OmwKZ9r07o",
+    "originalSongLink": "https://www.youtube.com/embed/28Iz4yYCIqM",
     "collab": "solo",
     "performances": [
       {
@@ -1468,7 +1464,7 @@
     "songName": "Rokutousei no Yoru",
     "songInfo": "Original: Aimer",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/medv3y09E5Q",
+    "originalSongLink": "https://www.youtube.com/embed/pHsaIsUTHdc",
     "collab": "solo",
     "performances": [
       {
@@ -1853,18 +1849,13 @@
     "collab": "group",
     "performances": [
       {
-        "context": "release",
-        "link": "https://www.youtube.com/embed/S2dWTOCdnEA",
-        "status": "archived"
-      },
-      {
         "context": "concert",
         "link": "https://www.youtube.com/embed/CDljbqawDkw?start=2879",
         "status": "archived",
-        "name": "hololive English -Myth-"
+        "name": "The Show Goes On!"
       }
     ],
-    "originalSongLink": "https://www.youtube.com/embed/V5A4_5R1v0Q"
+    "originalSongLink": "https://www.youtube.com/embed/S2dWTOCdnEA"
   },
   {
     "songName": "The Twelve Days of Christmas",

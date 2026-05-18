@@ -210,7 +210,6 @@ export const ModalCard = styled.div`
   line-height: 24px;
 
   width: 70vw;
-  max-width: 900px;
   height: 90vh;
   overflow-y: auto;
   display: flex;

@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from "styled-components";
-import ScrollContainer from "react-indiana-drag-scroll";
 
 const skeletonPulse = keyframes`
   0%, 100% { opacity: 0.4; }
@@ -19,16 +18,19 @@ export const BannerWrapper = styled.div`
   background: transparent;
 `;
 
-export const Container = styled(ScrollContainer)`
+export const Container = styled.div`
   display: flex;
   align-items: flex-end;
   width: 100%;
   height: 100%;
   cursor: grab;
+  user-select: none;
   gap: 48px;
   padding: 1.2rem 0 1.2rem;
   overflow-x: scroll;
-  scroll-snap-type: x proximity;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -104,6 +106,7 @@ export const BannerImg = styled.img<{ $loaded?: boolean }>`
   width: auto;
   height: auto;
   max-height: calc(70vh / 1.22);
+  -webkit-user-drag: none;
   border: 3px solid transparent;
   cursor: pointer;
   transition: transform 0.2s;
