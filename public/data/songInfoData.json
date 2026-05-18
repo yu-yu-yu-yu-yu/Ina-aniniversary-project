@@ -908,9 +908,12 @@
     "performances": [
       {
         "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=2802",
+        "status": "archived",
         "name": "Evermore"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/FP4duz43t_A"
   },
   {
     "songName": "Katharsis",
@@ -1652,6 +1655,8 @@
     "performances": [
       {
         "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=2045",
+        "status": "archived",
         "name": "Evermore"
       }
     ],
@@ -1717,6 +1722,22 @@
         "status": "archived"
       }
     ]
+  },
+  {
+    "songName": "Synchronicity～第三章 巡る世界のレクイエム～",
+    "songInfo": "Original: 鏡音リン、鏡音レン",
+    "origin": "3rd Party",
+    "coverInfo": "Hakos Baelz, Ninomae Ina'nis",
+    "collab": "duo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=3028",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/A83q5bQquJc"
   },
   {
     "songName": "Take Me Home, Country Roads",
@@ -2810,5 +2831,80 @@
         "name": "不知火フレア Birthday 3D 2025"
       }
     ]
+  },
+  {
+    "songName": "イノセント・ブルー ～ version de l'apprivoiser",
+    "songInfo": "Original: 日高里菜 (Aria the Natural OP)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=248",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/v-ofVcyKOGk"
+  },
+  {
+    "songName": "忘れじの言の葉",
+    "songInfo": "Original: 未来古代楽団 ft. 安次嶺希和子 (SAO: Lost Song)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=409",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/uB2GnZ1IVxA"
+  },
+  {
+    "songName": "すずめ",
+    "songInfo": "Original: RADWIMPS ft. 十明 (すずめの戸締まり)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=679",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/Xs0Lxif1u9E"
+  },
+  {
+    "songName": "クロイウタ",
+    "songInfo": "Original: 藍井エイル",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=1623",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/pvXOUDA4Q-I"
+  },
+  {
+    "songName": "とある竜の恋の歌",
+    "songInfo": "Original: いとうかなこ",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=2517",
+        "status": "archived",
+        "name": "Evermore"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/uuGIUOk8P9I"
   }
 ]
