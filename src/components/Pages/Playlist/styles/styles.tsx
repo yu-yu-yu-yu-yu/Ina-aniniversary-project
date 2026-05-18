@@ -18,8 +18,11 @@ export const playlistFilterColors: Record<string, string> = {
   "3rd Party": "#3498DB",
   karaoke: "#F39C12",
   concert: "#E74C3C",
+  featured: "#F1C40F",
+  banana: "#FFE135",
   archived: "#95A5A6",
   "unofficially archived": "#E67E22",
+  unarchived: "#C0392B",
   duo: "#1ABC9C",
   group: "#27AE60",
 };
@@ -181,6 +184,22 @@ export const PlaylistDrawerToggle = styled.i`
   &:hover {
     opacity: 0.7;
   }
+`;
+
+export const SongCountBadge = styled.div`
+  font: normal normal 700 13px/18px Montserrat;
+  letter-spacing: 0.5px;
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid var(--light-highlight);
+  border-radius: 10px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
 `;
 
 export const PlaylistDrawerSeparator = styled.div`

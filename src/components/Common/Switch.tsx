@@ -46,13 +46,12 @@ const Circle = styled.div<{ active: boolean; color: string }>`
   }
 `;
 
-const Label = styled.span`
-  color: var(--dark-highlight);
+const Label = styled.span<{ labelColor?: string }>`
+  color: ${({ labelColor }) => labelColor ?? "var(--text-color)"};
   text-align: left;
   font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
   &.mobile {
-    color: white;
     font: normal normal 300 13px/16px Montserrat;
   }
 `;
@@ -62,12 +61,14 @@ export const Switch = ({
   value,
   onChange,
   color = "var(--dark-highlight)",
+  labelColor,
   mobile,
 }: {
   label: string;
   value: boolean;
   onChange: (b: boolean) => void;
   color?: string;
+  labelColor?: string;
   mobile?: boolean;
 }): JSX.Element => {
   const cls = mobile ? "mobile" : "";
@@ -76,7 +77,7 @@ export const Switch = ({
       <Bar active={value} color={color} className={cls}>
         <Circle active={value} color={color} className={cls} />
       </Bar>
-      <Label className={cls}>{label}</Label>
+      <Label labelColor={labelColor} className={cls}>{label}</Label>
     </Container>
   );
 };

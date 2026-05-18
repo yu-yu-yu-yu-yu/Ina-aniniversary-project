@@ -54,8 +54,7 @@ const Lore = (): JSX.Element => {
             <p>
               One day, <b>Ina&apos;nis</b> picked up a <b>strange book</b> and
               then started to gain the power of <b>controlling tentacles</b>. To
-              her,
-              <b>tentacles</b> are just a part in her ordinary life; it has
+              her, <b>tentacles</b> are just a part in her ordinary life; it has
               never been a big deal for her. However, her girly mind does want
               to get them
               <b> dressed up and stay pretty</b>.

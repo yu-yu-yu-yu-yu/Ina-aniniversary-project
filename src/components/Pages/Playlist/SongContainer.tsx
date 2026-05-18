@@ -26,13 +26,18 @@ const toEmbed = (url: string): string => {
   return match ? `https://www.youtube.com/embed/${match[1]}` : url;
 };
 
+const CONTEXT_LABEL: Record<string, string> = {
+  karaoke:  "Karaoke",
+  concert:  "Concert",
+  cover:    "Cover",
+  release:  "Release",
+  featured: "Featured",
+  banana:   "Banana",
+};
+
 const perfLabel = (p: Performance): string => {
   if (p.label) return p.label;
-  const contextLabel =
-    p.context === "karaoke" ? "Karaoke"
-    : p.context === "concert" ? "Concert"
-    : p.context === "cover" ? "Cover"
-    : "Release";
+  const contextLabel = CONTEXT_LABEL[p.context] ?? p.context;
   return p.name ? `${contextLabel} · ${p.name}` : contextLabel;
 };
 
@@ -141,6 +146,9 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
           ))}
           {archiveStatus !== "unarchived" && (
             <SongTag tagColor={playlistFilterColors[archiveStatus]}>{archiveStatus}</SongTag>
+          )}
+          {linkedPerfs.length === 0 && (
+            <SongTag tagColor={playlistFilterColors["unarchived"]}>Unarchived</SongTag>
           )}
           {song.collab !== "solo" && (
             <SongTag tagColor={playlistFilterColors[song.collab]}>{song.collab}</SongTag>

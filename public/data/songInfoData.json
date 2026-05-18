@@ -31,7 +31,7 @@
     ]
   },
   {
-    "songName": "Aishite Aishite Aishite",
+    "songName": "愛して愛して愛して (Aishite Aishite Aishite)",
     "songInfo": "Original: Kikuo feat. Hatsune Miku (Vocaloid)",
     "origin": "3rd Party",
     "collab": "solo",
@@ -40,7 +40,8 @@
         "context": "concert",
         "name": "Color Rise Harmony"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/NTrm_idbhUk"
   },
   {
     "songName": "All for One",
@@ -83,7 +84,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/ksAJIsl047w",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -119,26 +120,13 @@
   },
   {
     "songName": "banana",
-    "songInfo": "Original: Daoko × 米津玄師",
-    "origin": "3rd Party",
+    "songInfo": "banana",
+    "origin": "banana",
+    "originalSongLink": "https://www.youtube.com/embed/OjkLlysRfd0?start=351",
     "collab": "solo",
     "performances": [
       {
-        "context": "karaoke",
-        "link": "https://www.youtube.com/embed/OjkLlysRfd0?start=3517",
-        "status": "archived"
-      }
-    ]
-  },
-  {
-    "songName": "Banana",
-    "songInfo": "Original: Ninomae Ina\u0027nis",
-    "origin": "Ina\u0027s original",
-    "originalSongLink": "https://www.youtube.com/embed/q0cnTB8gTS0",
-    "collab": "solo",
-    "performances": [
-      {
-        "context": "karaoke",
+        "context": "banana",
         "link": "https://www.youtube.com/embed/OjkLlysRfd0?start=3518",
         "status": "archived"
       }
@@ -251,9 +239,14 @@
     "origin": "Hololive\u0027s original",
     "collab": "group",
     "performances": [
+         {
+        "context": "concert",
+        
+        "name": "Breaking Dimensions"
+      },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/hcSuSzbj38M",
+
         "name": "Drawn to Dawn"
       }
     ],
@@ -416,7 +409,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/QfGuQELt1Tk",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -473,7 +466,7 @@
     "collab": "duo",
     "performances": [
       {
-        "context": "cover",
+        "context": "featured",
         "link": "https://www.youtube.com/embed/9w4X67atXEo",
         "status": "archived"
       }
@@ -588,7 +581,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/YzgPJtBuOAE",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -978,7 +971,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/AB_CKhn3ZrI",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1023,7 +1016,7 @@
     "collab": "solo",
     "performances": [
       {
-        "context": "cover",
+        "context": "karaoke",
         "link": "https://www.youtube.com/embed/iekILuORN4Y",
         "status": "unofficially archived"
       }
@@ -1130,7 +1123,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/XzkNg89Cq9Y",
+        
         "name": "Drawn to Dawn"
       },
       {
@@ -1309,7 +1302,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/0Uhh62MUEic",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1325,7 +1318,7 @@
         "context": "concert",
         "link": "https://www.youtube.com/embed/HT_HUFi8DJ4?start=2374",
         "status": "archived",
-        "name": "hololive English -Myth-"
+        "name": "Fortune Spinner"
       },
       {
         "context": "karaoke",
@@ -1343,7 +1336,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/k0usYxw3pko",
+        
         "name": "Drawn to Dawn"
       }
     ],
@@ -1358,7 +1351,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/Ud73fm4Uoq0",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1545,6 +1538,7 @@
     "origin": "Hololive\u0027s original",
     "originalSongLink": "https://www.youtube.com/embed/ozH28qYrMy4",
     "collab": "duo",
+    "coverInfo": "Ninomae Ina\u0027nis, Mori Calliope",
     "performances": [
       {
         "context": "concert",
@@ -1623,7 +1617,6 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/102kPrUykWU",
         "name": "Drawn to Dawn"
       }
     ]
@@ -1637,7 +1630,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/a51VH9BYzZA",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -1776,7 +1769,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/6sAQ1wuYzxk",
+        
         "name": "Drawn to Dawn"
       },
       {
@@ -1803,7 +1796,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/g4b28_6lwKY",
+        
         "name": "Drawn to Dawn"
       },
       {
@@ -1837,7 +1830,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/LtTO1HMGjqA",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -2013,7 +2006,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/8ZdLXELdF9Q",
+        
         "name": "Drawn to Dawn"
       },
       {
@@ -2044,7 +2037,7 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/Nu-t2HVUqDA",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -2104,7 +2097,8 @@
         "context": "concert",
         "name": "Color Rise Harmony"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/JTOM6fuXptg"
   },
   {
     "songName": "い〜やい〜やい〜や",
@@ -2121,7 +2115,6 @@
       },
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/R5yfM_UlucY",
         "name": "Drawn to Dawn"
       },
       {
@@ -2399,9 +2392,9 @@
     "originalSongLink": "https://www.youtube.com/embed/8nQm9RN9J7w"
   },
   {
-    "songName": "ホロぐら (VR Dance)",
+    "songName": "『おどれ！VRダンス！』 (VR Dance)",
     "songInfo": "Hololive",
-    "origin": "Hololive\u0027s original",
+    "origin": "Original: KurageP",
     "collab": "solo",
     "performances": [
       {
@@ -2409,7 +2402,8 @@
         "link": "https://www.youtube.com/embed/5KCpe82_jW4",
         "status": "archived"
       }
-    ]
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/-PgwpwD_WIc"
   },
   {
     "songName": "モザイクロール (Mozaik Role)",
@@ -2495,7 +2489,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/watch?v=I-J11Da5ONY&t=3445s",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=3445s",
         "status": "archived",
         "name": "Evermore"
       }
@@ -2621,7 +2615,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/010_SzKAon4",
+        
         "name": "Drawn to Dawn"
       }
     ]
@@ -2677,7 +2671,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/1s84rIhPuhk",
+        
         "name": "Drawn to Dawn"
       }
     ]

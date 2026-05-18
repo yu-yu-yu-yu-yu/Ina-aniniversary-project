@@ -15,6 +15,7 @@ import {
   PlaylistDrawerSeparator,
   PlaylistBackdrop,
   PlaylistDrawerContainer,
+  SongCountBadge,
   NavButtonGroup,
   ModalButton,
   DropdownContent,
@@ -76,11 +77,13 @@ const groupSongs = (songs: SongData[], by: GroupBy): { label: string; songs: Son
     const holo     = songs.filter((s) => s.origin === "Hololive's original");
     const covers   = songs.filter((s) => s.origin === "3rd Party" && s.performances.some((p) => p.context === "cover"));
     const thirdPty = songs.filter((s) => s.origin === "3rd Party" && !s.performances.some((p) => p.context === "cover"));
+    const banana   = songs.filter((s) => s.origin === "banana");
     return [
       ...(ina.length      ? [{ label: "Ina's Original",      songs: ina      }] : []),
       ...(covers.length   ? [{ label: "Covers",              songs: covers   }] : []),
       ...(holo.length     ? [{ label: "Hololive's Original", songs: holo     }] : []),
       ...(thirdPty.length ? [{ label: "3rd Party",           songs: thirdPty }] : []),
+      ...(banana.length   ? [{ label: "Banana",              songs: banana   }] : []),
     ];
   }
   if (by === "archive") {
@@ -105,8 +108,12 @@ const groupSongs = (songs: SongData[], by: GroupBy): { label: string; songs: Son
   }
   if (by === "performance") {
     const sections: { label: string; songs: SongData[] }[] = [];
-    const karaoke = songs.filter((s) => s.performances.some((p) => p.context === "karaoke"));
-    if (karaoke.length) sections.push({ label: "Karaoke", songs: karaoke });
+    const karaoke  = songs.filter((s) => s.performances.some((p) => p.context === "karaoke"));
+    const featured = songs.filter((s) => s.performances.some((p) => p.context === "featured"));
+    const banana   = songs.filter((s) => s.performances.some((p) => p.context === "banana"));
+    if (karaoke.length)  sections.push({ label: "Karaoke",  songs: karaoke  });
+    if (featured.length) sections.push({ label: "Featured", songs: featured });
+    if (banana.length)   sections.push({ label: "Banana",   songs: banana   });
     const concertNames = Array.from(
       new Set(songs.flatMap((s) => s.performances.filter((p) => p.name).map((p) => p.name!))),
     ).sort();
@@ -213,9 +220,12 @@ const FiltersPanel = ({
       <Switch label="Ina's Originals"      value={originFilter === "Ina's original"}      onChange={setOrigin("Ina's original")}      color={playlistFilterColors["Ina's original"]}      mobile />
       <Switch label="Hololive's Originals" value={originFilter === "Hololive's original"} onChange={setOrigin("Hololive's original")} color={playlistFilterColors["Hololive's original"]} mobile />
       <Switch label="3rd Partys"  value={originFilter === "3rd Party"}  onChange={setOrigin("3rd Party")}  color={playlistFilterColors["3rd Party"]}  mobile />
+      <Switch label="Banana"      value={originFilter === "banana"}      onChange={setOrigin("banana")}      color={playlistFilterColors["banana"]}      mobile />
       <Switch label="Covers"             value={contextFilter === "cover"}            onChange={setContext("cover")}            color={playlistFilterColors["cover"]}              mobile />
       <Switch label="Karaoke"            value={contextFilter === "karaoke"}          onChange={setContext("karaoke")}          color={playlistFilterColors["karaoke"]}            mobile />
-      <Switch label="Concert"            value={contextFilter === "concert"}          onChange={setContext("concert")}          color={playlistFilterColors["concert"]}            mobile />
+      <Switch label="Concert"             value={contextFilter === "concert"}           onChange={setContext("concert")}           color={playlistFilterColors["concert"]}           mobile />
+      <Switch label="Featured"            value={contextFilter === "featured"}          onChange={setContext("featured")}          color={playlistFilterColors["featured"]}          mobile />
+      <Switch label="Banana"              value={contextFilter === "banana"}            onChange={setContext("banana")}            color={playlistFilterColors["banana"]}            mobile />
     </FilterGroup>
     <PlaylistDrawerSeparator>Archive</PlaylistDrawerSeparator>
     <FilterGroup>
@@ -468,6 +478,11 @@ const PlaylistBoard = (): JSX.Element => {
                 <i className="fa fa-times" />
               </ModalButton>
             </div>
+            {sourceData.length > 0 && (
+              <SongCountBadge style={{ justifyContent: "center" }}>
+                <i className="fa fa-music" /> Ina has sung: {sourceData.length} songs!
+              </SongCountBadge>
+            )}
             <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0 }} />
             <PlaylistDrawerSeparator>Filters</PlaylistDrawerSeparator>
             <FiltersPanel {...filterProps} />
@@ -497,6 +512,11 @@ const PlaylistBoard = (): JSX.Element => {
               {groupDropdown}
               {versionToggle}
               {helpButton}
+              {sourceData.length > 0 && (
+                <SongCountBadge>
+                  <i className="fa fa-music" /> Ina has sung: {sourceData.length} songs!
+                </SongCountBadge>
+              )}
             </SearchRowButtons>
             <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0, flex: "1 1 0", maxWidth: "50%", marginLeft: "auto" }} />
           </SearchRow>

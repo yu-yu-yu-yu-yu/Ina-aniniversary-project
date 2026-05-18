@@ -242,11 +242,15 @@ const MessageBoard = (): JSX.Element => {
                 label="Only Images"
                 value={isToggledOnlyImg}
                 onChange={(value) => OnlyImgToggle(value)}
+                color="var(--light-highlight)"
+                labelColor="var(--dark-highlight)"
               />
               <Switch
                 label="Only messages"
                 value={isToggledTextOnly}
                 onChange={(value) => OnlyTextToggle(value)}
+                color="var(--light-highlight)"
+                labelColor="var(--dark-highlight)"
               />
             </div>
           </FiltersContainer>
