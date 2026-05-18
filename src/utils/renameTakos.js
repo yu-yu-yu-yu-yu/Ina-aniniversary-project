@@ -2,7 +2,7 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const _ = require("lodash");
 
-const IMG_PATH = "./public/images";
+const IMG_PATH = "./public/artworks";
 const TAKO_PATH = "./public/takos";
 const CSV_PATH = "./public/data/messageData.csv";
 const filenameDictionary = "./renamedTakos.txt";

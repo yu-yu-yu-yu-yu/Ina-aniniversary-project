@@ -27,10 +27,10 @@ import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
 
-const LIMIT = 10;
+const LIMIT = 4;
 
 type ArchiveFilterValue = "archived" | "unofficially archived" | "unarchived";
-type GroupBy = "origin" | "archive" | "collab" | "performance";
+type GroupBy = "type" | "archive" | "collab" | "performance";
 
 const getFiltered = (
   source: SongData[],
@@ -69,14 +69,16 @@ const getFiltered = (
 };
 
 const groupSongs = (songs: SongData[], by: GroupBy): { label: string; songs: SongData[] }[] => {
-  if (by === "origin") {
-    const ina    = songs.filter((s) => s.origin === "Ina's original");
-    const holo   = songs.filter((s) => s.origin === "Hololive's original");
-    const artist = songs.filter((s) => s.origin === "3rd Party");
+  if (by === "type") {
+    const ina      = songs.filter((s) => s.origin === "Ina's original");
+    const holo     = songs.filter((s) => s.origin === "Hololive's original");
+    const covers   = songs.filter((s) => s.origin === "3rd Party" && s.performances.some((p) => p.context === "cover"));
+    const thirdPty = songs.filter((s) => s.origin === "3rd Party" && !s.performances.some((p) => p.context === "cover"));
     return [
-      ...(ina.length    ? [{ label: "Ina's Original",      songs: ina    }] : []),
-      ...(holo.length   ? [{ label: "Hololive's Original", songs: holo   }] : []),
-      ...(artist.length ? [{ label: "3rd Party",   songs: artist }] : []),
+      ...(ina.length      ? [{ label: "Ina's Original",      songs: ina      }] : []),
+      ...(covers.length   ? [{ label: "Covers",              songs: covers   }] : []),
+      ...(holo.length     ? [{ label: "Hololive's Original", songs: holo     }] : []),
+      ...(thirdPty.length ? [{ label: "3rd Party",           songs: thirdPty }] : []),
     ];
   }
   if (by === "archive") {
@@ -245,7 +247,7 @@ interface GroupPanelProps {
 
 const GroupPanel = ({ groupBy, setGroupBy }: GroupPanelProps) => (
   <FilterGroup>
-    <Switch label="By Origin"      value={groupBy === "origin"}      onChange={setGroupBy("origin")}      color={playlistFilterColors["Ina's original"]}   mobile />
+    <Switch label="By Type"        value={groupBy === "type"}        onChange={setGroupBy("type")}        color={playlistFilterColors["Ina's original"]}   mobile />
     <Switch label="By Archive"     value={groupBy === "archive"}     onChange={setGroupBy("archive")}     color={playlistFilterColors["archived"]}          mobile />
     <Switch label="By Collab"      value={groupBy === "collab"}      onChange={setGroupBy("collab")}      color={playlistFilterColors["duo"]}               mobile />
     <Switch label="By Performance" value={groupBy === "performance"} onChange={setGroupBy("performance")} color={playlistFilterColors["concert"]}           mobile />
@@ -292,7 +294,10 @@ const PlaylistBoard = (): JSX.Element => {
   const [contextFilter, setContextFilter] = useState<PerformanceContext | null>(null);
   const [sourceFilter, setSourceFilter] = useState<string | null>(null);
   const [archiveFilter, setArchiveFilter] = useState<ArchiveFilterValue | null>("archived");
-  const [groupBy, setGroupByState] = useState<GroupBy | null>(null);
+  const [groupBy, setGroupByState] = useState<GroupBy | null>("type");
+  const [groupedOffset, setGroupedOffset] = useState(LIMIT);
+  const groupedOffsetRef = useRef(LIMIT);
+  const groupedFetchingRef = useRef(false);
 
   useEffect(() => {
     if (rawData) setSourceData([...rawData].reverse());
@@ -322,8 +327,11 @@ const PlaylistBoard = (): JSX.Element => {
 
   useEffect(() => {
     if (hasMore && data.length > 0 && !groupBy) {
-      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
-      if (!isScrollable) fetchMore();
+      const raf = requestAnimationFrame(() => {
+        const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+        if (!isScrollable) fetchMore();
+      });
+      return () => cancelAnimationFrame(raf);
     }
   }, [data.length, hasMore, groupBy]);
 
@@ -335,6 +343,54 @@ const PlaylistBoard = (): JSX.Element => {
     offsetRef.current += LIMIT;
     setData((prev) => prev.concat(rows));
   };
+
+  // Full grouping (not rendered) — used to determine group-order for pagination
+  const allGrouped = useMemo(
+    () => groupBy ? groupSongs(filteredData, groupBy) : null,
+    [filteredData, groupBy],
+  );
+  // Songs flattened in group order: all of group 1, then group 2, etc.
+  const groupOrdered = useMemo(
+    () => allGrouped ? allGrouped.flatMap((g) => g.songs) : [],
+    [allGrouped],
+  );
+  const groupOrderedRef = useRef<SongData[]>([]);
+  groupOrderedRef.current = groupOrdered;
+
+  useEffect(() => {
+    if (!groupBy) return;
+    groupedOffsetRef.current = LIMIT;
+    groupedFetchingRef.current = false;
+    setGroupedOffset(LIMIT);
+  }, [filteredData, groupBy]);
+
+  const fetchMoreGrouped = async () => {
+    if (groupedFetchingRef.current) return;
+    groupedFetchingRef.current = true;
+    const ordered = groupOrderedRef.current;
+    const slice = ordered.slice(groupedOffsetRef.current, groupedOffsetRef.current + LIMIT);
+    if (!slice.length) { groupedFetchingRef.current = false; return; }
+    await awaitImgs(slice);
+    groupedOffsetRef.current += LIMIT;
+    setGroupedOffset(groupedOffsetRef.current);
+    groupedFetchingRef.current = false;
+  };
+
+  useEffect(() => {
+    if (!groupBy) return;
+    if (groupedOffset >= groupOrderedRef.current.length) return;
+    const raf = requestAnimationFrame(() => {
+      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      if (!isScrollable) fetchMoreGrouped();
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [groupedOffset, groupBy]);
+
+  // Slice the group-ordered list then re-group — groups fill sequentially
+  const visibleGrouped = useMemo(
+    () => groupBy ? groupSongs(groupOrdered.slice(0, groupedOffset), groupBy) : null,
+    [groupOrdered, groupBy, groupedOffset],
+  );
 
   const handleFilter = useCallback(
     debounce((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -354,8 +410,6 @@ const PlaylistBoard = (): JSX.Element => {
     sourceFilter, setSource, archiveFilter, setArchive, sources,
   };
   const groupProps: GroupPanelProps = { groupBy, setGroupBy };
-
-  const grouped = groupBy ? groupSongs(filteredData, groupBy) : null;
 
   const filterDropdown = (
     <DropdownPanel label="Filters" icon="fa-filter">
@@ -418,13 +472,23 @@ const PlaylistBoard = (): JSX.Element => {
             <SearchBar onChange={handleFilter} placeholder="Search..." style={{ marginBottom: 0, flex: "1 1 0", maxWidth: "50%", marginLeft: "auto" }} />
           </SearchRow>
 
-          {grouped ? (
-            grouped.map(({ label, songs }) => (
-              <React.Fragment key={label}>
-                <SectionHeader>{label}</SectionHeader>
-                <SongContainer SongData={songs} showOriginal={showOriginal} />
-              </React.Fragment>
-            ))
+          {visibleGrouped ? (
+            <InfiniteScroll
+              style={{ overflow: "hidden" }}
+              scrollThreshold="50px"
+              dataLength={Math.min(groupedOffset, groupOrdered.length)}
+              next={fetchMoreGrouped}
+              hasMore={groupedOffset < groupOrdered.length}
+              loader={<Loader><TakoLoading /></Loader>}
+              endMessage={<p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>}
+            >
+              {visibleGrouped.map(({ label, songs }) => (
+                <React.Fragment key={label}>
+                  <SectionHeader>{label}</SectionHeader>
+                  <SongContainer SongData={songs} showOriginal={showOriginal} />
+                </React.Fragment>
+              ))}
+            </InfiniteScroll>
           ) : (
             <InfiniteScroll
               style={{ overflow: "hidden" }}
