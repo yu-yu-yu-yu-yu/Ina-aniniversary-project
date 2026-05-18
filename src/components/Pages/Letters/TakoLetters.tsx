@@ -130,7 +130,7 @@ const LetterModal = ({ submission, index, total, zoom, onZoomChange, onClose, on
             ) : (
               <BubbleImage
                 src={`${process.env.PUBLIC_URL}/letters/${image}`}
-                style={{ width: `${zoom / 2}vw` }}
+                style={{ width: `${zoom / 2}vw`, maxWidth: "none" }}
               />
             )}
           </SRLWrapper>
