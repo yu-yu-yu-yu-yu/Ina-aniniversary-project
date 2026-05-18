@@ -103,7 +103,7 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
   );
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <Navbar>
         <NavHome />
         <NavTitle>Moments and WAH</NavTitle>

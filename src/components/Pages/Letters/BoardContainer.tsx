@@ -118,7 +118,7 @@ const BoardContainer = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}

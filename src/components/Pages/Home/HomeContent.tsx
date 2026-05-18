@@ -16,6 +16,8 @@ const Home = styled.div`
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+  min-height: 100vh;
+  background: var(--background);
 `;
 
 const HomeContent = (): JSX.Element => {

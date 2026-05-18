@@ -66,7 +66,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
     );
 
     return (
-        <>
+        <div style={{ minHeight: "100vh", background: "var(--background)" }}>
             <Navbar>
                 <NavHome />
                 <NavTitle>Takodex</NavTitle>
@@ -133,6 +133,6 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                     })}
                 </Masonry>
             </SiteBoard>
-        </>
+        </div>
     );
 };

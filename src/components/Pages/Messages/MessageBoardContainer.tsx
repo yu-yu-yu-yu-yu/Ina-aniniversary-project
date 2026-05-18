@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
 import ScrollArrow from "../../Common/BackToTop";
 import { Switch } from "../../Common/Switch";
-import { debounce } from "lodash";
+import { debounce, DebouncedFunc } from "lodash";
 import {
   FiltersContainer,
   Loader,
@@ -78,7 +78,7 @@ const MessageBoard = (): JSX.Element => {
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = useCallback(
+  const handleFilter = useMemo(() =>
     debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value !== "") {
         const resultData = sourceData.filter((row: Submission) => {
@@ -97,9 +97,15 @@ const MessageBoard = (): JSX.Element => {
         setData(rows);
         setOffset(LIMIT);
       }
-    }, 1000),
-    [],
+    }, 1000) as DebouncedFunc<(event: React.ChangeEvent<HTMLInputElement>) => Promise<void>>,
+    [sourceData],
   );
+
+  useEffect(() => {
+    return () => {
+      handleFilter.cancel();
+    };
+  }, [handleFilter]);
 
   const applySearch = (base: Submission[], search: string) =>
     base.filter(
@@ -180,7 +186,7 @@ const MessageBoard = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
