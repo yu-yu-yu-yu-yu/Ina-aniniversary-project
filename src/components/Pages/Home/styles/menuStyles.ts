@@ -116,7 +116,7 @@ export const TakoPeek = styled.img<TakoPeekProps>`
   width: 80px;
   pointer-events: none;
   z-index: 0;
-  transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+  transition: ${props => props.active ? 'transform 0.4s cubic-bezier(.4,2,.6,1)' : 'none'};
   transform: translate(-50%, -50%) translateY(${props => (props.active ? '-5.1vw' : '4vw')}) scale(${props => (props.active ? 1.1 : 0.5)});
   @media only screen and (max-width: 700px) {
     width: 60px;

@@ -106,9 +106,11 @@ const LetterModal = ({ submission, index, total, zoom, onZoomChange, onClose, on
     };
   }, [onClose, onNavigate, index]);
 
+  const modalWidth = `min(${Math.max(70, zoom / 2 + 12)}vw, 96vw)`;
+
   return ReactDOM.createPortal(
     <Backdrop onClick={onClose}>
-      <ModalCard onClick={(e) => e.stopPropagation()}>
+      <ModalCard onClick={(e) => e.stopPropagation()} style={{ width: modalWidth, overflowX: "auto" }}>
         <ZoomBar>
           <ZoomButton onClick={() => onNavigate(index, -1)} disabled={!hasPrev} title="Previous letter">←</ZoomButton>
           <ZoomButton onClick={() => onZoomChange(Math.max(ZOOM_MIN, zoom - ZOOM_STEP))} disabled={zoom <= ZOOM_MIN} title="Zoom out">−</ZoomButton>
@@ -128,7 +130,7 @@ const LetterModal = ({ submission, index, total, zoom, onZoomChange, onClose, on
             ) : (
               <BubbleImage
                 src={`${process.env.PUBLIC_URL}/letters/${image}`}
-                style={{ width: `${zoom / 2}vw`, maxWidth: "100%" }}
+                style={{ width: `${zoom / 2}vw` }}
               />
             )}
           </SRLWrapper>

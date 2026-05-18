@@ -26,7 +26,7 @@ const CreditsPage = (): JSX.Element => {
         <NavHome />
         <NavTitle>Credits</NavTitle>
       </Navbar>
-      <FloatingTakos freeFloat />
+      <FloatingTakos freeFloat zIndex={1} />
       <CreditsBoard>
         {credits.map((entry, i) => (
           <React.Fragment key={i}>

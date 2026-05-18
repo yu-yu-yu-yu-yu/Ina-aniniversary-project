@@ -28,7 +28,7 @@ export const Container = styled(ScrollContainer)`
   gap: 48px;
   padding: 1.2rem 0 1.2rem;
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -87,9 +87,11 @@ export const BannerImgWrapper = styled.div<{
   &::before {
     content: "";
     position: absolute;
-    width: 50%;
+    top: 50%;
+    left: 50%;
+    width: 60%;
     height: 50%;
-    transform: translate(50%, 50%);
+    transform: translate(-50%, -30%);
     background: var(--dark-highlight);
     filter: blur(50px) brightness(2) saturate(1.2);
     opacity: 0.8;

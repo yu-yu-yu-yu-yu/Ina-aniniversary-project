@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   LoreContainer,
   FlexRow,
@@ -31,9 +31,18 @@ const getRandomVideo = (currentVideo?: string) => {
 
 const Lore = (): JSX.Element => {
   const [currentVideo, setCurrentVideo] = useState(() => getRandomVideo());
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
+  useEffect(() => {
+    setIsVideoReady(false);
+  }, [currentVideo]);
 
   const handleChangeVideo = useCallback(() => {
     setCurrentVideo((video) => getRandomVideo(video));
+  }, []);
+
+  const handleCanPlay = useCallback(() => {
+    setIsVideoReady(true);
   }, []);
 
   return (
@@ -60,13 +69,15 @@ const Lore = (): JSX.Element => {
             <hr />
           </div>
         </TextBoxContainer>
-        <InaVideoContainer>
+        <InaVideoContainer style={{ background: isVideoReady ? "transparent" : "var(--dark-background)" }}>
           <InaVideo
             key={currentVideo}
             autoPlay
             loop
             muted
             preload="auto"
+            onCanPlay={handleCanPlay}
+            style={{ opacity: isVideoReady ? 1 : 0, transition: "opacity 0.5s ease" }}
           >
             <source
               src={`${process.env.PUBLIC_URL}/${currentVideo}`}

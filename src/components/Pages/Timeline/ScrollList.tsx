@@ -674,16 +674,25 @@ const BottomControls = ({
     <>
       <YearPicker selected={year} setYear={setYear} />
       <MonthListContainer>
-        {monthsWithEntries.map((month, index) => (
-          <MonthDisplay
-            highlight={index === selectedIndex}
-            passed={index < selectedIndex}
-            key={month}
-            onClick={() => setMonth(month as Month)}
-          >
-            {month}
-          </MonthDisplay>
-        ))}
+        {months.map((month) => {
+          const monthIndex = monthsWithEntries.findIndex(m => m === month);
+          const hasEntries = monthIndex !== -1;
+          return (
+            <MonthDisplay
+              highlight={month === selectedMonth}
+              passed={hasEntries && monthIndex < selectedIndex}
+              key={month}
+              onClick={hasEntries ? () => setMonth(month as Month) : undefined}
+              style={{
+                opacity: hasEntries ? 1 : 0.18,
+                cursor: hasEntries ? "pointer" : "default",
+                pointerEvents: hasEntries ? "auto" : "none",
+              }}
+            >
+              {month}
+            </MonthDisplay>
+          );
+        })}
       </MonthListContainer>
     </>
   );
@@ -806,7 +815,11 @@ export const DrawerToggle = ({
   onClick,
 }: {
   onClick: () => void;
-}): JSX.Element => <DrawerToggleI onClick={onClick} className="fa fa-search" />;
+}): JSX.Element => (
+  <DrawerToggleI onClick={onClick} aria-label="Open search and filters">
+    <i className="fa fa-search" aria-hidden="true" /> Search
+  </DrawerToggleI>
+);
 
 export const ScrollList = ({
   milestones,

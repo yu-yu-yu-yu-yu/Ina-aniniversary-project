@@ -48,20 +48,20 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
   animation: ${floatUp} 9s linear forwards;
 `;
 
-const TakoFloatBg = styled.div`
+const TakoFloatBg = styled.div<{ $zIndex?: number }>`
   position: absolute;
   pointer-events: none;
   top: 0;
   left: 0;
   right: 0;
   height: 100%;
-  z-index: 3;
+  z-index: ${({ $zIndex }) => $zIndex ?? 3};
   overflow: visible;
   overflow-x: hidden;
   pointer-events: none;
 `;
 
-const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Element => {
+const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIndex?: number }): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const sfxRef = useRef<HTMLAudioElement>(null);
@@ -128,7 +128,7 @@ const FloatingTakos = ({ freeFloat = false }: { freeFloat?: boolean }): JSX.Elem
         preload="auto"
         style={{ display: "none" }}
       />
-      <TakoFloatBg>
+      <TakoFloatBg $zIndex={zIndex}>
         {floatingTakos.map((tako) => (
           <FloatingTako
             key={tako.key}

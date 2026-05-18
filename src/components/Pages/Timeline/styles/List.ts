@@ -454,14 +454,25 @@ export const DrawerSeparator = styled.span`
   padding-bottom: 4px;
 `;
 
-export const DrawerToggleI = styled.i`
+export const DrawerToggleI = styled.button`
+  font: normal normal 700 13px/18px Montserrat;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: var(--dark-highlight);
   color: var(--text-color);
-  padding-right: 15px;
-  font-size: 1.2em;
-  flex-shrink: 0;
+  border: 2px solid var(--light-highlight);
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin-right: 6px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
   }
 `;
 

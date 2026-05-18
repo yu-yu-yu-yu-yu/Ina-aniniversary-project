@@ -55,24 +55,25 @@ export const StyleHome = styled.button`
 `;
 
 export const HintButton = styled.button`
+  font: normal normal 700 13px/18px Montserrat;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   background: var(--dark-highlight);
+  color: var(--text-color);
   border: 2px solid var(--light-highlight);
-  border-radius: 50%;
-  width: 41px;
-  height: 41px;
-  color: var(--light-highlight);
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-left: 16px;
-  margin-right: 10px;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin-left: 8px;
+  margin-right: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
   &:hover {
-    background: var(--dark-highlight);
-    color: var(--light-highlight);
+    opacity: 0.8;
   }
 `;
 

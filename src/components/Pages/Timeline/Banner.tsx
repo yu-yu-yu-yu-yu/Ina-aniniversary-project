@@ -63,16 +63,9 @@ export const Banner = () => {
 
   const scrollToPivot = useCallback((index: number) => {
     const el = itemRefs.current[index];
-    const container = containerRef.current;
-    if (!el || !container) return;
+    if (!el) return;
     lastSnapTo.current = index;
-    const elRect = el.getBoundingClientRect();
-    const cRect = container.getBoundingClientRect();
-    const target =
-      container.scrollLeft +
-      (elRect.left + elRect.width / 2) -
-      (cRect.left + cRect.width / 2);
-    container.scrollTo({ left: target, behavior: "smooth" });
+    el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, []);
 
   const goTo = useCallback(

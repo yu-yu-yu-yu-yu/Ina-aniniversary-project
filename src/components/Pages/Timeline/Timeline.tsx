@@ -102,7 +102,7 @@ export const Timeline = ({
             onClick={() => setHintOpen((v) => !v)}
             title="Show timeline usage hint"
           >
-            ?
+            <i className="fa fa-question-circle" aria-hidden="true" /> Help
           </HintButton>
           {hintOpen && (
             <HintPopover onClick={() => setHintOpen(false)}>

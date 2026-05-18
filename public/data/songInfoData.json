@@ -2782,5 +2782,33 @@
                                  "name":  "Hakos Baelz DREAMCATCHER Birthday 2024"
                              }
                          ]
+    },
+    {
+        "songName":  "ブライダルドリーム (Bridal Dream)",
+        "songInfo":  "Original: 兎田ぺこら \u0026 宝鐘マリン",
+        "origin":  "Hololive\u0027s original",
+        "collab":  "duo",
+        "performances":  [
+                             {
+                                 "context":  "concert",
+                                 "link":  "https://www.youtube.com/embed/XcRns_s_wQ8?start=1295",
+                                 "status":  "archived",
+                                 "name":  "不知火フレア Birthday 3D 2025"
+                             }
+                         ]
+    },
+    {
+        "songName":  "だいしきゅーだいしゅき (Daishikyuu Daishuki)",
+        "songInfo":  "Original: femme fatale",
+        "origin":  "3rd Party",
+        "collab":  "group",
+        "performances":  [
+                             {
+                                 "context":  "concert",
+                                 "link":  "https://www.youtube.com/embed/XcRns_s_wQ8?start=1491",
+                                 "status":  "archived",
+                                 "name":  "不知火フレア Birthday 3D 2025"
+                             }
+                         ]
     }
 ]

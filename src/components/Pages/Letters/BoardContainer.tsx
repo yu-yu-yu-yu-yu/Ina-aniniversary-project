@@ -30,6 +30,7 @@ const BoardContainer = (): JSX.Element => {
   } = useFetch<LetterEntry[]>(`${process.env.PUBLIC_URL}/data/letterData.json`);
 
   const [sourceData, setSourceData] = useState<LetterEntry[]>([]);
+  const sourceDataRef = useRef<LetterEntry[]>([]);
   const [data, setData] = useState<LetterEntry[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const offsetRef = useRef(0);
@@ -38,6 +39,7 @@ const BoardContainer = (): JSX.Element => {
     if (rawData) {
       const processedData = [...rawData].reverse();
       setSourceData(processedData);
+      sourceDataRef.current = processedData;
       const rows = processedData.slice(0, LIMIT);
       awaitImgs(rows).then(() => {
         ReactDOM.unstable_batchedUpdates(() => {
@@ -70,24 +72,32 @@ const BoardContainer = (): JSX.Element => {
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = useCallback(
-    debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: LetterEntry) =>
-          row.user?.toLowerCase().includes(event.target.value.toLowerCase())
+  const handleFilterDebounced = useCallback(
+    debounce(async (value: string) => {
+      const currentSource = sourceDataRef.current;
+      if (value !== "") {
+        const resultData = currentSource.filter((row: LetterEntry) =>
+          row.user?.toLowerCase().includes(value.toLowerCase())
         );
         offsetRef.current = 0;
         setHasMore(false);
         setData(resultData);
       } else {
-        const rows = sourceData.slice(0, LIMIT);
+        const rows = currentSource.slice(0, LIMIT);
         await awaitImgs(rows);
         offsetRef.current = LIMIT;
         setData(rows);
-        setHasMore(true);
+        setHasMore(currentSource.length > LIMIT);
       }
-    }, 1000),
+    }, 500),
     [],
+  );
+
+  const handleFilter = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleFilterDebounced(event.target.value);
+    },
+    [handleFilterDebounced],
   );
 
   const awaitImgs = async (data: LetterEntry[]) => {
