@@ -384,7 +384,7 @@ const PlaylistBoard = (): JSX.Element => {
       if (!isScrollable) fetchMoreGrouped();
     });
     return () => cancelAnimationFrame(raf);
-  }, [groupedOffset, groupBy]);
+  }, [groupedOffset, groupBy, groupOrdered.length]);
 
   // Slice the group-ordered list then re-group — groups fill sequentially
   const visibleGrouped = useMemo(

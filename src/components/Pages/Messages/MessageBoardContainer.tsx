@@ -52,9 +52,13 @@ const MessageBoard = (): JSX.Element => {
 
   const fetchMore = async () => {
     if (data.length !== 0) {
-      const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => row.image !== "")
-        : sourceData;
+      let resultData = sourceData;
+      if (isToggledOnlyImg) {
+        resultData = resultData.filter((row: Submission) => row.image !== "");
+      }
+      if (isToggledTextOnly) {
+        resultData = resultData.filter((row: Submission) => row.message);
+      }
 
       const rows = resultData.slice(offset, LIMIT + offset);
 
@@ -118,7 +122,7 @@ const MessageBoard = (): JSX.Element => {
     const search = searchRef.current;
     if (value) {
       setData([]);
-      const imgData = sourceData.filter((row: Submission) => row.image !== "");
+      const imgData = sourceData.filter((row: Submission) => row.image);
       if (search !== "") {
         const resultData = applySearch(imgData, search);
         setHasMore(false);
@@ -151,19 +155,37 @@ const MessageBoard = (): JSX.Element => {
   };
 
   const OnlyTextToggle = async (value: boolean) => {
+    const search = searchRef.current;
     if (value) {
-      if (isToggledOnlyImg) {
+      setData([]);
+      const textData = sourceData.filter((row: Submission) => row.message);
+      if (search !== "") {
+        const resultData = applySearch(textData, search);
+        setHasMore(false);
+        setData(resultData);
         setOffset(0);
+      } else {
+        const rows = textData.slice(0, LIMIT);
+        setHasMore(true);
+        await awaitImgs(rows);
+        setData(rows);
+        setOffset(LIMIT);
+      }
+      setisToggledTextOnly(true);
+      setIsToggledOnlyImg(false);
+    } else {
+      if (search !== "") {
+        const resultData = applySearch(sourceData, search);
+        setHasMore(false);
+        setData(resultData);
+        setOffset(0);
+      } else {
         const rows = sourceData.slice(0, LIMIT);
         setHasMore(true);
         await awaitImgs(rows);
         setData(rows);
         setOffset(LIMIT);
-        setIsToggledOnlyImg(false);
       }
-      setisToggledTextOnly(true);
-      setIsToggledOnlyImg(false);
-    } else {
       setisToggledTextOnly(false);
     }
   };

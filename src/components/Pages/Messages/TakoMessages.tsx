@@ -48,8 +48,17 @@ const TakoMessages = ({
   }, []);
 
   const visibleSubmissions = useMemo(
-    () => isToggledOnlyImg ? submissions.filter((sub) => sub.image) : submissions,
-    [submissions, isToggledOnlyImg],
+    () => {
+      let filtered = submissions;
+      if (isToggledOnlyImg) {
+        filtered = filtered.filter((sub) => sub.image);
+      }
+      if (isToggledTextOnly) {
+        filtered = filtered.filter((sub) => sub.message);
+      }
+      return filtered;
+    },
+    [submissions, isToggledOnlyImg, isToggledTextOnly],
   );
 
   return (
