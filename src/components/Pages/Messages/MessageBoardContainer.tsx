@@ -53,7 +53,7 @@ const MessageBoard = (): JSX.Element => {
   const fetchMore = async () => {
     if (data.length !== 0) {
       const resultData = isToggledOnlyImg
-        ? sourceData.filter((row: Submission) => row.image !== "")
+        ? sourceData.filter((row: Submission) => row.image)
         : sourceData;
 
       const rows = resultData.slice(offset, LIMIT + offset);
@@ -118,7 +118,7 @@ const MessageBoard = (): JSX.Element => {
     const search = searchRef.current;
     if (value) {
       setData([]);
-      const imgData = sourceData.filter((row: Submission) => row.image !== "");
+      const imgData = sourceData.filter((row: Submission) => row.image);
       if (search !== "") {
         const resultData = applySearch(imgData, search);
         setHasMore(false);

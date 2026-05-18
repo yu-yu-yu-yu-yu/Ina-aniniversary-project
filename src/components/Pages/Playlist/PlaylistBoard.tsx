@@ -344,12 +344,11 @@ const PlaylistBoard = (): JSX.Element => {
     setData((prev) => prev.concat(rows));
   };
 
-  // Full grouping (not rendered) — used to determine group-order for pagination
   const allGrouped = useMemo(
     () => groupBy ? groupSongs(filteredData, groupBy) : null,
     [filteredData, groupBy],
   );
-  // Songs flattened in group order: all of group 1, then group 2, etc.
+
   const groupOrdered = useMemo(
     () => allGrouped ? allGrouped.flatMap((g) => g.songs) : [],
     [allGrouped],
@@ -384,9 +383,8 @@ const PlaylistBoard = (): JSX.Element => {
       if (!isScrollable) fetchMoreGrouped();
     });
     return () => cancelAnimationFrame(raf);
-  }, [groupedOffset, groupBy]);
+  }, [groupedOffset, groupBy, groupOrdered.length]);
 
-  // Slice the group-ordered list then re-group — groups fill sequentially
   const visibleGrouped = useMemo(
     () => groupBy ? groupSongs(groupOrdered.slice(0, groupedOffset), groupBy) : null,
     [groupOrdered, groupBy, groupedOffset],
