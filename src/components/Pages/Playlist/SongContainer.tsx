@@ -26,6 +26,14 @@ const toEmbed = (url: string): string => {
   return match ? `https://www.youtube.com/embed/${match[1]}` : url;
 };
 
+const toWatch = (url: string): string => {
+  const videoMatch = url.match(/youtube\.com\/embed\/([^?&#]+)/);
+  if (!videoMatch) return url;
+  const startMatch = url.match(/[?&]start=(\d+)/);
+  const base = `https://www.youtube.com/watch?v=${videoMatch[1]}`;
+  return startMatch ? `${base}&t=${startMatch[1]}` : base;
+};
+
 const CONTEXT_LABEL: Record<string, string> = {
   karaoke:  "Karaoke",
   concert:  "Concert",
@@ -128,7 +136,7 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
         {song.songInfo && (
           <BubbleSong>
             {song.originalSongLink
-              ? <a href={song.originalSongLink} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>{song.songInfo}</a>
+              ? <a href={toWatch(song.originalSongLink)} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>{song.songInfo}</a>
               : song.songInfo}
           </BubbleSong>
         )}
