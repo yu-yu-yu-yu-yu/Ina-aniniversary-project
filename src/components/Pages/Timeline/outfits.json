@@ -62,8 +62,8 @@
   {
     "title": "Violet Ina",
     "artist": "Rogue Takolyte",
-    "handle": "",
-    "username": "",
+    "handle": "@ArchiveTakolyte",
+    "username": "ArchiveTakolyte",
     "filename": "Violet_ina_RogueTakolyte.png",
     "vodtitle": "『VIOLET』 - Ninomae Ina'nis",
     "video": "https://www.youtube.com/watch?v=8ZdLXELdF9Q",
@@ -131,9 +131,9 @@
   },
   {
     "title": "WAHcher",
-    "artist": "Rogue Takolyte",
-    "handle": "",
-    "username": "",
+    "artist": "drizzle",
+    "handle": "@drizzle_021",
+    "username": "drizzle_021",
     "filename": "wahcher_drizzle.png",
     "vodtitle": "【Chat】 Morrrrrning",
     "video": "https://www.youtube.com/watch?v=2oc4di4E60o",
@@ -238,6 +238,16 @@
     "vodtitle": "【3D LIVE】『Neverland Paradox』 Ninomae Ina'nis Birthday Live 2023 #INAinaNeverland",
     "video": "https://www.youtube.com/watch?v=yT2ety9RfIo",
     "date": "Dec 10, 2023"
+  },
+  {
+    "title": "Mind Craft Ina",
+    "artist": "Ruthar",
+    "handle": "@DRuthar",
+    "username": "DRuthar",
+    "filename": "mindcraft_ina_ruthar.png",
+    "vodtitle": "【MV】Mind Craft ▶️ hololive English Cover",
+    "video": "https://www.youtube.com/watch?v=OQuGEpICY2o",
+    "date": "Jan 20, 2024"
   },
   {
     "title": "Spring Ina 2024",
