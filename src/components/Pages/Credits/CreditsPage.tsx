@@ -5,6 +5,8 @@ import FloatingTakos from "../Home/FloatingTakos";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import { NavTitle } from "../../../styles/globalStyles";
 import { TAKO_COUNT } from "../../../constants/takos";
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 import {
   CreditsBoard,
   CreditsSection,
@@ -20,8 +22,18 @@ import {
 const credits = creditsData as CreditEntry[];
 
 const CreditsPage = (): JSX.Element => {
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
+
   return (
     <div style={{ position: "relative", minHeight: "100vh", background: "var(--background)" }}>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/明日も晴れるといいね.mp3"}
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
       <Navbar>
         <NavHome />
         <NavTitle>Credits</NavTitle>
