@@ -91,11 +91,13 @@ export const HintPopover = styled.div`
   border: 2px solid var(--light-highlight);
   border-radius: 12px;
   box-shadow: 0 4px 16px var(--shadow);
-  padding: 16px 22px;
-  font-size: 0.5em;
+  padding: 16px 20px;
+  font-size: clamp(12px, 0.5em, 15px);
   z-index: 100;
-  min-width: 220px;
-  max-width: 400px;
+  min-width: 260px;
+  max-width: min(90vw, 460px);
+  max-height: 80vh;
+  overflow-y: auto;
 `;
 
 export const NavHome = () => {

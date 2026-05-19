@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import outfits from "./outfits.json";
 import {
+  ArtworkButton,
   BannerImg,
   BannerImgWrapper,
   BannerWrapper,
@@ -36,6 +37,7 @@ const initialLoaded = new Set(
 export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
+  const [isPlaying, setIsPlaying] = useState(true);
   const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
   const [pivotIndex, setPivotIndex] = useState(0);
   const [loadedSet, setLoadedSet] = useState<Set<number>>(initialLoaded);
@@ -116,6 +118,7 @@ export const Banner = () => {
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "touch") return;
+    if ((e.target as HTMLElement).closest("button")) return;
     const el = containerRef.current;
     if (!el) return;
     isDragging.current = true;
@@ -154,7 +157,15 @@ export const Banner = () => {
     goTo(bestIdx);
   }, [goTo]);
 
+  const swapArtwork = useCallback((title: string, arr: Outfit[]) => {
+    setDupIdx(prev => ({
+      ...prev,
+      [title]: ((prev[title] || 0) + 1) % arr.length,
+    }));
+  }, []);
+
   useEffect(() => {
+    if (!isPlaying) return;
     const interval = setInterval(() => {
       setDupIdx(prev => {
         const next: Record<string, number> = { ...prev };
@@ -167,7 +178,7 @@ export const Banner = () => {
       });
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPlaying]);
 
   return (
     <>
@@ -267,6 +278,31 @@ export const Banner = () => {
                         alt={outfit.title}
                       />
                     </span>
+                    {arr.length > 1 && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: 8,
+                          right: 8,
+                          display: "flex",
+                          gap: 5,
+                          zIndex: 10,
+                        }}
+                      >
+                        <ArtworkButton
+                          title="Next artwork"
+                          onClick={e => { e.stopPropagation(); swapArtwork(title, arr); }}
+                        >
+                          <i className="fa fa-exchange" aria-hidden="true" />
+                        </ArtworkButton>
+                        <ArtworkButton
+                          title={isPlaying ? "Pause auto-swap" : "Resume auto-swap"}
+                          onClick={e => { e.stopPropagation(); setIsPlaying(v => !v); }}
+                        >
+                          <i className={`fa fa-${isPlaying ? "pause" : "play"}`} aria-hidden="true" />
+                        </ArtworkButton>
+                      </div>
+                    )}
                     <DialogueBox $active={activeIdx === i}>
                       <div style={{ textAlign: "center" }}>
                         <b style={{ fontSize: "1.25em" }}>{outfit.title}</b>

@@ -2251,19 +2251,6 @@
     ]
   },
   {
-    "songName": "とある竜の恋の歌",
-    "songInfo": "Original: Itou Kanako",
-    "origin": "3rd Party",
-    "collab": "solo",
-    "performances": [
-      {
-        "context": "concert",
-        "name": "Evermore"
-      }
-    ],
-    "originalSongLink": "https://www.youtube.com/embed/uuGIUOk8P9I"
-  },
-  {
     "songName": "ドライフラワー (Dryflower)",
     "songInfo": "Original: Yuuri (ユーリ)",
     "origin": "3rd Party",
@@ -2419,20 +2406,6 @@
     "originalSongLink": "https://www.youtube.com/embed/8nQm9RN9J7w"
   },
   {
-    "songName": "『おどれ！VRダンス！』 (VR Dance)",
-    "songInfo": "Hololive",
-    "origin": "Original: KurageP",
-    "collab": "solo",
-    "performances": [
-      {
-        "context": "cover",
-        "link": "https://www.youtube.com/embed/5KCpe82_jW4",
-        "status": "archived"
-      }
-    ],
-    "originalSongLink": "https://www.youtube.com/embed/-PgwpwD_WIc"
-  },
-  {
     "songName": "モザイクロール (Mozaik Role)",
     "songInfo": "Original: DECO*27 feat. GUMI (Vocaloid)",
     "origin": "3rd Party",
@@ -2459,21 +2432,6 @@
     ],
     "coverInfo": "Minato Aqua, Houshou Marine, Sakamata Chloe, Ninomae Ina'nis, Gawr Gura",
     "originalSongLink": "https://www.youtube.com/embed/VOFOmeHAmfk"
-  },
-  {
-    "songName": "レイメイ",
-    "songInfo": "Original: さユり × MY FIRST STORY (Golden Kamuy S2 OP)",
-    "origin": "3rd Party",
-    "coverInfo": "Concert by Ninomae Ina'nis",
-    "originalSongLink": "https://www.youtube.com/embed/msLkh1fE8Os",
-    "collab": "solo",
-    "performances": [
-      {
-        "context": "concert",
-        "link": "https://www.youtube.com/embed/3n9igJnSXtQ?start=600",
-        "status": "archived"
-      }
-    ]
   },
   {
     "songName": "丸の内サディスティック (Marunouchi Sadistic)",

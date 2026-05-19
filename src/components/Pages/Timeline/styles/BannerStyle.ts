@@ -173,6 +173,27 @@ export const PageArrowButton = styled.button`
   }
 `;
 
+export const ArtworkButton = styled.button`
+  background: rgba(0, 0, 0, 0.52);
+  color: var(--light-highlight);
+  border: 1px solid var(--light-highlight);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  opacity: 0.72;
+  transition: opacity 0.18s, background 0.18s;
+  flex-shrink: 0;
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.78);
+  }
+`;
+
 export const DialogueBox = styled.div<{ $active: boolean }>`
   position: absolute;
   left: 50%;

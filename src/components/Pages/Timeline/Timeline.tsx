@@ -106,9 +106,49 @@ export const Timeline = ({
           </HintButton>
           {hintOpen && (
             <HintPopover onClick={() => setHintOpen(false)}>
-              {mobile
-                ? "Click thumbnail to see more"
-                : "Drag timeline to scroll, click on thumbnail to see more details"}
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+
+                <section>
+                  <div style={{ fontWeight: 700, marginBottom: 5, paddingBottom: 3, borderBottom: "1px solid var(--light-highlight)" }}>
+                    Outfit Banner
+                  </div>
+                  <ul style={{ margin: 0, paddingLeft: 16, lineHeight: 1.65 }}>
+                    <li>Drag or use the ‹ › arrows to browse outfits</li>
+                    <li>Click an image to open it full-size</li>
+                    <li>Hover a card to see the title, artist and source stream</li>
+                    <li>Cards with multiple artworks show two small buttons at the bottom-right corner:
+                      <ul style={{ paddingLeft: 14, marginTop: 3 }}>
+                        <li><b>⇄</b> : manually cycle to the next artwork</li>
+                        <li><b>⏸ / ▶</b> : pause or resume the 3 s auto-swap</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <div style={{ fontWeight: 700, marginBottom: 5, paddingBottom: 3, borderBottom: "1px solid var(--light-highlight)" }}>
+                    Streams &amp; Milestones
+                  </div>
+                  <ul style={{ margin: 0, paddingLeft: 16, lineHeight: 1.65 }}>
+                    {mobile ? (
+                      <li>Scroll vertically to browse the current month</li>
+                    ) : (
+                      <li>Drag horizontally to scroll through the current month</li>
+                    )}
+                    <li>Click a thumbnail to see full details, date and notes</li>
+                    <li>Use the <b>Search</b> {mobile ? "drawer" : "bar"} to filter milestones by name</li>
+                    <li>Tag toggles filter by type: Highlighted, Important, Gaming, Drawing, Collab, Song, or Has Comment</li>
+                    <li>The <b>【tag】</b> dropdown filters by stream series (e.g. Minecraft, Elden Ring)</li>
+                    <li>Use the <b>Month / Year</b> bar at the bottom to jump to any period</li>
+                    {mobile && <li>Tap the <b>Search</b> button in the navbar to open filters &amp; navigation</li>}
+                  </ul>
+                </section>
+
+                <div style={{ textAlign: "center", opacity: 0.45, fontSize: "0.88em" }}>
+                  Click anywhere to close
+                </div>
+
+              </div>
             </HintPopover>
           )}
         </div>
