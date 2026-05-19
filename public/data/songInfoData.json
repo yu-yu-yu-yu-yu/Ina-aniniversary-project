@@ -44,7 +44,7 @@
     "originalSongLink": "https://www.youtube.com/embed/NTrm_idbhUk"
   },
   {
-    "songName": "All for One",
+    "songName": "All For One",
     "songInfo": "Original song by hololive English",
     "origin": "Hololive's original",
     "collab": "group",
@@ -52,6 +52,10 @@
       {
         "context": "release",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/ok24HgzbeLs"
@@ -335,6 +339,18 @@
         "link": "https://www.youtube.com/embed/CDljbqawDkw?start=3392",
         "status": "archived",
         "name": "hololive English -Myth-"
+      },
+      {
+        "context": "concert",
+        "name": "Connect the World"
+      },
+      {
+        "context": "concert",
+        "name": "Breaking Dimensions"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/bitH6NZ_e2Q"
@@ -925,6 +941,19 @@
     ]
   },
   {
+    "songName": "Kirameki Rider☆",
+    "songInfo": "Original: hololive IDOL PROJECT",
+    "origin": "Hololive's original",
+    "collab": "group",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Connect the World"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/vE4L1IWLeag"
+  },
+  {
     "songName": "Kirameki Rider - English ver.",
     "songInfo": "Original: hololive Japan (キラメキライダー☆)",
     "origin": "3rd Party",
@@ -940,6 +969,10 @@
       {
         "context": "concert",
         "name": "Drawn to Dawn"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ]
   },
@@ -1179,7 +1212,7 @@
       },
       {
         "context": "concert",
-        "name": "ALL FOR ONE",
+        "name": "All For One",
         "status": "archived"
       }
     ],
@@ -1207,9 +1240,31 @@
       {
         "context": "release",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Connect the World"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/zbgWUK_tidI"
+  },
+  {
+    "songName": "おーしゃんうぇーぶ Party☆らぃ (Ocean wave Party☆Live)",
+    "songInfo": "Original song by UMISEA",
+    "origin": "Hololive's original",
+    "coverInfo": "Minato Aqua, Houshou Marine, Ninomae Ina'nis, Gawr Gura, Sakamata Chloe",
+    "collab": "group",
+    "performances": [
+      {
+        "context": "release",
+        "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "Splash Party"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/2v_BFL-kuWs"
   },
   {
     "songName": "Ochame Kinou",
@@ -1255,6 +1310,10 @@
       {
         "context": "release",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/0wO8d70KSXw"
@@ -1551,6 +1610,10 @@
         "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=1318",
         "name": "Evermore",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/Ii7rtNaGlls"
@@ -1671,6 +1734,10 @@
         "context": "concert",
         "name": "Breaking Dimensions",
         "status": "archived"
+      },
+      {
+        "context": "concert",
+        "name": "All For One"
       }
     ]
   },
@@ -1778,7 +1845,7 @@
       },
       {
         "context": "concert",
-        "name": "ALL FOR ONE",
+        "name": "All For One",
         "status": "archived"
       },
       {
@@ -2249,7 +2316,7 @@
     "performances": [
       {
         "context": "concert",
-        "name": "ALL FOR ONE",
+        "name": "All For One",
         "status": "archived"
       }
     ],
