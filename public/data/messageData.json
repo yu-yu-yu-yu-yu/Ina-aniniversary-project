@@ -901,7 +901,7 @@
   },
   {
     "user": "Deer Oh Dear",
-    "icon": "DeerOhDear",
+    "icon": "DeerOhDear.png",
     "message": "",
     "image": "DeerOhDear01.png"
   },
@@ -937,7 +937,7 @@
   },
   {
     "user": "TakoGrem",
-    "icon": "TakoGrem.png",
+    "icon": "TakoGrem.PNG",
     "message": "",
     "image": "TakoGrem01.png"
   },
