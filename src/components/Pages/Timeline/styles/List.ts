@@ -501,7 +501,7 @@ export const EventModalInfoLeft = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--text-color);
     flex-direction: row;
     padding: 0;
   }
@@ -512,7 +512,7 @@ export const EventModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background: var(--dark-highlight);
+  background: var(--light-background);
   color: var(--text-color);
   border: 2px solid var(--light-highlight);
   border-radius: 12px;

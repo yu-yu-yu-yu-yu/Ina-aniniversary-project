@@ -339,7 +339,7 @@ const Event = ({
           <div style={{ marginLeft: hoverMessage.author ? 32 : 0, minWidth: 220, maxWidth: 400, display: "flex", flexDirection: "column" }}>
             <span style={{ fontSize: 14 }}>{hoverMessage.text}</span>
             {hoverMessage.author && (
-              <span style={{ fontSize: 13, marginTop: 12, color: "#ffd580", alignSelf: "flex-end" }}>
+              <span style={{ fontSize: 13, marginTop: 12, color: "var(--light-highlight)", alignSelf: "flex-end" }}>
                 by: {hoverMessage.author}
               </span>
             )}
@@ -429,7 +429,7 @@ const EventModal = ({
                     {msg.text}
                   </span>
                   {msg.author && (
-                    <div style={{ fontSize: 13, marginTop: 10, color: "#ffd580", textAlign: "right" }}>
+                    <div style={{ fontSize: 13, marginTop: 10, color: "var(--light-highlight)", textAlign: "right" }}>
                       by: {msg.author}
                     </div>
                   )}
