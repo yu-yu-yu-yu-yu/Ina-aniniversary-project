@@ -57,12 +57,15 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
   const { reportVideoPlaying } = useMute();
   const linkedPerfs = song.performances.filter((p) => p.link);
 
-  const slots = useMemo(() => [
-    ...linkedPerfs.map((p) => ({ link: p.link!, label: perfLabel(p), isOriginal: false })),
-    ...(song.originalSongLink
+  const slots = useMemo(() => {
+    const perfSlots = linkedPerfs.map((p) => ({ link: p.link!, label: perfLabel(p), isOriginal: false }));
+    const originalSlot = song.originalSongLink
       ? [{ link: toEmbed(song.originalSongLink), label: "Original ver.", isOriginal: true }]
-      : []),
-  ], [song]);
+      : [];
+    return song.origin === "Ina's original"
+      ? [...originalSlot, ...perfSlots]
+      : [...perfSlots, ...originalSlot];
+  }, [song]);
 
   const [slotIndex, setSlotIndex] = useState(0);
 
@@ -166,7 +169,7 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
           {archiveStatus !== "unarchived" && (
             <SongTag tagColor={playlistFilterColors[archiveStatus]}>{archiveStatus}</SongTag>
           )}
-          {linkedPerfs.length === 0 && (
+          {linkedPerfs.length === 0 && song.origin !== "Ina's original" && song.origin !== "Hololive's original" && (
             <SongTag tagColor={playlistFilterColors["unarchived"]}>Unarchived</SongTag>
           )}
           {song.collab !== "solo" && (

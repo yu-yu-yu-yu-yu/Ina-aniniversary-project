@@ -242,7 +242,7 @@ export const BubbleHeader = styled.div`
 
   & > * {
     color: inherit;
-    -webkit-text-stroke: 0.5px var(--light-highlight);
+    -webkit-text-stroke: 0.5px var(--title-stroke);
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
     overflow-wrap: break-word;
     word-break: break-word;

@@ -225,7 +225,6 @@ const FiltersPanel = ({
       <Switch label="Karaoke"            value={contextFilter === "karaoke"}          onChange={setContext("karaoke")}          color={playlistFilterColors["karaoke"]}            mobile />
       <Switch label="Concert"             value={contextFilter === "concert"}           onChange={setContext("concert")}           color={playlistFilterColors["concert"]}           mobile />
       <Switch label="Featured"            value={contextFilter === "featured"}          onChange={setContext("featured")}          color={playlistFilterColors["featured"]}          mobile />
-      <Switch label="Banana"              value={contextFilter === "banana"}            onChange={setContext("banana")}            color={playlistFilterColors["banana"]}            mobile />
     </FilterGroup>
     <PlaylistDrawerSeparator>Archive</PlaylistDrawerSeparator>
     <FilterGroup>

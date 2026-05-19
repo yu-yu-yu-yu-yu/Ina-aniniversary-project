@@ -67,14 +67,16 @@ export const Banner = () => {
 
   const scrollToPivot = useCallback((index: number) => {
     const el = itemRefs.current[index];
-    if (!el) return;
+    const container = containerRef.current;
+    if (!el || !container) return;
     programmaticRef.current = true;
     clearTimeout(programmaticTimer.current);
     programmaticTimer.current = window.setTimeout(() => {
       programmaticRef.current = false;
-      if (containerRef.current) containerRef.current.style.scrollSnapType = "";
+      container.style.scrollSnapType = "";
     }, 700);
-    el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const targetLeft = el.offsetLeft - container.clientWidth / 2 + el.offsetWidth / 2;
+    container.scrollTo({ left: targetLeft, behavior: "smooth" });
   }, []);
 
   const goTo = useCallback(

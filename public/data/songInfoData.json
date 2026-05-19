@@ -121,7 +121,6 @@
     "songName": "banana",
     "songInfo": "banana",
     "origin": "banana",
-    "originalSongLink": "https://www.youtube.com/embed/OjkLlysRfd0?start=351",
     "collab": "solo",
     "performances": [
       {
@@ -282,7 +281,7 @@
     "songName": "caramel ribbon cursetard",
     "songInfo": "Original: Kana Hanazawa & Saori Hayami",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/KrKmSwSuKlE",
+    "originalSongLink": "https://www.youtube.com/embed/t0K91kvHUIE",
     "collab": "duo",
     "performances": [
       {
@@ -370,20 +369,6 @@
     "originalSongLink": "https://www.youtube.com/embed/O1bhZgkC4Gw"
   },
   {
-    "songName": "Crybaby",
-    "songInfo": "Original: The Neighbourhood",
-    "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/O1bhZgkC4Gw",
-    "collab": "solo",
-    "performances": [
-      {
-        "context": "karaoke",
-        "link": "https://www.youtube.com/embed/WN-Bw81o-xo?start=1279",
-        "status": "archived"
-      }
-    ]
-  },
-  {
     "songName": "DADDY! DADDY! DO!",
     "songInfo": "Original: Masayuki Suzuki feat. Airi Suzuki (Kaguya-sama: Love is War OP)",
     "origin": "3rd Party",
@@ -433,7 +418,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/yT2ety9RfIo",
+        "link": "https://www.youtube.com/embed/yT2ety9RfIo?start=516",
         "name": "Neverland Paradox",
         "status": "archived"
       }
@@ -477,7 +462,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/yT2ety9RfIo",
+        "link": "https://www.youtube.com/embed/yT2ety9RfIo?start=1032",
         "name": "Neverland Paradox",
         "status": "archived"
       }
@@ -929,7 +914,7 @@
     "songName": "Kimi ni Asa ga Furu (転がる岩、君に朝が降る)",
     "songInfo": "Original: Kessoku Band",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/q-bCp4MxuYU",
+    "originalSongLink": "https://www.youtube.com/embed/E5O0mCrUdAM",
     "collab": "solo",
     "performances": [
       {
@@ -1514,7 +1499,7 @@
     "songName": "Sepia",
     "songInfo": "Original: Mori Calliope",
     "origin": "Hololive's original",
-    "originalSongLink": "https://www.youtube.com/embed/ozH28qYrMy4",
+    "originalSongLink": "https://www.youtube.com/embed/73_TiCJ-Wtc",
     "collab": "duo",
     "coverInfo": "Ninomae Ina'nis, Mori Calliope",
     "performances": [
@@ -1547,7 +1532,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/yT2ety9RfIo",
+        "link": "https://www.youtube.com/embed/yT2ety9RfIo?start=1818",
         "name": "Neverland Paradox",
         "status": "archived"
       }
@@ -1563,7 +1548,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/I-J11Da5ONY",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=1318",
         "name": "Evermore",
         "status": "archived"
       }
@@ -1913,7 +1898,7 @@
     "songInfo": "Original: Yuna (SAO Ordinal Scale)",
     "coverInfo": "Sword Art Online: Ordinal Scale feat. IRyS",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/xEVcTStgA4A",
+    "originalSongLink": "https://www.youtube.com/embed/ozx4R6usDbw",
     "collab": "duo",
     "performances": [
       {
@@ -2022,7 +2007,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/yT2ety9RfIo",
+        "link": "https://www.youtube.com/embed/yT2ety9RfIo?start=207",
         "name": "Neverland Paradox",
         "status": "archived"
       }
@@ -2120,7 +2105,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/yT2ety9RfIo",
+        "link": "https://www.youtube.com/embed/yT2ety9RfIo?start=1218",
         "name": "Neverland Paradox",
         "status": "archived"
       }
@@ -2168,7 +2153,7 @@
         "status": "archived"
       }
     ],
-    "originalSongLink": "https://www.youtube.com/embed/YLiiyIKW-l0"
+    "originalSongLink": "https://www.youtube.com/embed/nNe6o3ivrXA"
   },
   {
     "songName": "スキちゃん (Suki-chan)",
@@ -2193,7 +2178,7 @@
     "performances": [
       {
         "context": "karaoke",
-        "link": "https://www.youtube.com/embed/ACV-i-b10io?start=589",
+        "link": "https://www.youtube.com/embed/ACV-i-b10io?start=383",
         "status": "archived"
       }
     ]
@@ -2332,7 +2317,7 @@
     "performances": [
       {
         "context": "karaoke",
-        "link": "https://www.youtube.com/embed/fUEnTLLN9sQ",
+        "link": "https://www.youtube.com/embed/fUEnTLLN9sQ?start=351",
         "status": "archived"
       }
     ],
@@ -2464,7 +2449,7 @@
     "performances": [
       {
         "context": "concert",
-        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=3445s",
+        "link": "https://www.youtube.com/embed/I-J11Da5ONY?start=3445",
         "status": "archived",
         "name": "Evermore"
       }
@@ -2500,7 +2485,7 @@
     "performances": [
       {
         "context": "karaoke",
-        "link": "https://www.youtube.com/embed/0L0HMYSPtyQ",
+        "link": "https://www.youtube.com/embed/0L0HMYSPtyQ?start=2430",
         "status": "archived"
       },
       {
@@ -2868,5 +2853,18 @@
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/uuGIUOk8P9I"
+  },
+  {
+    "songName": "Seishun Archive (青春アーカイブ)",
+    "songInfo": "Original: hololive IDOL PROJECT",
+    "origin": "Hololive's original",
+    "collab": "group",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "All For One"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/YzQCNmk3YYA"
   }
 ]

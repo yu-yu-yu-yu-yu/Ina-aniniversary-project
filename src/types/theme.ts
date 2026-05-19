@@ -17,6 +17,7 @@ export interface ThemeVariables {
   "--background": string;
   "--shadow": string;
   "--logo-filter": string;
+  "--title-stroke": string;
 }
 
 export type Themes = Record<ThemeName, ThemeVariables>;

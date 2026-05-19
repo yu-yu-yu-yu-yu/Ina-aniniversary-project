@@ -14,6 +14,7 @@ export const themes: Themes = {
     "--background": "#F3EDFF",
     "--shadow": "#0000001C",
     "--logo-filter": "none",
+    "--title-stroke": "#ffc549",
   },
   Violet: {
     "--lightdark": "#f0eeffff",
@@ -27,6 +28,7 @@ export const themes: Themes = {
     "--background": "#31303A",
     "--shadow": "#0000001C",
     "--logo-filter": "invert(60%) sepia(80%) saturate(400%) hue-rotate(180deg)",
+    "--title-stroke": "#bf00ff",
   },
   Meconopsis: {
     "--lightdark": "#0d0d2e",
@@ -40,6 +42,7 @@ export const themes: Themes = {
     "--background": "#07071e",
     "--shadow": "#0000003C",
     "--logo-filter": "sepia(100%) hue-rotate(190deg) brightness(0.8) contrast(1.2)",
+    "--title-stroke": "#5db8ff",
   },
   Temari: {
     "--lightdark": "#181818",
@@ -53,6 +56,7 @@ export const themes: Themes = {
     "--background": "#5a5a5aff",
     "--shadow": "#0000001C",
     "--logo-filter": "invert(18%) sepia(98%) saturate(0) hue-rotate(357deg) brightness(0.9)",
+    "--title-stroke": "#ff5555",
   },
   TakoTakover: {
     "--lightdark": "#1e0a3c",
@@ -66,5 +70,6 @@ export const themes: Themes = {
     "--background": "#12003e",
     "--shadow": "#0000005C",
     "--logo-filter": "sepia(100%) hue-rotate(270deg) saturate(300%) brightness(0.8)",
+    "--title-stroke": "#ffc251",
   },
 };

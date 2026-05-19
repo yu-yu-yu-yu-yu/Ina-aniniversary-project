@@ -91,6 +91,7 @@ const TagBar = ({
         value={tags.highlight}
         onChange={(value) => setSelectedTags({ ...tags, highlight: value })}
         color={tagColors.highlight}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -98,6 +99,7 @@ const TagBar = ({
         value={tags.important}
         onChange={(value) => setSelectedTags({ ...tags, important: value })}
         color={tagColors.important}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -105,6 +107,7 @@ const TagBar = ({
         value={tags.gaming}
         onChange={(value) => setSelectedTags({ ...tags, gaming: value })}
         color={tagColors.gaming}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -112,6 +115,7 @@ const TagBar = ({
         value={tags.drawing}
         onChange={(value) => setSelectedTags({ ...tags, drawing: value })}
         color={tagColors.drawing}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -119,6 +123,7 @@ const TagBar = ({
         value={tags.collab}
         onChange={(value) => setSelectedTags({ ...tags, collab: value })}
         color={tagColors.collab}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -126,6 +131,7 @@ const TagBar = ({
         value={tags.song}
         onChange={(value) => setSelectedTags({ ...tags, song: value })}
         color={tagColors.song}
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
       <Switch
@@ -133,6 +139,7 @@ const TagBar = ({
         value={tags.hasComment}
         onChange={(value) => setSelectedTags({ ...tags, hasComment: value })}
         color="#00FF99"
+        labelColor="var(--dark-highlight)"
         mobile={mobile}
       />
     </TagsContainer>
