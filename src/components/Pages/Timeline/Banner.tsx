@@ -118,7 +118,7 @@ export const Banner = () => {
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "touch") return;
-    if ((e.target as HTMLElement).closest("button")) return;
+    if ((e.target as HTMLElement).closest("button, a")) return;
     const el = containerRef.current;
     if (!el) return;
     isDragging.current = true;
