@@ -89,11 +89,11 @@ const TakoMessages = ({
                   {image.includes("mp4") ?
 
                     <video width={420} controls>
-                        <source src={process.env.PUBLIC_URL + "/Artworks/" + image} type="video/mp4"/>
+                        <source src={process.env.PUBLIC_URL + "/artworks/" + image} type="video/mp4"/>
                     </video>
 
                   : <BubbleImage
-                    src={process.env.PUBLIC_URL + "/Artworks/" + image}
+                    src={process.env.PUBLIC_URL + "/artworks/" + image}
                   />
                   }
                 </SRLWrapper>

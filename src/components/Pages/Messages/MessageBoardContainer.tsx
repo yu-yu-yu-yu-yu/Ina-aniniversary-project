@@ -197,7 +197,7 @@ const MessageBoard = (): JSX.Element => {
         promises.push(
           new Promise((resolve) => {
             const img = new Image();
-            img.src = process.env.PUBLIC_URL + "/Artworks/" + row.image;
+            img.src = process.env.PUBLIC_URL + "/artworks/" + row.image;
             img.onerror = resolve;
             img.onload = resolve;
           }),
