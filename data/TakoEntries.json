@@ -85,7 +85,7 @@
     "category": "",
     "attributes": "",
     "description": "",
-    "image": ""
+    "image": "YatoTako.png"
   },
   {
     "author": "NowaruArt",
@@ -120,12 +120,12 @@
     "image": "Vantablack.png"
   },
   {
-    "author": "Popop",
-    "name": "popop",
-    "category": "Mastering the 8th WAH (we adore her(",
-    "attributes": "Passionate / smart",
-    "description": "A devout follower of the priestess. This Tako draws fan art whenever. My drawing powers from the void. A power that comes from the unknown.\n\nClass: Wizard\nAttributes: fat / bouncy \n\n“A tako famous for its wise decisions. This Tako is a researcher of the door to darkness.  I use the ways of the bounce to learn ways of the ancient ones. This Tako is very determined to learn and may inspire other Takos as well",
-    "image": ""
+    “author”: “Popop”,
+    “name”: “popop”,
+    “category”: “Mastering the 8th WAH (we adore her(“,
+    “attributes”: “Passionate / smart”,
+    “description”: “A devout follower of the priestess. This Tako draws fan art whenever. My drawing powers from the void. A power that comes from the unknown.\n\nClass: Wizard\nAttributes: fat / bouncy \n\n”A tako famous for its wise decisions. This Tako is a researcher of the door to darkness.  I use the ways of the bounce to learn ways of the ancient ones. This Tako is very determined to learn and may inspire other Takos as well”,
+    “image”: “popop.png”
   },
   {
     "author": "Huros",
@@ -141,7 +141,7 @@
     "category": "Support",
     "attributes": "Timid / Squishy",
     "description": "\"A very shy Tako who struggle to speak until help is needed specially for the priestess and his fellows takodachis\"",
-    "image": ""
+    "image": "Chumbeque.png"
   },
   {
     "author": "Gathog",
@@ -169,11 +169,11 @@
   },
   {
     "author": "Eyeye",
-    "name": "Eyeye",
+    "name": "Eve",
     "category": "",
     "attributes": "",
     "description": "",
-    "image": ""
+    "image": "Eve.png"
   },
   {
     "author": "KiwiNeko",
@@ -694,5 +694,245 @@
     "attributes": "Short / Observant",
     "description": "\"A peculiar takodachi with no remarkable features except with it's notebook near it. It loves observing other takodachi and the priestess. Some rumors say, that it also sneaks for some cookies at night when all other takos are asleep.\"",
     "image": "Lyudmilia.png"
+  },
+  {
+    "author": "Scalim",
+    "name": "Scalim",
+    "category": "Mage",
+    "attributes": "Optimistic / Squishy",
+    "description": "This Optimistic Mage serves with a boundless sense of cheer, casting spells that shimmer with positivity and light. Despite their incredibly Squishy form, which isn't built for direct combat, their resilience is unmatched; they always bounce back with a smile. Their magic is often a shield of support and comfort, proving that true power comes not from brute force, but from an unwavering, hopeful heart.",
+    "image": "Scalim.png"
+  },
+  {
+    "author": "Kurasu Kanon",
+    "name": "Kanon",
+    "category": "Just a lil guy",
+    "attributes": "Round / Lazy",
+    "description": "\"This Tako prefers to lay on the floor of an air-conditioned room. Small though they may be, these round entities are some of the most numerous, and just like any other Tako, the Priestess's presence fills them with happiness.\"",
+    "image": "KurasuKanon.png"
+  },
+  {
+    "author": "Kaede, Acolyte of Wahtcher",
+    "name": "Kaede Nakamura",
+    "category": "Priestess",
+    "attributes": "Devout / Warm",
+    "description": "\"A Priestess from a parallel world, this humanoids Tako resides in a shrine dedicated to Wahtcher. There were more of her kind in her world, but they have fled to the void between worlds during a war. She has striking similarities to the priestess of AO, Ninomae Ina'nis. Kaede's main ability is spiritual healing, but has been known to have the ability to hop between dimensions, exorcise demons, and make use of her third eye. She prefers to stay hidden from the world, as her kind has had conflict with humans in the past.\"",
+    "image": "Kaede,AcolyteofWahtcher.png"
+  },
+  {
+    "author": "Nowaru",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Nowaru.png"
+  },
+  {
+    "author": "drizzle",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "drizzle.png"
+  },
+  {
+    "author": "NKS5",
+    "name": "Takobocchi",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Takobocchi.png"
+  },
+  {
+    "author": "m-pien",
+    "name": "m-pien",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "m-pien.png"
+  },
+  {
+    "author": "Gathog",
+    "name": "Cybertako",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Gathog.png"
+  },
+  {
+    "author": "Kais3r",
+    "name": "Kais3r",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Kais3r.png"
+  },
+  {
+    "author": "GrayTako",
+    "name": "GrayTako",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "GrayTako.png"
+  },
+  {
+    "author": "GlennAkio",
+    "name": "TakoGoomy",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "TakoGoomy.png"
+  },
+  {
+    "author": "Dark0dachi",
+    "name": "Darkodachi",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Darkodachi.png"
+  },
+  {
+    "author": "Deer Oh Dear",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "DeerOhDear.png"
+  },
+  {
+    "author": "犬三",
+    "name": "犬三",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "犬三.png"
+  },
+  {
+    "author": "Vaan",
+    "name": "Vaan The Brainless One",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "VaanTheBrainlessOne.png"
+  },
+  {
+    "author": "RCSI",
+    "name": "Tako Lamp",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "TakoLamp.png"
+  },
+  {
+    "author": "Exvnir",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Exvnir.jpeg"
+  },
+  {
+    "author": "Cyber Toast",
+    "name": "Dumpling Takodachi",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "DumplingTakodachi.png"
+  },
+  {
+    "author": "Rina",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Rina.png"
+  },
+  {
+    "author": "nataniachan",
+    "name": "Lotus Pond Tako",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "LotusPondTako.png"
+  },
+  {
+    "author": "Reika零",
+    "name": "Takozashi",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Takozashi.png"
+  },
+  {
+    "author": "GreenFox",
+    "name": "GreenFox",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "GreenFox.png"
+  },
+  {
+    "author": "Takoster",
+    "name": "Tasaowl",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Tasaowl.png"
+  },
+  {
+    "author": "Cotton Cat",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "CottonCat.png"
+  },
+  {
+    "author": "third12",
+    "name": "third12",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "third12.jpg"
+  },
+  {
+    "author": "Ruthar D. Ulluhan",
+    "name": "Knighted Tako",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "KnightedTako.png"
+  },
+  {
+    "author": "Mr. BioTurtle",
+    "name": "Mr. Kamedachi",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "MrKamedachi.png"
+  },
+  {
+    "author": "SleepzyTofu",
+    "name": "SleepzyTofu",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "SleepzyTofu.png"
+  },
+  {
+    "author": "Ithius",
+    "name": "",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "ithius.png"
+  },
+  {
+    "author": "Takolyte Xander",
+    "name": "Rogue Takolyte",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "RogueTakolyte.png"
   }
 ]
