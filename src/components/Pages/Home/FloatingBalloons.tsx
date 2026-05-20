@@ -109,6 +109,13 @@ const FloatingBalloons = (): JSX.Element => {
   const { theme } = useTheme();
 
   useEffect(() => {
+    themePool[theme].forEach(def => {
+      const img = new Image();
+      img.src = `${process.env.PUBLIC_URL}/${def.src}`;
+    });
+  }, [theme]);
+
+  useEffect(() => {
     const spawn = () => {
       const pool = themePool[theme];
       const spawnCount = Math.floor(Math.random() * 2) + 1;

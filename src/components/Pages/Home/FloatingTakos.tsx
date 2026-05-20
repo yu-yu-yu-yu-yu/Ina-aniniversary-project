@@ -69,6 +69,13 @@ const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIn
   const [columnMode] = useState(!freeFloat);
 
   useEffect(() => {
+    TAKO_FILES.forEach(file => {
+      const img = new Image();
+      img.src = `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`;
+    });
+  }, []);
+
+  useEffect(() => {
     const spawn = () => {
       const spawnCount = Math.floor(Math.random() * 3) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
