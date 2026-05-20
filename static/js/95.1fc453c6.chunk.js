@@ -37,6 +37,7 @@
   width: auto;
   z-index: 3;
   pointer-events: none;
+  will-change: transform;
   animation: ${l} 9s linear forwards;
 `,d=i.Ay.div`
   position: absolute;
@@ -49,7 +50,7 @@
   overflow: visible;
   overflow-x: hidden;
   pointer-events: none;
-`,p=e=>{let{freeFloat:t=!1,zIndex:a}=e;const[i,l]=(0,n.useState)([]),p=(0,n.useRef)(null),x=(0,n.useRef)(null),[c]=(0,n.useState)(!t);(0,n.useEffect)(()=>(p.current=setInterval(()=>{const e=Math.floor(3*Math.random())+1,t=document.documentElement.scrollHeight,a=[];for(let n=0;n<e;n++)Math.random()<.6&&a.push({key:Date.now()+Math.random()+n,left:c?h():90*Math.random(),tako:o.A[Math.floor(Math.random()*o.A.length)],bottom:Math.random()*t,createdAt:Date.now()});a.length>0&&l(e=>[...e,...a])},1e3),()=>{p.current&&clearInterval(p.current)}),[]),(0,n.useEffect)(()=>{const e=setInterval(()=>{l(e=>e.filter(e=>Date.now()-e.createdAt<9e3))},1e3);return()=>clearInterval(e)},[]);const h=()=>Math.random()<.5?10*Math.random():90+10*Math.random(),m=()=>{x.current&&(x.current.volume=.2,x.current.currentTime=0,x.current.play())};return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)("audio",{ref:x,src:"/inatakosound.mp3",preload:"auto",style:{display:"none"}}),(0,r.jsx)(d,{$zIndex:a,children:i.map(e=>(0,r.jsx)(s,{left:e.left,bottom:e.bottom,src:`/takos/${encodeURIComponent(e.tako)}`,alt:"floating takodachi",onClick:m,style:{pointerEvents:"auto",cursor:"pointer"}},e.key))})]})}},1095(e,t,a){a.r(t),a.d(t,{default:()=>Te});var n=a(5043),i=a(403),o=a(2582);const r=i.i7`
+`,p=e=>{let{freeFloat:t=!1,zIndex:a}=e;const[i,l]=(0,n.useState)([]),p=(0,n.useRef)(null),x=(0,n.useRef)(null),[c]=(0,n.useState)(!t);(0,n.useEffect)(()=>{const e=()=>{const e=Math.floor(3*Math.random())+1,t=document.documentElement.scrollHeight,a=[];for(let n=0;n<e;n++)Math.random()<.6&&a.push({key:Date.now()+Math.random()+n,left:c?h():90*Math.random(),tako:o.A[Math.floor(Math.random()*o.A.length)],bottom:Math.random()*t,createdAt:Date.now()});a.length>0&&l(e=>[...e,...a])},t=()=>{p.current=setInterval(e,1e3)},a=()=>{p.current&&clearInterval(p.current)},n=()=>"hidden"===document.visibilityState?a():t();return t(),document.addEventListener("visibilitychange",n),()=>{a(),document.removeEventListener("visibilitychange",n)}},[]),(0,n.useEffect)(()=>{const e=setInterval(()=>{l(e=>e.filter(e=>Date.now()-e.createdAt<9e3))},1e3);return()=>clearInterval(e)},[]);const h=()=>Math.random()<.5?10*Math.random():90+10*Math.random(),m=()=>{x.current&&(x.current.volume=.2,x.current.currentTime=0,x.current.play())};return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)("audio",{ref:x,src:"/inatakosound.mp3",preload:"auto",style:{display:"none"}}),(0,r.jsx)(d,{$zIndex:a,children:i.map(e=>(0,r.jsx)(s,{left:e.left,bottom:e.bottom,src:`/takos/${encodeURIComponent(e.tako)}`,alt:"floating takodachi",onClick:m,style:{pointerEvents:"auto",cursor:"pointer"}},e.key))})]})}},1095(e,t,a){a.r(t),a.d(t,{default:()=>Me});var n=a(5043),i=a(403),o=a(2582);const r=i.i7`
   0%, 75%, 100% { transform: rotate(0deg); }
   78%  { transform: rotate(-5deg); }
   81%  { transform: rotate(5deg); }
@@ -303,7 +304,7 @@
     border: 0;
     border-bottom: 1px solid #ddd;
   }
-`;var d=a(579);const{rE:p}={rE:"26.1.4"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
+`;var d=a(579);const{rE:p}={rE:"26.1.5"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -436,7 +437,7 @@
       font-size: 6px;
     }
   }
-`;var y=a(3403);const b={Standard:"",Violet:"violet",Meconopsis:"meconopsis",Temari:"temari",TakoTakover:"tako8takover"},v=["0","1","cookies","uhh-i-think-she-needs-help"],w=i.i7`
+`;var y=a(3403);const v={Standard:"",Violet:"violet",Meconopsis:"meconopsis",Temari:"temari",TakoTakover:"tako8takover"},b=["0","1","cookies","uhh-i-think-she-needs-help"],w=i.i7`
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50%       { transform: translateY(-14px) rotate(3deg); }
 `,k=i.Ay.div`
@@ -467,14 +468,14 @@
     gap: 10px;
     margin: 4px 0;
   }
-`,A=[31,36,29,33],M=[6,22,0,14],T=i.Ay.img`
+`,A=[31,36,29,33],z=[6,22,0,14],M=i.Ay.img`
   height: ${e=>{let{$index:t}=e;return A[t]}}vw;
   width: auto;
   pointer-events: none;
-  margin-bottom: ${e=>{let{$index:t}=e;return M[t]}}px;
+  margin-bottom: ${e=>{let{$index:t}=e;return z[t]}}px;
   animation: ${w} ${e=>{let{$delay:t}=e;return 2.6+.35*t}}s ease-in-out infinite;
   animation-delay: ${e=>{let{$delay:t}=e;return.45*t}}s;
-`,z=()=>{const{theme:e}=(0,y.D)(),{mvFiles:t,shapedFiles:a,pos:i}=(0,n.useMemo)(()=>{const t=e=>(Math.random()-.5)*e+"%",a=(e,t)=>`${Math.floor(Math.random()*(t-e)+e)}px`,n=(e,t)=>`${Math.floor(Math.random()*(t-e)+e)}%`;return{mvFiles:"Standard"===e?["meconopsis","violet","temari","tako8takover"]:Array(4).fill(b[e]),shapedFiles:[...v].sort(()=>Math.random()-.5),pos:{mvLT:t(20),mvLB:t(20),mvRT:t(20),mvRB:t(20),mvGapLT:a(8,28),mvGapLB:a(8,28),mvGapRT:a(8,28),mvGapRB:a(8,28),shTopLT:n(-20,0),shTopLB:n(55,78),shTopRT:n(-20,0),shTopRB:n(55,78),shGapLT:a(130,210),shGapLB:a(120,200),shGapRT:a(130,210),shGapRB:a(120,200)}}},[e]),o=e=>`/balloons/mv/balloon-mv-${e}.png`,r=e=>`/balloons/takos/balloon-takos-${e}.png`;return(0,d.jsxs)(c,{children:[(0,d.jsxs)(f,{children:[(0,d.jsx)(m,{children:"Tentacult Temple Fan Site"}),(0,d.jsx)($,{children:t.map((e,t)=>(0,d.jsx)(T,{src:o(e),alt:"",$delay:t,$index:t},t))}),(0,d.jsxs)(k,{children:[(0,d.jsx)(j,{$side:"left",$top:`calc(0%  + ${i.mvLT})`,$gap:i.mvGapLT,$delay:0,src:o(t[0]),alt:""}),(0,d.jsx)(j,{$side:"left",$top:`calc(45% + ${i.mvLB})`,$gap:i.mvGapLB,$delay:1,src:o(t[1]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:`calc(5%  + ${i.mvRT})`,$gap:i.mvGapRT,$delay:2,src:o(t[2]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:`calc(40% + ${i.mvRB})`,$gap:i.mvGapRB,$delay:3,src:o(t[3]),alt:""}),(0,d.jsx)(h,{alt:"ina-logo",src:"/InaLogo.png"}),(0,d.jsx)(j,{$side:"left",$top:i.shTopLT,$gap:i.shGapLT,$delay:4,src:r(a[0]),alt:""}),(0,d.jsx)(j,{$side:"left",$top:i.shTopLB,$gap:i.shGapLB,$delay:5,src:r(a[1]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:i.shTopRT,$gap:i.shGapRT,$delay:6,src:r(a[2]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:i.shTopRB,$gap:i.shGapRB,$delay:7,src:r(a[3]),alt:""})]}),(0,d.jsx)(g,{children:"INA'S 6TH BIRTHDAY CELEBRATION"})]}),(0,d.jsx)(u,{children:(0,d.jsxs)("h3",{children:[(0,d.jsx)("i",{className:"fa fa-chevron-down"})," Scroll down for more"," ",(0,d.jsx)("i",{className:"fa fa-chevron-down"})]})})]})},I=i.Ay.div`
+`,T=()=>{const{theme:e}=(0,y.D)(),{mvFiles:t,shapedFiles:a,pos:i}=(0,n.useMemo)(()=>{const t=e=>(Math.random()-.5)*e+"%",a=(e,t)=>`${Math.floor(Math.random()*(t-e)+e)}px`,n=(e,t)=>`${Math.floor(Math.random()*(t-e)+e)}%`;return{mvFiles:"Standard"===e?["meconopsis","violet","temari","tako8takover"]:Array(4).fill(v[e]),shapedFiles:[...b].sort(()=>Math.random()-.5),pos:{mvLT:t(20),mvLB:t(20),mvRT:t(20),mvRB:t(20),mvGapLT:a(8,28),mvGapLB:a(8,28),mvGapRT:a(8,28),mvGapRB:a(8,28),shTopLT:n(-20,0),shTopLB:n(55,78),shTopRT:n(-20,0),shTopRB:n(55,78),shGapLT:a(130,210),shGapLB:a(120,200),shGapRT:a(130,210),shGapRB:a(120,200)}}},[e]),o=e=>`/balloons/mv/balloon-mv-${e}.png`,r=e=>`/balloons/takos/balloon-takos-${e}.png`;return(0,d.jsxs)(c,{children:[(0,d.jsxs)(f,{children:[(0,d.jsx)(m,{children:"Tentacult Temple Fan Site"}),(0,d.jsx)($,{children:t.map((e,t)=>(0,d.jsx)(M,{src:o(e),alt:"",$delay:t,$index:t},t))}),(0,d.jsxs)(k,{children:[(0,d.jsx)(j,{$side:"left",$top:`calc(0%  + ${i.mvLT})`,$gap:i.mvGapLT,$delay:0,src:o(t[0]),alt:""}),(0,d.jsx)(j,{$side:"left",$top:`calc(45% + ${i.mvLB})`,$gap:i.mvGapLB,$delay:1,src:o(t[1]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:`calc(5%  + ${i.mvRT})`,$gap:i.mvGapRT,$delay:2,src:o(t[2]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:`calc(40% + ${i.mvRB})`,$gap:i.mvGapRB,$delay:3,src:o(t[3]),alt:""}),(0,d.jsx)(h,{alt:"ina-logo",src:"/InaLogo.png"}),(0,d.jsx)(j,{$side:"left",$top:i.shTopLT,$gap:i.shGapLT,$delay:4,src:r(a[0]),alt:""}),(0,d.jsx)(j,{$side:"left",$top:i.shTopLB,$gap:i.shGapLB,$delay:5,src:r(a[1]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:i.shTopRT,$gap:i.shGapRT,$delay:6,src:r(a[2]),alt:""}),(0,d.jsx)(j,{$side:"right",$top:i.shTopRB,$gap:i.shGapRB,$delay:7,src:r(a[3]),alt:""})]}),(0,d.jsx)(g,{children:"INA'S 6TH BIRTHDAY CELEBRATION"})]}),(0,d.jsx)(u,{children:(0,d.jsxs)("h3",{children:[(0,d.jsx)("i",{className:"fa fa-chevron-down"})," Scroll down for more"," ",(0,d.jsx)("i",{className:"fa fa-chevron-down"})]})})]})},I=i.Ay.div`
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -486,7 +487,7 @@
   @media (max-width: 701px) {
     padding-top: 40px;
   }
-`,R=i.Ay.div`
+`,S=i.Ay.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -503,7 +504,7 @@
     gap: 24px;
     max-width: 100%;
   }
-`,S=i.Ay.div`
+`,R=i.Ay.div`
   flex: 1;
   min-width: 300px;
   display: flex;
@@ -636,7 +637,7 @@
   @media only screen and (max-width: 1100px) {
     font-size: 13px;
   }
-`;var G=a(984);const B=Array.from({length:47},(e,t)=>`valkyrie_illust_vids/val-${t+1}.mp4`),H=e=>{if(1===B.length)return B[0];let t=e;for(;t===e;){const e=Math.floor(Math.random()*B.length);t=B[e]}return t},E=()=>{const[e,t]=(0,n.useState)(()=>H()),[a,i]=(0,n.useState)(!1);(0,n.useEffect)(()=>{i(!1)},[e]);const o=(0,n.useCallback)(()=>{t(e=>H(e))},[]),r=(0,n.useCallback)(()=>{i(!0)},[]);return(0,d.jsx)(I,{children:(0,d.jsxs)(R,{children:[(0,d.jsx)(G.wA,{children:(0,d.jsxs)("div",{className:"lore-text",children:[(0,d.jsx)("hr",{}),(0,d.jsxs)("p",{children:["One day, ",(0,d.jsx)("b",{children:"Ina'nis"})," picked up a ",(0,d.jsx)("b",{children:"strange book"})," and then started to gain the power of ",(0,d.jsx)("b",{children:"controlling tentacles"}),". To her, ",(0,d.jsx)("b",{children:"tentacles"})," are just a part in her ordinary life; it has never been a big deal for her. However, her girly mind does want to get them",(0,d.jsx)("b",{children:" dressed up and stay pretty"}),"."]}),(0,d.jsxs)("p",{children:["After gaining power, she started hearing"," ",(0,d.jsx)("b",{children:"Ancient Whispers and Revelations"}),". Hence, she began her"," ",(0,d.jsx)("b",{children:"VTuber activities "})," to deliver ",(0,d.jsx)("b",{children:" random sanity checks "})," ","on humanity, as an ",(0,d.jsx)("b",{children:"ordinary girl"}),"."]}),(0,d.jsx)("hr",{})]})}),(0,d.jsxs)(S,{style:{background:a?"transparent":"var(--dark-background)"},children:[(0,d.jsx)(L,{autoPlay:!0,loop:!0,muted:!0,preload:"auto",onCanPlay:r,style:{opacity:a?1:0,transition:"opacity 0.5s ease"},children:(0,d.jsx)("source",{src:`/${e}`,type:"video/mp4"})},e),(0,d.jsx)(Y,{type:"button",onClick:o,"aria-label":"Change lore video",title:"Change video",children:(0,d.jsx)("i",{className:"fa fa-refresh","aria-hidden":"true"})}),(0,d.jsx)(C,{children:(0,d.jsx)(N,{children:"Illustration and Animation: @valkyrie_illust"})})]})]})})},D=i.Ay.div`
+`;var G=a(984);const E=Array.from({length:47},(e,t)=>`valkyrie_illust_vids/val-${t+1}.mp4`),B=e=>{if(1===E.length)return E[0];let t=e;for(;t===e;){const e=Math.floor(Math.random()*E.length);t=E[e]}return t},H=()=>{const[e,t]=(0,n.useState)(()=>B()),[a,i]=(0,n.useState)(!1);(0,n.useEffect)(()=>{i(!1)},[e]);const o=(0,n.useCallback)(()=>{t(e=>B(e))},[]),r=(0,n.useCallback)(()=>{i(!0)},[]);return(0,d.jsx)(I,{children:(0,d.jsxs)(S,{children:[(0,d.jsx)(G.wA,{children:(0,d.jsxs)("div",{className:"lore-text",children:[(0,d.jsx)("hr",{}),(0,d.jsxs)("p",{children:["One day, ",(0,d.jsx)("b",{children:"Ina'nis"})," picked up a ",(0,d.jsx)("b",{children:"strange book"})," and then started to gain the power of ",(0,d.jsx)("b",{children:"controlling tentacles"}),". To her, ",(0,d.jsx)("b",{children:"tentacles"})," are just a part in her ordinary life; it has never been a big deal for her. However, her girly mind does want to get them",(0,d.jsx)("b",{children:" dressed up and stay pretty"}),"."]}),(0,d.jsxs)("p",{children:["After gaining power, she started hearing"," ",(0,d.jsx)("b",{children:"Ancient Whispers and Revelations"}),". Hence, she began her"," ",(0,d.jsx)("b",{children:"VTuber activities "})," to deliver ",(0,d.jsx)("b",{children:" random sanity checks "})," ","on humanity, as an ",(0,d.jsx)("b",{children:"ordinary girl"}),"."]}),(0,d.jsx)("hr",{})]})}),(0,d.jsxs)(R,{style:{background:a?"transparent":"var(--dark-background)"},children:[(0,d.jsx)(L,{autoPlay:!0,loop:!0,muted:!0,preload:"auto",onCanPlay:r,style:{opacity:a?1:0,transition:"opacity 0.5s ease"},children:(0,d.jsx)("source",{src:`/${e}`,type:"video/mp4"})},e),(0,d.jsx)(Y,{type:"button",onClick:o,"aria-label":"Change lore video",title:"Change video",children:(0,d.jsx)("i",{className:"fa fa-refresh","aria-hidden":"true"})}),(0,d.jsx)(C,{children:(0,d.jsx)(N,{children:"Illustration and Animation: @valkyrie_illust"})})]})]})})},D=i.Ay.div`
   background: ${e=>{let{$grayscale:t}=e;return t?"linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(40,40,40,0.95) 100%)":"transparent linear-gradient(180deg, var(--light-background) 0%, var(--dark-highlight) 100%) 0% 0% no-repeat padding-box"}};
   text-align: center;
   padding: 80px 20px;
@@ -750,8 +751,8 @@
   }
 `,_=()=>{const[e,t]=(0,n.useState)(!1),[a,i]=(0,n.useState)(null),o=(0,n.useCallback)(()=>{t(e=>(e&&i(e=>(null!==e&&void 0!==e?e:0)+1),!e))},[]);return(0,d.jsxs)(D,{$grayscale:e,children:[(0,d.jsxs)(O,{children:[(0,d.jsx)(F,{src:"/InaInaIna.png",grayscale:e,alt:"Ina"}),null!==a&&(0,d.jsx)(K,{children:"Miraculously preserved"},a)]}),(0,d.jsxs)(X,{style:e?{filter:"grayscale(1)"}:{},children:[(0,d.jsx)("img",{alt:"WAH",src:"/WAH.png",style:e?{filter:"grayscale(1)"}:{}}),(0,d.jsx)("br",{}),"Ninomae Ina'nis",(0,d.jsx)("br",{}),"12\xb709\xb72020",(0,d.jsx)("br",{})]}),(0,d.jsx)(P,{onClick:o,children:e?"Give her an elixir of the undying":"Ina asked for this button but didn't see it last time lol"})]})},J=i.Ay.div`
   position: absolute;
-  top: 50px;
-  left: 10px;
+  top: 4px;
+  left: 4px;
   background: var(--dark-highlight);
   color: var(--text-color);
   font-size: 18px;
@@ -760,6 +761,10 @@
   border-radius: 12px;
   z-index: 2;
   pointer-events: none;
+  @media only screen and (max-width: 700px) {
+    font-size: 12px;
+    padding: 2px 7px;
+  }
 `,V=i.i7`
   0% { transform: rotate(0deg);}
   20% { transform: rotate(-8deg);}
@@ -907,9 +912,8 @@
     -0.08em -0.08em 0 #fff,
     0.08em -0.08em 0 #fff,
     -0.08em 0.08em 0 #fff;
-  width: auto;
+  width: 90%;
   min-width: 0;
-  max-width: 90%;
   text-align: center;
   z-index: 1;
   pointer-events: none;
@@ -972,7 +976,7 @@
   }
 `)(t)}} ${10}s linear infinite;
   animation-delay: ${e=>{let{delay:t}=e;return t}}s;
-`,me=e=>{let{mirror:t,topGap:a}=e;return(0,d.jsx)(ce,{$topGap:a,children:Array(8).fill(0).map((e,a)=>(0,d.jsx)(he,{src:"/takoflap.gif",alt:"gif",delay:-1.25*a,mirror:t,draggable:"false"},a))})};var ge=a(1472),fe=a(2154),ue=a(4530);const ye=e=>({src:`balloons/generic/balloon-generic-${e}.png`}),be=e=>({src:`balloons/mv/balloon-mv-${e}.png`}),ve=e=>({src:`balloons/takos/balloon-takos-${e}.png`}),we=[ve("0"),ve("1"),ve("cookies"),ve("uhh-i-think-she-needs-help")],ke={Standard:[be("meconopsis"),be("violet"),be("temari"),be("tako8takover"),ye("purple"),ye("pink"),ye("white"),ye("yellow"),ye("fushia"),ye("orange"),ye("green"),ye("lime"),...we],Violet:[be("violet"),ye("blue"),ye("blueagain"),ye("violet"),ye("sky"),ye("cyan"),ye("purple"),...we],Meconopsis:[be("meconopsis"),ye("blue"),ye("blueagain"),ye("cyan"),ye("purple"),ye("sky"),ye("violet"),...we],Temari:[be("temari"),ye("red"),ye("lightred"),ye("orange"),ye("pink"),ye("fushia"),ye("yellow"),...we],TakoTakover:[be("tako8takover"),ye("purple"),ye("fushia"),ye("pink"),ye("violet"),ye("sky"),...we]},je=i.Ay.img`
+`,me=e=>{let{mirror:t,topGap:a}=e;return(0,d.jsx)(ce,{$topGap:a,children:Array(8).fill(0).map((e,a)=>(0,d.jsx)(he,{src:"/takoflap.gif",alt:"gif",delay:-1.25*a,mirror:t,draggable:"false"},a))})};var ge=a(1472),fe=a(2154),ue=a(4530);const ye=e=>({src:`balloons/generic/balloon-generic-${e}.png`}),ve=e=>({src:`balloons/mv/balloon-mv-${e}.png`}),be=e=>({src:`balloons/takos/balloon-takos-${e}.png`}),we=[be("0"),be("1"),be("cookies"),be("uhh-i-think-she-needs-help")],ke={Standard:[ve("meconopsis"),ve("violet"),ve("temari"),ve("tako8takover"),ye("purple"),ye("pink"),ye("white"),ye("yellow"),ye("fushia"),ye("orange"),ye("green"),ye("lime"),...we],Violet:[ve("violet"),ye("blue"),ye("blueagain"),ye("violet"),ye("sky"),ye("cyan"),ye("purple"),...we],Meconopsis:[ve("meconopsis"),ye("blue"),ye("blueagain"),ye("cyan"),ye("purple"),ye("sky"),ye("violet"),...we],Temari:[ve("temari"),ye("red"),ye("lightred"),ye("orange"),ye("pink"),ye("fushia"),ye("yellow"),...we],TakoTakover:[ve("tako8takover"),ye("purple"),ye("fushia"),ye("pink"),ye("violet"),ye("sky"),...we]},je=i.Ay.img`
   position: absolute;
   left: ${e=>{let{left:t}=e;return t}}vw;
   bottom: ${e=>{let{bottom:t}=e;return t}}px;
@@ -982,6 +986,7 @@
   width: auto;
   z-index: 0;
   pointer-events: none;
+  will-change: transform;
   animation: ${e=>{let{swayOffset:t}=e;return i.AH`${(e=>i.i7`
   0% {
     transform: translateY(0) translateX(0) rotate(-2deg);
@@ -1010,14 +1015,14 @@
   z-index: 3;
   overflow: visible;
   overflow-x: hidden;
-`,Ae=()=>{const[e,t]=(0,n.useState)([]),a=(0,n.useRef)(null),{theme:i}=(0,y.D)();return(0,n.useEffect)(()=>(a.current=setInterval(()=>{const e=ke[i],a=Math.floor(2*Math.random())+1,n=document.documentElement.scrollHeight,o=[];for(let t=0;t<a;t++)if(Math.random()<.96){const a=e[Math.floor(Math.random()*e.length)];o.push({key:Date.now()+Math.random()+t,left:88*Math.random(),src:a.src,bottom:Math.random()*n,createdAt:Date.now(),heightScale:.6*Math.random()+.4,swayOffset:(30*Math.random()+10)*(Math.random()<.5?1:-1)})}o.length>0&&t(e=>[...e,...o])},2e3),()=>{a.current&&clearInterval(a.current)}),[i]),(0,n.useEffect)(()=>{const e=setInterval(()=>{t(e=>e.filter(e=>Date.now()-e.createdAt<2e4))},2e3);return()=>clearInterval(e)},[]),(0,d.jsx)($e,{children:e.map(e=>(0,d.jsx)(je,{left:e.left,bottom:e.bottom,swayOffset:e.swayOffset,$heightScale:e.heightScale,src:`/${e.src}`,alt:"floating balloon"},e.key))})},Me=i.Ay.div`
+`,Ae=()=>{const[e,t]=(0,n.useState)([]),a=(0,n.useRef)(null),{theme:i}=(0,y.D)();return(0,n.useEffect)(()=>{const e=()=>{const e=ke[i],a=Math.floor(2*Math.random())+1,n=document.documentElement.scrollHeight,o=[];for(let t=0;t<a;t++)if(Math.random()<.96){const a=e[Math.floor(Math.random()*e.length)];o.push({key:Date.now()+Math.random()+t,left:88*Math.random(),src:a.src,bottom:Math.random()*n,createdAt:Date.now(),heightScale:.6*Math.random()+.4,swayOffset:(30*Math.random()+10)*(Math.random()<.5?1:-1)})}o.length>0&&t(e=>[...e,...o])},n=()=>{a.current=setInterval(e,2e3)},o=()=>{a.current&&clearInterval(a.current)},r=()=>"hidden"===document.visibilityState?o():n();return n(),document.addEventListener("visibilitychange",r),()=>{o(),document.removeEventListener("visibilitychange",r)}},[i]),(0,n.useEffect)(()=>{const e=setInterval(()=>{t(e=>e.filter(e=>Date.now()-e.createdAt<2e4))},2e3);return()=>clearInterval(e)},[]),(0,d.jsx)($e,{children:e.map(e=>(0,d.jsx)(je,{left:e.left,bottom:e.bottom,swayOffset:e.swayOffset,$heightScale:e.heightScale,src:`/${e.src}`,alt:"floating balloon"},e.key))})},ze=i.Ay.div`
   position: relative;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
   min-height: 100vh;
   background: var(--background);
-`,Te=()=>{const{muted:e}=(0,ge.d2)(),t=(0,fe.G)({muted:e,autoPlay:!0});return(0,d.jsxs)(d.Fragment,{children:[(0,d.jsx)("audio",{ref:t,src:"/\u660e\u65e5\u3082\u6674\u308c\u308b\u3068\u3044\u3044\u306d.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,d.jsxs)(Me,{children:[(0,d.jsx)(Ae,{}),(0,d.jsx)(ue.A,{}),(0,d.jsx)(z,{}),(0,d.jsx)(_,{}),(0,d.jsx)(me,{mirror:!0,topGap:"48px"}),(0,d.jsx)(E,{}),(0,d.jsx)(me,{topGap:"48px"}),(0,d.jsx)(pe,{}),(0,d.jsx)(x,{})]})]})}},5402(e,t,a){a.d(t,{A:()=>n,s:()=>i});const n=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],i=n.length},2154(e,t,a){a.d(t,{G:()=>i});var n=a(5043);const i=e=>{let{muted:t,volume:a=.1,autoPlay:i=!1,videoPaused:o=!1}=e;const r=(0,n.useRef)(null);return(0,n.useEffect)(()=>{r.current&&(r.current.volume=a)},[a]),(0,n.useEffect)(()=>{const e=r.current;e&&(o?e.pause():(t||e.paused)&&(t?e.pause():e.play().catch(()=>{})))},[t,o]),(0,n.useEffect)(()=>{if(!i)return;let e=null,a=!1;return r.current&&!t&&r.current.play().catch(()=>{a||(e=()=>{r.current&&!t&&r.current.play().catch(()=>{}),e&&window.removeEventListener("click",e)},window.addEventListener("click",e))}),()=>{a=!0,e&&window.removeEventListener("click",e)}},[i,t]),r}},984(e,t,a){a.d(t,{HM:()=>p,IW:()=>g,Id:()=>o,Jj:()=>h,Zy:()=>x,a3:()=>l,aH:()=>m,gQ:()=>c,hP:()=>r,iM:()=>s,ue:()=>f,wA:()=>i,wI:()=>d});var n=a(403);const i=n.Ay.div`
+`,Me=()=>{const{muted:e}=(0,ge.d2)(),t=(0,fe.G)({muted:e,autoPlay:!0});return(0,d.jsxs)(d.Fragment,{children:[(0,d.jsx)("audio",{ref:t,src:"/\u660e\u65e5\u3082\u6674\u308c\u308b\u3068\u3044\u3044\u306d.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,d.jsxs)(ze,{children:[(0,d.jsx)(Ae,{}),(0,d.jsx)(ue.A,{}),(0,d.jsx)(T,{}),(0,d.jsx)(_,{}),(0,d.jsx)(me,{mirror:!0,topGap:"48px"}),(0,d.jsx)(H,{}),(0,d.jsx)(me,{topGap:"48px"}),(0,d.jsx)(pe,{}),(0,d.jsx)(x,{})]})]})}},5402(e,t,a){a.d(t,{A:()=>n,s:()=>i});const n=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],i=n.length},2154(e,t,a){a.d(t,{G:()=>i});var n=a(5043);const i=e=>{let{muted:t,volume:a=.1,autoPlay:i=!1,videoPaused:o=!1}=e;const r=(0,n.useRef)(null);return(0,n.useEffect)(()=>{r.current&&(r.current.volume=a)},[a]),(0,n.useEffect)(()=>{const e=r.current;e&&(o?e.pause():(t||e.paused)&&(t?e.pause():e.play().catch(()=>{})))},[t,o]),(0,n.useEffect)(()=>{if(!i)return;let e=null,a=!1;return r.current&&!t&&r.current.play().catch(()=>{a||(e=()=>{r.current&&!t&&r.current.play().catch(()=>{}),e&&window.removeEventListener("click",e)},window.addEventListener("click",e))}),()=>{a=!0,e&&window.removeEventListener("click",e)}},[i,t]),r}},984(e,t,a){a.d(t,{HM:()=>p,IW:()=>g,Id:()=>o,Jj:()=>h,Zy:()=>x,a3:()=>l,aH:()=>m,gQ:()=>c,hP:()=>r,iM:()=>s,ue:()=>f,wA:()=>i,wI:()=>d});var n=a(403);const i=n.Ay.div`
   flex: 0 0 auto;
   min-width: 320px;
   max-width: 600px;
@@ -1218,4 +1223,4 @@
     opacity: 0.8;
   }
 `}}]);
-//# sourceMappingURL=95.f96e8a63.chunk.js.map
+//# sourceMappingURL=95.1fc453c6.chunk.js.map
