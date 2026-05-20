@@ -7,9 +7,9 @@ export const NewTag = styled.div`
   left: 10px;
   background: var(--dark-highlight);
   color: var(--text-color);
-  font-size: 12px;
+  font-size: 18px;
   font-weight: bold;
-  padding: 2px 8px;
+  padding: 3px 12px;
   border-radius: 12px;
   z-index: 2;
   pointer-events: none;

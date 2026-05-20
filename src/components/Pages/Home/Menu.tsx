@@ -27,12 +27,9 @@ const buttons = [
   { to: "/wah", label: "WAH (2024)" },
 ];
 
-const newButtons = [
-  "Letters for Ina",
-  "The Ultimate Ina Playlist",
-  "Ina's Timeline",
-  "Messages and Artworks",
-];
+const newButtons = ["Letters for Ina", "The Ultimate Ina Playlist"];
+
+const updateButtons = ["Ina's Timeline", "Takodex", "Messages and Artworks"];
 
 const Menu = (): JSX.Element => {
   const [peekIndex, setPeekIndex] = useState<number | null>(null);
@@ -97,7 +94,8 @@ const Menu = (): JSX.Element => {
               onMouseLeave={() => setPeekIndex(null)}
               style={{ position: "relative" }}
             >
-              {newButtons.includes(btn.label) && <NewTag>New</NewTag>}
+              {newButtons.includes(btn.label) && <NewTag>New!</NewTag>}
+              {updateButtons.includes(btn.label) && <NewTag>Update!</NewTag>}
               <TakoPeek
                 className="tako-peek"
                 src={peekTako}
