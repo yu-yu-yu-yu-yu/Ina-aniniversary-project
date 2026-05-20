@@ -304,7 +304,7 @@
     border: 0;
     border-bottom: 1px solid #ddd;
   }
-`;var d=a(579);const{rE:p}={rE:"26.1.5"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
+`;var d=a(579);const{rE:p}={rE:"26.1.6"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -1022,7 +1022,7 @@
   overflow-x: hidden;
   min-height: 100vh;
   background: var(--background);
-`,Me=()=>{const{muted:e}=(0,ge.d2)(),t=(0,fe.G)({muted:e,autoPlay:!0});return(0,d.jsxs)(d.Fragment,{children:[(0,d.jsx)("audio",{ref:t,src:"/\u660e\u65e5\u3082\u6674\u308c\u308b\u3068\u3044\u3044\u306d.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,d.jsxs)(ze,{children:[(0,d.jsx)(Ae,{}),(0,d.jsx)(ue.A,{}),(0,d.jsx)(T,{}),(0,d.jsx)(_,{}),(0,d.jsx)(me,{mirror:!0,topGap:"48px"}),(0,d.jsx)(H,{}),(0,d.jsx)(me,{topGap:"48px"}),(0,d.jsx)(pe,{}),(0,d.jsx)(x,{})]})]})}},5402(e,t,a){a.d(t,{A:()=>n,s:()=>i});const n=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],i=n.length},2154(e,t,a){a.d(t,{G:()=>i});var n=a(5043);const i=e=>{let{muted:t,volume:a=.1,autoPlay:i=!1,videoPaused:o=!1}=e;const r=(0,n.useRef)(null);return(0,n.useEffect)(()=>{r.current&&(r.current.volume=a)},[a]),(0,n.useEffect)(()=>{const e=r.current;e&&(o?e.pause():(t||e.paused)&&(t?e.pause():e.play().catch(()=>{})))},[t,o]),(0,n.useEffect)(()=>{if(!i)return;let e=null,a=!1;return r.current&&!t&&r.current.play().catch(()=>{a||(e=()=>{r.current&&!t&&r.current.play().catch(()=>{}),e&&window.removeEventListener("click",e)},window.addEventListener("click",e))}),()=>{a=!0,e&&window.removeEventListener("click",e)}},[i,t]),r}},984(e,t,a){a.d(t,{HM:()=>p,IW:()=>g,Id:()=>o,Jj:()=>h,Zy:()=>x,a3:()=>l,aH:()=>m,gQ:()=>c,hP:()=>r,iM:()=>s,ue:()=>f,wA:()=>i,wI:()=>d});var n=a(403);const i=n.Ay.div`
+`,Me=()=>{const{muted:e}=(0,ge.d2)(),t=(0,fe.G)({muted:e,autoPlay:!0});return(0,d.jsxs)(d.Fragment,{children:[(0,d.jsx)("audio",{ref:t,src:"/\u660e\u65e5\u3082\u6674\u308c\u308b\u3068\u3044\u3044\u306d.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,d.jsxs)(ze,{children:[(0,d.jsx)(Ae,{}),(0,d.jsx)(ue.A,{}),(0,d.jsx)(T,{}),(0,d.jsx)(_,{}),(0,d.jsx)(me,{mirror:!0,topGap:"48px"}),(0,d.jsx)(H,{}),(0,d.jsx)(me,{topGap:"48px"}),(0,d.jsx)(pe,{}),(0,d.jsx)(x,{})]})]})}},5402(e,t,a){a.d(t,{A:()=>n,s:()=>i});const n=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],i=n.length},2154(e,t,a){a.d(t,{G:()=>i});var n=a(5043);const i=e=>{let{muted:t,volume:a=.1,autoPlay:i=!1,videoPaused:o=!1}=e;const r=(0,n.useRef)(null);return(0,n.useEffect)(()=>{r.current&&(r.current.volume=a)},[a]),(0,n.useEffect)(()=>{const e=r.current;e&&(o?e.pause():(t||e.paused)&&(t?e.pause():e.play().catch(()=>{})))},[t,o]),(0,n.useEffect)(()=>{if(!i)return;let e=null,a=!1;return r.current&&!t&&r.current.play().catch(()=>{a||(e=()=>{r.current&&!t&&r.current.play().catch(()=>{}),e&&window.removeEventListener("click",e)},window.addEventListener("click",e))}),()=>{a=!0,e&&window.removeEventListener("click",e)}},[i,t]),r}},984(e,t,a){a.d(t,{HM:()=>s,IW:()=>h,Id:()=>o,Jj:()=>x,Zy:()=>d,aH:()=>c,gQ:()=>p,iM:()=>r,ue:()=>m,wA:()=>i,wI:()=>l});var n=a(403);const i=n.Ay.div`
   flex: 0 0 auto;
   min-width: 320px;
   max-width: 600px;
@@ -1078,7 +1078,7 @@
     width: 100%;
     padding-bottom: 5px;
   }
-`,r=n.Ay.div`
+`,r=(n.Ay.div`
   position: relative;
   font-family: sans-serif;
   font-size: 18px;
@@ -1095,7 +1095,7 @@
     background-color: var(--light-background);
     border: none;
   }
-`,l=n.Ay.div`
+`,n.Ay.div`
   padding-top: 5px;
   overflow-wrap: break-word;
   color: var(--dark-highlight);
@@ -1104,7 +1104,7 @@
   letter-spacing: 0px;
   opacity: 1;
   white-space: pre-line;
-`,s=n.Ay.img`
+`,n.Ay.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -1117,7 +1117,7 @@
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
-`,d=n.Ay.div`
+`),l=n.Ay.div`
   color: var(--dark-highlight);
   text-align: center;
   font: normal normal 600 30px/40px Montserrat;
@@ -1132,27 +1132,27 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-`,p=n.Ay.div`
+`,s=n.Ay.div`
   overflow-wrap: break-word;
   color: var(--dark-highlight);
-`,x=n.Ay.iframe`
+`,d=n.Ay.iframe`
   border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
-`,c=n.Ay.div`
+`,p=n.Ay.div`
   width: 100%;
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 2%;
   box-sizing: border-box;
   background: var(--background);
-`,h=n.Ay.div`
+`,x=n.Ay.div`
   margin: auto auto 35px;
-`,m=n.Ay.div`
+`,c=n.Ay.div`
   display: flex !important;
   justify-content: center;
   align-items: center;
-`,g=(n.Ay.div`
+`,h=(n.Ay.div`
   display: flex;
   flex-direction: row;
 `,n.Ay.input`
@@ -1169,7 +1169,7 @@
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
   opacity: 1;
-`),f=n.Ay.h2`
+`),m=n.Ay.h2`
   margin: 0;
   color: var(--dark-highlight);
   text-shadow:
@@ -1223,4 +1223,4 @@
     opacity: 0.8;
   }
 `}}]);
-//# sourceMappingURL=95.b612b547.chunk.js.map
+//# sourceMappingURL=95.792c190b.chunk.js.map

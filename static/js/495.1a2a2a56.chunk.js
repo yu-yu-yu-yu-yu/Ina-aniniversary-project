@@ -130,7 +130,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 32px #0008;
   z-index: 1001;
-`;var u=e(579);const b=[{src:"/takollage.png",title:"Tako Takollage 4th Anniversary",description:"A takollage made of takos, was made during the 4th anniversary."},{src:"/EvermoreCollage.png",title:"Evermore Collage",description:"A collage celebrating Ina's Evermore 3D live, made out of her streams thumbnails!"}],v=()=>{const[t,r]=(0,i.useState)(null),{muted:e}=(0,o.d2)(),d=(0,a.G)({muted:e,autoPlay:!0});return(0,u.jsxs)(p,{children:[(0,u.jsxs)(n.Fp,{children:[(0,u.jsx)(n.Pn,{}),(0,u.jsx)(l.ue,{children:"Collages"})]}),(0,u.jsx)("audio",{ref:d,src:"/ensolarado.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,u.jsx)(x,{children:b.map((t,e)=>(0,u.jsxs)(s,{children:[(0,u.jsx)(h,{src:t.src,alt:t.title,onClick:()=>r(t.src)}),(0,u.jsx)(g,{children:t.title}),(0,u.jsx)(c,{children:t.description})]},e))}),t&&(0,u.jsxs)(u.Fragment,{children:[(0,u.jsx)(m,{onClick:()=>r(null)}),(0,u.jsx)(f,{src:t,alt:"Collage",onClick:()=>r(null)})]})]})}},2154(t,r,e){e.d(r,{G:()=>a});var i=e(5043);const a=t=>{let{muted:r,volume:e=.1,autoPlay:a=!1,videoPaused:o=!1}=t;const n=(0,i.useRef)(null);return(0,i.useEffect)(()=>{n.current&&(n.current.volume=e)},[e]),(0,i.useEffect)(()=>{const t=n.current;t&&(o?t.pause():(r||t.paused)&&(r?t.pause():t.play().catch(()=>{})))},[r,o]),(0,i.useEffect)(()=>{if(!a)return;let t=null,e=!1;return n.current&&!r&&n.current.play().catch(()=>{e||(t=()=>{n.current&&!r&&n.current.play().catch(()=>{}),t&&window.removeEventListener("click",t)},window.addEventListener("click",t))}),()=>{e=!0,t&&window.removeEventListener("click",t)}},[a,r]),n}},984(t,r,e){e.d(r,{HM:()=>x,IW:()=>m,Id:()=>o,Jj:()=>g,Zy:()=>s,a3:()=>d,aH:()=>c,gQ:()=>h,hP:()=>n,iM:()=>l,ue:()=>f,wA:()=>a,wI:()=>p});var i=e(403);const a=i.Ay.div`
+`;var u=e(579);const b=[{src:"/takollage.png",title:"Tako Takollage 4th Anniversary",description:"A takollage made of takos, was made during the 4th anniversary."},{src:"/EvermoreCollage.png",title:"Evermore Collage",description:"A collage celebrating Ina's Evermore 3D live, made out of her streams thumbnails!"}],v=()=>{const[t,r]=(0,i.useState)(null),{muted:e}=(0,o.d2)(),d=(0,a.G)({muted:e,autoPlay:!0});return(0,u.jsxs)(p,{children:[(0,u.jsxs)(n.Fp,{children:[(0,u.jsx)(n.Pn,{}),(0,u.jsx)(l.ue,{children:"Collages"})]}),(0,u.jsx)("audio",{ref:d,src:"/ensolarado.mp3",loop:!0,preload:"auto",style:{display:"none"}}),(0,u.jsx)(x,{children:b.map((t,e)=>(0,u.jsxs)(s,{children:[(0,u.jsx)(h,{src:t.src,alt:t.title,onClick:()=>r(t.src)}),(0,u.jsx)(g,{children:t.title}),(0,u.jsx)(c,{children:t.description})]},e))}),t&&(0,u.jsxs)(u.Fragment,{children:[(0,u.jsx)(m,{onClick:()=>r(null)}),(0,u.jsx)(f,{src:t,alt:"Collage",onClick:()=>r(null)})]})]})}},2154(t,r,e){e.d(r,{G:()=>a});var i=e(5043);const a=t=>{let{muted:r,volume:e=.1,autoPlay:a=!1,videoPaused:o=!1}=t;const n=(0,i.useRef)(null);return(0,i.useEffect)(()=>{n.current&&(n.current.volume=e)},[e]),(0,i.useEffect)(()=>{const t=n.current;t&&(o?t.pause():(r||t.paused)&&(r?t.pause():t.play().catch(()=>{})))},[r,o]),(0,i.useEffect)(()=>{if(!a)return;let t=null,e=!1;return n.current&&!r&&n.current.play().catch(()=>{e||(t=()=>{n.current&&!r&&n.current.play().catch(()=>{}),t&&window.removeEventListener("click",t)},window.addEventListener("click",t))}),()=>{e=!0,t&&window.removeEventListener("click",t)}},[a,r]),n}},984(t,r,e){e.d(r,{HM:()=>l,IW:()=>g,Id:()=>o,Jj:()=>s,Zy:()=>p,aH:()=>h,gQ:()=>x,iM:()=>n,ue:()=>c,wA:()=>a,wI:()=>d});var i=e(403);const a=i.Ay.div`
   flex: 0 0 auto;
   min-width: 320px;
   max-width: 600px;
@@ -186,7 +186,7 @@
     width: 100%;
     padding-bottom: 5px;
   }
-`,n=i.Ay.div`
+`,n=(i.Ay.div`
   position: relative;
   font-family: sans-serif;
   font-size: 18px;
@@ -203,7 +203,7 @@
     background-color: var(--light-background);
     border: none;
   }
-`,d=i.Ay.div`
+`,i.Ay.div`
   padding-top: 5px;
   overflow-wrap: break-word;
   color: var(--dark-highlight);
@@ -212,7 +212,7 @@
   letter-spacing: 0px;
   opacity: 1;
   white-space: pre-line;
-`,l=i.Ay.img`
+`,i.Ay.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -225,7 +225,7 @@
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
-`,p=i.Ay.div`
+`),d=i.Ay.div`
   color: var(--dark-highlight);
   text-align: center;
   font: normal normal 600 30px/40px Montserrat;
@@ -240,27 +240,27 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-`,x=i.Ay.div`
+`,l=i.Ay.div`
   overflow-wrap: break-word;
   color: var(--dark-highlight);
-`,s=i.Ay.iframe`
+`,p=i.Ay.iframe`
   border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
-`,h=i.Ay.div`
+`,x=i.Ay.div`
   width: 100%;
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 2%;
   box-sizing: border-box;
   background: var(--background);
-`,g=i.Ay.div`
+`,s=i.Ay.div`
   margin: auto auto 35px;
-`,c=i.Ay.div`
+`,h=i.Ay.div`
   display: flex !important;
   justify-content: center;
   align-items: center;
-`,m=(i.Ay.div`
+`,g=(i.Ay.div`
   display: flex;
   flex-direction: row;
 `,i.Ay.input`
@@ -277,7 +277,7 @@
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
   opacity: 1;
-`),f=i.Ay.h2`
+`),c=i.Ay.h2`
   margin: 0;
   color: var(--dark-highlight);
   text-shadow:
@@ -331,4 +331,4 @@
     opacity: 0.8;
   }
 `}}]);
-//# sourceMappingURL=495.5a2d844f.chunk.js.map
+//# sourceMappingURL=495.1a2a2a56.chunk.js.map

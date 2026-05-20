@@ -191,7 +191,7 @@
   overflow: visible;
   overflow-x: hidden;
   pointer-events: none;
-`,m=t=>{let{freeFloat:e=!1,zIndex:n}=t;const[a,l]=(0,r.useState)([]),m=(0,r.useRef)(null),h=(0,r.useRef)(null),[d]=(0,r.useState)(!e);(0,r.useEffect)(()=>{o.A.forEach(t=>{(new Image).src=`/takos/${encodeURIComponent(t)}`})},[]),(0,r.useEffect)(()=>{const t=()=>{const t=Math.floor(3*Math.random())+1,e=document.documentElement.scrollHeight,n=[];for(let r=0;r<t;r++)Math.random()<.6&&n.push({key:Date.now()+Math.random()+r,left:d?c():90*Math.random(),tako:o.A[Math.floor(Math.random()*o.A.length)],bottom:Math.random()*e,createdAt:Date.now()});n.length>0&&l(t=>[...t,...n])},e=()=>{m.current=setInterval(t,1e3)},n=()=>{m.current&&clearInterval(m.current)},r=()=>"hidden"===document.visibilityState?n():e();return e(),document.addEventListener("visibilitychange",r),()=>{n(),document.removeEventListener("visibilitychange",r)}},[]),(0,r.useEffect)(()=>{const t=setInterval(()=>{l(t=>t.filter(t=>Date.now()-t.createdAt<9e3))},1e3);return()=>clearInterval(t)},[]);const c=()=>Math.random()<.5?10*Math.random():90+10*Math.random(),g=()=>{h.current&&(h.current.volume=.2,h.current.currentTime=0,h.current.play())};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsx)("audio",{ref:h,src:"/inatakosound.mp3",preload:"auto",style:{display:"none"}}),(0,i.jsx)(s,{$zIndex:n,children:a.map(t=>(0,i.jsx)(p,{left:t.left,bottom:t.bottom,src:`/takos/${encodeURIComponent(t.tako)}`,alt:"floating takodachi",onClick:g,style:{pointerEvents:"auto",cursor:"pointer"}},t.key))})]})}},5402(t,e,n){n.d(e,{A:()=>r,s:()=>a});const r=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],a=r.length},2154(t,e,n){n.d(e,{G:()=>a});var r=n(5043);const a=t=>{let{muted:e,volume:n=.1,autoPlay:a=!1,videoPaused:o=!1}=t;const i=(0,r.useRef)(null);return(0,r.useEffect)(()=>{i.current&&(i.current.volume=n)},[n]),(0,r.useEffect)(()=>{const t=i.current;t&&(o?t.pause():(e||t.paused)&&(e?t.pause():t.play().catch(()=>{})))},[e,o]),(0,r.useEffect)(()=>{if(!a)return;let t=null,n=!1;return i.current&&!e&&i.current.play().catch(()=>{n||(t=()=>{i.current&&!e&&i.current.play().catch(()=>{}),t&&window.removeEventListener("click",t)},window.addEventListener("click",t))}),()=>{n=!0,t&&window.removeEventListener("click",t)}},[a,e]),i}},984(t,e,n){n.d(e,{HM:()=>m,IW:()=>u,Id:()=>o,Jj:()=>c,Zy:()=>h,a3:()=>l,aH:()=>g,gQ:()=>d,hP:()=>i,iM:()=>p,ue:()=>x,wA:()=>a,wI:()=>s});var r=n(403);const a=r.Ay.div`
+`,m=t=>{let{freeFloat:e=!1,zIndex:n}=t;const[a,l]=(0,r.useState)([]),m=(0,r.useRef)(null),h=(0,r.useRef)(null),[d]=(0,r.useState)(!e);(0,r.useEffect)(()=>{o.A.forEach(t=>{(new Image).src=`/takos/${encodeURIComponent(t)}`})},[]),(0,r.useEffect)(()=>{const t=()=>{const t=Math.floor(3*Math.random())+1,e=document.documentElement.scrollHeight,n=[];for(let r=0;r<t;r++)Math.random()<.6&&n.push({key:Date.now()+Math.random()+r,left:d?c():90*Math.random(),tako:o.A[Math.floor(Math.random()*o.A.length)],bottom:Math.random()*e,createdAt:Date.now()});n.length>0&&l(t=>[...t,...n])},e=()=>{m.current=setInterval(t,1e3)},n=()=>{m.current&&clearInterval(m.current)},r=()=>"hidden"===document.visibilityState?n():e();return e(),document.addEventListener("visibilitychange",r),()=>{n(),document.removeEventListener("visibilitychange",r)}},[]),(0,r.useEffect)(()=>{const t=setInterval(()=>{l(t=>t.filter(t=>Date.now()-t.createdAt<9e3))},1e3);return()=>clearInterval(t)},[]);const c=()=>Math.random()<.5?10*Math.random():90+10*Math.random(),g=()=>{h.current&&(h.current.volume=.2,h.current.currentTime=0,h.current.play())};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsx)("audio",{ref:h,src:"/inatakosound.mp3",preload:"auto",style:{display:"none"}}),(0,i.jsx)(s,{$zIndex:n,children:a.map(t=>(0,i.jsx)(p,{left:t.left,bottom:t.bottom,src:`/takos/${encodeURIComponent(t.tako)}`,alt:"floating takodachi",onClick:g,style:{pointerEvents:"auto",cursor:"pointer"}},t.key))})]})}},5402(t,e,n){n.d(e,{A:()=>r,s:()=>a});const r=["11.png","14.png","15.png","16.png","17.png","35.png","44.png","71.png","A random casual.png","Arthain.png","Astraea.png","BreadART.png","Chibi RoggianX.png","chuunilord.png","Corp.Shephard.png","Creau.png","Cyber Toast.png","CYtako.png","DarkNess2101.png","Deer Oh Dear.png","DHugo.png","Drebyal Draws.png","eLun.png","Endactam.png","enicholas.png","Epi.png","fluffycatfish.png","Fluid.png","Frediloc8.png","GreenFox.png","Haru.png","Hermit Purple.png","HiloNero.png","Huros.png","Ironsigh.png","Ithi.png","Jaboll252.png","Jamu(ta)ko.png","Jamuko.png","Jems.png","Jhon. Palmer.png","Joakim MF.png","junblebee.png","Kaede, Acolyte of Wahtcher.png","keoqzzi\ud83c\udf5c.png","Kinoko.png","KiwiNeko.png","kshut (@shutowl).png","Kurasu Kanon.png","Kurosagi.png","LasagnaLaffeydiction.png","Lethargic.png","Lienou.png","LynsDoodles.png","Lyudmilia.png","Machi says WAH.png","Mango Konata.png","Mara.png","McArkus.png","Meap.png","Melmarkt.png","MiJi.png","Milk.png","Minja.png","Neminem.png","NKS5.png","notaBob.png","NowaruArt.png","NxKarim.png","Nyuusai.png","OK Kei.png","OutOfRice.png","Overseer Olive.png","popop.png","ProxyZeus.png","PureTako.png","RCSI.png","Ren.png","Reyk.png","Reykhebaxh.png","RiDeth.png","Rie Cotton Cat.png","Rinh.png","Scalim.png","SeaRain.png","SharkyDoko.png","Shokuro.png","SleepDeprivedFae.png","SleepzyTofu.png","Sock.png","Spud Tako.png","Squirl.png","sunnyfaller.png","Tahi.png","Taiki Kiki.png","Takedo.png","Takollite.png","Takomonty.png","Takoster.png","Teddy B\u0295\xb4\u2022\u1d25\u2022`\u0294.png","Teo.png","The Shiv Spoon.png","Thocclord.png","Tornhalo.png","Tung.png","Valawari.png","Valtaur_tw.png","Vanilla Thunder.png","Vantablack.png","vignedev.png","WindStreak.png","Wydken.png","Yato Tako.png","Zel Maelstrom.png","zeroyaka.png","\u304a\u5144\u304e\u308a.png","\u30a4\u30ab^10.png"],a=r.length},2154(t,e,n){n.d(e,{G:()=>a});var r=n(5043);const a=t=>{let{muted:e,volume:n=.1,autoPlay:a=!1,videoPaused:o=!1}=t;const i=(0,r.useRef)(null);return(0,r.useEffect)(()=>{i.current&&(i.current.volume=n)},[n]),(0,r.useEffect)(()=>{const t=i.current;t&&(o?t.pause():(e||t.paused)&&(e?t.pause():t.play().catch(()=>{})))},[e,o]),(0,r.useEffect)(()=>{if(!a)return;let t=null,n=!1;return i.current&&!e&&i.current.play().catch(()=>{n||(t=()=>{i.current&&!e&&i.current.play().catch(()=>{}),t&&window.removeEventListener("click",t)},window.addEventListener("click",t))}),()=>{n=!0,t&&window.removeEventListener("click",t)}},[a,e]),i}},984(t,e,n){n.d(e,{HM:()=>p,IW:()=>c,Id:()=>o,Jj:()=>h,Zy:()=>s,aH:()=>d,gQ:()=>m,iM:()=>i,ue:()=>g,wA:()=>a,wI:()=>l});var r=n(403);const a=r.Ay.div`
   flex: 0 0 auto;
   min-width: 320px;
   max-width: 600px;
@@ -247,7 +247,7 @@
     width: 100%;
     padding-bottom: 5px;
   }
-`,i=r.Ay.div`
+`,i=(r.Ay.div`
   position: relative;
   font-family: sans-serif;
   font-size: 18px;
@@ -264,7 +264,7 @@
     background-color: var(--light-background);
     border: none;
   }
-`,l=r.Ay.div`
+`,r.Ay.div`
   padding-top: 5px;
   overflow-wrap: break-word;
   color: var(--dark-highlight);
@@ -273,7 +273,7 @@
   letter-spacing: 0px;
   opacity: 1;
   white-space: pre-line;
-`,p=r.Ay.img`
+`,r.Ay.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -286,7 +286,7 @@
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
-`,s=r.Ay.div`
+`),l=r.Ay.div`
   color: var(--dark-highlight);
   text-align: center;
   font: normal normal 600 30px/40px Montserrat;
@@ -301,27 +301,27 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-`,m=r.Ay.div`
+`,p=r.Ay.div`
   overflow-wrap: break-word;
   color: var(--dark-highlight);
-`,h=r.Ay.iframe`
+`,s=r.Ay.iframe`
   border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
-`,d=r.Ay.div`
+`,m=r.Ay.div`
   width: 100%;
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 2%;
   box-sizing: border-box;
   background: var(--background);
-`,c=r.Ay.div`
+`,h=r.Ay.div`
   margin: auto auto 35px;
-`,g=r.Ay.div`
+`,d=r.Ay.div`
   display: flex !important;
   justify-content: center;
   align-items: center;
-`,u=(r.Ay.div`
+`,c=(r.Ay.div`
   display: flex;
   flex-direction: row;
 `,r.Ay.input`
@@ -338,7 +338,7 @@
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
   opacity: 1;
-`),x=r.Ay.h2`
+`),g=r.Ay.h2`
   margin: 0;
   color: var(--dark-highlight);
   text-shadow:
@@ -392,4 +392,4 @@
     opacity: 0.8;
   }
 `}}]);
-//# sourceMappingURL=167.35734d48.chunk.js.map
+//# sourceMappingURL=167.80f74c8d.chunk.js.map
