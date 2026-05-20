@@ -4,13 +4,12 @@ import Masonry from "react-masonry-component";
 import {TakoIcon} from "./TakoIcon";
 import {SRLWrapper} from "simple-react-lightbox";
 import {
-  BubbleHeader,
   BubbleImage,
-  BubbleMessage,
-  HeaderText,
   IFrame,
+  MessageCard,
+  MessageCardHeader,
+  MessageText,
   SubmissionContainer,
-  TextBubbleContainer
 } from "./styles";
 
 
@@ -73,49 +72,45 @@ const TakoMessages = ({
     >
       {visibleSubmissions.map(({ message, user, icon, image, pun, event_date }, i) => (
         <SubmissionContainer key={i}>
-          <TextBubbleContainer>
-            <BubbleHeader>
-
-                <TakoIcon id={icon} pun={pun} index={i} />
-
-              <HeaderText>{user || "Anonymous Tako"}</HeaderText>
-            </BubbleHeader>
-            <hr />
-
-            {!isToggledTextOnly &&
-              image &&
-              (!image.includes("youtube") ? (
-                <SRLWrapper options={options}>
-                  {image.includes("mp4") ?
-
-                    <video width={420} controls>
+          <MessageCard>
+            <MessageCardHeader>
+              <TakoIcon id={icon} pun={pun} index={i} />
+              {user || "Anonymous Tako"}
+            </MessageCardHeader>
+            <div style={{ padding: "0.75rem" }}>
+              {!isToggledTextOnly &&
+                image &&
+                (!image.includes("youtube") ? (
+                  <SRLWrapper options={options}>
+                    {image.includes("mp4") ?
+                      <video width={420} controls>
                         <source src={process.env.PUBLIC_URL + "/artworks/" + image} type="video/mp4"/>
-                    </video>
-
-                  : <BubbleImage
-                    src={process.env.PUBLIC_URL + "/artworks/" + image}
-                    loading="lazy"
-                    decoding="async"
+                      </video>
+                    : <BubbleImage
+                        src={process.env.PUBLIC_URL + "/artworks/" + image}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    }
+                  </SRLWrapper>
+                ) : (
+                  <IFrame
+                    width="100%"
+                    height="315"
+                    src={`${image}${image.includes("?") ? "&" : "?"}enablejsapi=1`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen={true}
                   />
-                  }
-                </SRLWrapper>
-              ) : (
-                <IFrame
-                  width="100%"
-                  height="315"
-                  src={`${image}${image.includes("?") ? "&" : "?"}enablejsapi=1`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen={true}
-                ></IFrame>
-              ))}
-            {(!isToggledOnlyImg  || image.includes("mp4")) && <BubbleMessage>{message}</BubbleMessage>}
-            {event_date && (
-              <div style={{ textAlign: "right", fontSize: "0.75rem", opacity: 0.6, marginTop: "0.4rem", paddingRight: "0.5rem" }}>
-                {event_date}
-              </div>
-            )}
-          </TextBubbleContainer>
+                ))}
+              {(!isToggledOnlyImg || image.includes("mp4")) && <MessageText>{message}</MessageText>}
+              {event_date && (
+                <div style={{ textAlign: "right", fontSize: "0.75rem", opacity: 0.6, marginTop: "0.4rem", paddingRight: "0.5rem" }}>
+                  {event_date}
+                </div>
+              )}
+            </div>
+          </MessageCard>
         </SubmissionContainer>
       ))}
     </Masonry>

@@ -70,13 +70,9 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
   const [slotIndex, setSlotIndex] = useState(0);
 
   useEffect(() => {
-    if (globalShowOriginal) {
-      const idx = slots.findIndex((s) => s.isOriginal);
-      setSlotIndex(idx >= 0 ? idx : 0);
-    } else {
-      const idx = slots.findIndex((s) => !s.isOriginal);
-      setSlotIndex(idx >= 0 ? idx : 0);
-    }
+    const useOriginal = globalShowOriginal || song.origin === "Ina's original";
+    const idx = slots.findIndex((s) => useOriginal ? s.isOriginal : !s.isOriginal);
+    setSlotIndex(idx >= 0 ? idx : 0);
   }, [globalShowOriginal, slots]);
 
   const currentSlot  = slots[slotIndex] ?? null;

@@ -3,13 +3,11 @@ import {Submission} from "../../../types";
 import Masonry from "react-masonry-component";
 import {TakoIcon} from "./TakoIcon";
 import {
-  BubbleHeader,
-
-  BubbleMessage,
-  HeaderText,
   IFrame,
+  MessageCard,
+  MessageCardHeader,
+  MessageText,
   SubmissionContainer,
-  TextBubbleContainer
 } from "./styles";
 
 
@@ -40,18 +38,13 @@ const TakoMessages = ({
     >
       {submissions.map(({ message, user, icon, image, pun,sub }, i) => (
         <SubmissionContainer key={i}>
-          <TextBubbleContainer>
-            <BubbleHeader>
-
-              {<TakoIcon id={icon} pun={pun} index={i} />}
-
-              <HeaderText>{user || "Anonymous Tako"}</HeaderText>
-            </BubbleHeader>
-            <hr />
-
-            {
-
-              (image.includes("http") ?
+          <MessageCard>
+            <MessageCardHeader>
+              <TakoIcon id={icon} pun={pun} index={i} />
+              {user || "Anonymous Tako"}
+            </MessageCardHeader>
+            <div style={{ padding: "0.75rem" }}>
+              {image.includes("http") ? (
                 <IFrame
                   width="100%"
                   height="315"
@@ -59,14 +52,12 @@ const TakoMessages = ({
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={true}
-                /> :  (<><BubbleMessage>{image}</BubbleMessage><hr/></>)
-              )
-
-            }
-            {sub &&  (<><BubbleMessage>{sub}</BubbleMessage><hr/></>)}
-
-            <BubbleMessage>{message}</BubbleMessage>
-          </TextBubbleContainer>
+                />
+              ) : (<><MessageText>{image}</MessageText><hr /></>)}
+              {sub && (<><MessageText>{sub}</MessageText><hr /></>)}
+              <MessageText>{message}</MessageText>
+            </div>
+          </MessageCard>
         </SubmissionContainer>
       ))}
     </Masonry>
