@@ -2,11 +2,7 @@ import styled from "styled-components";
 
 export {
   SubmissionContainer,
-  TextBubbleContainer,
-  BubbleMessage,
   BubbleImage,
-  BubbleHeader,
-  HeaderText,
   IFrame,
   SiteBoard,
   FiltersContainer,

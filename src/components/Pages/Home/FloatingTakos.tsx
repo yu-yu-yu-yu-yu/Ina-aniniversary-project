@@ -45,6 +45,7 @@ const FloatingTako = styled.img<{ left: number; bottom: number }>`
   width: auto;
   z-index: 3;
   pointer-events: none;
+  will-change: transform;
   animation: ${floatUp} 9s linear forwards;
 `;
 
@@ -68,7 +69,7 @@ const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIn
   const [columnMode] = useState(!freeFloat);
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
+    const spawn = () => {
       const spawnCount = Math.floor(Math.random() * 3) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
       const newTakos: FloatingTakoData[] = [];
@@ -86,9 +87,15 @@ const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIn
       if (newTakos.length > 0) {
         setFloatingTakos((prev) => [...prev, ...newTakos]);
       }
-    }, 1000);
+    };
+    const start = () => { intervalRef.current = setInterval(spawn, 1000); };
+    const stop = () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    const onVisibility = () => document.visibilityState === "hidden" ? stop() : start();
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 

@@ -85,6 +85,7 @@ const FloatingBalloon = styled.img<{
   width: auto;
   z-index: 0;
   pointer-events: none;
+  will-change: transform;
   animation: ${({ swayOffset }) =>
     css`${floatBalloon(swayOffset)} 12s ease-in-out forwards`};
 `;
@@ -108,7 +109,7 @@ const FloatingBalloons = (): JSX.Element => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
+    const spawn = () => {
       const pool = themePool[theme];
       const spawnCount = Math.floor(Math.random() * 2) + 1;
       const spawnHeight = document.documentElement.scrollHeight;
@@ -132,10 +133,15 @@ const FloatingBalloons = (): JSX.Element => {
       if (newBalloons.length > 0) {
         setBalloons((prev) => [...prev, ...newBalloons]);
       }
-    }, 2000);
-
+    };
+    const start = () => { intervalRef.current = setInterval(spawn, 2000); };
+    const stop = () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    const onVisibility = () => document.visibilityState === "hidden" ? stop() : start();
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [theme]);
 

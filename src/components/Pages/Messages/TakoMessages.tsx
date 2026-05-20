@@ -94,6 +94,8 @@ const TakoMessages = ({
 
                   : <BubbleImage
                     src={process.env.PUBLIC_URL + "/artworks/" + image}
+                    loading="lazy"
+                    decoding="async"
                   />
                   }
                 </SRLWrapper>

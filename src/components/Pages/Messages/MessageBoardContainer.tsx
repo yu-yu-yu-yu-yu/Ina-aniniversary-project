@@ -232,6 +232,7 @@ const MessageBoard = (): JSX.Element => {
             </h1>
             <video
               controls
+              preload="none"
               style={{ maxWidth: "min(720px, 100%)", width: "100%", borderRadius: "12px" }}
               src={`${process.env.PUBLIC_URL}/TakoToriDay3_InaBday.mp4`}
             />

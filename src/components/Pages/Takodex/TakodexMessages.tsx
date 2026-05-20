@@ -2,11 +2,10 @@ import React, { useLayoutEffect, useState } from "react";
 import Masonry from "react-masonry-component";
 import {
     SubmissionContainer,
-    TextBubbleContainer,
-    BubbleImage,
-    BubbleHeader,
-    HeaderText,
-    BubbleMessage,
+    TakodexCard,
+    TakodexCardHeader,
+    TakodexText,
+    TakodexImage,
     NavTitle,
     AddTakoButton
 } from "./styles";
@@ -100,34 +99,35 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                         const displayName = name && name.trim() !== "" ? name : author;
                         return (
                             <SubmissionContainer key={i}>
-                                <TextBubbleContainer>
-                                    <BubbleHeader>
-                                        <HeaderText>{displayName ? displayName : author}</HeaderText>
-                                    </BubbleHeader>
-                                    <BubbleMessage>
-                                        <b>Category:</b> {category ? category : "Uncategorized"}
-                                    </BubbleMessage>
-                                    <BubbleMessage>
-                                        <b>Attributes:</b> {attributes ? attributes : "Unknown"}
-                                    </BubbleMessage>
-                                    {(image && !failedImages[i]) ? (
-                                        <BubbleImage
-                                            src={process.env.PUBLIC_URL + "/takoswentries/" + image}
-                                            alt={displayName}
-                                            onError={() => handleImgError(i)}
-                                        />
-                                    ) : (
-                                        <BubbleImage
-                                            src={process.env.PUBLIC_URL + "/icon/" + getRandomIcon(i)}
-                                            alt="random tako icon"
-                                        />
-                                    )}
-                                    <hr />
-                                    <BubbleMessage>{description}</BubbleMessage>
-                                    <BubbleMessage>
-                                        <b>by: {author}</b>
-                                    </BubbleMessage>
-                                </TextBubbleContainer>
+                                <TakodexCard>
+                                    <TakodexCardHeader>{displayName ? displayName : author}</TakodexCardHeader>
+                                    <div style={{ padding: "0.75rem" }}>
+                                        <TakodexText>
+                                            <b>Category:</b> {category ? category : "Uncategorized"}
+                                        </TakodexText>
+                                        <TakodexText>
+                                            <b>Attributes:</b> {attributes ? attributes : "Unknown"}
+                                        </TakodexText>
+                                        <hr />
+                                        {(image && !failedImages[i]) ? (
+                                            <TakodexImage
+                                                src={process.env.PUBLIC_URL + "/takoswentries/" + image}
+                                                alt={displayName}
+                                                onError={() => handleImgError(i)}
+                                            />
+                                        ) : (
+                                            <TakodexImage
+                                                src={process.env.PUBLIC_URL + "/icon/" + getRandomIcon(i)}
+                                                alt="random tako icon"
+                                            />
+                                        )}
+                                        <hr />
+                                        <TakodexText>{description}</TakodexText>
+                                        <TakodexText>
+                                            <b>by: {author}</b>
+                                        </TakodexText>
+                                    </div>
+                                </TakodexCard>
                             </SubmissionContainer>
                         );
                     })}

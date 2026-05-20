@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const NewTag = styled.div`
   position: absolute;
-  top: 50px;
-  left: 10px;
+  top: 4px;
+  left: 4px;
   background: var(--dark-highlight);
   color: var(--text-color);
   font-size: 18px;
@@ -13,6 +13,10 @@ export const NewTag = styled.div`
   border-radius: 12px;
   z-index: 2;
   pointer-events: none;
+  @media only screen and (max-width: 700px) {
+    font-size: 12px;
+    padding: 2px 7px;
+  }
 `;
 
 export const shake = keyframes`
@@ -184,9 +188,8 @@ export const CookieLabel = styled.span`
     -0.08em -0.08em 0 #fff,
     0.08em -0.08em 0 #fff,
     -0.08em 0.08em 0 #fff;
-  width: auto;
+  width: 90%;
   min-width: 0;
-  max-width: 90%;
   text-align: center;
   z-index: 1;
   pointer-events: none;
