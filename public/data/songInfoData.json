@@ -243,11 +243,13 @@
     "performances": [
       {
         "context": "concert",
-        "name": "Breaking Dimensions"
+        "name": "Breaking Dimensions",
+        "status": "archived"
       },
       {
         "context": "concert",
-        "name": "Drawn to Dawn"
+        "name": "Drawn to Dawn",
+        "status": "archived"
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/hcSuSzbj38M"
@@ -353,7 +355,7 @@
         "name": "All For One"
       }
     ],
-    "originalSongLink": "https://www.youtube.com/embed/bitH6NZ_e2Q"
+    "originalSongLink": "https://www.youtube.com/embed/eNvD-D6Gw6c"
   },
   {
     "songName": "Cry Baby",
@@ -1017,7 +1019,7 @@
     "performances": [
       {
         "context": "karaoke",
-        "link": "https://www.youtube.com/embed/iekILuORN4Y",
+        "link": "https://www.youtube.com/embed/iekILuORN4Y?start=1718",
         "status": "unofficially archived"
       }
     ]
@@ -1026,7 +1028,7 @@
     "songName": "Lemon (レモン)",
     "songInfo": "Original: 米津玄師 (Kenshi Yonezu)",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/SX7-Vj3hha4",
+    "originalSongLink": "https://www.youtube.com/embed/SX_ViT4Ra7k",
     "collab": "group",
     "coverInfo": "Ninomae Ina'nis, Nanashi Mumei & IRyS",
     "performances": [
@@ -1638,7 +1640,7 @@
     "songName": "StarRingChild",
     "songInfo": "Original: Aimer (Mobile Suit Gundam Unicorn ending theme)",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/102kPrUykWU",
+    "originalSongLink": "https://www.youtube.com/embed/69w7p05W8HA",
     "collab": "solo",
     "performances": [
       {
@@ -1949,8 +1951,9 @@
   },
   {
     "songName": "U (ウ)",
-    "songInfo": "Original: Ado",
+    "songInfo": "Original: millennium parade × Belle",
     "origin": "3rd Party",
+    "originalSongLink": "https://www.youtube.com/embed/R3V4sAXUJ-g",
     "collab": "solo",
     "performances": [
       {
@@ -2627,7 +2630,7 @@
     "performances": [
       {
         "context": "karaoke",
-        "link": "https://www.youtube.com/embed/0yCbn7aaNTc",
+        "link": "https://www.youtube.com/embed/z7UPEIA-CqY",
         "status": "unofficially archived"
       }
     ],
@@ -2735,7 +2738,7 @@
     "songName": "踊 (Odo)",
     "songInfo": "Original: Ado",
     "origin": "3rd Party",
-    "originalSongLink": "https://www.youtube.com/embed/T3pCKOtTDGk",
+    "originalSongLink": "https://www.youtube.com/embed/YnSW8ian29w",
     "collab": "solo",
     "performances": [
       {
