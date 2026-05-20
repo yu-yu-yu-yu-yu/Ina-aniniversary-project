@@ -71,7 +71,7 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {visibleSubmissions.map(({ message, user, icon, image, pun }, i) => (
+      {visibleSubmissions.map(({ message, user, icon, image, pun, event_date }, i) => (
         <SubmissionContainer key={i}>
           <TextBubbleContainer>
             <BubbleHeader>
@@ -108,6 +108,11 @@ const TakoMessages = ({
                 ></IFrame>
               ))}
             {(!isToggledOnlyImg  || image.includes("mp4")) && <BubbleMessage>{message}</BubbleMessage>}
+            {event_date && (
+              <div style={{ textAlign: "right", fontSize: "0.75rem", opacity: 0.6, marginTop: "0.4rem", paddingRight: "0.5rem" }}>
+                {event_date}
+              </div>
+            )}
           </TextBubbleContainer>
         </SubmissionContainer>
       ))}

@@ -20,7 +20,7 @@ const buttons = [
   { to: "/playlist", label: "The Ultimate Ina Playlist" },
   { to: "/timeline", label: "Ina's Timeline" },
   { to: "/takodex", label: "Takodex" },
-  { to: "/messages", label: "Messages and Artworks" },
+  { to: "/messages", label: "Artworks & Messages" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
   { to: "/collages", label: "Takollages" },
   { to: "/moments", label: `Ina Moments (2024)` },
@@ -29,7 +29,7 @@ const buttons = [
 
 const newButtons = ["Letters for Ina", "The Ultimate Ina Playlist"];
 
-const updateButtons = ["Ina's Timeline", "Takodex", "Messages and Artworks"];
+const updateButtons = ["Ina's Timeline", "Takodex", "Artworks & Messages"];
 
 const Menu = (): JSX.Element => {
   const [peekIndex, setPeekIndex] = useState<number | null>(null);

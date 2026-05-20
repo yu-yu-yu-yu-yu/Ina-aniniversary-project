@@ -7,6 +7,7 @@ export interface Submission {
   sub?: string;
   wah?: string;
   wah_sub?: string;
+  event_date?: string;
 }
 
 export interface VideoEntry extends Submission {

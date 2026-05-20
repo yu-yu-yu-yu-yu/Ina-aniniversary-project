@@ -218,7 +218,7 @@ const MessageBoard = (): JSX.Element => {
       />
       <Navbar>
         <NavHome />
-        <NavTitle>Messages from Takos</NavTitle>
+        <NavTitle>Artworks &amp; Messages</NavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />
@@ -226,18 +226,26 @@ const MessageBoard = (): JSX.Element => {
         <div>Error loading messages: {error.message}</div>
       ) : (
         <SiteBoard>
-          <FiltersContainer>
+          <div style={{ textAlign: "center", padding: "2rem 1rem 1rem" }}>
+            <h1 style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", color: "var(--dark-highlight)", marginBottom: "1rem" }}>
+              HAPPY BIRTHDAY INA! 🐙💜
+            </h1>
+            <video
+              controls
+              style={{ maxWidth: "min(720px, 100%)", width: "100%", borderRadius: "12px" }}
+              src={`${process.env.PUBLIC_URL}/TakoToriDay3_InaBday.mp4`}
+            />
+            <p style={{ fontSize: "0.85rem", color: "var(--dark-highlight)", marginTop: "0.5rem", opacity: 0.8 }}>
+              From Drawn to Dawn Fan Meeting Day 3
+            </p>
+          </div>
+          <FiltersContainer style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
             <SearchBar
               onChange={(e) => { searchRef.current = e.target.value; handleFilter(e); }}
               placeholder="Search..."
+              style={{ flex: 1, minWidth: "160px" }}
             />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                overflow: "hidden",
-              }}
-            >
+            <div style={{ display: "flex", flexDirection: "row", overflow: "hidden", flexShrink: 0 }}>
               <Switch
                 label="Only Images"
                 value={isToggledOnlyImg}

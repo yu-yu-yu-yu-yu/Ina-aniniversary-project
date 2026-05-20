@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Footer, AoLogo } from "./styles/footerStyles";
+import pkg from "../../../../package.json";
+const { version } = pkg;
 
 const HomeFooter = (): JSX.Element => {
   return (
@@ -44,6 +46,7 @@ const HomeFooter = (): JSX.Element => {
           This is a fan project. We are not affiliated with or endorsed by Cover
           Corporation.
         </p>
+        <p style={{ fontSize: "0.75rem", opacity: 0.5, marginTop: "0.25rem" }}>v{version}</p>
       </div>
     </Footer>
   );
