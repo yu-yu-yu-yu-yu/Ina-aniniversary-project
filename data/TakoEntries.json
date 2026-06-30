@@ -8,6 +8,22 @@
     "image": "Arandomcasual.png"
   },
   {
+    "author": "Akio",
+    "name": "Ta-kio",
+    "category": "Unintentional Tank",
+    "attributes": "Witty / Surprisingly durable when thrown / Sponges both physical and mental damage",
+    "description": "\"A bright red Tako that has been mistakenly seen as a stress ball for multiple years. The Tako loves to deliver a properly timed pun or give a witty remark which others believe acts like a natural taunt to deter enemies from weaker Takos. Despite all these years this Tako still makes a happy and healthy squeak noise when squeezed.\"",
+    "image": "Ta-kio.png"
+  },
+  {
+    "author": "Ami Lunami",
+    "name": "Amidachi",
+    "category": "Sorceress",
+    "attributes": "Comfy/Magical",
+    "description": "\"A sorceress who spend its days studying the art of spellcasting and magic. This Takodachi doesn't appear as often as they hide in their study room all day.\"",
+    "image": "Amidachi.png"
+  },
+  {
     "author": "Alloy Automaton",
     "name": "Alloy Automaton",
     "category": "Inorganic",
@@ -54,6 +70,14 @@
     "attributes": "",
     "description": "",
     "image": "BreadART.png"
+  },
+  {
+    "author": "cameratako",
+    "name": "cameratako",
+    "category": "Shuttertako",
+    "attributes": "Obervant / Long / Comfy / Patient",
+    "description": "\"This tako is an observant one, noticing small details in life and people, with patience to find the perfect snapshot, freezing quiet, cozy moments on sheets of film or in the digital realm. Will perform better if yummy snacks are provided. Might zone out looking for interesting compositions when hanging out.\"",
+    "image": "cameratako.png"
   },
   {
     "author": "Chumbeque ",
@@ -110,6 +134,14 @@
     "attributes": "",
     "description": "",
     "image": "DumplingTakodachi.png"
+  },
+  {
+    "author": "Darade",
+    "name": "タ子だち・イカちゃん[赤ちゃん]",
+    "category": "",
+    "attributes": "",
+    "description": "",
+    "image": "Darade.png"
   },
   {
     "author": "Dark0dachi",
@@ -206,6 +238,14 @@
     "attributes": "Introverted / Grainy",
     "description": "\"Surviving solely in digital spaces, this elusive Tako may be spotted wherever software produces unintended results. Prefers to live in places where its shenanigans cause delights instead of concern, like Bethesda games. Finding one at your workplace, however, is a sign of bad luck.\"",
     "image": "Fluid.png"
+  },
+  {
+    "author": "Fraxinity",
+    "name": "Fraxodachi",
+    "category": "Glooby",
+    "attributes": "Gloop/Chill",
+    "description": "“In the hidden crowd of Tako's lies a slimy yet squishy Tako. This Tako prefers to remain in the shadows-shy, but supportive. He is rarely seen in public, but he always appears in style whenever the priestess arrives. Though he seldom speaks, he always listens. When you encounter this Tako, be sure to say hi, you’ll make him happy.”",
+    "image": "Fraxodachi.png"
   },
   {
     "author": "Gathog",
@@ -320,6 +360,14 @@
     "image": "Jems.png"
   },
   {
+    "author": "Jester",
+    "name": "Flaco",
+    "category": "Music enjoyer",
+    "attributes": "requires internet connection",
+    "description": "Notes: thinks he has better taste than you, but is often wrong...",
+    "image": "Flaco.png"
+  },
+  {
     "author": "Joakim MF",
     "name": "Uni 3d modelling handin Tako",
     "category": "Tape Dispenser",
@@ -374,6 +422,14 @@
     "attributes": "Potato, Patient, Otaku",
     "description": "\"This Tako dreams of attending HoloFes in-person someday to cheer on all the talents and witness the hype. Thus far his work schedule as an internal medicine resident has not been cooperative. Nevertheless, he remains hopeful for next year and prays to the gacha gods for favorable scheduling!\"",
     "image": "KiwiNeko.png"
+  },
+  {
+    "author": "KodasKitten333",
+    "name": "Split-dachi",
+    "category": "cookie muncher",
+    "attributes": "soft/fun",
+    "description": "\"This tako has seen a lot. But this tako has been so fun that he forgot his past. But after finding the presses he opens up and accepts both sides as whole\"",
+    "image": "Split-dachi.png"
   },
   {
     "author": "Kodithehoomanshark🌙🥐",
@@ -624,6 +680,14 @@
     "image": "PureTako.png"
   },
   {
+    "author": "radioactivebean",
+    "name": "",
+    "category": "Artificer",
+    "attributes": "Cautious, Slow",
+    "description": "\"This Tako is a thorough thinker and carefully analyzes the current situation before acting. Although normally laid back and slow, this Tako has been reported to exert all of its energy cheering while furiously waving magical light wands in order to cheer for the Priestess.\"",
+    "image": "radioactivebean.png"
+  },
+  {
     "author": "RCSI",
     "name": "Glass Dome Tako",
     "category": "Infrastructure",
@@ -642,9 +706,9 @@
   {
     "author": "Reika零",
     "name": "Takozashi",
-    "category": "",
-    "attributes": "",
-    "description": "",
+    "category": "Weapon",
+    "attributes": "Loyal / Sharp",
+    "description": "\"A takodachi who was so overprotective that he turned himself into a literal self-defence weapon. Can inflict bleed. Can be thrown as a projectile and will automatically retract itself in the same turn. Can only be wield by fellow takodachis and Ina herself.\"",
     "image": "Takozashi.png"
   },
   {
@@ -738,9 +802,9 @@
   {
     "author": "SleepzyTofu",
     "name": "SleepzyTofu",
-    "category": "",
-    "attributes": "",
-    "description": "",
+    "category": "Mind-Soothing Familiar",
+    "attributes": "Comfy / Sleepy / Psychic",
+    "description": "\"Originally a sentient tofu with powerful mind-controlling abilities, One day this creature attempted to dominate a nearby Takodachi through gentle psychic waves. However, the overwhelming comfort and affection of the Takodachi slowly melted its mind away. Now, it spends most of its days resting peacefully atop its favorite Takodachi, drifting between sleepy thoughts and cozy dreams while quietly spreading calming psychic energy to everyone nearby.\"",
     "image": "SleepzyTofu.png"
   },
   {
@@ -790,6 +854,14 @@
     "attributes": "",
     "description": "",
     "image": "Tasaowl.png"
+  },
+  {
+    "author": "Tentacult (not a Cult btw)",
+    "name": "Takodachi-Prime",
+    "category": "Sanest Tako",
+    "attributes": "1. Ore no Ina; 2.Who's that singing with Ina?! She's in the way!",
+    "description": "INAAAAAAAAAAAAAAAAAAAAAAAA!!! (She loves Ina) - On behalf of Tako Flare, without asking: The Tentacult (not a Cult btw)  Note: this is proposed by me to include the sanest Tako among us, since she wont be able to do it herself",
+    "image": "Takodachi-Prime.png"
   },
   {
     "author": "Teo",

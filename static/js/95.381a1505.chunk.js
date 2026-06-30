@@ -304,7 +304,7 @@
     border: 0;
     border-bottom: 1px solid #ddd;
   }
-`;var d=a(579);const{rE:p}={rE:"26.1.6"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
+`;var d=a(579);const{rE:p}={rE:"26.1.7"},x=()=>(0,d.jsxs)(l,{children:[(0,d.jsx)(s,{children:(0,d.jsx)("img",{alt:"Ao-chan Logo",src:"/AOPatternFilledIn.png"})}),(0,d.jsx)("div",{className:"footer-social-container",children:(0,d.jsxs)("div",{className:"social-links",children:[(0,d.jsx)("a",{href:"https://twitter.com/ninomaeinanis",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-twitter"})," @ninomaeinanis"]})}),(0,d.jsx)("br",{}),(0,d.jsx)("a",{href:"https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",target:"_blank",rel:"noopener noreferrer",children:(0,d.jsxs)("p",{children:[(0,d.jsx)("i",{className:"fa fa-youtube-play"})," Ninomae Ina'nis Ch."]})})]})}),(0,d.jsx)("div",{className:"footer-img-container",children:(0,d.jsx)(o.N_,{to:"/credits",children:(0,d.jsx)("img",{alt:"mini-ina",className:"footer-img",src:"/MiniIna.png"})})}),(0,d.jsxs)("div",{className:"disclaimer-container",children:[(0,d.jsx)("p",{children:"This is a fan project. We are not affiliated with or endorsed by Cover Corporation."}),(0,d.jsxs)("p",{style:{fontSize:"0.75rem",opacity:.5,marginTop:"0.25rem"},children:["v",p]})]})]}),c=i.Ay.div`
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -1223,4 +1223,4 @@
     opacity: 0.8;
   }
 `}}]);
-//# sourceMappingURL=95.792c190b.chunk.js.map
+//# sourceMappingURL=95.381a1505.chunk.js.map
