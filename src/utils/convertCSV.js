@@ -5,7 +5,7 @@ const inputFiles = [
   // "./public/data/video.csv",
   // "./src/static/Ina Anniversary Milestones.csv",
   //  "./public/data/messageData.csv"
-   "./src/components/Takodex/TakoEntries.csv"
+  "./src/components/Pages/Takodex/TakoEntries.csv",
 ];
 
 async function convertCSV(inputFiles) {
@@ -23,8 +23,8 @@ async function convertCSV(inputFiles) {
           JSON.stringify(csv_by_line),
           (err) => {
             if (err) throw err;
-          }
-        )
+          },
+        ),
       );
   }
 }

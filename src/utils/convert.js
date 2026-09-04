@@ -46,17 +46,24 @@ fs.createReadStream(inputCSV)
         imageFilename = `${artworkIndex}.png`;
         artworkDownloads.push({
           url: row["Art Submission"],
-          filepath: path.join("C:\\Users\\karim\\Documents\\Ina-aniniversary-project\\public\\Images", imageFilename),
+          filepath: path.join(
+            __dirname,
+            "../../public/artworks",
+            imageFilename,
+          ),
         });
         artworkIndex++;
       }
 
       // Set iconFilename only if "Your own Takodachi!" is a valid image link
-      if (row["Your own Takodachi!"] && row["Your own Takodachi!"].startsWith("http")) {
+      if (
+        row["Your own Takodachi!"] &&
+        row["Your own Takodachi!"].startsWith("http")
+      ) {
         iconFilename = `${takosIndex}.png`;
         takosDownloads.push({
           url: row["Your own Takodachi!"],
-          filepath: path.join("C:\\Users\\karim\\Documents\\Ina-aniniversary-project\\public\\takos", iconFilename),
+          filepath: path.join(__dirname, "../../public/takos", iconFilename),
         });
         takosIndex++;
       }
@@ -64,7 +71,8 @@ fs.createReadStream(inputCSV)
       messageData.push({
         user: row["Your Display Name"] || row["Discord Name"] || "",
         icon: iconFilename, // Set icon only if downloaded
-        message: row["Anniversary Message Submission"]?.replace("/n","<br>") || "",
+        message:
+          row["Anniversary Message Submission"]?.replace("/n", "<br>") || "",
         image: imageFilename,
       });
     }
@@ -75,7 +83,10 @@ fs.createReadStream(inputCSV)
       return label.split(" -->")[0].trim();
     }
 
-    if (row["Select your 1st Favorite Stream"] && row["Message for your 1st Favorite Stream"]) {
+    if (
+      row["Select your 1st Favorite Stream"] &&
+      row["Message for your 1st Favorite Stream"]
+    ) {
       timelineMessages.push({
         label: cleanLabel(row["Select your 1st Favorite Stream"]),
         tako1: row["Your Display Name"] || "",
@@ -86,7 +97,10 @@ fs.createReadStream(inputCSV)
         takoMessage3: "",
       });
     }
-    if (row["Select your 2nd Favorite Stream"] && row["Message for your 2nd Favorite Stream"]) {
+    if (
+      row["Select your 2nd Favorite Stream"] &&
+      row["Message for your 2nd Favorite Stream"]
+    ) {
       timelineMessages.push({
         label: cleanLabel(row["Select your 2nd Favorite Stream"]),
         tako1: row["Your Display Name"] || "",
@@ -97,7 +111,10 @@ fs.createReadStream(inputCSV)
         takoMessage3: "",
       });
     }
-    if (row["Select your 3rd Favorite Stream"] && row["Message for your 3rd Favorite Stream"]) {
+    if (
+      row["Select your 3rd Favorite Stream"] &&
+      row["Message for your 3rd Favorite Stream"]
+    ) {
       timelineMessages.push({
         label: cleanLabel(row["Select your 3rd Favorite Stream"]),
         tako1: row["Your Display Name"] || "",
@@ -116,13 +133,17 @@ fs.createReadStream(inputCSV)
       let attributes = "";
 
       // Parse category
-      const categoryMatch = description.match(/(?:Category|Class)\s*:\s*([^\n\r]*)/i);
+      const categoryMatch = description.match(
+        /(?:Category|Class)\s*:\s*([^\n\r]*)/i,
+      );
       if (categoryMatch) {
         category = categoryMatch[1].trim();
       }
 
       // Parse attributes
-      const attributesMatch = description.match(/Attributes?\s*:\s*([^\n\r]*)/i);
+      const attributesMatch = description.match(
+        /Attributes?\s*:\s*([^\n\r]*)/i,
+      );
       if (attributesMatch) {
         attributes = attributesMatch[1].trim();
       }
@@ -130,16 +151,23 @@ fs.createReadStream(inputCSV)
       description = description
         .replace(/(?:Category|Class)\s*:\s*[^\n\r]*[\n\r]?/i, "")
         .replace(/Attributes?\s*:\s*[^\n\r]*[\n\r]?/i, "")
-        .replace("/n","<br>")
+        .replace("/n", "<br>")
         .trim();
 
       let takoImageFilename = "";
-      if (row["Your own Takodachi!"] && row["Your own Takodachi!"].startsWith("http")) {
+      if (
+        row["Your own Takodachi!"] &&
+        row["Your own Takodachi!"].startsWith("http")
+      ) {
         // Download image from "Your own Takodachi!" link
         takoImageFilename = `${(row["Your Display Name"] || "").replace(/ /g, "")}.png`;
         takoDownloads.push({
           url: row["Your own Takodachi!"],
-          filepath: path.join("C:\\Users\\karim\\Documents\\Ina-aniniversary-project\\public\\takoswentries", takoImageFilename),
+          filepath: path.join(
+            __dirname,
+            "../../public/takoswentries",
+            takoImageFilename,
+          ),
         });
       } else {
         // If not a link, use the filename or leave empty
@@ -156,7 +184,10 @@ fs.createReadStream(inputCSV)
     }
   })
   .on("end", async () => {
-    fs.writeFileSync(messageDataOutput, JSON.stringify([...origmessageData, ...messageData], null, 2));
+    fs.writeFileSync(
+      messageDataOutput,
+      JSON.stringify([...origmessageData, ...messageData], null, 2),
+    );
     console.log("prepdatapv.json written");
 
     // fs.writeFileSync(timelineMessagesOutput, JSON.stringify(mergedTimelineMessages, null, 2));
@@ -164,10 +195,12 @@ fs.createReadStream(inputCSV)
 
     // fs.writeFileSync(takoEntriesOutput, JSON.stringify(mergedTakoEntries, null, 2));
     // console.log("TakoEntries.json written");
-//
+    //
     function mergeTimelineMessages(oldEntries, newEntries) {
       // Map by label for quick lookup
-      const oldMap = Object.fromEntries(oldEntries.map(e => [e.label, { ...e }]));
+      const oldMap = Object.fromEntries(
+        oldEntries.map((e) => [e.label, { ...e }]),
+      );
 
       for (const newEntry of newEntries) {
         const label = newEntry.label;
@@ -210,14 +243,20 @@ fs.createReadStream(inputCSV)
       return Object.values(oldMap);
     }
 
-    const mergedTimelineMessages = mergeTimelineMessages(origTimelineMessages, timelineMessages);
-    fs.writeFileSync(timelineMessagesOutput, JSON.stringify(mergedTimelineMessages, null, 2));
+    const mergedTimelineMessages = mergeTimelineMessages(
+      origTimelineMessages,
+      timelineMessages,
+    );
+    fs.writeFileSync(
+      timelineMessagesOutput,
+      JSON.stringify(mergedTimelineMessages, null, 2),
+    );
     console.log("timelinepv.json written");
 
     function mergeTakoEntries(oldEntries, newEntries) {
       // Build a map from author+name to entry for new data
       const key = (entry) => `${entry.author}|||${entry.name}`;
-      const newMap = Object.fromEntries(newEntries.map(e => [key(e), e]));
+      const newMap = Object.fromEntries(newEntries.map((e) => [key(e), e]));
 
       // Merge: if new exists, use new; else keep old
       const merged = [];
@@ -243,7 +282,10 @@ fs.createReadStream(inputCSV)
     }
 
     const mergedTakoEntries = mergeTakoEntries(origTakoEntries, takoEntries);
-    fs.writeFileSync(takoEntriesOutput, JSON.stringify(mergedTakoEntries, null, 2));
+    fs.writeFileSync(
+      takoEntriesOutput,
+      JSON.stringify(mergedTakoEntries, null, 2),
+    );
     console.log("TakoEntries.json written");
 
     // Download images (artwork and takoswentries)
@@ -276,7 +318,8 @@ async function downloadImage(url, filepath) {
     }
     const directUrl = getDirectImageUrl(url);
     const res = await fetch(directUrl);
-    if (!res.ok) throw new Error(`Failed to fetch ${directUrl}: ${res.statusText}`);
+    if (!res.ok)
+      throw new Error(`Failed to fetch ${directUrl}: ${res.statusText}`);
     const buffer = await res.buffer();
     fs.writeFileSync(filepath, buffer);
     console.log(`Downloaded: ${filepath}`);

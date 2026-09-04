@@ -21,6 +21,18 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }]
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
+  settings: {
+    react: { version: "detect" },
+  },
+  overrides: [
+    {
+      files: ["src/utils/*.js"],
+      env: { node: true },
+      rules: {
+        "@typescript-eslint/no-var-requires": "off",
+      },
+    },
+  ],
 };
