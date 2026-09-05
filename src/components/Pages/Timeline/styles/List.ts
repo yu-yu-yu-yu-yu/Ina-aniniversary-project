@@ -150,7 +150,7 @@ export const ListScrollable = styled(ScrollContainer)`
     padding-bottom: 150px;
   }
   :not(&.mobile) > ${EventContainer}:first-child {
-    padding-left: 0; 
+    padding-left: 0;
   }
   > ${EventContainer}:last-child {
     ${Line} {
@@ -197,17 +197,19 @@ export const YearContainer = styled.div`
   width: fit-content;
   position: relative;
   z-index: 0;
-`
+`;
 
 export const YearDisplay = styled.div<{
-    selected: boolean;
+  selected: boolean;
 }>`
   padding: 5px;
-  color: ${({ selected }) => selected ? "var(--light-highlight)" : "var(--text-color)"};
+  color: ${({ selected }) =>
+    selected ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
   letter-spacing: 0;
-  font: normal normal ${({selected}) => selected ? "bold" : "light"} 30px Roboto;
-  font-size: ${({ selected }) => selected ? "30px" : "26px"};
+  font: normal normal ${({ selected }) => (selected ? "bold" : "light")} 30px
+    Roboto;
+  font-size: ${({ selected }) => (selected ? "30px" : "26px")};
   opacity: 1;
   margin: auto 0;
   position: relative;
@@ -236,19 +238,21 @@ export const YearDisplay = styled.div<{
          1px -1px 0 var(--shadow),
         -1px  1px 0 var(--shadow),
          1px  1px 0 var(--shadow);
-    `
-  }
+    `}
 `;
 
 export const MonthDisplay = styled.span<{
   highlight: boolean;
   passed: boolean;
 }>`
-  color: ${({ highlight }) => highlight ? "var(--light-highlight)" : "var(--text-color)"};
+  color: ${({ highlight }) =>
+    highlight ? "var(--light-highlight)" : "var(--text-color)"};
   text-align: center;
-  font: normal normal ${({ highlight, passed }) =>
-    highlight ? "bold" : passed ? "light" : "100"} 30px/37px Roboto;
-  font-size: ${({ highlight }) => highlight ? "30px" : "27px"};
+  font: normal normal
+    ${({ highlight, passed }) =>
+      highlight ? "bold" : passed ? "light" : "100"}
+    30px/37px Roboto;
+  font-size: ${({ highlight }) => (highlight ? "30px" : "27px")};
   opacity: 1;
   margin: auto 0;
   position: relative;
@@ -277,8 +281,7 @@ export const MonthDisplay = styled.span<{
          2px -2px 0 var(--shadow),
         -2px  2px 0 var(--shadow),
          2px  2px 0 var(--shadow);
-    `
-  }
+    `}
 `;
 
 export const MonthAnchorHeader = styled.span`
@@ -332,7 +335,7 @@ export const EventLabel = styled.span`
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-    
+
   &.mobile {
     text-align: left;
     font: normal normal 400 20px/24px Roboto;
@@ -526,8 +529,8 @@ export const EventModalContainer = styled.div`
     display: none;
   }
 
-  -ms-overflow-style: none; 
-  scrollbar-width: none;  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 export const ModalVideo = styled.iframe`
   width: 100%;
@@ -630,7 +633,10 @@ export const PageArrowButton = styled.button`
   color: var(--light-highlight);
   font-size: 1.1em;
   flex-shrink: 0;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border 0.2s;
   &:disabled {
     opacity: 0.35;
     cursor: not-allowed;
@@ -638,5 +644,40 @@ export const PageArrowButton = styled.button`
   &:not(:disabled):hover {
     background: var(--light-highlight);
     color: var(--dark-highlight);
+  }
+`;
+
+export const PageContainer = styled.div`
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--dark-highlight);
+`;
+
+export const PageTitle = styled.h2`
+  margin: 0;
+  color: var(--dark-highlight);
+  text-shadow:
+    0 0 0.03em #ffffff7b,
+    0.03em 0 0 #ffffff7b,
+    -0.03em 0 0 #ffffff7b,
+    0 0.03em 0 #ffffff7b,
+    0 -0.03em 0 #ffffff7b,
+    0.03em 0.03em 0 #ffffff7b,
+    -0.03em -0.03em 0 #ffffff7b,
+    0.03em -0.03em 0 #ffffff7b,
+    -0.03em 0.03em 0 #ffffff7b;
+  text-align: center;
+  font: normal normal bold 48px/56px Montserrat;
+  flex: 1;
+  @media only screen and (max-width: 1000px) {
+    font: normal normal bold 32px/40px Montserrat;
+    letter-spacing: 1.25px;
+  }
+  @media only screen and (max-width: 768px) {
+    font: normal normal bold 24px/30px Montserrat;
+    letter-spacing: 1px;
   }
 `;

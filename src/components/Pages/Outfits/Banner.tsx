@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import outfits from "./outfits.json";
 import {
   ArtworkButton,
@@ -12,6 +12,7 @@ import {
   VodLink,
 } from "./styles/BannerStyle";
 import { Outfit } from "../../../types";
+import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 
 const images = outfits.map((item: Outfit) => ({
   ...item,
@@ -20,7 +21,7 @@ const images = outfits.map((item: Outfit) => ({
 }));
 
 const grouped: Record<string, Outfit[]> = {};
-images.forEach(img => {
+images.forEach((img) => {
   if (!grouped[img.title]) grouped[img.title] = [];
   grouped[img.title].push(img);
 });
@@ -28,137 +29,23 @@ images.forEach(img => {
 const groupedEntries = Object.entries(grouped);
 const TOTAL = groupedEntries.length;
 
-const LOAD_RADIUS = 2;
-
-const initialLoaded = new Set(
-  Array.from({ length: Math.min(LOAD_RADIUS + 1, TOTAL) }, (_, i) => i)
-);
-
 export const Banner = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
   const [isPlaying, setIsPlaying] = useState(true);
   const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
-  const [pivotIndex, setPivotIndex] = useState(0);
-  const [loadedSet, setLoadedSet] = useState<Set<number>>(initialLoaded);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const debounceTimer = useRef<number>(0);
-  const pivotRef = useRef(pivotIndex);
-  const programmaticRef = useRef(false);
-  const programmaticTimer = useRef<number>(0);
-  const isDragging = useRef(false);
-  const dragStartX = useRef(0);
-  const dragStartScroll = useRef(0);
-  pivotRef.current = pivotIndex;
-
-  const expandLoad = useCallback((center: number) => {
-    setLoadedSet(prev => {
-      const next = new Set(prev);
-      for (
-        let i = Math.max(0, center - LOAD_RADIUS);
-        i <= Math.min(TOTAL - 1, center + LOAD_RADIUS);
-        i++
-      ) {
-        next.add(i);
-      }
-      return next;
-    });
-  }, []);
-
-  const scrollToPivot = useCallback((index: number) => {
-    const el = itemRefs.current[index];
-    const container = containerRef.current;
-    if (!el || !container) return;
-    programmaticRef.current = true;
-    clearTimeout(programmaticTimer.current);
-    programmaticTimer.current = window.setTimeout(() => {
-      programmaticRef.current = false;
-      container.style.scrollSnapType = "";
-    }, 700);
-    const targetLeft = el.offsetLeft - container.clientWidth / 2 + el.offsetWidth / 2;
-    container.scrollTo({ left: targetLeft, behavior: "smooth" });
-  }, []);
-
-  const goTo = useCallback(
-    (index: number) => {
-      const clamped = Math.max(0, Math.min(index, TOTAL - 1));
-      setPivotIndex(clamped);
-      expandLoad(clamped);
-      scrollToPivot(clamped);
-    },
-    [expandLoad, scrollToPivot]
-  );
-
-  const handleScroll = useCallback(() => {
-    if (programmaticRef.current) return;
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = window.setTimeout(() => {
-      const container = containerRef.current;
-      if (!container) return;
-      const cRect = container.getBoundingClientRect();
-      const centerX = cRect.left + cRect.width / 2;
-      let bestIdx = pivotRef.current;
-      let bestDist = Infinity;
-      itemRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const dist = Math.abs((rect.left + rect.width / 2) - centerX);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = i;
-        }
-      });
-      if (bestIdx === pivotRef.current) return;
-      setPivotIndex(bestIdx);
-      expandLoad(bestIdx);
-    }, 250);
-  }, [expandLoad]);
-
-  const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === "touch") return;
-    if ((e.target as HTMLElement).closest("button, a")) return;
-    const el = containerRef.current;
-    if (!el) return;
-    isDragging.current = true;
-    dragStartX.current = e.clientX;
-    dragStartScroll.current = el.scrollLeft;
-    el.setPointerCapture(e.pointerId);
-    el.style.scrollSnapType = "none";
-    el.style.cursor = "grabbing";
-  }, []);
-
-  const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging.current || !containerRef.current) return;
-    containerRef.current.scrollLeft = dragStartScroll.current - (e.clientX - dragStartX.current);
-  }, []);
-
-  const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging.current || !containerRef.current) return;
-    isDragging.current = false;
-    const el = containerRef.current;
-    el.style.cursor = "";
-    const dragDistance = Math.abs(e.clientX - dragStartX.current);
-    if (dragDistance < 5) {
-      el.style.scrollSnapType = "";
-      return;
-    }
-    const cRect = el.getBoundingClientRect();
-    const centerX = cRect.left + cRect.width / 2;
-    let bestIdx = pivotRef.current;
-    let bestDist = Infinity;
-    itemRefs.current.forEach((item, i) => {
-      if (!item) return;
-      const rect = item.getBoundingClientRect();
-      const dist = Math.abs((rect.left + rect.width / 2) - centerX);
-      if (dist < bestDist) { bestDist = dist; bestIdx = i; }
-    });
-    goTo(bestIdx);
-  }, [goTo]);
+  const {
+    pivotIndex,
+    goTo,
+    containerRef,
+    itemRefs,
+    isLoaded,
+    containerHandlers,
+  } = useCenterCarousel(TOTAL);
 
   const swapArtwork = useCallback((title: string, arr: Outfit[]) => {
-    setDupIdx(prev => ({
+    setDupIdx((prev) => ({
       ...prev,
       [title]: ((prev[title] || 0) + 1) % arr.length,
     }));
@@ -167,7 +54,7 @@ export const Banner = () => {
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setDupIdx(prev => {
+      setDupIdx((prev) => {
         const next: Record<string, number> = { ...prev };
         Object.entries(grouped).forEach(([title, arr]) => {
           if (arr.length > 1) {
@@ -192,7 +79,13 @@ export const Banner = () => {
           padding: "0.75rem 0",
         }}
       >
-        <h2 style={{ fontSize: "clamp(1.2rem, 4vh, 2.5rem)", textAlign: "center", margin: 0 }}>
+        <h2
+          style={{
+            fontSize: "clamp(1.2rem, 4vh, 2.5rem)",
+            textAlign: "center",
+            margin: 0,
+          }}
+        >
           Ina&apos;s Outfits Across Time
         </h2>
         <div
@@ -206,49 +99,41 @@ export const Banner = () => {
             userSelect: "none",
           }}
         >
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex - 1)}
-          disabled={pivotIndex === 0}
-          aria-label="Previous outfit"
-        >
-          <i className="fa fa-chevron-left" aria-hidden="true" />
-        </PageArrowButton>
-        <span
-          style={{
-            background: "var(--dark-highlight)",
-            color: "white",
-            borderRadius: 12,
-            padding: "6px 18px",
-            boxShadow: "0 2px 8px #0002",
-            minWidth: 160,
-            textAlign: "center",
-          }}
-        >
-          Ina No. {pivotIndex + 1} / {TOTAL} 
-        </span>
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex + 1)}
-          disabled={pivotIndex >= TOTAL - 1}
-          aria-label="Next outfit"
-        >
-          <i className="fa fa-chevron-right" aria-hidden="true" />
-        </PageArrowButton>
+          <PageArrowButton
+            onClick={() => goTo(pivotIndex - 1)}
+            disabled={pivotIndex === 0}
+            aria-label="Previous outfit"
+          >
+            <i className="fa fa-chevron-left" aria-hidden="true" />
+          </PageArrowButton>
+          <span
+            style={{
+              background: "var(--dark-highlight)",
+              color: "white",
+              borderRadius: 12,
+              padding: "6px 18px",
+              boxShadow: "0 2px 8px #0002",
+              minWidth: 160,
+              textAlign: "center",
+            }}
+          >
+            Ina No. {pivotIndex + 1} / {TOTAL}
+          </span>
+          <PageArrowButton
+            onClick={() => goTo(pivotIndex + 1)}
+            disabled={pivotIndex >= TOTAL - 1}
+            aria-label="Next outfit"
+          >
+            <i className="fa fa-chevron-right" aria-hidden="true" />
+          </PageArrowButton>
         </div>
       </div>
 
       <BannerWrapper>
-        <Container
-          ref={containerRef}
-          onScroll={handleScroll}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerUp}
-        >
+        <Container ref={containerRef} {...containerHandlers}>
           {groupedEntries.map(([title, arr], i) => {
             const outfit = arr.length > 1 ? arr[dupIdx[title] || 0] : arr[0];
             const isPivot = i === pivotIndex;
-            const isLoaded = loadedSet.has(i);
 
             return (
               <BannerImgWrapper
@@ -261,13 +146,18 @@ export const Banner = () => {
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
               >
-                {isLoaded ? (
+                {isLoaded(i) ? (
                   <>
                     <span
-                      style={{ display: "block", cursor: "pointer", position: "relative", zIndex: 1 }}
+                      style={{
+                        display: "block",
+                        cursor: "pointer",
+                        position: "relative",
+                        zIndex: 1,
+                      }}
                       onClick={() =>
                         setModalImgSrc(
-                          `${process.env.PUBLIC_URL}/outfits/${outfit.filename}`
+                          `${process.env.PUBLIC_URL}/outfits/${outfit.filename}`,
                         )
                       }
                     >
@@ -291,15 +181,26 @@ export const Banner = () => {
                       >
                         <ArtworkButton
                           title="Next artwork"
-                          onClick={e => { e.stopPropagation(); swapArtwork(title, arr); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            swapArtwork(title, arr);
+                          }}
                         >
                           <i className="fa fa-exchange" aria-hidden="true" />
                         </ArtworkButton>
                         <ArtworkButton
-                          title={isPlaying ? "Pause auto-swap" : "Resume auto-swap"}
-                          onClick={e => { e.stopPropagation(); setIsPlaying(v => !v); }}
+                          title={
+                            isPlaying ? "Pause auto-swap" : "Resume auto-swap"
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsPlaying((v) => !v);
+                          }}
                         >
-                          <i className={`fa fa-${isPlaying ? "pause" : "play"}`} aria-hidden="true" />
+                          <i
+                            className={`fa fa-${isPlaying ? "pause" : "play"}`}
+                            aria-hidden="true"
+                          />
                         </ArtworkButton>
                       </div>
                     )}
@@ -376,8 +277,12 @@ export const Banner = () => {
           <img
             src={modalImgSrc}
             alt="Artwork"
-            style={{ maxWidth: "90vw", maxHeight: "90vh", borderRadius: "12px" }}
-            onClick={e => e.stopPropagation()}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              borderRadius: "12px",
+            }}
+            onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}

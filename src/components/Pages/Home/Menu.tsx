@@ -19,6 +19,7 @@ const buttons = [
   { to: "/letters", label: "Letters for Ina" },
   { to: "/playlist", label: "The Ultimate Ina Playlist" },
   { to: "/timeline", label: "Ina's Timeline" },
+  { to: "/inaoutfit", label: "Ina Ina Outfit!" },
   { to: "/takodex", label: "Takodex" },
   { to: "/messages", label: "Artworks & Messages" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
@@ -27,7 +28,11 @@ const buttons = [
   { to: "/wah", label: "WAH (2024)" },
 ];
 
-const newButtons = ["Letters for Ina", "The Ultimate Ina Playlist"];
+const newButtons = [
+  "Letters for Ina",
+  "The Ultimate Ina Playlist",
+  "Ina Ina Outfit!",
+];
 
 const updateButtons = ["Ina's Timeline", "Takodex", "Artworks & Messages"];
 
