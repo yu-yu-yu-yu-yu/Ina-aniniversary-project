@@ -21,6 +21,7 @@ const buttons = [
   { to: "/timeline", label: "Ina's Timeline" },
   { to: "/inaoutfit", label: "Ina Ina Outfit!" },
   { to: "/momentsgallery", label: "Moments Gallery" },
+  { to: "/wahrld", label: "Ina around the WAHrld" },
   { to: "/takodex", label: "Takodex" },
   { to: "/messages", label: "Artworks & Messages" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
@@ -34,6 +35,7 @@ const newButtons = [
   "The Ultimate Ina Playlist",
   "Ina Ina Outfit!",
   "Moments Gallery",
+  "Ina around the WAHrld",
 ];
 
 const updateButtons = ["Ina's Timeline", "Takodex", "Artworks & Messages"];

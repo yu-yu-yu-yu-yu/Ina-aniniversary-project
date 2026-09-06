@@ -43,6 +43,7 @@ const OutfitsPage = lazy(
 const MomentsGallery = lazy(
   () => import("./components/Pages/MomentsGallery/MomentsGallery"),
 );
+const WahrldPage = lazy(() => import("./components/Pages/Wahrld/WahrldPage"));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -85,6 +86,9 @@ const App = (): JSX.Element => (
             </Route>
             <Route path="/momentsgallery">
               <MomentsGallery />
+            </Route>
+            <Route path="/wahrld">
+              <WahrldPage />
             </Route>
             <Route path="/takodex">
               <TakodexList />
