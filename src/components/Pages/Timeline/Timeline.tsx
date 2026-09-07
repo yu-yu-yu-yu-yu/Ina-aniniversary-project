@@ -4,9 +4,12 @@ import { DrawerToggle, ScrollList } from "./ScrollList";
 import { Milestone } from "../../../types";
 import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
 import { PageContainer, PageTitle } from "./styles/List";
+import { useMute } from "../../Common/MuteButton";
+import { useAudio } from "../../../hooks/useAudio";
 
 const Content = styled.div`
   flex: 1;
+  min-height: 0;
   display: flex;
 `;
 
@@ -20,6 +23,8 @@ export const Timeline = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
   const navBarRef = useRef(null);
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
 
   const checkMobile = () => {
     setMobile(window.innerWidth < 768);
@@ -39,7 +44,14 @@ export const Timeline = ({
   };
 
   return (
-    <PageContainer>
+    <PageContainer style={{ height: "100vh", overflow: "hidden" }}>
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/ensolarado.mp3"}
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
       <Navbar
         ref={navBarRef}
         className={mobile ? "mobile" : ""}
@@ -72,15 +84,14 @@ export const Timeline = ({
                     Streams &amp; Milestones
                   </div>
                   <ul style={{ margin: 0, paddingLeft: 16, lineHeight: 1.65 }}>
-                    {mobile ? (
-                      <li>Scroll vertically to browse the current month</li>
-                    ) : (
-                      <li>
-                        Drag horizontally to scroll through the current month
-                      </li>
-                    )}
+                    <li>Drag or click a side card to bring it to the center</li>
                     <li>
-                      Click a thumbnail to see full details, date and notes
+                      The centered stream plays its VOD, description and tako
+                      messages right on the page
+                    </li>
+                    <li>
+                      Click a node on the tentacle below to jump straight to
+                      that stream
                     </li>
                     <li>
                       Use the <b>Search</b> {mobile ? "drawer" : "bar"} to
@@ -125,7 +136,6 @@ export const Timeline = ({
       <Content>
         <ScrollList
           milestones={milestones}
-          mobile={mobile}
           modalControls={modalControls}
           drawerVisible={drawerOpen}
           toggleDrawer={handleDrawerToggle}

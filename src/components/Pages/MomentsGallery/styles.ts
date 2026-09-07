@@ -3,8 +3,10 @@ import styled from "styled-components";
 export const GalleryWrapper = styled.div`
   width: 100%;
   position: relative;
-  min-height: 65vh;
-  overflow: visible;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const CarouselNav = styled.div`
@@ -31,6 +33,8 @@ export const GalleryScroller = styled.div`
   display: flex;
   align-items: stretch;
   width: 100%;
+  flex: 1;
+  min-height: 0;
   cursor: grab;
   user-select: none;
   gap: 32px;
@@ -55,6 +59,7 @@ export const GalleryScroller = styled.div`
 export const MomentSlot = styled.div<{ $isPivot: boolean }>`
   position: relative;
   flex-shrink: 0;
+  height: 100%;
   width: ${({ $isPivot }) => ($isPivot ? "640px" : "220px")};
   max-width: 90vw;
   display: flex;
@@ -93,13 +98,16 @@ export const MomentCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
+  overflow-y: auto;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 `;
 
 export const MomentSource = styled.div`
   border-radius: 14px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  flex: 1 1 auto;
+  min-height: 160px;
   background: #000;
 `;
 

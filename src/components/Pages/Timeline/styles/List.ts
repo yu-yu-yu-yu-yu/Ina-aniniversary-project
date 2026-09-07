@@ -21,6 +21,7 @@ export const Line = styled.span`
 export const ScrollListContainer = styled.div`
   display: flex;
   flex: 1;
+  min-height: 0;
   width: 100vw;
   overflow: hidden;
   flex-direction: column;
@@ -679,5 +680,255 @@ export const PageTitle = styled.h2`
   @media only screen and (max-width: 768px) {
     font: normal normal bold 24px/30px Montserrat;
     letter-spacing: 1px;
+  }
+`;
+
+export const StageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 12px 0 32px;
+`;
+
+export const StageNav = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  user-select: none;
+`;
+
+export const StageCounter = styled.span`
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border-radius: 12px;
+  padding: 6px 18px;
+  min-width: 90px;
+  text-align: center;
+`;
+
+export const StageScroller = styled.div`
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  cursor: grab;
+  user-select: none;
+  gap: 40px;
+  padding: 1.2rem 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    flex: 0 0 max(0px, calc(50vw - 220px));
+  }
+`;
+
+export const StageSlot = styled.div<{ $isPivot: boolean }>`
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+  overflow-y: auto;
+  width: ${({ $isPivot }) => ($isPivot ? "min(1040px, 92vw)" : "220px")};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  opacity: ${({ $isPivot }) => ($isPivot ? 1 : 0.45)};
+  transform: ${({ $isPivot }) => ($isPivot ? "scale(1)" : "scale(0.9)")};
+  transition:
+    width 0.35s,
+    opacity 0.35s,
+    transform 0.35s;
+  cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};
+`;
+
+export const NeighborThumb = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--dark-highlight);
+  border: 2px solid var(--light-highlight);
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--text-color);
+  text-align: center;
+  width: 100%;
+
+  img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+`;
+
+export const StageSkeleton = styled.div`
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  background: var(--light-highlight);
+  opacity: 0.35;
+`;
+
+export const StageMain = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: min(1000px, 92vw);
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const StageCenter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 300px;
+`;
+
+export const StageVideoFrame = styled.iframe`
+  aspect-ratio: 16 / 9;
+  width: auto;
+  max-width: min(900px, 90vw);
+  height: min(46vh, 500px);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow);
+`;
+
+export const StageImageFrame = styled.img`
+  width: auto;
+  height: auto;
+  max-width: min(900px, 90vw);
+  max-height: min(46vh, 500px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow);
+`;
+
+export const StageHeading = styled.a`
+  margin-top: 12px;
+  font: normal normal bold 22px/28px Montserrat;
+  color: var(--dark-highlight);
+  text-align: center;
+  text-decoration: none;
+`;
+
+export const StageDate = styled.span`
+  color: var(--dark-highlight);
+  opacity: 0.75;
+`;
+
+export const StageDescription = styled.p`
+  margin: 16px 0 0;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--dark-highlight);
+  max-width: 700px;
+`;
+
+export const BubbleColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 260px;
+  flex-shrink: 0;
+  @media (max-width: 900px) {
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+  }
+`;
+
+export const SpeechBubble = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid var(--light-highlight);
+  border-radius: 14px;
+  padding: 10px 14px;
+  max-width: 260px;
+  font-size: 14px;
+
+  img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--light-highlight);
+    flex-shrink: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+  }
+
+  &.left::after {
+    right: -16px;
+    border-left-color: var(--dark-highlight);
+  }
+
+  &.right::after {
+    left: -16px;
+    border-right-color: var(--dark-highlight);
+  }
+`;
+
+export const RailContainer = styled.div`
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 24px auto 0;
+  width: min(1000px, 92vw);
+  scrollbar-width: thin;
+`;
+
+export const RailNode = styled.button<{ $active: boolean }>`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: ${({ $active }) => ($active ? "20px" : "14px")};
+  height: ${({ $active }) => ($active ? "20px" : "14px")};
+  border-radius: 50%;
+  border: 2px solid var(--light-highlight);
+  background: ${({ $active }) =>
+    $active ? "var(--light-highlight)" : "var(--dark-highlight)"};
+  cursor: pointer;
+  padding: 0;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s;
+  &:hover {
+    filter: brightness(1.15);
   }
 `;

@@ -1,5 +1,3 @@
-import { MutableRefObject, RefObject } from "react";
-
 export interface Milestone {
   label: string;
   media?: string;
@@ -74,18 +72,14 @@ export interface IScrollListProps {
     setSelectedTitleTag: (tag: string) => void;
     milestones: Milestone[];
   };
-  setYear: (year: Year) => void;
   monthProps: {
     selectedMonth: Month;
     setMonth: (month: Month) => void;
     year: Year;
     setYear: (year: Year) => void;
   };
-  setMonth: (month: Month) => void;
   milestones: Milestone[];
-  refMap: MutableRefObject<Record<MonthWithYear, RefObject<HTMLSpanElement> | null>>;
   modalControls: boolean;
-  scrollPos: [number, number];
 }
 
 export interface INodeProps {

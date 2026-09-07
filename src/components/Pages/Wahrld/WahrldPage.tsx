@@ -48,7 +48,15 @@ const WahrldPage = (): JSX.Element => {
     useCenterCarousel(total);
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        background: "var(--background)",
+      }}
+    >
       <Navbar>
         <NavHome />
         <NavTitle>Ina around the WAHrld</NavTitle>
@@ -58,7 +66,14 @@ const WahrldPage = (): JSX.Element => {
       ) : error ? (
         <div>Error loading submissions: {error.message}</div>
       ) : (
-        <SiteBoard>
+        <SiteBoard
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <KindSwitchRow>
             {KINDS.map((kind) => (
               <Switch
@@ -66,6 +81,7 @@ const WahrldPage = (): JSX.Element => {
                 label={KIND_LABEL[kind]}
                 value={kindFilter === kind}
                 onChange={setKind(kind)}
+                labelColor="var(--dark-highlight)"
               />
             ))}
           </KindSwitchRow>

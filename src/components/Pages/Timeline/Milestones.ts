@@ -1,5 +1,6 @@
 import { Milestone } from "../../../types";
 import milestoneJson from "../../../static/Ina Anniversary Milestones.json";
+import { toEmbed } from "../../../utils/youtube";
 
 const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
   const formatDate = (string: string) => {
@@ -23,12 +24,9 @@ const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
         gaming: jmilestone.gaming,
         drawing: jmilestone.drawing,
         collab: jmilestone.collab,
-        song: jmilestone.song
+        song: jmilestone.song,
       },
-      video: jmilestone.video.replace(
-        /.*\?v=(.+)$/,
-        `https://www.youtube.com/embed/$1`
-      ),
+      video: jmilestone.video ? toEmbed(jmilestone.video) : "",
     };
   });
 };

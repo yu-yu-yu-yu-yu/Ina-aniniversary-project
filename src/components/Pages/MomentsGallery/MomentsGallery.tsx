@@ -41,7 +41,15 @@ const MomentsGallery = (): JSX.Element => {
     setCategoryFilter(active ? value : null);
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        background: "var(--background)",
+      }}
+    >
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
@@ -58,7 +66,14 @@ const MomentsGallery = (): JSX.Element => {
       ) : error ? (
         <div>Error loading moments: {error.message}</div>
       ) : (
-        <SiteBoard>
+        <SiteBoard
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <CategorySwitchRow>
             {CATEGORIES.map((cat) => (
               <Switch
@@ -66,6 +81,7 @@ const MomentsGallery = (): JSX.Element => {
                 label={CATEGORY_LABEL[cat]}
                 value={categoryFilter === cat}
                 onChange={setCategory(cat)}
+                labelColor="var(--dark-highlight)"
               />
             ))}
           </CategorySwitchRow>
