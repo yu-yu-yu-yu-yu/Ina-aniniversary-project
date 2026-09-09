@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAudio } from "../../../hooks/useAudio";
 import { useMute } from "../../Common/MuteButton";
-import { Navbar, NavHome } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
 import {
   PageContainer,
   NavTitle,
@@ -31,6 +31,7 @@ const collages = [
 
 const CollagePage = () => {
   const [modalSrc, setModalSrc] = useState<string | null>(null);
+  const [hintOpen, setHintOpen] = useState(false);
   const { muted } = useMute();
   const audioRef = useAudio({ muted, autoPlay: true });
   return (
@@ -38,6 +39,21 @@ const CollagePage = () => {
       <Navbar>
         <NavHome />
         <NavTitle>Collages</NavTitle>
+        <div style={{ flex: "0 0 auto", position: "relative" }}>
+          <HintButton
+            aria-label="Show collages usage hint"
+            onClick={() => setHintOpen((v) => !v)}
+            title="Show collages usage hint"
+          >
+            <i className="fa fa-question-circle" aria-hidden="true" />
+            <span className="btn-text">Help</span>
+          </HintButton>
+          {hintOpen && (
+            <HintPopover onClick={() => setHintOpen(false)}>
+              <p>Click a collage to open it full-size.</p>
+            </HintPopover>
+          )}
+        </div>
       </Navbar>
       <audio
         ref={audioRef}

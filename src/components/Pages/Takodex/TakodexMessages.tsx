@@ -10,7 +10,7 @@ import {
   AddTakoButton,
 } from "./styles";
 import { SiteBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
-import { Navbar, NavHome } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
 
 const iconImages = [
   "8-bit Tako.png",
@@ -53,6 +53,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
     {},
   );
   const [search, setSearch] = useState("");
+  const [hintOpen, setHintOpen] = useState(false);
 
   const handleImgError = (i: number) => {
     setFailedImages((prev) => ({ ...prev, [i]: true }));
@@ -71,6 +72,24 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
       <Navbar>
         <NavHome />
         <NavTitle>Takodex</NavTitle>
+        <div style={{ flex: "0 0 auto", position: "relative" }}>
+          <HintButton
+            aria-label="Show Takodex usage hint"
+            onClick={() => setHintOpen((v) => !v)}
+            title="Show Takodex usage hint"
+          >
+            <i className="fa fa-question-circle" aria-hidden="true" />
+            <span className="btn-text">Help</span>
+          </HintButton>
+          {hintOpen && (
+            <HintPopover onClick={() => setHintOpen(false)}>
+              <p>
+                Search by name, category, or attribute. Made your own Takodachi?
+                Use &quot;Add my Tako&quot; to submit it for a future entry.
+              </p>
+            </HintPopover>
+          )}
+        </div>
         <div style={{ marginLeft: "auto" }}>
           <AddTakoButton
             href="https://forms.gle/qnrMrk2z6QaRHsdZ7"

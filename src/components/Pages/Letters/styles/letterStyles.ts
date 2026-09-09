@@ -244,8 +244,8 @@ export const ModalCard = styled.div`
   border-radius: 15px;
   padding: 15px;
   font-family: sans-serif;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: clamp(18px, 1vw + 0.6vh, 26px);
+  line-height: 1.35;
 
   width: 70vw;
   height: 90vh;

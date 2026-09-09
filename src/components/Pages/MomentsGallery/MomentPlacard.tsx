@@ -33,7 +33,10 @@ const MomentPlacard = ({
   moment: Moment;
   view: ExhibitView;
 }): JSX.Element => {
-  const contextRef = useFitText<HTMLParagraphElement>([moment.slug]);
+  const contextRef = useFitText<HTMLParagraphElement>([moment.slug], {
+    min: 12,
+    max: 22,
+  });
 
   return (
     <PlacardCard>

@@ -24,8 +24,7 @@ export const Card = styled.div`
 `;
 
 export const Thumbnail = styled.img`
-  width: 25rem;
-  max-width: 100%;
+  width: min(100%, 34rem);
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0 2px 8px #0002;

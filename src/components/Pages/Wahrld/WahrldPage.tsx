@@ -3,11 +3,7 @@ import { WahrldEntry, WahrldKind } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 import { Navbar, NavHome } from "../../Common/Navbar";
-import {
-  CarouselCenterMark,
-  NavTitle,
-  SiteBoard,
-} from "../../../styles/globalStyles";
+import { CarouselCenterMark, SiteBoard } from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
@@ -23,6 +19,7 @@ import {
   NeighborAvatar,
   NeighborCard,
   NoEntriesYet,
+  WahrldTitle,
 } from "./styles";
 
 const KIND_LABEL: Record<WahrldKind, string> = {
@@ -69,7 +66,7 @@ const WahrldPage = (): JSX.Element => {
     >
       <Navbar>
         <NavHome />
-        <NavTitle>Ina around the WAHrld</NavTitle>
+        <WahrldTitle>Ina around the WAHrld</WahrldTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />

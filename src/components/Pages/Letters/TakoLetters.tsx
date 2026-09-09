@@ -53,6 +53,14 @@ const ZOOM_STEP = 25;
 
 const LS_KEY = (index: number) => `letter_read_${index}`;
 
+export const letterSlug = (image: string): string =>
+  image.replace(/\.[^.]+$/, "");
+
+const copyLetterLink = (image: string): void => {
+  const url = `${window.location.origin}${window.location.pathname}#${letterSlug(image)}`;
+  navigator.clipboard?.writeText(url).catch(() => {});
+};
+
 const CenterAnimOverlay = ({ submission }: { submission: LetterEntry }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -157,6 +165,15 @@ const LetterModal = ({
           >
             →
           </ZoomButton>
+          {image && (
+            <ZoomButton
+              onClick={() => copyLetterLink(image)}
+              title="Copy link to this letter"
+              aria-label="Copy link to this letter"
+            >
+              <i className="fa fa-link" aria-hidden="true" />
+            </ZoomButton>
+          )}
         </ZoomBar>
 
         <hr style={{ margin: "4px 0 8px" }} />
@@ -319,16 +336,24 @@ const EnvelopeCard = ({
 
 const TakoLetters = ({
   submissions,
+  initialOpenIndex,
 }: {
   submissions: LetterEntry[];
+  initialOpenIndex?: number | null;
 }): JSX.Element => {
   const [zoom, setZoom] = useState(100);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [animIndex, setAnimIndex] = useState<number | null>(null);
 
   useEffect(() => {
+    if (initialOpenIndex == null) return;
+    setOpenIndex(initialOpenIndex);
+  }, [initialOpenIndex]);
+
+  useEffect(() => {
+    if (initialOpenIndex != null) return;
     window.scrollTo(0, 0);
-  }, []);
+  }, [initialOpenIndex]);
 
   const handleOpen = useCallback((idx: number) => {
     setOpenIndex(idx);

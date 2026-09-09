@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import TakoMessages from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
@@ -13,7 +14,7 @@ import {
   SearchBar,
   NavTitle,
 } from "./styles";
-import { Navbar, NavHome } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
@@ -35,6 +36,10 @@ const MessageBoard = (): JSX.Element => {
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState<number | null>(null);
+  const hashHandledRef = useRef(false);
+  const { hash } = useLocation();
   const searchRef = React.useRef("");
 
   useEffect(() => {
@@ -49,6 +54,25 @@ const MessageBoard = (): JSX.Element => {
       });
     }
   }, [rawData]);
+
+  useEffect(() => {
+    if (hashHandledRef.current || !hash || sourceData.length === 0) return;
+    const match = hash.match(/^#message-(\d+)$/);
+    if (!match) return;
+    const idx = Number(match[1]);
+    if (idx < 0 || idx >= sourceData.length) return;
+    hashHandledRef.current = true;
+    searchRef.current = "";
+    setIsToggledOnlyImg(false);
+    setisToggledTextOnly(false);
+    const rows = sourceData.slice(0, idx + 1);
+    awaitImgs(rows).then(() => {
+      setData(rows);
+      setOffset(idx + 1);
+      setHasMore(sourceData.length > idx + 1);
+      setHighlightIndex(idx);
+    });
+  }, [hash, sourceData]);
 
   const fetchMore = async () => {
     if (data.length !== 0) {
@@ -227,6 +251,26 @@ const MessageBoard = (): JSX.Element => {
       <Navbar>
         <NavHome />
         <NavTitle>Artworks &amp; Messages</NavTitle>
+        <div style={{ flex: "0 0 auto", position: "relative" }}>
+          <HintButton
+            aria-label="Show messages usage hint"
+            onClick={() => setHintOpen((v) => !v)}
+            title="Show messages usage hint"
+          >
+            <i className="fa fa-question-circle" aria-hidden="true" />
+            <span className="btn-text">Help</span>
+          </HintButton>
+          {hintOpen && (
+            <HintPopover onClick={() => setHintOpen(false)}>
+              <p>
+                Use the toggles to show only image submissions or only text
+                messages, or search by name. A tako icon with a speech-bubble
+                &quot;...&quot; next to it has a pun hiding underneath — click
+                it to reveal.
+              </p>
+            </HintPopover>
+          )}
+        </div>
       </Navbar>
       {loading ? (
         <TakoLoading />
@@ -325,8 +369,10 @@ const MessageBoard = (): JSX.Element => {
           >
             <TakoMessages
               submissions={data}
+              sourceData={sourceData}
               isToggledOnlyImg={isToggledOnlyImg}
               isToggledTextOnly={isToggledTextOnly}
+              highlightIndex={highlightIndex}
             />
           </InfiniteScroll>
           <ScrollArrow />

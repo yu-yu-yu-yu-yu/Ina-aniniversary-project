@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Submission } from "../../../types";
 import Masonry from "react-masonry-component";
 import { TakoIcon } from "./TakoIcon";
@@ -13,10 +13,17 @@ import {
   SubmissionContainer,
 } from "./styles";
 
+const copyMessageLink = (globalIndex: number): void => {
+  const url = `${window.location.origin}${window.location.pathname}#message-${globalIndex}`;
+  navigator.clipboard?.writeText(url).catch(() => {});
+};
+
 interface TakoMessagesProps {
   submissions: Submission[];
+  sourceData: Submission[];
   isToggledOnlyImg: boolean;
   isToggledTextOnly: boolean;
+  highlightIndex?: number | null;
 }
 
 const options = {
@@ -39,12 +46,28 @@ const options = {
 
 const TakoMessages = ({
   submissions,
+  sourceData,
   isToggledOnlyImg,
   isToggledTextOnly,
+  highlightIndex,
 }: TakoMessagesProps): JSX.Element => {
+  const [pulseIndex, setPulseIndex] = useState<number | null>(null);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (highlightIndex == null) {
+      window.scrollTo(0, 0);
+    }
+  }, [highlightIndex]);
+
+  useEffect(() => {
+    if (highlightIndex == null) return;
+    const el = document.getElementById(`message-${highlightIndex}`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    setPulseIndex(highlightIndex);
+    const timer = setTimeout(() => setPulseIndex(null), 1800);
+    return () => clearTimeout(timer);
+  }, [highlightIndex, submissions]);
 
   const visibleSubmissions = useMemo(() => {
     let filtered = submissions;
@@ -67,13 +90,42 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {visibleSubmissions.map(
-        ({ message, user, icon, image, pun, event_date }, i) => (
-          <SubmissionContainer key={i}>
+      {visibleSubmissions.map((sub, i) => {
+        const { message, user, icon, image, pun, event_date } = sub;
+        const globalIndex = sourceData.indexOf(sub);
+        return (
+          <SubmissionContainer
+            key={i}
+            id={`message-${globalIndex}`}
+            style={
+              pulseIndex === globalIndex
+                ? {
+                    outline: "3px solid var(--light-highlight)",
+                    borderRadius: 15,
+                  }
+                : undefined
+            }
+          >
             <MessageCard>
               <MessageCardHeader>
                 <TakoIcon id={icon} pun={pun} index={i} />
                 {user || "Anonymous Tako"}
+                <button
+                  type="button"
+                  onClick={() => copyMessageLink(globalIndex)}
+                  title="Copy link to this message"
+                  aria-label="Copy link to this message"
+                  style={{
+                    marginLeft: "auto",
+                    background: "none",
+                    border: "none",
+                    color: "inherit",
+                    cursor: "pointer",
+                    opacity: 0.8,
+                  }}
+                >
+                  <i className="fa fa-link" aria-hidden="true" />
+                </button>
               </MessageCardHeader>
               <div style={{ padding: "0.75rem" }}>
                 {!isToggledTextOnly &&
@@ -125,8 +177,8 @@ const TakoMessages = ({
               </div>
             </MessageCard>
           </SubmissionContainer>
-        ),
-      )}
+        );
+      })}
     </Masonry>
   );
 };

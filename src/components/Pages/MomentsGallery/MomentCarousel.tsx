@@ -58,12 +58,14 @@ const MomentCarousel = ({
       {moments.map((moment, i) => {
         const isPivot = i === pivotIndex;
         const showBig = isPivot && !dragging;
+        const isNear = Math.abs(i - pivotIndex) <= 2;
         return (
           <MomentSlot
             key={moment.slug}
             id={moment.slug}
             $isPivot={isPivot}
             $dragging={dragging}
+            $isNear={isNear}
             ref={(el: HTMLDivElement | null) => {
               itemRefs.current[i] = el;
             }}

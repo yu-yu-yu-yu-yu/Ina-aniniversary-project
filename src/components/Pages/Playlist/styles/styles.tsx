@@ -222,7 +222,7 @@ export const BubbleSong = styled.div`
   overflow-wrap: break-word;
   color: var(--text-color);
   text-align: left;
-  font: normal normal 300 16px/22px Mulish;
+  font: normal normal 300 clamp(16px, 1vw, 20px) / 1.35 Mulish;
   letter-spacing: 0px;
   opacity: 1;
   white-space: pre-line;
@@ -231,15 +231,16 @@ export const BubbleSong = styled.div`
 export const BubbleImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 `;
 
 export const BubbleHeader = styled.div`
+  position: relative;
   background: var(--dark-highlight);
   color: var(--text-color);
   text-align: center;
-  font: normal normal 700 18px/24px Montserrat;
+  font: normal normal 700 clamp(18px, 1.1vw, 23px) / 1.3 Montserrat;
   letter-spacing: 0.5px;
   display: block;
   padding: 10px 12px;
@@ -261,6 +262,12 @@ export const SongGrid = styled.div`
   gap: 20px;
   width: 100%;
 
+  @media only screen and (min-width: 2200px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media only screen and (min-width: 1700px) and (max-width: 2199px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
   @media only screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }

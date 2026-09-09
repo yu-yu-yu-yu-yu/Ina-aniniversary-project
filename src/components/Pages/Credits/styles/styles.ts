@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CreditsBoard = styled.div`
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 40px 5% 80px;
   position: relative;
@@ -15,7 +15,7 @@ export const CreditsSection = styled.section`
 
 export const CreditTitle = styled.h2`
   color: var(--dark-highlight);
-  font: normal normal 700 20px/26px Montserrat;
+  font: normal normal 700 clamp(20px, 1.6vw, 28px) / 1.3 Montserrat;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin: 0 0 10px 0;
@@ -30,7 +30,7 @@ export const PeopleList = styled.div`
 
 export const PersonLink = styled.a`
   color: var(--dark-highlight);
-  font: normal normal 300 18px/24px Mulish;
+  font: normal normal 300 clamp(18px, 1.1vw, 22px) / 1.3 Mulish;
   text-decoration: underline;
   opacity: 0.85;
   transition: opacity 0.2s;
@@ -42,7 +42,7 @@ export const PersonLink = styled.a`
 
 export const PersonName = styled.span`
   color: var(--dark-highlight);
-  font: normal normal 300 18px/24px Mulish;
+  font: normal normal 300 clamp(18px, 1.1vw, 22px) / 1.3 Mulish;
 `;
 
 export const TakoCountNote = styled.p`

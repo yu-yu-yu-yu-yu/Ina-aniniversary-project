@@ -19,7 +19,7 @@ export const DimSharedButtons = createGlobalStyle`
 `;
 
 export const CompactNavTitle = styled(NavTitle)`
-  font-size: clamp(22px, 3.2vw, 34px);
+  font-size: clamp(22px, 3.2vw, 44px);
   line-height: 1.15;
 `;
 
@@ -92,7 +92,7 @@ export const GalleryScroller = styled.div`
   cursor: grab;
   user-select: none;
   gap: 20px;
-  padding: calc(${SUBNAV_HEIGHT} + 12px) clamp(56px, 8vw, 128px)
+  padding: calc(${SUBNAV_HEIGHT} + 12px) clamp(48px, 7vw, 120px)
     calc(${FLOOR_HEIGHT} + 48px);
   overflow-x: scroll;
   overflow-y: visible;
@@ -100,7 +100,8 @@ export const GalleryScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: min(1040px, calc(100% - 320px));
+  --pivot-w: min(1700px, calc(100% - 280px));
+  --neighbor-w: clamp(160px, 10vw, 240px);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -112,28 +113,36 @@ export const GalleryScroller = styled.div`
   }
 `;
 
-export const MomentSlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
+export const MomentSlot = styled.div<{
+  $isPivot: boolean;
+  $dragging: boolean;
+  $isNear: boolean;
+}>`
   position: relative;
   flex-shrink: 0;
   height: 100%;
-  width: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "var(--pivot-w)" : "140px"};
+  width: ${({ $isPivot, $dragging, $isNear }) => {
+    if ($isPivot && !$dragging) return "var(--pivot-w)";
+    if ($dragging || $isNear) return "var(--neighbor-w)";
+    return "0px";
+  }};
   max-width: 90vw;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   scroll-snap-align: center;
   scroll-snap-stop: always;
   opacity: ${({ $isPivot, $dragging }) => ($isPivot && !$dragging ? 1 : 0.5)};
   transform: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "scale(1)" : "scale(0.9)"};
+    $isPivot && !$dragging ? "scale(1)" : "scale(0.55)"};
   transition:
+    width 0.4s ease,
     opacity 0.35s,
-    transform 0.35s;
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};
 `;
 
 export const NeighborFrame = styled.div`
-  height: 60%;
   align-self: center;
   display: flex;
   flex-direction: column;
@@ -143,18 +152,21 @@ export const NeighborFrame = styled.div`
 `;
 
 export const NeighborImg = styled.div<{ $src?: string }>`
-  width: 110px;
-  height: 76px;
+  width: min(100%, calc(clamp(70px, 8vh, 110px) * 16 / 9));
+  height: auto;
+  aspect-ratio: 16 / 9;
   border-radius: 6px;
   border: 3px solid var(--light-highlight);
   background-color: var(--lightdark);
   background-image: ${({ $src }) => ($src ? `url(${$src})` : "none")};
-  background-size: cover;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 `;
 
 export const NeighborLabel = styled.small`
+  font-size: clamp(11px, 0.6vw + 0.3vh, 17px);
   text-align: center;
   overflow-wrap: anywhere;
 `;
@@ -294,9 +306,9 @@ export const ExhibitStageColumn = styled.div`
 export const Frame = styled.div`
   position: relative;
   flex-shrink: 0;
-  width: 100%;
-  max-width: 100%;
-  height: min(480px, calc(100vh - 320px));
+  width: min(100%, calc(min(720px, calc(100vh - 320px)) * 16 / 9));
+  height: auto;
+  aspect-ratio: 16 / 9;
   box-sizing: border-box;
   border: 10px solid var(--light-highlight);
   outline: 3px solid var(--lightdark);
@@ -389,7 +401,8 @@ export const FanSprite = styled.img<{
   position: absolute;
   left: ${({ $left }) => $left}%;
   bottom: ${({ $bottom }) => $bottom}%;
-  width: clamp(44px, 8vw, 100px);
+  height: clamp(56px, 10vh, 150px);
+  width: auto;
   pointer-events: ${({ $interactive }) => ($interactive ? "auto" : "none")};
   z-index: ${({ $front }) => ($front ? 5 : 1)};
   transform-origin: 50% 100%;
@@ -450,6 +463,9 @@ export const CommenterBubbleWrap = styled.div<{
   left: ${({ $left }) => $left}%;
   bottom: ${({ $bottom }) => $bottom}%;
   transform: translateX(-50%);
+  transition:
+    left 0.6s ease,
+    bottom 0.6s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -521,10 +537,11 @@ export const ReactionName = styled.span`
 `;
 
 export const PlacardCard = styled.div`
-  flex: 0 0 300px;
+  flex: 0 0 380px;
   align-self: center;
-  max-width: 340px;
-  height: min(240px, calc((100vh - 320px) / 2));
+  max-width: 460px;
+  height: min(360px, calc((100vh - 320px) / 2));
+  font-size: clamp(13px, 0.85vw + 0.4vh, 22px);
   background: var(--dark-highlight);
   color: var(--text-color);
   border: 2px solid var(--light-highlight);

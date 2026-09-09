@@ -52,7 +52,7 @@ export const TextBoxContainer = styled.div`
 
 export const SubmissionContainer = styled.div`
   margin: 10px;
-  width: 450px;
+  width: 560px;
   @media only screen and (max-width: 768px) {
     margin-left: 0px;
     width: 100%;
@@ -97,7 +97,7 @@ export const BubbleImage = styled.img`
   border: 2px solid var(--light-background);
   border-radius: 23px;
   opacity: 1;
-  max-width: 400px;
+  max-width: 500px;
   cursor: pointer;
 
   @media only screen and (max-width: 768px) {
@@ -202,7 +202,7 @@ export const NavTitle = styled.h2`
     -0.03em 0.03em 0 #ffffff7b;
   text-align: center;
   text-border: 2px solid var(--light-highlight);
-  font: normal normal bold 48px/56px Montserrat;
+  font: normal normal bold clamp(48px, 3vw, 64px) / 1.15 Montserrat;
   flex: 1;
   @media only screen and (max-width: 1000px) {
     font: normal normal bold 32px/40px Montserrat;

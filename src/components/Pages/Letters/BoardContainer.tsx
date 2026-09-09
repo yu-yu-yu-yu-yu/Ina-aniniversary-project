@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import TakoLetters from "./TakoLetters";
+import { useLocation } from "react-router-dom";
+import TakoLetters, { letterSlug } from "./TakoLetters";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { LetterEntry } from "../../../types";
@@ -13,7 +14,7 @@ import {
   SearchBar,
   NavTitle,
 } from "./styles/styles";
-import { Navbar, NavHome } from "../../Common/Navbar";
+import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
@@ -34,6 +35,10 @@ const BoardContainer = (): JSX.Element => {
   const [data, setData] = useState<LetterEntry[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const offsetRef = useRef(0);
+  const [hintOpen, setHintOpen] = useState(false);
+  const [initialOpenIndex, setInitialOpenIndex] = useState<number | null>(null);
+  const hashHandledRef = useRef(false);
+  const { hash } = useLocation();
 
   useEffect(() => {
     if (rawData) {
@@ -50,6 +55,23 @@ const BoardContainer = (): JSX.Element => {
       });
     }
   }, [rawData]);
+
+  useEffect(() => {
+    if (hashHandledRef.current || !hash || sourceData.length === 0) return;
+    const slug = hash.replace("#", "");
+    const idx = sourceData.findIndex((l) => letterSlug(l.image) === slug);
+    if (idx < 0) return;
+    hashHandledRef.current = true;
+    const rows = sourceData.slice(0, idx + 1);
+    awaitImgs(rows).then(() => {
+      ReactDOM.unstable_batchedUpdates(() => {
+        offsetRef.current = idx + 1;
+        setData(rows);
+        setHasMore(sourceData.length > idx + 1);
+        setInitialOpenIndex(idx);
+      });
+    });
+  }, [hash, sourceData]);
 
   const fetchMore = async () => {
     if (data.length === 0) return;
@@ -130,6 +152,26 @@ const BoardContainer = (): JSX.Element => {
       <Navbar>
         <NavHome />
         <NavTitle>Letters for Ina</NavTitle>
+        <div style={{ flex: "0 0 auto", position: "relative" }}>
+          <HintButton
+            aria-label="Show letters usage hint"
+            onClick={() => setHintOpen((v) => !v)}
+            title="Show letters usage hint"
+          >
+            <i className="fa fa-question-circle" aria-hidden="true" />
+            <span className="btn-text">Help</span>
+          </HintButton>
+          {hintOpen && (
+            <HintPopover onClick={() => setHintOpen(false)}>
+              <p>
+                Hover an envelope to peek at it, click to open the full letter.
+                Inside, use the ‹ › buttons or your arrow keys to move between
+                letters, and Esc to close. The zoom controls at the bottom let
+                you read small handwriting up close.
+              </p>
+            </HintPopover>
+          )}
+        </div>
       </Navbar>
       {loading ? (
         <TakoLoading />
@@ -160,7 +202,10 @@ const BoardContainer = (): JSX.Element => {
               </p>
             }
           >
-            <TakoLetters submissions={data} />
+            <TakoLetters
+              submissions={data}
+              initialOpenIndex={initialOpenIndex}
+            />
           </InfiniteScroll>
           <ScrollArrow />
         </SiteBoard>

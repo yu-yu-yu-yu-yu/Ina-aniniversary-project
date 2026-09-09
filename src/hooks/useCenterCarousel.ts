@@ -25,6 +25,7 @@ export interface CenterCarousel {
 }
 
 const DRAG_THRESHOLD = 5;
+const FOLLOW_DURATION = 420;
 
 export const useCenterCarousel = (
   total: number,
@@ -46,7 +47,7 @@ export const useCenterCarousel = (
   const debounceTimer = useRef<number>(0);
   const pivotRef = useRef(pivotIndex);
   const programmaticRef = useRef(false);
-  const programmaticTimer = useRef<number>(0);
+  const followRaf = useRef<number>(0);
   const scrollTargetRef = useRef(0);
   const pointerActive = useRef(false);
   const isDragging = useRef(false);
@@ -72,20 +73,30 @@ export const useCenterCarousel = (
     [loadRadius, total],
   );
 
-  const scrollToPivot = useCallback((index: number) => {
+  const followScroll = useCallback((index: number) => {
     const el = itemRefs.current[index];
     const container = containerRef.current;
     if (!el || !container) return;
+    cancelAnimationFrame(followRaf.current);
     programmaticRef.current = true;
     container.style.scrollSnapType = "none";
-    clearTimeout(programmaticTimer.current);
-    programmaticTimer.current = window.setTimeout(() => {
-      programmaticRef.current = false;
-      container.style.scrollSnapType = "";
-    }, 700);
-    const targetLeft =
-      el.offsetLeft - container.clientWidth / 2 + el.offsetWidth / 2;
-    container.scrollTo({ left: targetLeft, behavior: "smooth" });
+    const start = performance.now();
+    const step = (now: number) => {
+      const target = itemRefs.current[index];
+      if (target && container) {
+        container.scrollLeft =
+          target.offsetLeft -
+          container.clientWidth / 2 +
+          target.offsetWidth / 2;
+      }
+      if (now - start < FOLLOW_DURATION) {
+        followRaf.current = requestAnimationFrame(step);
+      } else {
+        programmaticRef.current = false;
+        container.style.scrollSnapType = "";
+      }
+    };
+    followRaf.current = requestAnimationFrame(step);
   }, []);
 
   const goTo = useCallback(
@@ -101,8 +112,10 @@ export const useCenterCarousel = (
 
   useLayoutEffect(() => {
     if (scrollTick === 0) return;
-    scrollToPivot(scrollTargetRef.current);
-  }, [scrollTick, scrollToPivot]);
+    followScroll(scrollTargetRef.current);
+  }, [scrollTick, followScroll]);
+
+  useEffect(() => () => cancelAnimationFrame(followRaf.current), []);
 
   useEffect(() => {
     setPivotIndex((prev) => Math.max(0, Math.min(prev, total - 1)));

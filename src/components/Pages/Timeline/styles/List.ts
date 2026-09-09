@@ -671,7 +671,7 @@ export const PageTitle = styled.h2`
     0.03em -0.03em 0 #ffffff7b,
     -0.03em 0.03em 0 #ffffff7b;
   text-align: center;
-  font: normal normal bold 48px/56px Montserrat;
+  font: normal normal bold clamp(48px, 3vw, 60px) / 1.15 Montserrat;
   flex: 1;
   @media only screen and (max-width: 1000px) {
     font: normal normal bold 32px/40px Montserrat;
@@ -729,7 +729,7 @@ export const StageScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: min(1040px, calc(100% - 520px));
+  --pivot-w: min(1400px, calc(100% - 520px));
   &::-webkit-scrollbar {
     display: none;
   }
@@ -755,10 +755,11 @@ export const StageSlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   scroll-snap-stop: always;
   opacity: ${({ $isPivot, $dragging }) => ($isPivot && !$dragging ? 1 : 0.45)};
   transform: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "scale(1)" : "scale(0.9)"};
+    $isPivot && !$dragging ? "scale(1)" : "scale(0.55)"};
   transition:
+    width 0.4s ease,
     opacity 0.35s,
-    transform 0.35s;
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};
 `;
 
@@ -778,7 +779,7 @@ export const NeighborThumb = styled.div`
   img {
     width: 100%;
     max-height: 120px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
   }
 `;
@@ -797,7 +798,7 @@ export const StageMain = styled.div`
   justify-content: center;
   gap: 24px;
   flex-wrap: wrap;
-  width: min(1000px, 92vw);
+  width: min(1400px, 92vw);
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
@@ -815,8 +816,8 @@ export const StageCenter = styled.div`
 export const StageVideoFrame = styled.iframe`
   aspect-ratio: 16 / 9;
   width: auto;
-  max-width: min(900px, 90vw);
-  height: min(46vh, 500px);
+  max-width: min(1200px, 90vw);
+  height: min(52vh, 640px);
   border: 0;
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow);
@@ -825,8 +826,8 @@ export const StageVideoFrame = styled.iframe`
 export const StageImageFrame = styled.img`
   width: auto;
   height: auto;
-  max-width: min(900px, 90vw);
-  max-height: min(46vh, 500px);
+  max-width: min(1200px, 90vw);
+  max-height: min(52vh, 640px);
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow);
 `;
@@ -911,7 +912,7 @@ export const RailContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   margin: 24px auto 0;
-  width: min(1000px, 92vw);
+  width: min(1400px, 92vw);
   scrollbar-width: thin;
 `;
 

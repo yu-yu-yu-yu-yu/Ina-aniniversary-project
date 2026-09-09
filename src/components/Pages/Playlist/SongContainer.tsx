@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import {
   SongData,
   Performance,
@@ -59,6 +60,17 @@ const perfTagColor = (p: Performance): string =>
   playlistFilterColors[p.name ? "concert" : p.context] ??
   playlistFilterColors["concert"];
 
+export const songSlug = (songName: string): string =>
+  songName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const copySongLink = (songName: string): void => {
+  const url = `${window.location.origin}${window.location.pathname}#${songSlug(songName)}`;
+  navigator.clipboard?.writeText(url).catch(() => {});
+};
+
 const SongCardEntry = ({
   song,
   globalShowOriginal = false,
@@ -67,7 +79,19 @@ const SongCardEntry = ({
   globalShowOriginal?: boolean;
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
+  const { hash } = useLocation();
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const slug = songSlug(song.songName);
+  const [pulsing, setPulsing] = useState(false);
   const linkedPerfs = song.performances.filter((p) => p.link);
+
+  useEffect(() => {
+    if (hash !== `#${slug}`) return;
+    cardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setPulsing(true);
+    const timer = setTimeout(() => setPulsing(false), 1800);
+    return () => clearTimeout(timer);
+  }, [hash, slug]);
 
   const slots = useMemo(() => {
     const perfSlots = linkedPerfs.map((p) => ({
@@ -129,7 +153,7 @@ const SongCardEntry = ({
       if (link.includes("mp4")) {
         return (
           <video
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
             controls
             onPlay={() => reportVideoPlaying(true)}
             onPause={() => reportVideoPlaying(false)}
@@ -161,7 +185,13 @@ const SongCardEntry = ({
   };
 
   return (
-    <SongCard>
+    <SongCard
+      ref={cardRef}
+      id={slug}
+      style={
+        pulsing ? { outline: "3px solid var(--light-highlight)" } : undefined
+      }
+    >
       {currentLink && <SongCardMedia>{renderMedia(currentLink)}</SongCardMedia>}
       <SongCardInfo>
         <BubbleHeader>
@@ -181,6 +211,25 @@ const SongCardEntry = ({
               )}
             </VersionSubtitle>
           )}
+          <button
+            type="button"
+            onClick={() => copySongLink(song.songName)}
+            title="Copy link to this song"
+            aria-label="Copy link to this song"
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "10px",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              color: "inherit",
+              cursor: "pointer",
+              opacity: 0.8,
+            }}
+          >
+            <i className="fa fa-link" aria-hidden="true" />
+          </button>
         </BubbleHeader>
 
         {song.songInfo && (

@@ -40,7 +40,7 @@ export const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50% - 200px));
+    flex: 0 0 max(0px, calc(50% - 240px));
   }
 `;
 
@@ -64,7 +64,7 @@ export const BannerImgWrapper = styled.div<{
 }>`
   position: relative;
   flex-shrink: 0;
-  width: 400px;
+  width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,7 +124,7 @@ export const BannerImg = styled.img<{ $loaded?: boolean }>`
 `;
 
 export const OutfitSkeleton = styled.div`
-  width: 280px;
+  width: 320px;
   height: calc(70vh / 1.22);
   border-radius: 10px;
   background: var(--dark-highlight);

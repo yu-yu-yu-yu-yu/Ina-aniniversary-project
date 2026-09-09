@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { NavTitle } from "../../../styles/globalStyles";
+
+export const WahrldTitle = styled(NavTitle)`
+  font-size: clamp(28px, 3vw, 44px);
+`;
 
 export const GalleryWrapper = styled.div`
   width: 100%;
@@ -45,7 +50,7 @@ export const GalleryScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: 560px;
+  --pivot-w: min(760px, calc(100% - 320px));
   &::-webkit-scrollbar {
     display: none;
   }
@@ -70,10 +75,11 @@ export const EntrySlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   scroll-snap-stop: always;
   opacity: ${({ $isPivot, $dragging }) => ($isPivot && !$dragging ? 1 : 0.45)};
   transform: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "scale(1)" : "scale(0.88)"};
+    $isPivot && !$dragging ? "scale(1)" : "scale(0.55)"};
   transition:
+    width 0.4s ease,
     opacity 0.35s,
-    transform 0.35s;
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};
 `;
 

@@ -42,8 +42,8 @@ const FLEX_POOL: FanId[] = ["deadbeat", "takostretch", "flowertako", "sstako"];
 
 const MIN_BOTTOM = 0;
 const MAX_BOTTOM = 76;
-const SCALE_NEAR = 1.15;
-const SCALE_FAR = 0.55;
+const SCALE_NEAR = 1.25;
+const SCALE_FAR = 0.86;
 
 const scaleForDepth = (bottom: number): number => {
   const clamped = Math.min(Math.max(bottom, MIN_BOTTOM), MAX_BOTTOM);
@@ -317,7 +317,7 @@ const GalleryFans = ({
         const left = commenterLefts[i] ?? 50;
         return (
           <FanSprite
-            key={`commenter-${momentKey}-${i}`}
+            key={`commenter-${i}`}
             src={getTakoAvatar(reaction.author, i)}
             alt={reaction.author}
             onError={(e) => {
@@ -340,7 +340,7 @@ const GalleryFans = ({
         const left = commenterLefts[i] ?? 50;
         return (
           <CommenterBubbleWrap
-            key={`bubble-${momentKey}-${i}`}
+            key={`bubble-${i}`}
             $left={left}
             $bottom={COMMENTER_BOTTOM + 55}
             onMouseEnter={() => revealBubble(i)}

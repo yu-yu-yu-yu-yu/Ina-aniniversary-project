@@ -165,6 +165,8 @@ const MomentsGallery = (): JSX.Element => {
             position: "relative",
             zIndex: 1,
             background: "transparent",
+            paddingLeft: 0,
+            paddingRight: 0,
           }}
         >
           <MomentCarousel moments={filtered} carousel={carousel} />

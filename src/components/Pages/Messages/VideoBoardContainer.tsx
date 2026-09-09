@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
@@ -27,6 +27,8 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
   const [data, setData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const sourceDataRef = useRef(sourceData);
+  sourceDataRef.current = sourceData;
 
   useEffect(() => {
     if (rawData) {
@@ -82,13 +84,14 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = debounce(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value) {
-        const resultData = sourceData.filter((row: Submission) => {
+  const handleFilterDebounced = useCallback(
+    debounce((value: string) => {
+      const currentSource = sourceDataRef.current;
+      if (value) {
+        const resultData = currentSource.filter((row: Submission) => {
           return (
-            row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.message.toLowerCase().includes(event.target.value.toLowerCase())
+            row.user.toLowerCase().includes(value.toLowerCase()) ||
+            row.message.toLowerCase().includes(value.toLowerCase())
           );
         });
         setHasMore(false);
@@ -96,21 +99,32 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
         setData(resultData);
         setOffset(0);
       } else {
-        const rows = sourceData.slice(0, LIMIT);
+        const rows = currentSource.slice(0, LIMIT);
         setHasMore(true);
 
         setData(rows);
         setOffset(LIMIT);
       }
+    }, 1000),
+    [],
+  );
+
+  const handleFilter = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleFilterDebounced(event.target.value);
     },
-    1000,
+    [handleFilterDebounced],
   );
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <Navbar>
         <NavHome />
-        <NavTitle>Moments and WAH</NavTitle>
+        <NavTitle>
+          {mode === "wah"
+            ? "Ina around the WAH (2024)"
+            : "Ina's Moments (2024)"}
+        </NavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />
