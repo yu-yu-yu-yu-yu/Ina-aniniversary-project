@@ -40,7 +40,7 @@ export const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50vw - 200px));
+    flex: 0 0 max(0px, calc(50% - 200px));
   }
 `;
 
@@ -186,7 +186,9 @@ export const ArtworkButton = styled.button`
   cursor: pointer;
   font-size: 10px;
   opacity: 0.72;
-  transition: opacity 0.18s, background 0.18s;
+  transition:
+    opacity 0.18s,
+    background 0.18s;
   flex-shrink: 0;
   &:hover {
     opacity: 1;

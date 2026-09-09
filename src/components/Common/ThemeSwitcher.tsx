@@ -3,9 +3,19 @@ import styled from "styled-components";
 import { useTheme } from "./ThemeProvider";
 import { ThemeName, themes } from "./themes";
 
-const themeNames: ThemeName[] = ["Standard", "Violet", "Meconopsis", "Temari", "TakoTakover"];
+const themeNames: ThemeName[] = [
+  "Standard",
+  "Violet",
+  "Meconopsis",
+  "Temari",
+  "TakoTakover",
+];
 
-const ThemeButton = styled.button<{ bg: string; color: string; border: string }>`
+const ThemeButton = styled.button<{
+  bg: string;
+  color: string;
+  border: string;
+}>`
   position: fixed;
   left: 84px;
   bottom: 24px;
@@ -22,7 +32,10 @@ const ThemeButton = styled.button<{ bg: string; color: string; border: string }>
   box-shadow: 0 2px 8px #0002;
   cursor: pointer;
   font-size: 1.7rem;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border 0.2s;
 `;
 
 export const ThemeSwitcher = () => {

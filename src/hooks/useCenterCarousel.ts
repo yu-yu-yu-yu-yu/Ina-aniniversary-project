@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 export interface CenterCarouselHandlers {
   onScroll: () => void;
@@ -10,12 +16,15 @@ export interface CenterCarouselHandlers {
 
 export interface CenterCarousel {
   pivotIndex: number;
+  dragging: boolean;
   goTo: (index: number) => void;
   containerRef: React.RefObject<HTMLDivElement>;
   itemRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
   isLoaded: (index: number) => boolean;
   containerHandlers: CenterCarouselHandlers;
 }
+
+const DRAG_THRESHOLD = 5;
 
 export const useCenterCarousel = (
   total: number,
@@ -29,6 +38,8 @@ export const useCenterCarousel = (
 
   const [pivotIndex, setPivotIndex] = useState(0);
   const [loadedSet, setLoadedSet] = useState<Set<number>>(initialLoaded);
+  const [dragging, setDragging] = useState(false);
+  const [scrollTick, setScrollTick] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -36,7 +47,10 @@ export const useCenterCarousel = (
   const pivotRef = useRef(pivotIndex);
   const programmaticRef = useRef(false);
   const programmaticTimer = useRef<number>(0);
+  const scrollTargetRef = useRef(0);
+  const pointerActive = useRef(false);
   const isDragging = useRef(false);
+  const dragPointerId = useRef(0);
   const dragStartX = useRef(0);
   const dragStartScroll = useRef(0);
   pivotRef.current = pivotIndex;
@@ -63,6 +77,7 @@ export const useCenterCarousel = (
     const container = containerRef.current;
     if (!el || !container) return;
     programmaticRef.current = true;
+    container.style.scrollSnapType = "none";
     clearTimeout(programmaticTimer.current);
     programmaticTimer.current = window.setTimeout(() => {
       programmaticRef.current = false;
@@ -76,19 +91,25 @@ export const useCenterCarousel = (
   const goTo = useCallback(
     (index: number) => {
       const clamped = Math.max(0, Math.min(index, total - 1));
+      scrollTargetRef.current = clamped;
       setPivotIndex(clamped);
       expandLoad(clamped);
-      scrollToPivot(clamped);
+      setScrollTick((t) => t + 1);
     },
-    [expandLoad, scrollToPivot, total],
+    [expandLoad, total],
   );
+
+  useLayoutEffect(() => {
+    if (scrollTick === 0) return;
+    scrollToPivot(scrollTargetRef.current);
+  }, [scrollTick, scrollToPivot]);
 
   useEffect(() => {
     setPivotIndex((prev) => Math.max(0, Math.min(prev, total - 1)));
   }, [total]);
 
   const onScroll = useCallback(() => {
-    if (programmaticRef.current) return;
+    if (programmaticRef.current || isDragging.current) return;
     clearTimeout(debounceTimer.current);
     debounceTimer.current = window.setTimeout(() => {
       const container = containerRef.current;
@@ -117,31 +138,38 @@ export const useCenterCarousel = (
     if ((e.target as HTMLElement).closest("button, a")) return;
     const el = containerRef.current;
     if (!el) return;
-    isDragging.current = true;
+    pointerActive.current = true;
+    dragPointerId.current = e.pointerId;
     dragStartX.current = e.clientX;
     dragStartScroll.current = el.scrollLeft;
-    el.setPointerCapture(e.pointerId);
-    el.style.scrollSnapType = "none";
-    el.style.cursor = "grabbing";
   }, []);
 
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging.current || !containerRef.current) return;
-    containerRef.current.scrollLeft =
-      dragStartScroll.current - (e.clientX - dragStartX.current);
+    const el = containerRef.current;
+    if (!pointerActive.current || !el) return;
+    if (!isDragging.current) {
+      if (Math.abs(e.clientX - dragStartX.current) < DRAG_THRESHOLD) return;
+      isDragging.current = true;
+      setDragging(true);
+      el.setPointerCapture(dragPointerId.current);
+      el.style.scrollSnapType = "none";
+      el.style.cursor = "grabbing";
+    }
+    el.scrollLeft = dragStartScroll.current - (e.clientX - dragStartX.current);
   }, []);
 
   const onPointerUp = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!isDragging.current || !containerRef.current) return;
-      isDragging.current = false;
+    (_e: React.PointerEvent<HTMLDivElement>) => {
       const el = containerRef.current;
-      el.style.cursor = "";
-      const dragDistance = Math.abs(e.clientX - dragStartX.current);
-      if (dragDistance < 5) {
-        el.style.scrollSnapType = "";
-        return;
+      if (!pointerActive.current || !el) return;
+      pointerActive.current = false;
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      setDragging(false);
+      if (el.hasPointerCapture(dragPointerId.current)) {
+        el.releasePointerCapture(dragPointerId.current);
       }
+      el.style.cursor = "";
       const cRect = el.getBoundingClientRect();
       const centerX = cRect.left + cRect.width / 2;
       let bestIdx = pivotRef.current;
@@ -167,6 +195,7 @@ export const useCenterCarousel = (
 
   return {
     pivotIndex,
+    dragging,
     goTo,
     containerRef,
     itemRefs,

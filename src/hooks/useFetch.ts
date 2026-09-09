@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { UseFetchOptions, UseFetchResult } from '../types/hooks';
+import { useState, useEffect } from "react";
+import { UseFetchOptions, UseFetchResult } from "../types/hooks";
 
 export const useFetch = <T = unknown>(
   url: string,
-  options: UseFetchOptions = {}
+  options: UseFetchOptions = {},
 ): UseFetchResult<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

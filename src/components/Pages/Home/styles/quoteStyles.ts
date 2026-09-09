@@ -78,7 +78,9 @@ const GrayscaleButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 8px var(--shadow);
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   z-index: 10;
   &:hover {
     background: var(--dark-highlight);
@@ -119,7 +121,9 @@ const ElixirText = styled.span`
   font-weight: 700;
   font-size: 3.3rem;
   letter-spacing: 2px;
-  text-shadow: 0 0 12px #a78bfa, 0 2px 8px rgba(0, 0, 0, 0.8);
+  text-shadow:
+    0 0 12px #a78bfa,
+    0 2px 8px rgba(0, 0, 0, 0.8);
   pointer-events: none;
   animation: ${elixirFade} 2.5s ease forwards;
   @media only screen and (max-width: 701px) {
@@ -129,4 +133,11 @@ const ElixirText = styled.span`
   }
 `;
 
-export { QuoteContainer, QuoteInaImg, QuoteContent, GrayscaleButton, InaImageWrapper, ElixirText };
+export {
+  QuoteContainer,
+  QuoteInaImg,
+  QuoteContent,
+  GrayscaleButton,
+  InaImageWrapper,
+  ElixirText,
+};

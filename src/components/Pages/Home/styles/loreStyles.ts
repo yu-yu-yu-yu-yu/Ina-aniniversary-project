@@ -4,8 +4,7 @@ const LoreContainer = styled.div`
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  background: var(--background)
-  url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background: var(--background) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
   z-index: 3;
@@ -61,8 +60,7 @@ const InaVideo = styled.video`
   display: block;
   border-radius: 24px;
   filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.2));
-  -webkit-mask-image:
-    linear-gradient(
+  -webkit-mask-image: linear-gradient(
       to right,
       transparent,
       #000 var(--video-edge-fade),
@@ -77,8 +75,7 @@ const InaVideo = styled.video`
       transparent
     );
   -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(
+  mask-image: linear-gradient(
       to right,
       transparent,
       #000 var(--video-edge-fade),
@@ -117,7 +114,10 @@ const VideoShuffleButton = styled.button`
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(6px);
-  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 
   i {
     font-size: 20px;
@@ -155,7 +155,7 @@ const AnimationCreditsContainer = styled.div`
   text-align: right;
   padding: 6px 10px;
   border-radius: 6px;
-  background: rgba(0,0,0,0.15); 
+  background: rgba(0, 0, 0, 0.15);
 
   @media only screen and (max-width: 480px) {
     bottom: 8px;

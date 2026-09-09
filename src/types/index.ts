@@ -32,6 +32,12 @@ export type { SongData } from "./song";
 
 export type { CreditPerson, CreditEntry } from "./credits";
 
-export type { MomentCategory, TributeKind, Tribute, Moment } from "./moment";
+export type {
+  MomentCategory,
+  TributeKind,
+  Tribute,
+  Moment,
+  MomentReaction,
+} from "./moment";
 
 export type { WahrldKind, WahrldEntry } from "./wahrld";

@@ -156,9 +156,11 @@ export const Banner = () => {
                         zIndex: 1,
                       }}
                       onClick={() =>
-                        setModalImgSrc(
-                          `${process.env.PUBLIC_URL}/outfits/${outfit.filename}`,
-                        )
+                        isPivot
+                          ? setModalImgSrc(
+                              `${process.env.PUBLIC_URL}/outfits/${outfit.filename}`,
+                            )
+                          : goTo(i)
                       }
                     >
                       <BannerImg

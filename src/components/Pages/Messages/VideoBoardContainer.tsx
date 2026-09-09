@@ -40,7 +40,10 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
           const video_id = match ? match[1] : "";
           const timestamp = match ? match[2] : "";
           if (!video_id) console.log(link);
-          link = `https://www.youtube.com/embed/${video_id}?start${timestamp}`;
+          const params = timestamp
+            ? `start=${timestamp}&enablejsapi=1`
+            : "enablejsapi=1";
+          link = `https://www.youtube.com/embed/${video_id}?${params}`;
         }
         if (mode === "wah") {
           row.sub = row.wah_sub;
@@ -71,7 +74,8 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
 
   useEffect(() => {
     if (hasMore && data.length > 0) {
-      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      const isScrollable =
+        document.documentElement.scrollHeight > window.innerHeight;
       if (!isScrollable) {
         fetchMore();
       }
@@ -129,7 +133,9 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>
+                Yay! You have seen it all
+              </p>
             }
           >
             <TakoVideos

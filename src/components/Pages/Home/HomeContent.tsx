@@ -40,7 +40,7 @@ const HomeContent = (): JSX.Element => {
         <Quote />
         <Divider mirror topGap="48px" />
         <Lore />
-        <Divider  topGap="48px"/>
+        <Divider topGap="48px" />
         <Menu />
         <HomeFooter />
       </Home>

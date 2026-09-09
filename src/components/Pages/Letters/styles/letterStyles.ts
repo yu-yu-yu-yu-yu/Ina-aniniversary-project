@@ -48,7 +48,7 @@ export const modalSlideIn = keyframes`
 `;
 
 export type EnvelopeState = "idle" | "flipping" | "opening" | "open";
-export type HoverState    = "idle" | "hovering" | "leaving";
+export type HoverState = "idle" | "hovering" | "leaving";
 
 export const EnvelopeWrapper = styled.div`
   width: 280px;
@@ -62,15 +62,26 @@ export const CardScene = styled.div`
   overflow: visible;
 `;
 
-export const FrontFace = styled.div<{ $state: EnvelopeState; $hover: HoverState }>`
+export const FrontFace = styled.div<{
+  $state: EnvelopeState;
+  $hover: HoverState;
+}>`
   width: 100%;
   position: relative;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18));
 
   ${({ $state, $hover }) => {
-    if ($state !== "idle" || $hover === "hovering") return css`animation: ${frontExit}  0.25s ease-in           forwards;`;
-    if ($hover === "leaving")                        return css`animation: ${frontEnter} 0.25s ease-out 0.25s   both;`;
-                                                     return css`animation: ${envelopeFloat} 3s ease-in-out infinite;`;
+    if ($state !== "idle" || $hover === "hovering")
+      return css`
+        animation: ${frontExit} 0.25s ease-in forwards;
+      `;
+    if ($hover === "leaving")
+      return css`
+        animation: ${frontEnter} 0.25s ease-out 0.25s both;
+      `;
+    return css`
+      animation: ${envelopeFloat} 3s ease-in-out infinite;
+    `;
   }}
 
   &:hover {
@@ -102,16 +113,32 @@ export const NameOverlay = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const BackFace = styled.div<{ $state: EnvelopeState; $hover: HoverState }>`
+export const BackFace = styled.div<{
+  $state: EnvelopeState;
+  $hover: HoverState;
+}>`
   position: absolute;
   inset: 0;
   overflow: visible;
 
   ${({ $state, $hover }) => {
-    if ($state === "flipping" || $hover === "hovering") return css`animation: ${backEnter} 0.25s ease-out 0.25s forwards; transform: perspective(900px) rotateY(90deg);`;
-    if ($state === "opening" || $state === "open")       return css`transform: perspective(900px) rotateY(0deg);`;
-    if ($hover === "leaving")                            return css`animation: ${backExit}  0.25s ease-in  forwards;`;
-                                                         return css`transform: perspective(900px) rotateY(90deg); pointer-events: none;`;
+    if ($state === "flipping" || $hover === "hovering")
+      return css`
+        animation: ${backEnter} 0.25s ease-out 0.25s forwards;
+        transform: perspective(900px) rotateY(90deg);
+      `;
+    if ($state === "opening" || $state === "open")
+      return css`
+        transform: perspective(900px) rotateY(0deg);
+      `;
+    if ($hover === "leaving")
+      return css`
+        animation: ${backExit} 0.25s ease-in forwards;
+      `;
+    return css`
+      transform: perspective(900px) rotateY(90deg);
+      pointer-events: none;
+    `;
   }}
 
   img.base {
@@ -132,11 +159,15 @@ export const FlapContainer = styled.div<{ $state: EnvelopeState }>`
 
   ${({ $state }) =>
     $state === "opening" &&
-    css`animation: ${flapSwing} 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;`}
+    css`
+      animation: ${flapSwing} 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    `}
 
   ${({ $state }) =>
     $state === "open" &&
-    css`transform: perspective(700px) rotateX(-180deg);`}
+    css`
+      transform: perspective(700px) rotateX(-180deg);
+    `}
 `;
 
 export const FlapFrontImg = styled.img`
@@ -165,7 +196,10 @@ export const SealImg = styled.img<{ $opening: boolean }>`
   pointer-events: none;
 
   ${({ $opening }) =>
-    $opening && css`animation: ${sealPop} 0.45s ease forwards;`}
+    $opening &&
+    css`
+      animation: ${sealPop} 0.45s ease forwards;
+    `}
 `;
 
 export const readSealAppear = keyframes`
@@ -184,7 +218,11 @@ export const ReadSealImg = styled.img<{ $visible: boolean }>`
   transition: opacity 0.2s ease;
 
   ${({ $visible }) =>
-    $visible && css`animation: ${readSealAppear} 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;`}
+    $visible &&
+    css`
+      animation: ${readSealAppear} 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
+        forwards;
+    `}
 `;
 
 export const Backdrop = styled.div`
@@ -222,8 +260,13 @@ export const ModalCard = styled.div`
 
   scrollbar-width: thin;
   scrollbar-color: #bb6ad4 transparent;
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background: #b66ad4; border-radius: 3px; }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #b66ad4;
+    border-radius: 3px;
+  }
 `;
 
 export const ZoomHint = styled.p`
@@ -245,7 +288,9 @@ export const CloseLetterButton = styled.button`
   cursor: pointer;
   font-size: 15px;
   color: #795a9b;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
   flex-shrink: 0;
 
   &:hover {
@@ -277,7 +322,10 @@ export const ZoomButton = styled.button`
   font-size: 1em;
   font-weight: bold;
   line-height: 1;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
   flex-shrink: 0;
 
   &:hover {
@@ -288,7 +336,10 @@ export const ZoomButton = styled.button`
   &:disabled {
     opacity: 0.35;
     cursor: default;
-    &:hover { background: var(--dark-highlight); color: var(--light-highlight); }
+    &:hover {
+      background: var(--dark-highlight);
+      color: var(--light-highlight);
+    }
   }
 `;
 

@@ -95,13 +95,14 @@ export const SectionHeader = styled.h3`
   border-bottom: 2px solid var(--dark-highlight);
 `;
 
-
 export const ModalButton = styled.button<{ active?: boolean }>`
   font: normal normal 700 13px/18px Montserrat;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  background: ${({ active }) => active ? "var(--light-highlight)" : "var(--dark-highlight)"};
-  color: ${({ active }) => active ? "var(--dark-highlight)" : "var(--text-color)"};
+  background: ${({ active }) =>
+    active ? "var(--light-highlight)" : "var(--dark-highlight)"};
+  color: ${({ active }) =>
+    active ? "var(--dark-highlight)" : "var(--text-color)"};
   border: 2px solid var(--light-highlight);
   border-radius: 10px;
   padding: 8px 16px;
@@ -132,10 +133,15 @@ export const VersionSubtitle = styled.button<{ canToggle?: boolean }>`
   padding: 5px 0 2px;
   margin-top: 4px;
   display: block;
-  transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
   &:hover {
     opacity: ${({ canToggle }) => (canToggle ? 1 : 0.45)};
-    ${({ canToggle }) => canToggle && `
+    ${({ canToggle }) =>
+      canToggle &&
+      `
       background: var(--text-color);
       color: var(--dark-highlight);
     `}
@@ -214,7 +220,7 @@ export const PlaylistDrawerSeparator = styled.div`
 export const BubbleSong = styled.div`
   padding-top: 5px;
   overflow-wrap: break-word;
-   color: var(--text-color);
+  color: var(--text-color);
   text-align: left;
   font: normal normal 300 16px/22px Mulish;
   letter-spacing: 0px;
@@ -323,8 +329,10 @@ export const ControlButton = styled.button<{ active?: boolean }>`
   border-radius: 5px;
   padding: 2px 7px;
   cursor: pointer;
-  background: ${({ active }) => (active ? "var(--dark-highlight)" : "transparent")};
-  color: ${({ active }) => (active ? "var(--text-color)" : "var(--dark-highlight)")};
+  background: ${({ active }) =>
+    active ? "var(--dark-highlight)" : "transparent"};
+  color: ${({ active }) =>
+    active ? "var(--text-color)" : "var(--dark-highlight)"};
   &:hover {
     opacity: 0.75;
   }

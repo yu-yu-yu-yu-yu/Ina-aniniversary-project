@@ -195,7 +195,7 @@ async function convertMoments() {
   fs.writeFileSync(PENDING_OUTPUT, JSON.stringify(pendingApproval, null, 2));
   if (pendingApproval.length) {
     console.log(
-      `${pendingApproval.length} nominated works awaiting creator approval — see momentsPendingApproval.json`,
+      `${pendingApproval.length} nominated works awaiting creator approval: see momentsPendingApproval.json`,
     );
   }
 

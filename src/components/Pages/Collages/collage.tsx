@@ -11,22 +11,23 @@ import {
   CollageTitle,
   Description,
   ModalBackdrop,
-  ModalImg
+  ModalImg,
 } from "./styles";
 
 const collages = [
   {
     src: process.env.PUBLIC_URL + "/takollage.png",
     title: "Tako Takollage 4th Anniversary",
-    description: "A takollage made of takos, was made during the 4th anniversary.",
+    description:
+      "A takollage made of takos, was made during the 4th anniversary.",
   },
   {
     src: process.env.PUBLIC_URL + "/EvermoreCollage.png",
     title: "Evermore Collage",
-    description: "A collage celebrating Ina's Evermore 3D live, made out of her streams thumbnails!",
+    description:
+      "A collage celebrating Ina's Evermore 3D live, made out of her streams thumbnails!",
   },
 ];
-
 
 const CollagePage = () => {
   const [modalSrc, setModalSrc] = useState<string | null>(null);
@@ -35,7 +36,7 @@ const CollagePage = () => {
   return (
     <PageContainer>
       <Navbar>
-        <NavHome/>
+        <NavHome />
         <NavTitle>Collages</NavTitle>
       </Navbar>
       <audio
@@ -48,7 +49,11 @@ const CollagePage = () => {
       <Grid>
         {collages.map((c, i) => (
           <Card key={i}>
-            <Thumbnail src={c.src} alt={c.title} onClick={() => setModalSrc(c.src)} />
+            <Thumbnail
+              src={c.src}
+              alt={c.title}
+              onClick={() => setModalSrc(c.src)}
+            />
             <CollageTitle>{c.title}</CollageTitle>
             <Description>{c.description}</Description>
           </Card>
@@ -57,7 +62,11 @@ const CollagePage = () => {
       {modalSrc && (
         <>
           <ModalBackdrop onClick={() => setModalSrc(null)} />
-          <ModalImg src={modalSrc} alt="Collage" onClick={() => setModalSrc(null)} />
+          <ModalImg
+            src={modalSrc}
+            alt="Collage"
+            onClick={() => setModalSrc(null)}
+          />
         </>
       )}
     </PageContainer>

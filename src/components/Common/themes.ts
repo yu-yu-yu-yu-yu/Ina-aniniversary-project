@@ -41,7 +41,8 @@ export const themes: Themes = {
     "--text-color": "#ffffffff",
     "--background": "#07071e",
     "--shadow": "#0000003C",
-    "--logo-filter": "sepia(100%) hue-rotate(190deg) brightness(0.8) contrast(1.2)",
+    "--logo-filter":
+      "sepia(100%) hue-rotate(190deg) brightness(0.8) contrast(1.2)",
     "--title-stroke": "#5db8ff",
   },
   Temari: {
@@ -55,7 +56,8 @@ export const themes: Themes = {
     "--text-color": "#ffffffff",
     "--background": "#5a5a5aff",
     "--shadow": "#0000001C",
-    "--logo-filter": "invert(18%) sepia(98%) saturate(0) hue-rotate(357deg) brightness(0.9)",
+    "--logo-filter":
+      "invert(18%) sepia(98%) saturate(0) hue-rotate(357deg) brightness(0.9)",
     "--title-stroke": "#ff5555",
   },
   TakoTakover: {
@@ -69,7 +71,8 @@ export const themes: Themes = {
     "--text-color": "#f0d6ff",
     "--background": "#12003e",
     "--shadow": "#0000005C",
-    "--logo-filter": "sepia(100%) hue-rotate(270deg) saturate(300%) brightness(0.8)",
+    "--logo-filter":
+      "sepia(100%) hue-rotate(270deg) saturate(300%) brightness(0.8)",
     "--title-stroke": "#ffc251",
   },
 };

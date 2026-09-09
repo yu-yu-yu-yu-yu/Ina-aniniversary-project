@@ -26,7 +26,13 @@ const CreditsPage = (): JSX.Element => {
   const audioRef = useAudio({ muted, autoPlay: true });
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", background: "var(--background)" }}>
+    <div
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        background: "var(--background)",
+      }}
+    >
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/明日も晴れるといいね.mp3"}
@@ -48,22 +54,30 @@ const CreditsPage = (): JSX.Element => {
               <PeopleList>
                 {entry.people.map((person, j) =>
                   person.url ? (
-                    <PersonLink key={j} href={person.url} target="_blank" rel="noopener noreferrer">
+                    <PersonLink
+                      key={j}
+                      href={person.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {person.name}
                     </PersonLink>
                   ) : (
                     <PersonName key={j}>{person.name}</PersonName>
-                  )
+                  ),
                 )}
               </PeopleList>
               {entry.showTakoCount && (
-                <TakoCountNote>More than {TAKO_COUNT} takodachis!</TakoCountNote>
+                <TakoCountNote>
+                  More than {TAKO_COUNT} takodachis!
+                </TakoCountNote>
               )}
             </CreditsSection>
           </React.Fragment>
         ))}
         <CreditsNote>
-          Thanks to all the amazing takos who shared their art, sent messages, wrote letters, or simply cheered from the sidelines!
+          Thanks to all the amazing takos who shared their art, sent messages,
+          wrote letters, or simply cheered from the sidelines!
         </CreditsNote>
       </CreditsBoard>
     </div>

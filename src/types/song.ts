@@ -1,6 +1,16 @@
-export type PerformanceContext = "release" | "cover" | "karaoke" | "concert" | "featured" | "banana";
+export type PerformanceContext =
+  | "release"
+  | "cover"
+  | "karaoke"
+  | "concert"
+  | "featured"
+  | "banana";
 export type PerformanceStatus = "archived" | "unofficially archived";
-export type SongOrigin = "Ina's original" | "Hololive's original" | "3rd Party" | "banana";
+export type SongOrigin =
+  | "Ina's original"
+  | "Hololive's original"
+  | "3rd Party"
+  | "banana";
 export type CollabType = "solo" | "duo" | "group";
 
 export interface Performance {
@@ -26,8 +36,11 @@ export interface VideoEntry extends SongData {
   video?: string;
 }
 
-export const deriveArchiveStatus = (song: SongData): "archived" | "unofficially archived" | "unarchived" => {
+export const deriveArchiveStatus = (
+  song: SongData,
+): "archived" | "unofficially archived" | "unarchived" => {
   if (song.performances.some((p) => p.status === "archived")) return "archived";
-  if (song.performances.some((p) => p.status === "unofficially archived")) return "unofficially archived";
+  if (song.performances.some((p) => p.status === "unofficially archived"))
+    return "unofficially archived";
   return "unarchived";
 };

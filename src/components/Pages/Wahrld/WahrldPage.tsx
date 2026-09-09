@@ -3,7 +3,11 @@ import { WahrldEntry, WahrldKind } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 import { Navbar, NavHome } from "../../Common/Navbar";
-import { NavTitle, SiteBoard } from "../../../styles/globalStyles";
+import {
+  CarouselCenterMark,
+  NavTitle,
+  SiteBoard,
+} from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
@@ -44,8 +48,14 @@ const WahrldPage = (): JSX.Element => {
     setKindFilter(active ? value : null);
 
   const total = filtered.length;
-  const { pivotIndex, goTo, containerRef, itemRefs, containerHandlers } =
-    useCenterCarousel(total);
+  const {
+    pivotIndex,
+    dragging,
+    goTo,
+    containerRef,
+    itemRefs,
+    containerHandlers,
+  } = useCenterCarousel(total);
 
   return (
     <div
@@ -86,7 +96,7 @@ const WahrldPage = (): JSX.Element => {
             ))}
           </KindSwitchRow>
           {total === 0 ? (
-            <NoEntriesYet>No submissions yet — check back soon!</NoEntriesYet>
+            <NoEntriesYet>No submissions yet, check back soon!</NoEntriesYet>
           ) : (
             <GalleryWrapper>
               <CarouselNav>
@@ -108,19 +118,22 @@ const WahrldPage = (): JSX.Element => {
                   <i className="fa fa-chevron-right" aria-hidden="true" />
                 </PageArrowButton>
               </CarouselNav>
+              {dragging && <CarouselCenterMark />}
               <GalleryScroller ref={containerRef} {...containerHandlers}>
                 {filtered.map((entry, i) => {
                   const isPivot = i === pivotIndex;
+                  const showBig = isPivot && !dragging;
                   return (
                     <EntrySlot
                       key={`${entry.user}-${i}`}
                       $isPivot={isPivot}
+                      $dragging={dragging}
                       ref={(el: HTMLDivElement | null) => {
                         itemRefs.current[i] = el;
                       }}
                       onClick={isPivot ? undefined : () => goTo(i)}
                     >
-                      {isPivot ? (
+                      {showBig ? (
                         <WahrldCard entry={entry} index={i} />
                       ) : (
                         <NeighborCard>

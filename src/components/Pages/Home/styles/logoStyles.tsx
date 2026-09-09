@@ -4,7 +4,7 @@ const LogoContainer = styled.div`
   min-height: 100vh;
   position: relative;
   z-index: 1;
-  
+
   background: var(--background);
 
   display: flex;
@@ -14,16 +14,16 @@ const LogoContainer = styled.div`
 
   box-sizing: border-box;
 `;
-  
-  const LogoImg = styled.img`
+
+const LogoImg = styled.img`
   opacity: 1;
   margin-left: auto;
   margin-right: auto;
 
   width: 45vh;
-  filter: var(--logo-filter); 
-  @media only screen and (min-width: 1200px) and (max-height: 800px){
-    width: 70vh !important; 
+  filter: var(--logo-filter);
+  @media only screen and (min-width: 1200px) and (max-height: 800px) {
+    width: 70vh !important;
   }
 
   @media only screen and (max-width: 1350px) {
@@ -66,18 +66,16 @@ const TitleHeader = styled.h2`
 `;
 
 const LogoHeader = styled.h1`
-
   margin: 8px;
   color: var(--dark-highlight);
   text-align: center;
 
-  font: normal normal bold 60px/72px Montserrat;  
-  letter-spacing: 3px;                          
+  font: normal normal bold 60px/72px Montserrat;
+  letter-spacing: 3px;
 
-  @media only screen and (min-width: 1200px) and (max-height: 800px){
+  @media only screen and (min-width: 1200px) and (max-height: 800px) {
     font: normal normal bold 48px/60px Montserrat !important;
   }
-
 
   @media only screen and (max-width: 1000px) {
     font: normal normal bold 38px/46px Montserrat;
@@ -145,4 +143,11 @@ const ScrollIndicator = styled.div`
   }
 `;
 
-export { LogoContainer, LogoImg, TitleHeader, LogoHeader, CenterContainer, ScrollIndicator };
+export {
+  LogoContainer,
+  LogoImg,
+  TitleHeader,
+  LogoHeader,
+  CenterContainer,
+  ScrollIndicator,
+};

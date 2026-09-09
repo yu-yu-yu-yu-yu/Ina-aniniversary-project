@@ -17,7 +17,8 @@ const Bar = styled.div<{ active: boolean; color: string }>`
   min-width: 38px;
   height: 24px;
   flex-shrink: 0;
-  background-color: ${({ active, color }) => active ? color : "var(--dark-highlight)"};
+  background-color: ${({ active, color }) =>
+    active ? color : "var(--dark-highlight)"};
   transition: background-color 0.2s linear;
   &.mobile {
     width: 28px;
@@ -36,13 +37,15 @@ const Circle = styled.div<{ active: boolean; color: string }>`
   border: 2px solid ${({ color }) => color};
   top: 50%;
   left: 3px;
-  transform: translateY(-50%) translateX(${({ active }) => (active ? "14px" : "0px")});
+  transform: translateY(-50%)
+    translateX(${({ active }) => (active ? "14px" : "0px")});
   transition: transform 0.2s linear;
   &.mobile {
     width: 12px;
     height: 12px;
     left: 2px;
-    transform: translateY(-50%) translateX(${({ active }) => (active ? "12px" : "0px")});
+    transform: translateY(-50%)
+      translateX(${({ active }) => (active ? "12px" : "0px")});
   }
 `;
 
@@ -77,7 +80,9 @@ export const Switch = ({
       <Bar active={value} color={color} className={cls}>
         <Circle active={value} color={color} className={cls} />
       </Bar>
-      <Label labelColor={labelColor} className={cls}>{label}</Label>
+      <Label labelColor={labelColor} className={cls}>
+        {label}
+      </Label>
     </Container>
   );
 };

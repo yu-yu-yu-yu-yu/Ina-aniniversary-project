@@ -27,8 +27,7 @@ const Wrapper = styled.div<{ $topGap?: string }>`
   height: ${GIF_SIZE}px;
   overflow: hidden;
   position: relative;
-  background: var(--background)
-    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background: var(--background) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
   padding-top: calc(var(--divider-top-gap) + 20px);

@@ -19,12 +19,7 @@ const themeBalloonFile: Record<ThemeName, string> = {
   TakoTakover: "tako8takover",
 };
 
-const ALL_SHAPED = [
-  "0",
-  "1",
-  "cookies",
-  "uhh-i-think-she-needs-help",
-];
+const ALL_SHAPED = ["0", "1", "cookies", "uhh-i-think-she-needs-help"];
 
 const bob = keyframes`
   0%, 100% { transform: translateY(0) rotate(-3deg); }
@@ -52,7 +47,8 @@ const BalloonAnchor = styled.img<{
     $side === "left"
       ? `right: calc(100% + ${$gap});`
       : `left: calc(100% + ${$gap});`}
-  animation: ${bob} ${({ $delay }) => 2.6 + $delay * 0.35}s ease-in-out infinite;
+  animation: ${bob} ${({ $delay }) =>
+    2.6 + $delay * 0.35}s ease-in-out infinite;
   animation-delay: ${({ $delay }) => $delay * 0.45}s;
   pointer-events: none;
 
@@ -73,8 +69,8 @@ const MobileMVRow = styled.div`
   }
 `;
 
-const MOBILE_SIZES  = [31, 36, 29, 33];
-const MOBILE_LIFTS  = [6,  22, 0,  14];
+const MOBILE_SIZES = [31, 36, 29, 33];
+const MOBILE_LIFTS = [6, 22, 0, 14];
 
 const MobileMVBalloon = styled.img<{ $delay: number; $index: number }>`
   height: ${({ $index }) => MOBILE_SIZES[$index]}vw;
@@ -106,15 +102,23 @@ const Logo = (): JSX.Element => {
       mvFiles: mv,
       shapedFiles: shuffled,
       pos: {
-        
-        mvLT: jitter(20), mvLB: jitter(20), mvRT: jitter(20), mvRB: jitter(20),
-        mvGapLT: randPx(8, 28), mvGapLB: randPx(8, 28),
-        mvGapRT: randPx(8, 28), mvGapRB: randPx(8, 28),
+        mvLT: jitter(20),
+        mvLB: jitter(20),
+        mvRT: jitter(20),
+        mvRB: jitter(20),
+        mvGapLT: randPx(8, 28),
+        mvGapLB: randPx(8, 28),
+        mvGapRT: randPx(8, 28),
+        mvGapRB: randPx(8, 28),
 
-        shTopLT: randTop(-20, 0),  shTopLB: randTop(55, 78),
-        shTopRT: randTop(-20, 0),  shTopRB: randTop(55, 78),
-        shGapLT: randPx(130, 210), shGapLB: randPx(120, 200),
-        shGapRT: randPx(130, 210), shGapRB: randPx(120, 200),
+        shTopLT: randTop(-20, 0),
+        shTopLB: randTop(55, 78),
+        shTopRT: randTop(-20, 0),
+        shTopRB: randTop(55, 78),
+        shGapLT: randPx(130, 210),
+        shGapLB: randPx(120, 200),
+        shGapRT: randPx(130, 210),
+        shGapRB: randPx(120, 200),
       },
     };
   }, [theme]);
@@ -130,21 +134,86 @@ const Logo = (): JSX.Element => {
         <TitleHeader>Tentacult Temple Fan Site</TitleHeader>
         <MobileMVRow>
           {mvFiles.map((name, i) => (
-            <MobileMVBalloon key={i} src={mvSrc(name)} alt="" $delay={i} $index={i} />
+            <MobileMVBalloon
+              key={i}
+              src={mvSrc(name)}
+              alt=""
+              $delay={i}
+              $index={i}
+            />
           ))}
         </MobileMVRow>
         <LogoImageRow>
-          <BalloonAnchor $side="left"  $top={`calc(0%  + ${pos.mvLT})`} $gap={pos.mvGapLT} $delay={0} src={mvSrc(mvFiles[0])} alt="" />
-          <BalloonAnchor $side="left"  $top={`calc(45% + ${pos.mvLB})`} $gap={pos.mvGapLB} $delay={1} src={mvSrc(mvFiles[1])} alt="" />
-          <BalloonAnchor $side="right" $top={`calc(5%  + ${pos.mvRT})`} $gap={pos.mvGapRT} $delay={2} src={mvSrc(mvFiles[2])} alt="" />
-          <BalloonAnchor $side="right" $top={`calc(40% + ${pos.mvRB})`} $gap={pos.mvGapRB} $delay={3} src={mvSrc(mvFiles[3])} alt="" />
+          <BalloonAnchor
+            $side="left"
+            $top={`calc(0%  + ${pos.mvLT})`}
+            $gap={pos.mvGapLT}
+            $delay={0}
+            src={mvSrc(mvFiles[0])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="left"
+            $top={`calc(45% + ${pos.mvLB})`}
+            $gap={pos.mvGapLB}
+            $delay={1}
+            src={mvSrc(mvFiles[1])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="right"
+            $top={`calc(5%  + ${pos.mvRT})`}
+            $gap={pos.mvGapRT}
+            $delay={2}
+            src={mvSrc(mvFiles[2])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="right"
+            $top={`calc(40% + ${pos.mvRB})`}
+            $gap={pos.mvGapRB}
+            $delay={3}
+            src={mvSrc(mvFiles[3])}
+            alt=""
+          />
 
-          <LogoImg alt="ina-logo" src={`${process.env.PUBLIC_URL}/InaLogo.png`} />
+          <LogoImg
+            alt="ina-logo"
+            src={`${process.env.PUBLIC_URL}/InaLogo.png`}
+          />
 
-          <BalloonAnchor $side="left"  $top={pos.shTopLT} $gap={pos.shGapLT} $delay={4} src={tkSrc(shapedFiles[0])} alt="" />
-          <BalloonAnchor $side="left"  $top={pos.shTopLB} $gap={pos.shGapLB} $delay={5} src={tkSrc(shapedFiles[1])} alt="" />
-          <BalloonAnchor $side="right" $top={pos.shTopRT} $gap={pos.shGapRT} $delay={6} src={tkSrc(shapedFiles[2])} alt="" />
-          <BalloonAnchor $side="right" $top={pos.shTopRB} $gap={pos.shGapRB} $delay={7} src={tkSrc(shapedFiles[3])} alt="" />
+          <BalloonAnchor
+            $side="left"
+            $top={pos.shTopLT}
+            $gap={pos.shGapLT}
+            $delay={4}
+            src={tkSrc(shapedFiles[0])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="left"
+            $top={pos.shTopLB}
+            $gap={pos.shGapLB}
+            $delay={5}
+            src={tkSrc(shapedFiles[1])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="right"
+            $top={pos.shTopRT}
+            $gap={pos.shGapRT}
+            $delay={6}
+            src={tkSrc(shapedFiles[2])}
+            alt=""
+          />
+          <BalloonAnchor
+            $side="right"
+            $top={pos.shTopRB}
+            $gap={pos.shGapRB}
+            $delay={7}
+            src={tkSrc(shapedFiles[3])}
+            alt=""
+          />
         </LogoImageRow>
         <LogoHeader>INA&apos;S 6TH BIRTHDAY CELEBRATION</LogoHeader>
       </CenterContainer>

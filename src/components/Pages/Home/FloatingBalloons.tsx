@@ -21,33 +21,65 @@ const tk = (name: string): BalloonDef => ({
 });
 
 const takoShapes: BalloonDef[] = [
-  tk("0"), tk("1"), tk("cookies"), tk("uhh-i-think-she-needs-help"),
+  tk("0"),
+  tk("1"),
+  tk("cookies"),
+  tk("uhh-i-think-she-needs-help"),
 ];
 
 const themePool: Record<ThemeName, BalloonDef[]> = {
   Standard: [
-    mv("meconopsis"), mv("violet"), mv("temari"), mv("tako8takover"),
-    g("purple"), g("pink"), g("white"), g("yellow"), g("fushia"), g("orange"), g("green"), g("lime"),
+    mv("meconopsis"),
+    mv("violet"),
+    mv("temari"),
+    mv("tako8takover"),
+    g("purple"),
+    g("pink"),
+    g("white"),
+    g("yellow"),
+    g("fushia"),
+    g("orange"),
+    g("green"),
+    g("lime"),
     ...takoShapes,
   ],
   Violet: [
     mv("violet"),
-    g("blue"), g("blueagain"), g("violet"), g("sky"), g("cyan"), g("purple"),
+    g("blue"),
+    g("blueagain"),
+    g("violet"),
+    g("sky"),
+    g("cyan"),
+    g("purple"),
     ...takoShapes,
   ],
   Meconopsis: [
     mv("meconopsis"),
-    g("blue"), g("blueagain"), g("cyan"), g("purple"), g("sky"), g("violet"),
+    g("blue"),
+    g("blueagain"),
+    g("cyan"),
+    g("purple"),
+    g("sky"),
+    g("violet"),
     ...takoShapes,
   ],
   Temari: [
     mv("temari"),
-    g("red"), g("lightred"), g("orange"), g("pink"), g("fushia"), g("yellow"),
+    g("red"),
+    g("lightred"),
+    g("orange"),
+    g("pink"),
+    g("fushia"),
+    g("yellow"),
     ...takoShapes,
   ],
   TakoTakover: [
     mv("tako8takover"),
-    g("purple"), g("fushia"), g("pink"), g("violet"), g("sky"),
+    g("purple"),
+    g("fushia"),
+    g("pink"),
+    g("violet"),
+    g("sky"),
     ...takoShapes,
   ],
 };
@@ -86,8 +118,9 @@ const FloatingBalloon = styled.img<{
   z-index: 0;
   pointer-events: none;
   will-change: transform;
-  animation: ${({ swayOffset }) =>
-    css`${floatBalloon(swayOffset)} 12s ease-in-out forwards`};
+  animation: ${({ swayOffset }) => css`
+    ${floatBalloon(swayOffset)} 12s ease-in-out forwards
+  `};
 `;
 
 const BalloonFloatBg = styled.div`
@@ -109,7 +142,7 @@ const FloatingBalloons = (): JSX.Element => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    themePool[theme].forEach(def => {
+    themePool[theme].forEach((def) => {
       const img = new Image();
       img.src = `${process.env.PUBLIC_URL}/${def.src}`;
     });
@@ -141,9 +174,14 @@ const FloatingBalloons = (): JSX.Element => {
         setBalloons((prev) => [...prev, ...newBalloons]);
       }
     };
-    const start = () => { intervalRef.current = setInterval(spawn, 2000); };
-    const stop = () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-    const onVisibility = () => document.visibilityState === "hidden" ? stop() : start();
+    const start = () => {
+      intervalRef.current = setInterval(spawn, 2000);
+    };
+    const stop = () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+    const onVisibility = () =>
+      document.visibilityState === "hidden" ? stop() : start();
     start();
     document.addEventListener("visibilitychange", onVisibility);
     return () => {

@@ -1,11 +1,10 @@
 import React, { ChangeEventHandler } from "react";
 import styled from "styled-components";
 
-
 const SwitchContainer = styled.div`
-    display: inline-box;
-    margin-right: auto;
-    margin-left: auto;
+  display: inline-box;
+  margin-right: auto;
+  margin-left: auto;
 `;
 
 const SwitchInput = styled.input`
@@ -65,9 +64,12 @@ interface SwitchProps {
   onChange: ChangeEventHandler;
 }
 
-const SiteBoardSwitch = ({ id, label, toggled, onChange }: SwitchProps): JSX.Element => {
-
-
+const SiteBoardSwitch = ({
+  id,
+  label,
+  toggled,
+  onChange,
+}: SwitchProps): JSX.Element => {
   return (
     <SwitchContainer>
       <SwitchInput
@@ -80,11 +82,8 @@ const SiteBoardSwitch = ({ id, label, toggled, onChange }: SwitchProps): JSX.Ele
       <SwitchLabel className="switch-label" htmlFor={id}>
         <SwitchButton className="switch-button" />
       </SwitchLabel>
-      <SwitchTextLabel>
-        {label}
-      </SwitchTextLabel>
+      <SwitchTextLabel>{label}</SwitchTextLabel>
     </SwitchContainer>
-
   );
 };
 

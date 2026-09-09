@@ -1,25 +1,41 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Moment } from "../../../types";
-import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
-import { PageArrowButton } from "../Outfits/styles/BannerStyle";
+import { CenterCarousel } from "../../../hooks/useCenterCarousel";
+import { parseYouTube } from "../../../utils/youtube";
 import MomentCard from "./MomentCard";
 import {
-  CarouselCounter,
-  CarouselNav,
   GalleryScroller,
-  GalleryWrapper,
-  MomentDate,
   MomentSlot,
-  MomentTitle,
-  NeighborCard,
+  NeighborFrame,
+  NeighborImg,
+  NeighborLabel,
   NoMomentsYet,
 } from "./styles";
 
-const MomentCarousel = ({ moments }: { moments: Moment[] }): JSX.Element => {
+const neighborThumb = (moment: Moment): string | undefined => {
+  if (moment.image) return moment.image;
+  const ytRef = parseYouTube(moment.sourceUrl);
+  return ytRef ? `https://i.ytimg.com/vi/${ytRef.id}/hqdefault.jpg` : undefined;
+};
+
+const MomentCarousel = ({
+  moments,
+  carousel,
+}: {
+  moments: Moment[];
+  carousel: CenterCarousel;
+}): JSX.Element => {
   const total = moments.length;
-  const { pivotIndex, goTo, containerRef, itemRefs, containerHandlers } =
-    useCenterCarousel(total);
+  const {
+    pivotIndex,
+    dragging,
+    goTo,
+    containerRef,
+    itemRefs,
+    isLoaded,
+    containerHandlers,
+  } = carousel;
   const { hash } = useLocation();
   const hasHandledHash = useRef(false);
 
@@ -34,56 +50,41 @@ const MomentCarousel = ({ moments }: { moments: Moment[] }): JSX.Element => {
   }, [hash, moments, goTo]);
 
   if (total === 0) {
-    return <NoMomentsYet>No moments yet — check back soon!</NoMomentsYet>;
+    return <NoMomentsYet>No moments yet, check back soon!</NoMomentsYet>;
   }
 
   return (
-    <GalleryWrapper>
-      <CarouselNav>
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex - 1)}
-          disabled={pivotIndex === 0}
-          aria-label="Previous moment"
-        >
-          <i className="fa fa-chevron-left" aria-hidden="true" />
-        </PageArrowButton>
-        <CarouselCounter>
-          {pivotIndex + 1} / {total}
-        </CarouselCounter>
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex + 1)}
-          disabled={pivotIndex >= total - 1}
-          aria-label="Next moment"
-        >
-          <i className="fa fa-chevron-right" aria-hidden="true" />
-        </PageArrowButton>
-      </CarouselNav>
-      <GalleryScroller ref={containerRef} {...containerHandlers}>
-        {moments.map((moment, i) => {
-          const isPivot = i === pivotIndex;
-          return (
-            <MomentSlot
-              key={moment.slug}
-              id={moment.slug}
-              $isPivot={isPivot}
-              ref={(el: HTMLDivElement | null) => {
-                itemRefs.current[i] = el;
-              }}
-              onClick={isPivot ? undefined : () => goTo(i)}
-            >
-              {isPivot ? (
-                <MomentCard moment={moment} />
-              ) : (
-                <NeighborCard>
-                  <MomentTitle>{moment.title}</MomentTitle>
-                  <MomentDate>{moment.date}</MomentDate>
-                </NeighborCard>
-              )}
-            </MomentSlot>
-          );
-        })}
-      </GalleryScroller>
-    </GalleryWrapper>
+    <GalleryScroller ref={containerRef} {...containerHandlers}>
+      {moments.map((moment, i) => {
+        const isPivot = i === pivotIndex;
+        const showBig = isPivot && !dragging;
+        return (
+          <MomentSlot
+            key={moment.slug}
+            id={moment.slug}
+            $isPivot={isPivot}
+            $dragging={dragging}
+            ref={(el: HTMLDivElement | null) => {
+              itemRefs.current[i] = el;
+            }}
+            onClick={isPivot ? undefined : () => goTo(i)}
+          >
+            {showBig ? (
+              <MomentCard key={moment.slug} moment={moment} />
+            ) : (
+              <NeighborFrame>
+                <NeighborImg
+                  $src={isLoaded(i) ? neighborThumb(moment) : undefined}
+                />
+                <NeighborLabel>
+                  {moment.title} · {moment.date}
+                </NeighborLabel>
+              </NeighborFrame>
+            )}
+          </MomentSlot>
+        );
+      })}
+    </GalleryScroller>
   );
 };
 

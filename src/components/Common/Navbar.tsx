@@ -3,7 +3,13 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 
 export const Navbar = styled.nav`
-  background: transparent linear-gradient(180deg, var(--light-background) 90%, var(--dark-highlight) 100%) 0% 0% no-repeat padding-box;
+  background: transparent
+    linear-gradient(
+      180deg,
+      var(--light-background) 90%,
+      var(--dark-highlight) 100%
+    )
+    0% 0% no-repeat padding-box;
   display: flex;
   position: sticky;
   top: 0;
@@ -75,7 +81,9 @@ export const HintButton = styled.button`
   @media only screen and (max-width: 700px) {
     padding: 8px 10px;
     gap: 0;
-    .btn-text { display: none; }
+    .btn-text {
+      display: none;
+    }
   }
   &:hover {
     opacity: 0.8;

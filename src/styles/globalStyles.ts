@@ -142,6 +142,20 @@ export const SiteBoard = styled.div`
   background: var(--background);
 `;
 
+export const CarouselCenterMark = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--light-highlight);
+  box-shadow: 0 0 12px var(--light-highlight);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 40;
+`;
+
 export const FiltersContainer = styled.div`
   margin: auto auto 35px;
 `;
@@ -231,4 +245,3 @@ export const Button = styled.a`
     opacity: 0.8;
   }
 `;
-

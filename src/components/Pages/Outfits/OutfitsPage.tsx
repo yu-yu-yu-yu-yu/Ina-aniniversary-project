@@ -48,7 +48,8 @@ const OutfitsPage = (): JSX.Element => {
                   </div>
                   <ul style={{ margin: 0, paddingLeft: 16, lineHeight: 1.65 }}>
                     <li>Drag or use the ‹ › arrows to browse outfits</li>
-                    <li>Click an image to open it full-size</li>
+                    <li>Click a side outfit to bring it forward</li>
+                    <li>Click the centered outfit to open it full-size</li>
                     <li>
                       Hover a card to see the title, artist and source stream
                     </li>

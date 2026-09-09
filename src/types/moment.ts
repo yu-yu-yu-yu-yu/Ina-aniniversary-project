@@ -10,6 +10,11 @@ export interface Tribute {
   submittedBy?: string;
 }
 
+export interface MomentReaction {
+  author: string;
+  text: string;
+}
+
 export interface Moment {
   slug: string;
   title: string;
@@ -20,4 +25,6 @@ export interface Moment {
   context: string;
   cap: 2 | 3;
   tributes: Tribute[];
+  image?: string;
+  reactions?: MomentReaction[];
 }

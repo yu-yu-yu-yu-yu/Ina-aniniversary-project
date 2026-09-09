@@ -68,7 +68,11 @@ const Lore = (): JSX.Element => {
             <hr />
           </div>
         </TextBoxContainer>
-        <InaVideoContainer style={{ background: isVideoReady ? "transparent" : "var(--dark-background)" }}>
+        <InaVideoContainer
+          style={{
+            background: isVideoReady ? "transparent" : "var(--dark-background)",
+          }}
+        >
           <InaVideo
             key={currentVideo}
             autoPlay
@@ -76,7 +80,10 @@ const Lore = (): JSX.Element => {
             muted
             preload="auto"
             onCanPlay={handleCanPlay}
-            style={{ opacity: isVideoReady ? 1 : 0, transition: "opacity 0.5s ease" }}
+            style={{
+              opacity: isVideoReady ? 1 : 0,
+              transition: "opacity 0.5s ease",
+            }}
           >
             <source
               src={`${process.env.PUBLIC_URL}/${currentVideo}`}

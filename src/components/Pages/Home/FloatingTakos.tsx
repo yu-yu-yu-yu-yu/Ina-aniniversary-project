@@ -62,14 +62,20 @@ const TakoFloatBg = styled.div<{ $zIndex?: number }>`
   pointer-events: none;
 `;
 
-const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIndex?: number }): JSX.Element => {
+const FloatingTakos = ({
+  freeFloat = false,
+  zIndex,
+}: {
+  freeFloat?: boolean;
+  zIndex?: number;
+}): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const sfxRef = useRef<HTMLAudioElement>(null);
   const [columnMode] = useState(!freeFloat);
 
   useEffect(() => {
-    TAKO_FILES.forEach(file => {
+    TAKO_FILES.forEach((file) => {
       const img = new Image();
       img.src = `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`;
     });
@@ -95,9 +101,14 @@ const FloatingTakos = ({ freeFloat = false, zIndex }: { freeFloat?: boolean; zIn
         setFloatingTakos((prev) => [...prev, ...newTakos]);
       }
     };
-    const start = () => { intervalRef.current = setInterval(spawn, 1000); };
-    const stop = () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-    const onVisibility = () => document.visibilityState === "hidden" ? stop() : start();
+    const start = () => {
+      intervalRef.current = setInterval(spawn, 1000);
+    };
+    const stop = () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+    const onVisibility = () =>
+      document.visibilityState === "hidden" ? stop() : start();
     start();
     document.addEventListener("visibilitychange", onVisibility);
     return () => {

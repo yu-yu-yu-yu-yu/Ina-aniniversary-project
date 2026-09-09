@@ -32,8 +32,7 @@ export const MenuContainer = styled.div`
   text-align: center;
   padding-top: 50px;
   padding-bottom: 10rem;
-  background: var(--background)
-    url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
+  background: var(--background) url(${process.env.PUBLIC_URL}/Pattern2.png) 0 0;
   background-attachment: fixed;
   background-size: 180px;
   z-index: 1;
@@ -120,11 +119,16 @@ export const TakoPeek = styled.img<TakoPeekProps>`
   width: 80px;
   pointer-events: none;
   z-index: 0;
-  transition: ${props => props.active ? 'transform 0.4s cubic-bezier(.4,2,.6,1)' : 'none'};
-  transform: translate(-50%, -50%) translateY(${props => (props.active ? '-5.1vw' : '4vw')}) scale(${props => (props.active ? 1.1 : 0.5)});
+  transition: ${(props) =>
+    props.active ? "transform 0.4s cubic-bezier(.4,2,.6,1)" : "none"};
+  transform: translate(-50%, -50%)
+    translateY(${(props) => (props.active ? "-5.1vw" : "4vw")})
+    scale(${(props) => (props.active ? 1.1 : 0.5)});
   @media only screen and (max-width: 700px) {
     width: 60px;
-    transform: translate(-50%, -50%) translateY(${props => (props.active ? '-15vw' : '4vw')}) scale(${props => (props.active ? 1.1 : 0.5)});
+    transform: translate(-50%, -50%)
+      translateY(${(props) => (props.active ? "-15vw" : "4vw")})
+      scale(${(props) => (props.active ? 1.1 : 0.5)});
   }
 `;
 
@@ -228,4 +232,3 @@ export const CookieA = styled.a`
   align-items: center;
   justify-content: center;
 `;
-

@@ -15,7 +15,11 @@ const HomeFooter = (): JSX.Element => {
       </AoLogo>
       <div className="footer-social-container">
         <div className="social-links">
-          <a href="https://twitter.com/ninomaeinanis" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://twitter.com/ninomaeinanis"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <p>
               <i className="fa fa-twitter"></i> @ninomaeinanis
             </p>
@@ -46,7 +50,9 @@ const HomeFooter = (): JSX.Element => {
           This is a fan project. We are not affiliated with or endorsed by Cover
           Corporation.
         </p>
-        <p style={{ fontSize: "0.75rem", opacity: 0.5, marginTop: "0.25rem" }}>v{version}</p>
+        <p style={{ fontSize: "0.75rem", opacity: 0.5, marginTop: "0.25rem" }}>
+          v{version}
+        </p>
       </div>
     </Footer>
   );

@@ -32,10 +32,11 @@ async function renameFiles(path) {
     (err) => {
       if (err) throw err;
       console.log("filename map saved");
-    }
+    },
   );
-  const filenames_map = _.fromPairs(filename_pairs.map(([name, newname]) =>
-      [name, newname] ));
+  const filenames_map = _.fromPairs(
+    filename_pairs.map(([name, newname]) => [name, newname]),
+  );
   const csv_by_line = [];
 
   await fs
@@ -50,12 +51,12 @@ async function renameFiles(path) {
     .on("end", () => csvWriter.writeRecords(csv_by_line));
 
   for (const filename of filenames) {
-     fs.rename(
+    fs.rename(
       `${path}/${filename}`,
       `${path}/${filenames_map[filename]}`,
       (err) => {
         if (err) throw err;
-      }
+      },
     );
   }
 }

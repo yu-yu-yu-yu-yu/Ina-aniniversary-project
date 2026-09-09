@@ -7,7 +7,12 @@ interface UseAudioOptions {
   videoPaused?: boolean;
 }
 
-export const useAudio = ({ muted, volume = 0.1, autoPlay = false, videoPaused = false }: UseAudioOptions) => {
+export const useAudio = ({
+  muted,
+  volume = 0.1,
+  autoPlay = false,
+  videoPaused = false,
+}: UseAudioOptions) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -40,7 +45,8 @@ export const useAudio = ({ muted, volume = 0.1, autoPlay = false, videoPaused = 
       audioRef.current.play().catch(() => {
         if (cancelled) return;
         handler = () => {
-          if (audioRef.current && !muted) audioRef.current.play().catch(() => {});
+          if (audioRef.current && !muted)
+            audioRef.current.play().catch(() => {});
           if (handler) window.removeEventListener("click", handler);
         };
         window.addEventListener("click", handler);

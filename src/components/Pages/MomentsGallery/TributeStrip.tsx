@@ -2,7 +2,6 @@ import React from "react";
 import { Tribute } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import {
-  NoTributesNote,
   TributeAuthor,
   TributeAvatar,
   TributeCard,
@@ -11,38 +10,33 @@ import {
 
 const TributeStrip = ({
   tributes,
-  cap,
+  activeIndex,
+  onSelect,
 }: {
   tributes: Tribute[];
-  cap: 2 | 3;
+  activeIndex: number;
+  onSelect: (index: number) => void;
 }): JSX.Element => {
-  const shown = tributes.slice(0, cap);
-
-  if (shown.length === 0) {
-    return (
-      <NoTributesNote>
-        No tributes yet — be the first to send one!
-      </NoTributesNote>
-    );
-  }
-
   return (
     <TributeRow>
-      {shown.map((tribute, i) => (
+      {tributes.map((tribute, i) => (
         <TributeCard
           key={`${tribute.author}-${i}`}
-          href={
-            tribute.url ??
-            (tribute.handle ? `https://x.com/${tribute.handle}` : undefined)
-          }
-          target="_blank"
-          rel="noopener noreferrer"
+          type="button"
+          $active={activeIndex === i + 1}
+          onClick={() => onSelect(i + 1)}
+          title={`View tribute by ${tribute.author}`}
         >
           <TributeAvatar
+            $active={activeIndex === i + 1}
             src={getTakoAvatar(tribute.author, i)}
             alt={tribute.author}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = getTakoAvatar(null, i);
+            }}
           />
-          <TributeAuthor>By: {tribute.author}</TributeAuthor>
+          <TributeAuthor>{tribute.author}</TributeAuthor>
         </TributeCard>
       ))}
     </TributeRow>

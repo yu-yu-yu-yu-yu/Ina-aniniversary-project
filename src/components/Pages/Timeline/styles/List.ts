@@ -729,6 +729,7 @@ export const StageScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  --pivot-w: min(1040px, calc(100% - 520px));
   &::-webkit-scrollbar {
     display: none;
   }
@@ -736,25 +737,26 @@ export const StageScroller = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50vw - 220px));
+    flex: 0 0 max(0px, calc(50% - var(--pivot-w) / 2));
   }
 `;
 
-export const StageSlot = styled.div<{ $isPivot: boolean }>`
+export const StageSlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   position: relative;
   flex-shrink: 0;
   height: 100%;
   overflow-y: auto;
-  width: ${({ $isPivot }) => ($isPivot ? "min(1040px, 92vw)" : "220px")};
+  width: ${({ $isPivot, $dragging }) =>
+    $isPivot && !$dragging ? "var(--pivot-w)" : "220px"};
   display: flex;
   flex-direction: column;
   align-items: center;
   scroll-snap-align: center;
   scroll-snap-stop: always;
-  opacity: ${({ $isPivot }) => ($isPivot ? 1 : 0.45)};
-  transform: ${({ $isPivot }) => ($isPivot ? "scale(1)" : "scale(0.9)")};
+  opacity: ${({ $isPivot, $dragging }) => ($isPivot && !$dragging ? 1 : 0.45)};
+  transform: ${({ $isPivot, $dragging }) =>
+    $isPivot && !$dragging ? "scale(1)" : "scale(0.9)"};
   transition:
-    width 0.35s,
     opacity 0.35s,
     transform 0.35s;
   cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};

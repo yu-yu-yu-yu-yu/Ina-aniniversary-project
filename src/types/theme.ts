@@ -1,4 +1,9 @@
-export type ThemeName = "Standard" | "Violet" | "Meconopsis" | "Temari" | "TakoTakover";
+export type ThemeName =
+  | "Standard"
+  | "Violet"
+  | "Meconopsis"
+  | "Temari"
+  | "TakoTakover";
 
 export interface ThemeContextType {
   theme: ThemeName;

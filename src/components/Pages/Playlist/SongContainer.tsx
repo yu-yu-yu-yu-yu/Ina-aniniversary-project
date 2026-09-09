@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { SongData, Performance, deriveArchiveStatus } from "../../../types/song";
+import {
+  SongData,
+  Performance,
+  deriveArchiveStatus,
+} from "../../../types/song";
 import { useMute } from "../../Common/MuteButton";
+import { notifyPlayerReady } from "../../../utils/youtube";
 import {
   BubbleHeader,
   BubbleImage,
@@ -36,12 +41,12 @@ const toWatch = (url: string): string => {
 };
 
 const CONTEXT_LABEL: Record<string, string> = {
-  karaoke:  "Karaoke",
-  concert:  "Concert",
-  cover:    "Cover",
-  release:  "Release",
+  karaoke: "Karaoke",
+  concert: "Concert",
+  cover: "Cover",
+  release: "Release",
   featured: "Featured",
-  banana:   "Banana",
+  banana: "Banana",
 };
 
 const perfLabel = (p: Performance): string => {
@@ -51,16 +56,33 @@ const perfLabel = (p: Performance): string => {
 };
 
 const perfTagColor = (p: Performance): string =>
-  playlistFilterColors[p.name ? "concert" : p.context] ?? playlistFilterColors["concert"];
+  playlistFilterColors[p.name ? "concert" : p.context] ??
+  playlistFilterColors["concert"];
 
-const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; globalShowOriginal?: boolean }): JSX.Element => {
+const SongCardEntry = ({
+  song,
+  globalShowOriginal = false,
+}: {
+  song: SongData;
+  globalShowOriginal?: boolean;
+}): JSX.Element => {
   const { reportVideoPlaying } = useMute();
   const linkedPerfs = song.performances.filter((p) => p.link);
 
   const slots = useMemo(() => {
-    const perfSlots = linkedPerfs.map((p) => ({ link: p.link!, label: perfLabel(p), isOriginal: false }));
+    const perfSlots = linkedPerfs.map((p) => ({
+      link: p.link!,
+      label: perfLabel(p),
+      isOriginal: false,
+    }));
     const originalSlot = song.originalSongLink
-      ? [{ link: toEmbed(song.originalSongLink), label: "Original ver.", isOriginal: true }]
+      ? [
+          {
+            link: toEmbed(song.originalSongLink),
+            label: "Original ver.",
+            isOriginal: true,
+          },
+        ]
       : [];
     return song.origin === "Ina's original"
       ? [...originalSlot, ...perfSlots]
@@ -71,13 +93,15 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
 
   useEffect(() => {
     const useOriginal = globalShowOriginal || song.origin === "Ina's original";
-    const idx = slots.findIndex((s) => useOriginal ? s.isOriginal : !s.isOriginal);
+    const idx = slots.findIndex((s) =>
+      useOriginal ? s.isOriginal : !s.isOriginal,
+    );
     setSlotIndex(idx >= 0 ? idx : 0);
   }, [globalShowOriginal, slots]);
 
-  const currentSlot  = slots[slotIndex] ?? null;
-  const canCycle     = slots.length > 1;
-  const currentLink  = currentSlot?.link ?? null;
+  const currentSlot = slots[slotIndex] ?? null;
+  const canCycle = slots.length > 1;
+  const currentLink = currentSlot?.link ?? null;
   const versionLabel = currentSlot?.label ?? "";
 
   const handleVersionClick = () => {
@@ -111,11 +135,19 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
             onPause={() => reportVideoPlaying(false)}
             onEnded={() => reportVideoPlaying(false)}
           >
-            <source src={process.env.PUBLIC_URL + "/songLinks/" + link} type="video/mp4" />
+            <source
+              src={process.env.PUBLIC_URL + "/songLinks/" + link}
+              type="video/mp4"
+            />
           </video>
         );
       }
-      return <BubbleImage src={process.env.PUBLIC_URL + "/songLinks/" + link} alt={song.songName} />;
+      return (
+        <BubbleImage
+          src={process.env.PUBLIC_URL + "/songLinks/" + link}
+          alt={song.songName}
+        />
+      );
     }
     return (
       <IFrame
@@ -123,6 +155,7 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
         title={song.songName}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={true}
+        onLoad={(e) => notifyPlayerReady(e.currentTarget)}
       />
     );
   };
@@ -138,38 +171,68 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
               canToggle={canCycle}
               onClick={canCycle ? handleVersionClick : undefined}
             >
-              {canCycle ? <><i className="fa fa-chevron-left" /> {versionLabel} <i className="fa fa-chevron-right" /></> : versionLabel}
+              {canCycle ? (
+                <>
+                  <i className="fa fa-chevron-left" /> {versionLabel}{" "}
+                  <i className="fa fa-chevron-right" />
+                </>
+              ) : (
+                versionLabel
+              )}
             </VersionSubtitle>
           )}
         </BubbleHeader>
 
         {song.songInfo && (
           <BubbleSong>
-            {song.originalSongLink
-              ? <a href={toWatch(song.originalSongLink)} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>{song.songInfo}</a>
-              : song.songInfo}
+            {song.originalSongLink ? (
+              <a
+                href={toWatch(song.originalSongLink)}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "inherit", textDecoration: "underline" }}
+              >
+                {song.songInfo}
+              </a>
+            ) : (
+              song.songInfo
+            )}
           </BubbleSong>
         )}
         {song.coverInfo && <BubbleSong>{song.coverInfo}</BubbleSong>}
 
-<SongTagRow>
+        <SongTagRow>
           {song.origin === "Ina's original" && (
-            <SongTag tagColor={playlistFilterColors["Ina's original"]}>Ina&apos;s Original</SongTag>
+            <SongTag tagColor={playlistFilterColors["Ina's original"]}>
+              Ina&apos;s Original
+            </SongTag>
           )}
           {song.origin === "Hololive's original" && (
-            <SongTag tagColor={playlistFilterColors["Hololive's original"]}>Hololive&apos;s Original</SongTag>
+            <SongTag tagColor={playlistFilterColors["Hololive's original"]}>
+              Hololive&apos;s Original
+            </SongTag>
           )}
           {displayPerfs.map((p, i) => (
-            <SongTag key={i} tagColor={perfTagColor(p)}>{perfLabel(p)}</SongTag>
+            <SongTag key={i} tagColor={perfTagColor(p)}>
+              {perfLabel(p)}
+            </SongTag>
           ))}
           {archiveStatus !== "unarchived" && (
-            <SongTag tagColor={playlistFilterColors[archiveStatus]}>{archiveStatus}</SongTag>
+            <SongTag tagColor={playlistFilterColors[archiveStatus]}>
+              {archiveStatus}
+            </SongTag>
           )}
-          {linkedPerfs.length === 0 && song.origin !== "Ina's original" && song.origin !== "Hololive's original" && (
-            <SongTag tagColor={playlistFilterColors["unarchived"]}>Unarchived</SongTag>
-          )}
+          {linkedPerfs.length === 0 &&
+            song.origin !== "Ina's original" &&
+            song.origin !== "Hololive's original" && (
+              <SongTag tagColor={playlistFilterColors["unarchived"]}>
+                Unarchived
+              </SongTag>
+            )}
           {song.collab !== "solo" && (
-            <SongTag tagColor={playlistFilterColors[song.collab]}>{song.collab}</SongTag>
+            <SongTag tagColor={playlistFilterColors[song.collab]}>
+              {song.collab}
+            </SongTag>
           )}
         </SongTagRow>
       </SongCardInfo>
@@ -177,10 +240,17 @@ const SongCardEntry = ({ song, globalShowOriginal = false }: { song: SongData; g
   );
 };
 
-const SongContainer = ({ SongData, showOriginal }: SongContainerProps): JSX.Element => (
+const SongContainer = ({
+  SongData,
+  showOriginal,
+}: SongContainerProps): JSX.Element => (
   <SongGrid>
     {SongData.map((song, i) => (
-      <SongCardEntry key={`${song.songName}${i}`} song={song} globalShowOriginal={showOriginal} />
+      <SongCardEntry
+        key={`${song.songName}${i}`}
+        song={song}
+        globalShowOriginal={showOriginal}
+      />
     ))}
   </SongGrid>
 );

@@ -1,7 +1,8 @@
-import React, {useLayoutEffect} from "react";
-import {Submission} from "../../../types";
+import React, { useLayoutEffect } from "react";
+import { Submission } from "../../../types";
 import Masonry from "react-masonry-component";
-import {TakoIcon} from "./TakoIcon";
+import { TakoIcon } from "./TakoIcon";
+import { notifyPlayerReady } from "../../../utils/youtube";
 import {
   IFrame,
   MessageCard,
@@ -10,21 +11,16 @@ import {
   SubmissionContainer,
 } from "./styles";
 
-
 interface TakoMessagesProps {
   submissions: Submission[];
   isToggledOnlyImg: boolean;
   isToggledTextOnly: boolean;
 }
 
-
-const TakoMessages = ({
-  submissions,
-}: TakoMessagesProps): JSX.Element => {
+const TakoMessages = ({ submissions }: TakoMessagesProps): JSX.Element => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
 
   return (
     <Masonry
@@ -36,7 +32,7 @@ const TakoMessages = ({
       }}
       style={{ margin: "0 auto" }}
     >
-      {submissions.map(({ message, user, icon, image, pun,sub }, i) => (
+      {submissions.map(({ message, user, icon, image, pun, sub }, i) => (
         <SubmissionContainer key={i}>
           <MessageCard>
             <MessageCardHeader>
@@ -52,9 +48,20 @@ const TakoMessages = ({
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={true}
+                  onLoad={(e) => notifyPlayerReady(e.currentTarget)}
                 />
-              ) : (<><MessageText>{image}</MessageText><hr /></>)}
-              {sub && (<><MessageText>{sub}</MessageText><hr /></>)}
+              ) : (
+                <>
+                  <MessageText>{image}</MessageText>
+                  <hr />
+                </>
+              )}
+              {sub && (
+                <>
+                  <MessageText>{sub}</MessageText>
+                  <hr />
+                </>
+              )}
               <MessageText>{message}</MessageText>
             </div>
           </MessageCard>

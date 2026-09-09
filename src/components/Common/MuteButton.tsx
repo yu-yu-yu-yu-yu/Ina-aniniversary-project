@@ -6,7 +6,7 @@ export const MuteButton = styled.button`
   left: 24px;
   bottom: 24px;
   z-index: 1000;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   border: var(--ink-black) 2px solid;
   border-radius: 50%;
   width: 48px;
@@ -24,11 +24,18 @@ const MuteContext = createContext<{
   toggleMute: () => void;
   videoPlaying: boolean;
   reportVideoPlaying: (playing: boolean) => void;
-}>({ muted: false, toggleMute: () => {}, videoPlaying: false, reportVideoPlaying: () => {} });
+}>({
+  muted: false,
+  toggleMute: () => {},
+  videoPlaying: false,
+  reportVideoPlaying: () => {},
+});
 
 export const useMute = () => useContext(MuteContext);
 
-export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [userMuted, setUserMuted] = useState(false);
   const [ytPlaying, setYtPlaying] = useState(false);
 
@@ -38,20 +45,37 @@ export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       try {
-        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        const data =
+          typeof event.data === "string" ? JSON.parse(event.data) : event.data;
         if (data?.event === "onStateChange") {
           setYtPlaying(data.info === 1);
+        } else if (data?.event === "infoDelivery") {
+          const state =
+            typeof data.info === "object" ? data.info?.playerState : data.info;
+          if (typeof state === "number") setYtPlaying(state === 1);
         }
-      } catch (_) { /* non-YouTube messages are not valid JSON or have no event field */ }
+      } catch (_) {
+        /* non-YouTube messages are not valid JSON or have no event field */
+      }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   return (
-    <MuteContext.Provider value={{ muted, toggleMute, videoPlaying: ytPlaying, reportVideoPlaying: setYtPlaying }}>
+    <MuteContext.Provider
+      value={{
+        muted,
+        toggleMute,
+        videoPlaying: ytPlaying,
+        reportVideoPlaying: setYtPlaying,
+      }}
+    >
       {children}
-      <MuteButton onClick={toggleMute} title={muted ? "Unmute BGM" : "Mute BGM"}>
+      <MuteButton
+        onClick={toggleMute}
+        title={muted ? "Unmute BGM" : "Mute BGM"}
+      >
         {muted ? "🔇" : "🔊"}
       </MuteButton>
     </MuteContext.Provider>

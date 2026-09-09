@@ -1,57 +1,166 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Moment } from "../../../types";
-import { parseYouTube, toEmbed } from "../../../utils/youtube";
+import {
+  notifyPlayerReady,
+  parseYouTube,
+  toEmbed,
+} from "../../../utils/youtube";
+import { useMute } from "../../Common/MuteButton";
+import { ArtworkButton } from "../Outfits/styles/BannerStyle";
+import { ExhibitView } from "./exhibitView";
+import MomentPlacard from "./MomentPlacard";
 import TributeStrip from "./TributeStrip";
 import {
-  CopyLinkButton,
-  MomentCardWrapper,
-  MomentContext,
-  MomentDate,
-  MomentSource,
+  ExhibitLayout,
+  ExhibitStageColumn,
+  Frame,
+  FrameMedia,
   MomentSourceLink,
-  MomentTitle,
+  SwapRow,
 } from "./styles";
 
-const copyMomentLink = (slug: string) => {
-  const url = `${window.location.origin}${window.location.pathname}#${slug}`;
-  navigator.clipboard?.writeText(url).catch(() => {});
+const resolveTributeSrc = (slug: string, file: string): string =>
+  file.startsWith("http")
+    ? file
+    : `${process.env.PUBLIC_URL}/moments/${slug}/${file}`;
+
+const buildViews = (moment: Moment): ExhibitView[] => {
+  const ytRef = parseYouTube(moment.sourceUrl);
+  const originalCredit = `Original: ${moment.sourceLabel || moment.title}`;
+  const original: ExhibitView = ytRef
+    ? {
+        kind: "original-video",
+        src: toEmbed(moment.sourceUrl),
+        label: "Original",
+        credit: originalCredit,
+      }
+    : moment.image
+      ? {
+          kind: "original-image",
+          src: moment.image,
+          label: "Original",
+          credit: originalCredit,
+        }
+      : {
+          kind: "original-link",
+          src: moment.sourceUrl,
+          label: "Original",
+          credit: originalCredit,
+        };
+
+  const tributeViews: ExhibitView[] = moment.tributes
+    .slice(0, moment.cap)
+    .filter((tribute) => !!tribute.file)
+    .map((tribute) => ({
+      kind: tribute.kind === "video" ? "tribute-video" : "tribute-image",
+      src: resolveTributeSrc(moment.slug, tribute.file as string),
+      label: `Tribute by ${tribute.author}`,
+      credit: `Tribute by ${tribute.author}${
+        tribute.handle ? ` (@${tribute.handle})` : ""
+      }`,
+      tribute,
+    }));
+
+  return [original, ...tributeViews];
 };
 
 const MomentCard = ({ moment }: { moment: Moment }): JSX.Element => {
-  const isVideo = parseYouTube(moment.sourceUrl) !== null;
+  const [viewIndex, setViewIndex] = useState(0);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const { reportVideoPlaying } = useMute();
+  const views = buildViews(moment);
+  const view = views[viewIndex] ?? views[0];
+  const tributeViews = views.slice(1);
+  const imageBroken = failedSrc === view.src;
+
+  useEffect(() => {
+    if (view.kind !== "original-video") return;
+    return () => reportVideoPlaying(false);
+  }, [view.kind, view.src, reportVideoPlaying]);
 
   return (
-    <MomentCardWrapper>
-      <MomentTitle>{moment.title}</MomentTitle>
-      <MomentDate>{moment.date}</MomentDate>
-      {isVideo ? (
-        <MomentSource>
-          <iframe
-            src={toEmbed(moment.sourceUrl)}
-            title={moment.sourceLabel || moment.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{ width: "100%", height: "100%", border: 0 }}
-          />
-        </MomentSource>
-      ) : (
-        <MomentSourceLink
-          href={moment.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {moment.sourceLabel || "View the original"}
-        </MomentSourceLink>
-      )}
-      <MomentContext>{moment.context}</MomentContext>
-      <TributeStrip tributes={moment.tributes} cap={moment.cap} />
-      <CopyLinkButton
-        onClick={() => copyMomentLink(moment.slug)}
-        title="Copy link to this moment"
-      >
-        <i className="fa fa-link" aria-hidden="true" /> Copy link
-      </CopyLinkButton>
-    </MomentCardWrapper>
+    <ExhibitLayout>
+      <ExhibitStageColumn>
+        <Frame>
+          <FrameMedia>
+            {view.kind === "original-video" && (
+              <iframe
+                key={view.src}
+                src={view.src}
+                title={moment.sourceLabel || moment.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                onLoad={(e) => notifyPlayerReady(e.currentTarget)}
+              />
+            )}
+            {view.kind === "original-image" &&
+              (imageBroken ? (
+                <MomentSourceLink
+                  href={moment.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {moment.sourceLabel || "View the original"}
+                </MomentSourceLink>
+              ) : (
+                <img
+                  src={view.src}
+                  alt={moment.title}
+                  onError={() => setFailedSrc(view.src)}
+                />
+              ))}
+            {view.kind === "original-link" && (
+              <MomentSourceLink
+                href={view.src}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {moment.sourceLabel || "View the original"}
+              </MomentSourceLink>
+            )}
+            {view.kind === "tribute-image" &&
+              (imageBroken ? (
+                <MomentSourceLink
+                  href={view.tribute?.url || view.src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View tribute by {view.tribute?.author}
+                </MomentSourceLink>
+              ) : (
+                <img
+                  src={view.src}
+                  alt={view.label}
+                  onError={() => setFailedSrc(view.src)}
+                />
+              ))}
+            {view.kind === "tribute-video" && (
+              <video src={view.src} controls preload="none" />
+            )}
+          </FrameMedia>
+        </Frame>
+        {tributeViews.length > 0 && (
+          <>
+            <SwapRow>
+              <ArtworkButton
+                onClick={() => setViewIndex((i) => (i + 1) % views.length)}
+                title="Swap between the original and its tributes"
+                aria-label="Swap between the original and its tributes"
+              >
+                <i className="fa fa-exchange" aria-hidden="true" />
+              </ArtworkButton>
+              {view.label}
+            </SwapRow>
+            <TributeStrip
+              tributes={tributeViews.map((v) => v.tribute!)}
+              activeIndex={viewIndex}
+              onSelect={setViewIndex}
+            />
+          </>
+        )}
+      </ExhibitStageColumn>
+      <MomentPlacard moment={moment} view={view} />
+    </ExhibitLayout>
   );
 };
 

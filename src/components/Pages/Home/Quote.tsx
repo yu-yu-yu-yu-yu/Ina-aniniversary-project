@@ -1,5 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { QuoteContainer, QuoteInaImg, QuoteContent, GrayscaleButton, InaImageWrapper, ElixirText } from "./styles/quoteStyles";
+import {
+  QuoteContainer,
+  QuoteInaImg,
+  QuoteContent,
+  GrayscaleButton,
+  InaImageWrapper,
+  ElixirText,
+} from "./styles/quoteStyles";
 
 const Quote = (): JSX.Element => {
   const [grayscale, setGrayscale] = useState(false);
@@ -39,7 +46,9 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <GrayscaleButton onClick={handleElixir}>
-        {grayscale ? "Give her an elixir of the undying" : "Ina asked for this button but didn't see it last time lol"}
+        {grayscale
+          ? "Give her an elixir of the undying"
+          : "Ina asked for this button but didn't see it last time lol"}
       </GrayscaleButton>
     </QuoteContainer>
   );

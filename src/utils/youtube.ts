@@ -42,8 +42,20 @@ export const parseYouTube = (url: string): YouTubeRef | null => {
 export const toEmbed = (url: string): string => {
   const ref = parseYouTube(url);
   if (!ref) return url;
-  const base = `https://www.youtube.com/embed/${ref.id}`;
-  return ref.start !== undefined ? `${base}?start=${ref.start}` : base;
+  const params = new URLSearchParams();
+  if (ref.start !== undefined) params.set("start", String(ref.start));
+  params.set("enablejsapi", "1");
+  params.set("origin", window.location.origin);
+  return `https://www.youtube.com/embed/${ref.id}?${params.toString()}`;
+};
+
+export const notifyPlayerReady = (
+  iframe: HTMLIFrameElement | null | undefined,
+): void => {
+  iframe?.contentWindow?.postMessage(
+    JSON.stringify({ event: "listening" }),
+    "https://www.youtube.com",
+  );
 };
 
 export const toWatch = (url: string): string => {

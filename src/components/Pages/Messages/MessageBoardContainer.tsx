@@ -75,33 +75,41 @@ const MessageBoard = (): JSX.Element => {
 
   useEffect(() => {
     if (hasMore && data.length > 0) {
-      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      const isScrollable =
+        document.documentElement.scrollHeight > window.innerHeight;
       if (!isScrollable) {
         fetchMore();
       }
     }
   }, [data.length, hasMore]);
 
-  const handleFilter = useMemo(() =>
-    debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value !== "") {
-        const resultData = sourceData.filter((row: Submission) => {
-          return (
-            row.user.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.message.toLowerCase().includes(event.target.value.toLowerCase())
-          );
-        });
-        setHasMore(false);
-        setData(resultData);
-        setOffset(0);
-      } else {
-        const rows = sourceData.slice(0, LIMIT);
-        setHasMore(true);
-        await awaitImgs(rows);
-        setData(rows);
-        setOffset(LIMIT);
-      }
-    }, 1000) as DebouncedFunc<(event: React.ChangeEvent<HTMLInputElement>) => Promise<void>>,
+  const handleFilter = useMemo(
+    () =>
+      debounce(async (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value !== "") {
+          const resultData = sourceData.filter((row: Submission) => {
+            return (
+              row.user
+                .toLowerCase()
+                .includes(event.target.value.toLowerCase()) ||
+              row.message
+                .toLowerCase()
+                .includes(event.target.value.toLowerCase())
+            );
+          });
+          setHasMore(false);
+          setData(resultData);
+          setOffset(0);
+        } else {
+          const rows = sourceData.slice(0, LIMIT);
+          setHasMore(true);
+          await awaitImgs(rows);
+          setData(rows);
+          setOffset(LIMIT);
+        }
+      }, 1000) as DebouncedFunc<
+        (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+      >,
     [sourceData],
   );
 
@@ -227,26 +235,61 @@ const MessageBoard = (): JSX.Element => {
       ) : (
         <SiteBoard>
           <div style={{ textAlign: "center", padding: "2rem 1rem 1rem" }}>
-            <h1 style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", color: "var(--dark-highlight)", marginBottom: "1rem" }}>
+            <h1
+              style={{
+                fontSize: "clamp(1.8rem, 5vw, 3rem)",
+                color: "var(--dark-highlight)",
+                marginBottom: "1rem",
+              }}
+            >
               HAPPY BIRTHDAY INA! 🐙💜
             </h1>
             <video
               controls
               preload="none"
-              style={{ maxWidth: "min(720px, 100%)", width: "100%", borderRadius: "12px" }}
+              style={{
+                maxWidth: "min(720px, 100%)",
+                width: "100%",
+                borderRadius: "12px",
+              }}
               src={`${process.env.PUBLIC_URL}/TakoToriDay3_InaBday.mp4`}
             />
-            <p style={{ fontSize: "0.85rem", color: "var(--dark-highlight)", marginTop: "0.5rem", opacity: 0.8 }}>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "var(--dark-highlight)",
+                marginTop: "0.5rem",
+                opacity: 0.8,
+              }}
+            >
               From Drawn to Dawn Fan Meeting Day 3
             </p>
           </div>
-          <FiltersContainer style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <FiltersContainer
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
             <SearchBar
-              onChange={(e) => { searchRef.current = e.target.value; handleFilter(e); }}
+              onChange={(e) => {
+                searchRef.current = e.target.value;
+                handleFilter(e);
+              }}
               placeholder="Search..."
               style={{ flex: 1, minWidth: "160px" }}
             />
-            <div style={{ display: "flex", flexDirection: "row", overflow: "hidden", flexShrink: 0 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                overflow: "hidden",
+                flexShrink: 0,
+              }}
+            >
               <Switch
                 label="Only Images"
                 value={isToggledOnlyImg}
@@ -275,7 +318,9 @@ const MessageBoard = (): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all.</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>
+                Yay! You have seen it all.
+              </p>
             }
           >
             <TakoMessages

@@ -49,7 +49,10 @@
   {
     "title": "All for One Banner Planning and Organizing",
     "people": [
-      { "name": "StrawberryCandy", "url": "https://twitter.com/StrawberryCan_D" },
+      {
+        "name": "StrawberryCandy",
+        "url": "https://twitter.com/StrawberryCan_D"
+      },
       { "name": "Sock", "url": "https://twitter.com/Sock_Wanders" }
     ]
   },
@@ -62,14 +65,15 @@
   {
     "title": "Homepage Lore Illustration & Animation",
     "people": [
-      { "name": "valkyrie_illust", "url": "https://twitter.com/valkyrie_illust" }
+      {
+        "name": "valkyrie_illust",
+        "url": "https://twitter.com/valkyrie_illust"
+      }
     ]
   },
   {
     "title": "Letter and Balloon Assets",
-    "people": [
-      { "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" }
-    ]
+    "people": [{ "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" }]
   },
   {
     "title": "Web Design",
@@ -126,7 +130,10 @@
       { "name": "Ryusei", "url": "https://x.com/Ryusei_Kiiro" },
       { "name": "Uni88", "url": "https://twitter.com/YesThatUni" },
       { "name": "NxKarim", "url": "https://twitter.com/NexoZerok" },
-      { "name": "Vanilla Thunder", "url": "https://twitter.com/Vanilla_Inazuma" }
+      {
+        "name": "Vanilla Thunder",
+        "url": "https://twitter.com/Vanilla_Inazuma"
+      }
     ]
   },
   {
@@ -156,7 +163,10 @@
   {
     "title": "Special Thanks",
     "people": [
-      { "name": "Our Priestess: Ninomae Ina'nis", "url": "https://twitter.com/ninomaeinanis" }
+      {
+        "name": "Our Priestess: Ninomae Ina'nis",
+        "url": "https://twitter.com/ninomaeinanis"
+      }
     ]
   }
 ]

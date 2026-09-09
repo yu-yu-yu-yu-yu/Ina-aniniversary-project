@@ -65,7 +65,8 @@ const BoardContainer = (): JSX.Element => {
 
   useEffect(() => {
     if (hasMore && data.length > 0) {
-      const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+      const isScrollable =
+        document.documentElement.scrollHeight > window.innerHeight;
       if (!isScrollable) {
         fetchMore();
       }
@@ -77,7 +78,7 @@ const BoardContainer = (): JSX.Element => {
       const currentSource = sourceDataRef.current;
       if (value !== "") {
         const resultData = currentSource.filter((row: LetterEntry) =>
-          row.user?.toLowerCase().includes(value.toLowerCase())
+          row.user?.toLowerCase().includes(value.toLowerCase()),
         );
         offsetRef.current = 0;
         setHasMore(false);
@@ -137,7 +138,10 @@ const BoardContainer = (): JSX.Element => {
       ) : (
         <SiteBoard>
           <FiltersContainer>
-            <SearchBar onChange={handleFilter} placeholder="Search by name..." />
+            <SearchBar
+              onChange={handleFilter}
+              placeholder="Search by name..."
+            />
           </FiltersContainer>
           <InfiniteScroll
             style={{ overflow: "hidden" }}
@@ -151,7 +155,9 @@ const BoardContainer = (): JSX.Element => {
               </Loader>
             }
             endMessage={
-              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>Yay! You have seen it all</p>
+              <p style={{ textAlign: "center", color: "var(--ink-black)" }}>
+                Yay! You have seen it all
+              </p>
             }
           >
             <TakoLetters submissions={data} />

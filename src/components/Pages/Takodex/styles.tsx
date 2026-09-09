@@ -56,7 +56,10 @@ export const AddTakoButton = styled.a`
   font-size: 0.5em;
   text-decoration: none;
   margin-left: 16px;
-  transition: background 0.2s, color 0.2s, filter 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    filter 0.2s;
   &:hover {
     background: var(--dark-highlight);
     color: var(--light-highlight);

@@ -8,6 +8,9 @@ import {
   tagColors,
 } from "./ScrollListUtils";
 import { MonthNavItem } from "./ScrollList";
+import { notifyPlayerReady } from "../../../utils/youtube";
+import { useMute } from "../../Common/MuteButton";
+import { CarouselCenterMark } from "../../../styles/globalStyles";
 import {
   BubbleColumn,
   NeighborThumb,
@@ -101,6 +104,7 @@ const MilestoneStageContent = ({
 }: {
   milestone: Milestone;
 }): JSX.Element => {
+  const { reportVideoPlaying } = useMute();
   const messages = getMessagesForMilestone(milestone);
   const description = messages.find((m) => m.type === "longText");
   const bubbles = messages.filter((m) => m.type !== "longText" && m.author);
@@ -112,6 +116,11 @@ const MilestoneStageContent = ({
     milestone.video?.includes("youtu.be");
   const hrefObj: { href?: string } = {};
   if (milestone.video && !isYt) hrefObj.href = milestone.video;
+
+  useEffect(() => {
+    if (!isYt) return;
+    return () => reportVideoPlaying(false);
+  }, [isYt, milestone.video, reportVideoPlaying]);
 
   return (
     <StageMain>
@@ -135,6 +144,7 @@ const MilestoneStageContent = ({
             title={milestone.label}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            onLoad={(e) => notifyPlayerReady(e.currentTarget)}
           />
         ) : (
           <StageImageFrame
@@ -285,6 +295,7 @@ export const TimelineStage = ({
   const total = milestones.length;
   const {
     pivotIndex,
+    dragging,
     goTo,
     containerRef,
     itemRefs,
@@ -321,6 +332,7 @@ export const TimelineStage = ({
           <i className="fa fa-chevron-right" aria-hidden="true" />
         </PageArrowButton>
       </StageNav>
+      {dragging && <CarouselCenterMark />}
       <StageScroller ref={containerRef} {...containerHandlers}>
         {prevMonthEntry && onNavigate && (
           <MonthNavItem
@@ -332,16 +344,18 @@ export const TimelineStage = ({
         )}
         {milestones.map((milestone, i) => {
           const isPivot = i === pivotIndex;
+          const showBig = isPivot && !dragging;
           return (
             <StageSlot
               key={milestone.label}
               $isPivot={isPivot}
+              $dragging={dragging}
               ref={(el: HTMLDivElement | null) => {
                 itemRefs.current[i] = el;
               }}
               onClick={isPivot ? undefined : () => goTo(i)}
             >
-              {isPivot ? (
+              {showBig ? (
                 <MilestoneStageContent milestone={milestone} />
               ) : isLoaded(i) ? (
                 <NeighborThumb>
