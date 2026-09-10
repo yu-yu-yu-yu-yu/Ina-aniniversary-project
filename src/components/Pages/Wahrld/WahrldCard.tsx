@@ -3,6 +3,7 @@ import { WahrldEntry } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { getFlagSrc, VOID_BADGE } from "../../../utils/flags";
 import { useMute } from "../../Common/MuteButton";
+import ShareButton from "../../Common/ShareButton";
 import {
   EntryAvatar,
   EntryCardWrapper,
@@ -25,9 +26,11 @@ export const getEntryAvatar = (
 const WahrldCard = ({
   entry,
   index,
+  slug,
 }: {
   entry: WahrldEntry;
   index: number;
+  slug: string;
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
 
@@ -72,6 +75,7 @@ const WahrldCard = ({
             e.currentTarget.src = VOID_BADGE;
           }}
         />
+        <ShareButton slug={slug} label="Copy link to this submission" />
       </EntryHeader>
       {entry.message && <EntryMessage>{entry.message}</EntryMessage>}
       {entry.socials && (

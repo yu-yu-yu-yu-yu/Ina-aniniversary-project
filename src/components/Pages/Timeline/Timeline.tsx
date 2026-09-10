@@ -32,7 +32,6 @@ export const Timeline = ({
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     checkMobile();
 
     window.addEventListener("resize", checkMobile);

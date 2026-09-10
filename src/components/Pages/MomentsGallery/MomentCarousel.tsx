@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import { Moment } from "../../../types";
 import { CenterCarousel } from "../../../hooks/useCenterCarousel";
 import { parseYouTube } from "../../../utils/youtube";
@@ -36,19 +35,6 @@ const MomentCarousel = ({
     isLoaded,
     containerHandlers,
   } = carousel;
-  const { hash } = useLocation();
-  const hasHandledHash = useRef(false);
-
-  useEffect(() => {
-    if (hasHandledHash.current || !hash) return;
-    const slug = hash.replace("#", "");
-    const index = moments.findIndex((m) => m.slug === slug);
-    if (index >= 0) {
-      hasHandledHash.current = true;
-      goTo(index);
-    }
-  }, [hash, moments, goTo]);
-
   if (total === 0) {
     return <NoMomentsYet>No moments yet, check back soon!</NoMomentsYet>;
   }

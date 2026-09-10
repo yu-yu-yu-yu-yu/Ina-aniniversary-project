@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Submission } from "../../../types";
 import Masonry from "react-masonry-component";
 import { TakoIcon } from "./TakoIcon";
 import { SRLWrapper } from "simple-react-lightbox";
 import { notifyPlayerReady } from "../../../utils/youtube";
+import ShareButton from "../../Common/ShareButton";
+import { entrySlug } from "../../../utils/shareLink";
 import {
   BubbleImage,
   IFrame,
@@ -13,17 +15,14 @@ import {
   SubmissionContainer,
 } from "./styles";
 
-const copyMessageLink = (globalIndex: number): void => {
-  const url = `${window.location.origin}${window.location.pathname}#message-${globalIndex}`;
-  navigator.clipboard?.writeText(url).catch(() => {});
-};
+export const messageSlug = (sub: Submission): string =>
+  entrySlug(sub.user, sub.image || sub.message);
 
 interface TakoMessagesProps {
   submissions: Submission[];
-  sourceData: Submission[];
   isToggledOnlyImg: boolean;
   isToggledTextOnly: boolean;
-  highlightIndex?: number | null;
+  highlightSlug?: string | null;
 }
 
 const options = {
@@ -46,28 +45,32 @@ const options = {
 
 const TakoMessages = ({
   submissions,
-  sourceData,
   isToggledOnlyImg,
   isToggledTextOnly,
-  highlightIndex,
+  highlightSlug,
 }: TakoMessagesProps): JSX.Element => {
-  const [pulseIndex, setPulseIndex] = useState<number | null>(null);
+  const [pulseSlug, setPulseSlug] = useState<string | null>(null);
+  const hasMounted = useRef(false);
 
   useEffect(() => {
-    if (highlightIndex == null) {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+    if (highlightSlug == null) {
       window.scrollTo(0, 0);
     }
-  }, [highlightIndex]);
+  }, [highlightSlug]);
 
   useEffect(() => {
-    if (highlightIndex == null) return;
-    const el = document.getElementById(`message-${highlightIndex}`);
+    if (highlightSlug == null) return;
+    const el = document.getElementById(`message-${highlightSlug}`);
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "center" });
-    setPulseIndex(highlightIndex);
-    const timer = setTimeout(() => setPulseIndex(null), 1800);
+    setPulseSlug(highlightSlug);
+    const timer = setTimeout(() => setPulseSlug(null), 1800);
     return () => clearTimeout(timer);
-  }, [highlightIndex, submissions]);
+  }, [highlightSlug, submissions]);
 
   const visibleSubmissions = useMemo(() => {
     let filtered = submissions;
@@ -92,13 +95,13 @@ const TakoMessages = ({
     >
       {visibleSubmissions.map((sub, i) => {
         const { message, user, icon, image, pun, event_date } = sub;
-        const globalIndex = sourceData.indexOf(sub);
+        const slug = messageSlug(sub);
         return (
           <SubmissionContainer
             key={i}
-            id={`message-${globalIndex}`}
+            id={`message-${slug}`}
             style={
-              pulseIndex === globalIndex
+              pulseSlug === slug
                 ? {
                     outline: "3px solid var(--light-highlight)",
                     borderRadius: 15,
@@ -110,22 +113,9 @@ const TakoMessages = ({
               <MessageCardHeader>
                 <TakoIcon id={icon} pun={pun} index={i} />
                 {user || "Anonymous Tako"}
-                <button
-                  type="button"
-                  onClick={() => copyMessageLink(globalIndex)}
-                  title="Copy link to this message"
-                  aria-label="Copy link to this message"
-                  style={{
-                    marginLeft: "auto",
-                    background: "none",
-                    border: "none",
-                    color: "inherit",
-                    cursor: "pointer",
-                    opacity: 0.8,
-                  }}
-                >
-                  <i className="fa fa-link" aria-hidden="true" />
-                </button>
+                <div style={{ marginLeft: "auto" }}>
+                  <ShareButton slug={slug} label="Copy link to this message" />
+                </div>
               </MessageCardHeader>
               <div style={{ padding: "0.75rem" }}>
                 {!isToggledTextOnly &&

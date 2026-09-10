@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import { NavTitle } from "../../../styles/globalStyles";
-
-export const WahrldTitle = styled(NavTitle)`
-  font-size: clamp(28px, 3vw, 44px);
-`;
 
 export const GalleryWrapper = styled.div`
   width: 100%;
@@ -12,26 +7,6 @@ export const GalleryWrapper = styled.div`
   min-height: 0;
   display: flex;
   flex-direction: column;
-`;
-
-export const CarouselNav = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  font-size: 1.1em;
-  font-weight: 600;
-  padding: 0.5rem 0;
-  user-select: none;
-`;
-
-export const CarouselCounter = styled.span`
-  background: var(--dark-highlight);
-  color: var(--text-color);
-  border-radius: 12px;
-  padding: 6px 18px;
-  min-width: 90px;
-  text-align: center;
 `;
 
 export const GalleryScroller = styled.div`

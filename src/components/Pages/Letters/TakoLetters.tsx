@@ -4,6 +4,7 @@ import { LetterEntry } from "../../../types";
 import Masonry from "react-masonry-component";
 import { TakoIcon } from "./TakoIcon";
 import { SRLWrapper } from "simple-react-lightbox";
+import ShareButton from "../../Common/ShareButton";
 import { BubbleHeader, BubbleImage, HeaderText } from "./styles/styles";
 import {
   EnvelopeState,
@@ -55,11 +56,6 @@ const LS_KEY = (index: number) => `letter_read_${index}`;
 
 export const letterSlug = (image: string): string =>
   image.replace(/\.[^.]+$/, "");
-
-const copyLetterLink = (image: string): void => {
-  const url = `${window.location.origin}${window.location.pathname}#${letterSlug(image)}`;
-  navigator.clipboard?.writeText(url).catch(() => {});
-};
 
 const CenterAnimOverlay = ({ submission }: { submission: LetterEntry }) => {
   useEffect(() => {
@@ -166,13 +162,10 @@ const LetterModal = ({
             →
           </ZoomButton>
           {image && (
-            <ZoomButton
-              onClick={() => copyLetterLink(image)}
-              title="Copy link to this letter"
-              aria-label="Copy link to this letter"
-            >
-              <i className="fa fa-link" aria-hidden="true" />
-            </ZoomButton>
+            <ShareButton
+              slug={letterSlug(image)}
+              label="Copy link to this letter"
+            />
           )}
         </ZoomBar>
 
@@ -344,6 +337,7 @@ const TakoLetters = ({
   const [zoom, setZoom] = useState(100);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [animIndex, setAnimIndex] = useState<number | null>(null);
+  const hasMounted = useRef(false);
 
   useEffect(() => {
     if (initialOpenIndex == null) return;
@@ -351,6 +345,10 @@ const TakoLetters = ({
   }, [initialOpenIndex]);
 
   useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
     if (initialOpenIndex != null) return;
     window.scrollTo(0, 0);
   }, [initialOpenIndex]);

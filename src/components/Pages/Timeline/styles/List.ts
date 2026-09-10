@@ -684,6 +684,7 @@ export const PageTitle = styled.h2`
 `;
 
 export const StageContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -691,26 +692,6 @@ export const StageContainer = styled.div`
   flex: 1;
   min-height: 0;
   padding: 12px 0 32px;
-`;
-
-export const StageNav = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  font-size: 1.1em;
-  font-weight: 600;
-  padding: 0.5rem 0;
-  user-select: none;
-`;
-
-export const StageCounter = styled.span`
-  background: var(--dark-highlight);
-  color: var(--text-color);
-  border-radius: 12px;
-  padding: 6px 18px;
-  min-width: 90px;
-  text-align: center;
 `;
 
 export const StageScroller = styled.div`

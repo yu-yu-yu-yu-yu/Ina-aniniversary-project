@@ -1,9 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Moment, MomentCategory } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
-import { CarouselCenterMark, SiteBoard } from "../../../styles/globalStyles";
+import {
+  CarouselCenterMark,
+  CompactNavTitle,
+  SiteBoard,
+} from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { useMute } from "../../Common/MuteButton";
@@ -12,8 +17,6 @@ import GalleryFans from "./GalleryFans";
 import MomentCarousel from "./MomentCarousel";
 import {
   CategorySwitchRow,
-  CompactNavTitle,
-  DimSharedButtons,
   EdgeArrow,
   ExhibitCounter,
   GalleryWall,
@@ -73,6 +76,31 @@ const MomentsGallery = (): JSX.Element => {
   const setCategory = (value: MomentCategory) => (active: boolean) =>
     setCategoryFilter(active ? value : null);
 
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
+  const { goTo } = carousel;
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash || moments.length === 0) return;
+    const slug = hash.replace("#", "");
+    const target = moments.find(
+      (m) =>
+        m.slug === slug ||
+        slug.startsWith(`${m.slug}-t-`) ||
+        slug.startsWith(`${m.slug}-r-`),
+    );
+    if (!target) return;
+    if (categoryFilter && target.category !== categoryFilter) {
+      setCategoryFilter(null);
+      return;
+    }
+    const index = filtered.findIndex((m) => m.slug === slug);
+    if (index >= 0) {
+      hasHandledHash.current = true;
+      goTo(index);
+    }
+  }, [hash, moments, filtered, categoryFilter, goTo]);
+
   const goToYear = (year: number) => {
     const index = filtered.findIndex(
       (m) => new Date(m.date).getFullYear() === year,
@@ -82,7 +110,6 @@ const MomentsGallery = (): JSX.Element => {
 
   return (
     <GalleryWall>
-      <DimSharedButtons />
       <WoodFloor />
       <GalleryFans
         momentKey={pivotMoment?.slug ?? ""}

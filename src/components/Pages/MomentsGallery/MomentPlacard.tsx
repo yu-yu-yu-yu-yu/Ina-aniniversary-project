@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Moment, MomentCategory } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
+import ShareButton from "../../Common/ShareButton";
+import { entrySlug } from "../../../utils/shareLink";
 import { ExhibitView } from "./exhibitView";
 import {
-  CopyLinkButton,
   PlacardCard,
   PlacardContext,
   PlacardCredit,
@@ -21,11 +23,6 @@ const CATEGORY_LABEL: Record<MomentCategory, string> = {
   funny: "Funny Moments",
 };
 
-const copyMomentLink = (slug: string) => {
-  const url = `${window.location.origin}${window.location.pathname}#${slug}`;
-  navigator.clipboard?.writeText(url).catch(() => {});
-};
-
 const MomentPlacard = ({
   moment,
   view,
@@ -37,6 +34,20 @@ const MomentPlacard = ({
     min: 12,
     max: 22,
   });
+
+  const reactionSlug = (author: string, i: number) =>
+    `${moment.slug}-r-${entrySlug(author)}-${i}`;
+
+  const { hash } = useLocation();
+  const [pulseSlug, setPulseSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!hash) return;
+    const slug = hash.replace("#", "");
+    setPulseSlug(slug);
+    const timer = setTimeout(() => setPulseSlug(null), 1800);
+    return () => clearTimeout(timer);
+  }, [hash]);
 
   return (
     <PlacardCard>
@@ -59,13 +70,7 @@ const MomentPlacard = ({
           }}
         >
           <PlacardTitle>{moment.title}</PlacardTitle>
-          <CopyLinkButton
-            onClick={() => copyMomentLink(moment.slug)}
-            title="Copy link to this moment"
-            aria-label="Copy link to this moment"
-          >
-            <i className="fa fa-link" aria-hidden="true" />
-          </CopyLinkButton>
+          <ShareButton slug={moment.slug} label="Copy link to this moment" />
         </div>
         <PlacardMeta>
           {moment.date} · {CATEGORY_LABEL[moment.category]}
@@ -74,19 +79,34 @@ const MomentPlacard = ({
         <PlacardCredit>{view.credit}</PlacardCredit>
         {!!moment.reactions?.length && (
           <PlacardReactionList>
-            {moment.reactions.map((reaction, i) => (
-              <PlacardReactionRow key={`${reaction.author}-${i}`}>
-                <PlacardReactionAvatar
-                  src={getTakoAvatar(reaction.author, i)}
-                  alt={reaction.author}
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = getTakoAvatar(null, i);
-                  }}
-                />
-                <span>{reaction.text}</span>
-              </PlacardReactionRow>
-            ))}
+            {moment.reactions.map((reaction, i) => {
+              const slug = reactionSlug(reaction.author, i);
+              return (
+                <PlacardReactionRow
+                  key={slug}
+                  id={slug}
+                  style={
+                    pulseSlug === slug
+                      ? { outline: "3px solid var(--light-highlight)" }
+                      : undefined
+                  }
+                >
+                  <PlacardReactionAvatar
+                    src={getTakoAvatar(reaction.author, i)}
+                    alt={reaction.author}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = getTakoAvatar(null, i);
+                    }}
+                  />
+                  <span>{reaction.text}</span>
+                  <ShareButton
+                    slug={slug}
+                    label={`Copy link to ${reaction.author}'s reaction`}
+                  />
+                </PlacardReactionRow>
+              );
+            })}
           </PlacardReactionList>
         )}
       </div>

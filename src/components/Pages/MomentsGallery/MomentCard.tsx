@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Moment } from "../../../types";
 import {
   notifyPlayerReady,
   parseYouTube,
   toEmbed,
 } from "../../../utils/youtube";
+import { entrySlug } from "../../../utils/shareLink";
 import { useMute } from "../../Common/MuteButton";
 import { ArtworkButton } from "../Outfits/styles/BannerStyle";
 import { ExhibitView } from "./exhibitView";
@@ -77,6 +79,24 @@ const MomentCard = ({ moment }: { moment: Moment }): JSX.Element => {
     if (view.kind !== "original-video") return;
     return () => reportVideoPlaying(false);
   }, [view.kind, view.src, reportVideoPlaying]);
+
+  const { hash } = useLocation();
+  const hasHandledTributeHash = useRef(false);
+
+  useEffect(() => {
+    if (hasHandledTributeHash.current || !hash) return;
+    const slug = hash.replace("#", "");
+    const prefix = `${moment.slug}-t-`;
+    if (!slug.startsWith(prefix)) return;
+    const authorSlug = slug.slice(prefix.length);
+    const idx = tributeViews.findIndex(
+      (v) => v.tribute && entrySlug(v.tribute.author) === authorSlug,
+    );
+    if (idx >= 0) {
+      hasHandledTributeHash.current = true;
+      setViewIndex(idx + 1);
+    }
+  }, [hash, moment.slug, tributeViews]);
 
   return (
     <ExhibitLayout>
@@ -155,6 +175,7 @@ const MomentCard = ({ moment }: { moment: Moment }): JSX.Element => {
               tributes={tributeViews.map((v) => v.tribute!)}
               activeIndex={viewIndex}
               onSelect={setViewIndex}
+              momentSlug={moment.slug}
             />
           </>
         )}

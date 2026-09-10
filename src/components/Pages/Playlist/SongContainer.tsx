@@ -7,6 +7,7 @@ import {
 } from "../../../types/song";
 import { useMute } from "../../Common/MuteButton";
 import { notifyPlayerReady } from "../../../utils/youtube";
+import ShareButton from "../../Common/ShareButton";
 import {
   BubbleHeader,
   BubbleImage,
@@ -65,11 +66,6 @@ export const songSlug = (songName: string): string =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-
-const copySongLink = (songName: string): void => {
-  const url = `${window.location.origin}${window.location.pathname}#${songSlug(songName)}`;
-  navigator.clipboard?.writeText(url).catch(() => {});
-};
 
 const SongCardEntry = ({
   song,
@@ -211,25 +207,16 @@ const SongCardEntry = ({
               )}
             </VersionSubtitle>
           )}
-          <button
-            type="button"
-            onClick={() => copySongLink(song.songName)}
-            title="Copy link to this song"
-            aria-label="Copy link to this song"
+          <div
             style={{
               position: "absolute",
               top: "50%",
               right: "10px",
               transform: "translateY(-50%)",
-              background: "none",
-              border: "none",
-              color: "inherit",
-              cursor: "pointer",
-              opacity: 0.8,
             }}
           >
-            <i className="fa fa-link" aria-hidden="true" />
-          </button>
+            <ShareButton slug={slug} label="Copy link to this song" />
+          </div>
         </BubbleHeader>
 
         {song.songInfo && (

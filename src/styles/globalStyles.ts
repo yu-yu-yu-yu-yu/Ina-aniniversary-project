@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const TextBoxContainer = styled.div`
   flex: 0 0 auto;
@@ -218,6 +218,25 @@ export const NavTitle = styled.h2`
     right: 0;
     text-align: center;
     pointer-events: none;
+  }
+`;
+
+export const CompactNavTitle = styled(NavTitle)`
+  font-size: clamp(22px, 3.2vw, 44px);
+  line-height: 1.15;
+`;
+
+export const DimSharedButtons = createGlobalStyle`
+  button[title="Mute BGM"],
+  button[title="Unmute BGM"],
+  button[title^="Switch theme"] {
+    opacity: 0.45;
+    transition: opacity 0.2s;
+  }
+  button[title="Mute BGM"]:hover,
+  button[title="Unmute BGM"]:hover,
+  button[title^="Switch theme"]:hover {
+    opacity: 1;
   }
 `;
 

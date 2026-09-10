@@ -1,27 +1,7 @@
-import styled, { createGlobalStyle, css, keyframes } from "styled-components";
-import { NavTitle } from "../../../styles/globalStyles";
+import styled, { css, keyframes } from "styled-components";
 
 export const FLOOR_HEIGHT = "clamp(130px, 20vh, 240px)";
 export const SUBNAV_HEIGHT = "clamp(70px, 9vh, 96px)";
-
-export const DimSharedButtons = createGlobalStyle`
-  button[title="Mute BGM"],
-  button[title="Unmute BGM"],
-  button[title^="Switch theme"] {
-    opacity: 0.45;
-    transition: opacity 0.2s;
-  }
-  button[title="Mute BGM"]:hover,
-  button[title="Unmute BGM"]:hover,
-  button[title^="Switch theme"]:hover {
-    opacity: 1;
-  }
-`;
-
-export const CompactNavTitle = styled(NavTitle)`
-  font-size: clamp(22px, 3.2vw, 44px);
-  line-height: 1.15;
-`;
 
 export const GalleryWall = styled.div`
   position: relative;
@@ -619,26 +599,7 @@ export const PlacardReactionAvatar = styled.img`
   flex-shrink: 0;
 `;
 
-export const CopyLinkButton = styled.button`
-  flex-shrink: 0;
-  background: transparent;
-  border: 2px solid var(--light-highlight);
-  color: var(--light-highlight);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-  &:hover {
-    background: var(--light-highlight);
-    color: var(--dark-highlight);
-  }
-`;
+export { CopyLinkButton } from "../../Common/ShareButton";
 
 export const TributeRow = styled.div`
   display: flex;

@@ -215,7 +215,7 @@ const Logo = (): JSX.Element => {
             alt=""
           />
         </LogoImageRow>
-        <LogoHeader>INA&apos;S 6TH BIRTHDAY CELEBRATION</LogoHeader>
+        <LogoHeader>INA&apos;S 6TH ANNIVERSARY CELEBRATION</LogoHeader>
       </CenterContainer>
       <ScrollIndicator>
         <h3>

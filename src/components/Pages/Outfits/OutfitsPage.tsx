@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Banner } from "./Banner";
 import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
-import { PageContainer, PageTitle } from "../Timeline/styles/List";
+import { OutfitsPageContainer } from "./styles/BannerStyle";
+import { CompactNavTitle } from "../../../styles/globalStyles";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
 
@@ -11,7 +12,7 @@ const OutfitsPage = (): JSX.Element => {
   const [hintOpen, setHintOpen] = useState(false);
 
   return (
-    <PageContainer>
+    <OutfitsPageContainer>
       <audio
         ref={audioRef}
         src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
@@ -21,7 +22,7 @@ const OutfitsPage = (): JSX.Element => {
       />
       <Navbar style={{ alignItems: "center" }}>
         <NavHome />
-        <PageTitle>Ina Ina Outfit!</PageTitle>
+        <CompactNavTitle>Ina Ina Outfit!</CompactNavTitle>
         <div style={{ flex: "0 0 auto", position: "relative" }}>
           <HintButton
             aria-label="Show outfits usage hint"
@@ -51,7 +52,8 @@ const OutfitsPage = (): JSX.Element => {
                     <li>Click a side outfit to bring it forward</li>
                     <li>Click the centered outfit to open it full-size</li>
                     <li>
-                      Hover a card to see the title, artist and source stream
+                      The box below the carousel shows the artist and source
+                      stream for the centered outfit
                     </li>
                     <li>
                       Cards with multiple artworks show two small buttons at the
@@ -82,7 +84,7 @@ const OutfitsPage = (): JSX.Element => {
         </div>
       </Navbar>
       <Banner />
-    </PageContainer>
+    </OutfitsPageContainer>
   );
 };
 

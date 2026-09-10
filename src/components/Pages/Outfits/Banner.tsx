@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import outfits from "./outfits.json";
+import ShareButton from "../../Common/ShareButton";
 import {
   ArtworkButton,
   BannerImg,
@@ -7,10 +9,13 @@ import {
   BannerWrapper,
   Container,
   DialogueBox,
+  OutfitNamePlate,
   OutfitSkeleton,
-  PageArrowButton,
+  PivotGlow,
   VodLink,
 } from "./styles/BannerStyle";
+import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
+import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { Outfit } from "../../../types";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 
@@ -30,7 +35,6 @@ const groupedEntries = Object.entries(grouped);
 const TOTAL = groupedEntries.length;
 
 export const Banner = () => {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [dupIdx, setDupIdx] = useState<Record<string, number>>({});
   const [isPlaying, setIsPlaying] = useState(true);
   const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
@@ -67,69 +71,55 @@ export const Banner = () => {
     return () => clearInterval(interval);
   }, [isPlaying]);
 
+  const [activeTitle, activeArr] = groupedEntries[pivotIndex];
+  const activeOutfit =
+    activeArr.length > 1 ? activeArr[dupIdx[activeTitle] || 0] : activeArr[0];
+
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash) return;
+    const slug = hash.replace("#", "");
+    for (let i = 0; i < groupedEntries.length; i++) {
+      const [title, arr] = groupedEntries[i];
+      const dupIndex = arr.findIndex((o) => o.filename === slug);
+      if (dupIndex >= 0) {
+        hasHandledHash.current = true;
+        setDupIdx((prev) => ({ ...prev, [title]: dupIndex }));
+        goTo(i);
+        break;
+      }
+    }
+  }, [hash, goTo]);
+
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          padding: "0.75rem 0",
-        }}
+      <ExhibitCounter>
+        {pivotIndex + 1} / {TOTAL}
+      </ExhibitCounter>
+
+      <EdgeArrow
+        $side="left"
+        onClick={() => goTo(pivotIndex - 1)}
+        disabled={pivotIndex === 0}
+        aria-label="Previous outfit"
       >
-        <h2
-          style={{
-            fontSize: "clamp(1.2rem, 4vh, 2.5rem)",
-            textAlign: "center",
-            margin: 0,
-          }}
-        >
-          Ina&apos;s Outfits Across Time
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 16,
-            fontSize: "1.25em",
-            fontWeight: 600,
-            userSelect: "none",
-          }}
-        >
-          <PageArrowButton
-            onClick={() => goTo(pivotIndex - 1)}
-            disabled={pivotIndex === 0}
-            aria-label="Previous outfit"
-          >
-            <i className="fa fa-chevron-left" aria-hidden="true" />
-          </PageArrowButton>
-          <span
-            style={{
-              background: "var(--dark-highlight)",
-              color: "white",
-              borderRadius: 12,
-              padding: "6px 18px",
-              boxShadow: "0 2px 8px #0002",
-              minWidth: 160,
-              textAlign: "center",
-            }}
-          >
-            Ina No. {pivotIndex + 1} / {TOTAL}
-          </span>
-          <PageArrowButton
-            onClick={() => goTo(pivotIndex + 1)}
-            disabled={pivotIndex >= TOTAL - 1}
-            aria-label="Next outfit"
-          >
-            <i className="fa fa-chevron-right" aria-hidden="true" />
-          </PageArrowButton>
-        </div>
-      </div>
+        <i className="fa fa-chevron-left" aria-hidden="true" />
+      </EdgeArrow>
+      <EdgeArrow
+        $side="right"
+        onClick={() => goTo(pivotIndex + 1)}
+        disabled={pivotIndex >= TOTAL - 1}
+        aria-label="Next outfit"
+      >
+        <i className="fa fa-chevron-right" aria-hidden="true" />
+      </EdgeArrow>
+
+      <OutfitNamePlate>{activeOutfit.title}</OutfitNamePlate>
 
       <BannerWrapper>
+        <PivotGlow />
         <Container ref={containerRef} {...containerHandlers}>
           {groupedEntries.map(([title, arr], i) => {
             const outfit = arr.length > 1 ? arr[dupIdx[title] || 0] : arr[0];
@@ -142,15 +132,15 @@ export const Banner = () => {
                 ref={(el: HTMLDivElement | null) => {
                   itemRefs.current[i] = el;
                 }}
-                imgSrc={`${process.env.PUBLIC_URL}/outfits/${outfit.filename}`}
-                onMouseEnter={() => setActiveIdx(i)}
-                onMouseLeave={() => setActiveIdx(null)}
               >
                 {isLoaded(i) ? (
                   <>
                     <span
                       style={{
-                        display: "block",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        height: "100%",
                         cursor: "pointer",
                         position: "relative",
                         zIndex: 1,
@@ -206,47 +196,6 @@ export const Banner = () => {
                         </ArtworkButton>
                       </div>
                     )}
-                    <DialogueBox $active={activeIdx === i}>
-                      <div style={{ textAlign: "center" }}>
-                        <b style={{ fontSize: "1.25em" }}>{outfit.title}</b>
-                      </div>
-                      <div style={{ textAlign: "center" }}>
-                        {"By:"} {outfit.artist} (
-                        <a
-                          href={`https://x.com/${outfit.username}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            color: "var(--light-highlight)",
-                            textDecoration: "underline",
-                          }}
-                        >
-                          @{outfit.username}
-                        </a>
-                        )
-                      </div>
-                      <br />
-                      {outfit.vodtitle && outfit.video ? (
-                        <div style={{ textAlign: "center" }}>
-                          <VodLink
-                            href={outfit.video}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {outfit.vodtitle}
-                          </VodLink>
-                        </div>
-                      ) : outfit.vodtitle ? (
-                        <div>
-                          <i>{outfit.vodtitle}</i>
-                        </div>
-                      ) : null}
-                      {outfit.date && (
-                        <div style={{ textAlign: "center" }}>
-                          <small>{outfit.date}</small>
-                        </div>
-                      )}
-                    </DialogueBox>
                   </>
                 ) : (
                   <OutfitSkeleton
@@ -259,6 +208,73 @@ export const Banner = () => {
           })}
         </Container>
       </BannerWrapper>
+
+      <DialogueBox>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            marginBottom: 8,
+          }}
+        >
+          <img
+            src={getTakoAvatar(activeOutfit.artist, pivotIndex)}
+            alt={activeOutfit.artist}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = getTakoAvatar(null, pivotIndex);
+            }}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: "50%",
+              objectFit: "cover",
+              flexShrink: 0,
+            }}
+          />
+          <span>
+            {"By:"} {activeOutfit.artist} (
+            <a
+              href={`https://x.com/${activeOutfit.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "var(--light-highlight)",
+                textDecoration: "underline",
+              }}
+            >
+              @{activeOutfit.username}
+            </a>
+            )
+          </span>
+          <ShareButton
+            slug={activeOutfit.filename}
+            label="Copy link to this artwork"
+          />
+        </div>
+        {activeOutfit.vodtitle && activeOutfit.video ? (
+          <div style={{ textAlign: "center" }}>
+            <VodLink
+              href={activeOutfit.video}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {activeOutfit.vodtitle}
+            </VodLink>
+          </div>
+        ) : activeOutfit.vodtitle ? (
+          <div>
+            <i>{activeOutfit.vodtitle}</i>
+          </div>
+        ) : null}
+        {activeOutfit.date && (
+          <div style={{ textAlign: "center" }}>
+            <small>{activeOutfit.date}</small>
+          </div>
+        )}
+      </DialogueBox>
 
       {modalImgSrc && (
         <div

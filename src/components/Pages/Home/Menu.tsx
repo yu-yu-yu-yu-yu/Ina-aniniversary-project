@@ -19,11 +19,11 @@ const buttons = [
   { to: "/inaoutfit", label: "Ina Ina Outfit!" },
   { to: "/momentsgallery", label: "Moments Gallery" },
   { to: "/wahrld", label: "Ina around the WAHrld" },
-  { to: "/letters", label: "Letters for Ina" },
   { to: "/playlist", label: "The Ultimate Ina Playlist" },
   { to: "/timeline", label: "Ina's Timeline" },
   { to: "/takodex", label: "Takodex" },
   { to: "/messages", label: "Artworks & Messages" },
+  { to: "/letters", label: "Letters for Ina" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
   { to: "/collages", label: "Takollages" },
   { to: "/moments", label: `Ina Moments (2024)` },
@@ -70,7 +70,7 @@ const Menu = (): JSX.Element => {
               <b>Ina&apos;s milestones</b>!
             </p>
             <p>
-              This time we celebrate your <b>birthday</b>!
+              This time we celebrate your <b>anniversary</b>!
             </p>
             <p>
               We&apos;ve collected <b>artworks and fan letters</b> from
@@ -90,7 +90,7 @@ const Menu = (): JSX.Element => {
             <p>
               <b>From the bottom of our hearts, thank you so much!</b>
               <br />
-              <b>With all our love, Happy Birthday, Ina! 💜🐙</b>
+              <b>With all our love, Happy Anniversary, Ina! 💜🐙</b>
             </p>
             <sub>And Happy Anniversary, Takos!</sub>
           </div>

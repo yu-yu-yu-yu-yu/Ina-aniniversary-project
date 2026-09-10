@@ -29,6 +29,27 @@ const QuoteInaImg = styled.img<{ grayscale?: boolean }>`
   }
 `;
 
+const QuoteTextBox = styled.div`
+  width: 300px;
+  aspect-ratio: 448 / 147;
+  border-bottom: solid 4px;
+  padding-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  filter: inherit;
+  @media only screen and (max-width: 701px) {
+    width: 250px;
+    padding-bottom: 10px;
+    padding-top: 20px;
+  }
+  @media only screen and (max-width: 300px) {
+    width: 200px;
+  }
+`;
+
 const QuoteContent = styled.div`
   text-align: left;
   display: inline-block;
@@ -137,6 +158,7 @@ export {
   QuoteContainer,
   QuoteInaImg,
   QuoteContent,
+  QuoteTextBox,
   GrayscaleButton,
   InaImageWrapper,
   ElixirText,

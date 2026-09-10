@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
@@ -12,7 +13,7 @@ import {
   NavTitle,
 } from "./styles";
 import { Navbar, NavHome } from "../../Common/Navbar";
-import TakoVideos from "./TakoVideos";
+import TakoVideos, { videoSlug } from "./TakoVideos";
 import { useFetch } from "../../../hooks/useFetch";
 
 const LIMIT = 10;
@@ -27,8 +28,11 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
   const [data, setData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [highlightSlug, setHighlightSlug] = useState<string | null>(null);
   const sourceDataRef = useRef(sourceData);
   sourceDataRef.current = sourceData;
+  const { hash } = useLocation();
+  const hashHandledRef = useRef(false);
 
   useEffect(() => {
     if (rawData) {
@@ -60,6 +64,21 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
       setOffset(LIMIT);
     }
   }, [rawData, mode]);
+
+  useEffect(() => {
+    if (hashHandledRef.current || !hash || sourceData.length === 0) return;
+    const slug = hash.replace("#", "");
+    const idx = sourceData.findIndex(
+      (row: Submission) => videoSlug(row) === slug,
+    );
+    if (idx < 0) return;
+    hashHandledRef.current = true;
+    const rows = sourceData.slice(0, idx + 1);
+    setData(rows);
+    setOffset(idx + 1);
+    setHasMore(sourceData.length > idx + 1);
+    setHighlightSlug(slug);
+  }, [hash, sourceData]);
 
   const fetchMore = async () => {
     if (data.length) {
@@ -156,6 +175,7 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
               submissions={data}
               isToggledOnlyImg={false}
               isToggledTextOnly={false}
+              highlightSlug={highlightSlug}
             />
           </InfiniteScroll>
           <ScrollArrow />

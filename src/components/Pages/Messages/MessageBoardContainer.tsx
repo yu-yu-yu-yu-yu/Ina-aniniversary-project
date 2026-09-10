@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import TakoMessages from "./TakoMessages";
+import TakoMessages, { messageSlug } from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
@@ -37,7 +37,7 @@ const MessageBoard = (): JSX.Element => {
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
-  const [highlightIndex, setHighlightIndex] = useState<number | null>(null);
+  const [highlightSlug, setHighlightSlug] = useState<string | null>(null);
   const hashHandledRef = useRef(false);
   const { hash } = useLocation();
   const searchRef = React.useRef("");
@@ -57,10 +57,9 @@ const MessageBoard = (): JSX.Element => {
 
   useEffect(() => {
     if (hashHandledRef.current || !hash || sourceData.length === 0) return;
-    const match = hash.match(/^#message-(\d+)$/);
-    if (!match) return;
-    const idx = Number(match[1]);
-    if (idx < 0 || idx >= sourceData.length) return;
+    const slug = hash.replace("#", "");
+    const idx = sourceData.findIndex((sub) => messageSlug(sub) === slug);
+    if (idx < 0) return;
     hashHandledRef.current = true;
     searchRef.current = "";
     setIsToggledOnlyImg(false);
@@ -70,7 +69,7 @@ const MessageBoard = (): JSX.Element => {
       setData(rows);
       setOffset(idx + 1);
       setHasMore(sourceData.length > idx + 1);
-      setHighlightIndex(idx);
+      setHighlightSlug(slug);
     });
   }, [hash, sourceData]);
 
@@ -369,10 +368,9 @@ const MessageBoard = (): JSX.Element => {
           >
             <TakoMessages
               submissions={data}
-              sourceData={sourceData}
               isToggledOnlyImg={isToggledOnlyImg}
               isToggledTextOnly={isToggledTextOnly}
-              highlightIndex={highlightIndex}
+              highlightSlug={highlightSlug}
             />
           </InfiniteScroll>
           <ScrollArrow />

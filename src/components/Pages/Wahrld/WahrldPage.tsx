@@ -1,17 +1,21 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { WahrldEntry, WahrldKind } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
+import { entrySlug } from "../../../utils/shareLink";
 import { Navbar, NavHome } from "../../Common/Navbar";
-import { CarouselCenterMark, SiteBoard } from "../../../styles/globalStyles";
+import {
+  CarouselCenterMark,
+  CompactNavTitle,
+  SiteBoard,
+} from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
-import { PageArrowButton } from "../Outfits/styles/BannerStyle";
+import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
 import WahrldCard, { getEntryAvatar } from "./WahrldCard";
 import {
-  CarouselCounter,
-  CarouselNav,
   EntrySlot,
   GalleryScroller,
   GalleryWrapper,
@@ -19,7 +23,6 @@ import {
   NeighborAvatar,
   NeighborCard,
   NoEntriesYet,
-  WahrldTitle,
 } from "./styles";
 
 const KIND_LABEL: Record<WahrldKind, string> = {
@@ -54,9 +57,32 @@ const WahrldPage = (): JSX.Element => {
     containerHandlers,
   } = useCenterCarousel(total);
 
+  const wahrldSlug = (entry: WahrldEntry) =>
+    entrySlug(entry.user, entry.country);
+
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash || entries.length === 0) return;
+    const slug = hash.replace("#", "");
+    const target = entries.find((e) => wahrldSlug(e) === slug);
+    if (!target) return;
+    if (kindFilter && target.kind !== kindFilter) {
+      setKindFilter(null);
+      return;
+    }
+    const index = filtered.findIndex((e) => wahrldSlug(e) === slug);
+    if (index >= 0) {
+      hasHandledHash.current = true;
+      goTo(index);
+    }
+  }, [hash, entries, filtered, kindFilter, goTo]);
+
   return (
     <div
       style={{
+        position: "relative",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -66,7 +92,7 @@ const WahrldPage = (): JSX.Element => {
     >
       <Navbar>
         <NavHome />
-        <WahrldTitle>Ina around the WAHrld</WahrldTitle>
+        <CompactNavTitle>Ina around the WAHrld</CompactNavTitle>
       </Navbar>
       {loading ? (
         <TakoLoading />
@@ -96,33 +122,35 @@ const WahrldPage = (): JSX.Element => {
             <NoEntriesYet>No submissions yet, check back soon!</NoEntriesYet>
           ) : (
             <GalleryWrapper>
-              <CarouselNav>
-                <PageArrowButton
-                  onClick={() => goTo(pivotIndex - 1)}
-                  disabled={pivotIndex === 0}
-                  aria-label="Previous submission"
-                >
-                  <i className="fa fa-chevron-left" aria-hidden="true" />
-                </PageArrowButton>
-                <CarouselCounter>
-                  {pivotIndex + 1} / {total}
-                </CarouselCounter>
-                <PageArrowButton
-                  onClick={() => goTo(pivotIndex + 1)}
-                  disabled={pivotIndex >= total - 1}
-                  aria-label="Next submission"
-                >
-                  <i className="fa fa-chevron-right" aria-hidden="true" />
-                </PageArrowButton>
-              </CarouselNav>
+              <ExhibitCounter>
+                {pivotIndex + 1} / {total}
+              </ExhibitCounter>
+              <EdgeArrow
+                $side="left"
+                onClick={() => goTo(pivotIndex - 1)}
+                disabled={pivotIndex === 0}
+                aria-label="Previous submission"
+              >
+                <i className="fa fa-chevron-left" aria-hidden="true" />
+              </EdgeArrow>
+              <EdgeArrow
+                $side="right"
+                onClick={() => goTo(pivotIndex + 1)}
+                disabled={pivotIndex >= total - 1}
+                aria-label="Next submission"
+              >
+                <i className="fa fa-chevron-right" aria-hidden="true" />
+              </EdgeArrow>
               {dragging && <CarouselCenterMark />}
               <GalleryScroller ref={containerRef} {...containerHandlers}>
                 {filtered.map((entry, i) => {
                   const isPivot = i === pivotIndex;
                   const showBig = isPivot && !dragging;
+                  const slug = wahrldSlug(entry);
                   return (
                     <EntrySlot
                       key={`${entry.user}-${i}`}
+                      id={slug}
                       $isPivot={isPivot}
                       $dragging={dragging}
                       ref={(el: HTMLDivElement | null) => {
@@ -131,7 +159,7 @@ const WahrldPage = (): JSX.Element => {
                       onClick={isPivot ? undefined : () => goTo(i)}
                     >
                       {showBig ? (
-                        <WahrldCard entry={entry} index={i} />
+                        <WahrldCard entry={entry} index={i} slug={slug} />
                       ) : (
                         <NeighborCard>
                           <NeighborAvatar

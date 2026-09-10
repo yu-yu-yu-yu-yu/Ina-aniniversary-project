@@ -1,4 +1,5 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Masonry from "react-masonry-component";
 import {
   SubmissionContainer,
@@ -11,6 +12,8 @@ import {
 } from "./styles";
 import { SiteBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
 import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
+import ShareButton from "../../Common/ShareButton";
+import { entrySlug } from "../../../utils/shareLink";
 
 const iconImages = [
   "8-bit Tako.png",
@@ -44,6 +47,9 @@ interface TakodexEntry {
   image: string;
 }
 
+const takodexSlug = (entry: TakodexEntry): string =>
+  entrySlug(entry.name, entry.author);
+
 export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
@@ -54,6 +60,9 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
   );
   const [search, setSearch] = useState("");
   const [hintOpen, setHintOpen] = useState(false);
+  const [pulseSlug, setPulseSlug] = useState<string | null>(null);
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
 
   const handleImgError = (i: number) => {
     setFailedImages((prev) => ({ ...prev, [i]: true }));
@@ -66,6 +75,23 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
         .toLowerCase()
         .includes(search.toLowerCase()),
   );
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash || entries.length === 0) return;
+    const slug = hash.replace("#", "");
+    const target = entries.find((entry) => takodexSlug(entry) === slug);
+    if (!target) return;
+    if (search !== "" && !filteredEntries.includes(target)) {
+      setSearch("");
+      return;
+    }
+    hasHandledHash.current = true;
+    const el = document.getElementById(`takodex-${slug}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setPulseSlug(slug);
+    const timer = setTimeout(() => setPulseSlug(null), 1800);
+    return () => clearTimeout(timer);
+  }, [hash, entries, search, filteredEntries]);
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>
@@ -116,50 +142,69 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
           }}
           style={{ margin: "0 auto" }}
         >
-          {filteredEntries.map(
-            ({ name, author, category, attributes, description, image }, i) => {
-              const displayName = name && name.trim() !== "" ? name : author;
-              return (
-                <SubmissionContainer key={i}>
-                  <TakodexCard>
-                    <TakodexCardHeader>
-                      {displayName ? displayName : author}
-                    </TakodexCardHeader>
-                    <div style={{ padding: "0.75rem" }}>
-                      <TakodexText>
-                        <b>Category:</b> {category ? category : "Uncategorized"}
-                      </TakodexText>
-                      <TakodexText>
-                        <b>Attributes:</b> {attributes ? attributes : "Unknown"}
-                      </TakodexText>
-                      <hr />
-                      {image && !failedImages[i] ? (
-                        <TakodexImage
-                          src={
-                            process.env.PUBLIC_URL + "/takoswentries/" + image
-                          }
-                          alt={displayName}
-                          onError={() => handleImgError(i)}
-                        />
-                      ) : (
-                        <TakodexImage
-                          src={
-                            process.env.PUBLIC_URL + "/icon/" + getRandomIcon(i)
-                          }
-                          alt="random tako icon"
-                        />
-                      )}
-                      <hr />
-                      <TakodexText>{description}</TakodexText>
-                      <TakodexText>
-                        <b>by: {author}</b>
-                      </TakodexText>
-                    </div>
-                  </TakodexCard>
-                </SubmissionContainer>
-              );
-            },
-          )}
+          {filteredEntries.map((entry, i) => {
+            const { name, author, category, attributes, description, image } =
+              entry;
+            const displayName = name && name.trim() !== "" ? name : author;
+            const slug = takodexSlug(entry);
+            return (
+              <SubmissionContainer
+                key={i}
+                id={`takodex-${slug}`}
+                style={
+                  pulseSlug === slug
+                    ? {
+                        outline: "3px solid var(--light-highlight)",
+                        borderRadius: 15,
+                      }
+                    : undefined
+                }
+              >
+                <TakodexCard>
+                  <TakodexCardHeader
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 8,
+                      textAlign: "left",
+                    }}
+                  >
+                    <span>{displayName ? displayName : author}</span>
+                    <ShareButton slug={slug} label="Copy link to this Tako" />
+                  </TakodexCardHeader>
+                  <div style={{ padding: "0.75rem" }}>
+                    <TakodexText>
+                      <b>Category:</b> {category ? category : "Uncategorized"}
+                    </TakodexText>
+                    <TakodexText>
+                      <b>Attributes:</b> {attributes ? attributes : "Unknown"}
+                    </TakodexText>
+                    <hr />
+                    {image && !failedImages[i] ? (
+                      <TakodexImage
+                        src={process.env.PUBLIC_URL + "/takoswentries/" + image}
+                        alt={displayName}
+                        onError={() => handleImgError(i)}
+                      />
+                    ) : (
+                      <TakodexImage
+                        src={
+                          process.env.PUBLIC_URL + "/icon/" + getRandomIcon(i)
+                        }
+                        alt="random tako icon"
+                      />
+                    )}
+                    <hr />
+                    <TakodexText>{description}</TakodexText>
+                    <TakodexText>
+                      <b>by: {author}</b>
+                    </TakodexText>
+                  </div>
+                </TakodexCard>
+              </SubmissionContainer>
+            );
+          })}
         </Masonry>
       </SiteBoard>
     </div>

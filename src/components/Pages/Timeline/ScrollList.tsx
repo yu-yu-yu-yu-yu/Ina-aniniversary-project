@@ -5,8 +5,16 @@ import {
   Month,
   Year,
 } from "../../../types/timeline";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useLocation } from "react-router-dom";
 import { Switch } from "../../Common/Switch";
+import { entrySlug } from "../../../utils/shareLink";
 import { upperCase } from "lodash";
 import {
   Backdrop,
@@ -536,6 +544,44 @@ export const ScrollList = ({
       setYearState(first.year as Year);
     }
   };
+
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash) return;
+    const slug = hash.replace("#", "");
+    const target = milestones.find((m) =>
+      slug.startsWith(`${entrySlug(m.label)}-`),
+    );
+    if (!target) return;
+    const hasActiveFilter =
+      searchString !== "" ||
+      selectedTitleTag !== "" ||
+      Object.values(selectedTags).some(Boolean);
+    if (hasActiveFilter) {
+      setSearchString("");
+      setSelectedTags({} as Tags);
+      setSelectedTitleTag("");
+      return;
+    }
+    const [, mMonth, mYear] = target.date.split(/\W/);
+    const targetMonth = mappedMonths[mMonth] as Month;
+    const targetYear = mYear as Year;
+    if (month !== targetMonth || year !== targetYear) {
+      scrollToMonth(targetMonth, targetYear);
+      return;
+    }
+    hasHandledHash.current = true;
+  }, [
+    hash,
+    milestones,
+    searchString,
+    selectedTags,
+    selectedTitleTag,
+    month,
+    year,
+  ]);
 
   const searchProps = {
     searchString,

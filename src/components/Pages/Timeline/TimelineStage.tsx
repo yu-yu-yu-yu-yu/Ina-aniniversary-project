@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { Milestone, Month, Tags, Year } from "../../../types";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
+import ShareButton from "../../Common/ShareButton";
+import { entrySlug } from "../../../utils/shareLink";
 import {
   getMediaLink,
   getMessagesForMilestone,
@@ -11,22 +14,20 @@ import { MonthNavItem } from "./ScrollList";
 import { notifyPlayerReady } from "../../../utils/youtube";
 import { useMute } from "../../Common/MuteButton";
 import { CarouselCenterMark } from "../../../styles/globalStyles";
+import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
 import {
   BubbleColumn,
   NeighborThumb,
-  PageArrowButton,
   RailContainer,
   RailNode,
   SpeechBubble,
   StageCenter,
   StageContainer,
-  StageCounter,
   StageDate,
   StageDescription,
   StageHeading,
   StageImageFrame,
   StageMain,
-  StageNav,
   StageScroller,
   StageSkeleton,
   StageSlot,
@@ -68,10 +69,12 @@ const TakoBubble = ({
   msg,
   index,
   side,
+  slug,
 }: {
   msg: TakoMsg;
   index: number;
   side: "left" | "right";
+  slug: string;
 }): JSX.Element => (
   <SpeechBubble className={side}>
     <img
@@ -82,8 +85,11 @@ const TakoBubble = ({
         e.currentTarget.src = getTakoAvatar(null, index);
       }}
     />
-    <div>
-      <span>{msg.text}</span>
+    <div style={{ flex: 1 }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+        <span style={{ flex: 1 }}>{msg.text}</span>
+        <ShareButton slug={slug} label="Copy link to this message" />
+      </div>
       {msg.author && (
         <div
           style={{
@@ -132,6 +138,7 @@ const MilestoneStageContent = ({
               msg={msg}
               index={i * 2}
               side="left"
+              slug={`${entrySlug(milestone.label)}-${msg.type}`}
             />
           ))}
         </BubbleColumn>
@@ -170,6 +177,7 @@ const MilestoneStageContent = ({
               msg={msg}
               index={i * 2 + 1}
               side="right"
+              slug={`${entrySlug(milestone.label)}-${msg.type}`}
             />
           ))}
         </BubbleColumn>
@@ -303,6 +311,21 @@ export const TimelineStage = ({
     containerHandlers,
   } = useCenterCarousel(total);
 
+  const { hash } = useLocation();
+  const hasHandledHash = useRef(false);
+
+  useEffect(() => {
+    if (hasHandledHash.current || !hash) return;
+    const slug = hash.replace("#", "");
+    const index = milestones.findIndex((m) =>
+      slug.startsWith(`${entrySlug(m.label)}-`),
+    );
+    if (index >= 0) {
+      hasHandledHash.current = true;
+      goTo(index);
+    }
+  }, [hash, milestones, goTo]);
+
   if (total === 0) {
     return (
       <StageContainer>
@@ -313,25 +336,25 @@ export const TimelineStage = ({
 
   return (
     <StageContainer>
-      <StageNav>
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex - 1)}
-          disabled={pivotIndex === 0}
-          aria-label="Previous milestone"
-        >
-          <i className="fa fa-chevron-left" aria-hidden="true" />
-        </PageArrowButton>
-        <StageCounter>
-          {pivotIndex + 1} / {total}
-        </StageCounter>
-        <PageArrowButton
-          onClick={() => goTo(pivotIndex + 1)}
-          disabled={pivotIndex >= total - 1}
-          aria-label="Next milestone"
-        >
-          <i className="fa fa-chevron-right" aria-hidden="true" />
-        </PageArrowButton>
-      </StageNav>
+      <ExhibitCounter>
+        {pivotIndex + 1} / {total}
+      </ExhibitCounter>
+      <EdgeArrow
+        $side="left"
+        onClick={() => goTo(pivotIndex - 1)}
+        disabled={pivotIndex === 0}
+        aria-label="Previous milestone"
+      >
+        <i className="fa fa-chevron-left" aria-hidden="true" />
+      </EdgeArrow>
+      <EdgeArrow
+        $side="right"
+        onClick={() => goTo(pivotIndex + 1)}
+        disabled={pivotIndex >= total - 1}
+        aria-label="Next milestone"
+      >
+        <i className="fa fa-chevron-right" aria-hidden="true" />
+      </EdgeArrow>
       {dragging && <CarouselCenterMark />}
       <StageScroller ref={containerRef} {...containerHandlers}>
         {prevMonthEntry && onNavigate && (

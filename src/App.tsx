@@ -9,6 +9,7 @@ import { milestones } from "./components/Pages/Timeline/Milestones";
 import { ThemeSwitcher } from "./components/Common/ThemeSwitcher";
 import { MuteProvider } from "./components/Common/MuteButton";
 import { TakoLoading } from "./components/Common/TakoLoading";
+import { DimSharedButtons } from "./styles/globalStyles";
 
 const HomeContent = lazy(() => import("./components/Pages/Home/HomeContent"));
 const MessageBoard = lazy(
@@ -45,10 +46,15 @@ const MomentsGallery = lazy(
 );
 const WahrldPage = lazy(() => import("./components/Pages/Wahrld/WahrldPage"));
 
+const scrollPositions = new Map<string, number>();
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, scrollPositions.get(pathname) ?? 0);
+    return () => {
+      scrollPositions.set(pathname, window.scrollY);
+    };
   }, [pathname]);
   return null;
 };
@@ -102,6 +108,7 @@ const App = (): JSX.Element => (
           </Switch>
         </Suspense>
       </div>
+      <DimSharedButtons />
       <ThemeSwitcher />
     </div>
   </Router>
