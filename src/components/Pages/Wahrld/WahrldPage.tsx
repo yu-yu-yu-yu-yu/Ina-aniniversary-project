@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { WahrldEntry, WahrldKind } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
+import { useAudio } from "../../../hooks/useAudio";
 import { entrySlug } from "../../../utils/shareLink";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import {
@@ -12,6 +13,7 @@ import {
 } from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
+import { useMute } from "../../Common/MuteButton";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
 import WahrldCard, { getEntryAvatar } from "./WahrldCard";
@@ -33,6 +35,8 @@ const KIND_LABEL: Record<WahrldKind, string> = {
 const KINDS = Object.keys(KIND_LABEL) as WahrldKind[];
 
 const WahrldPage = (): JSX.Element => {
+  const { muted } = useMute();
+  const audioRef = useAudio({ muted, autoPlay: true });
   const { data, loading, error } = useFetch<WahrldEntry[]>(
     `${process.env.PUBLIC_URL}/data/wahrldData.json`,
   );
@@ -90,6 +94,13 @@ const WahrldPage = (): JSX.Element => {
         background: "var(--background)",
       }}
     >
+      <audio
+        ref={audioRef}
+        src={process.env.PUBLIC_URL + "/リコーダービート2.mp3"}
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
       <Navbar>
         <NavHome />
         <CompactNavTitle>Ina around the WAHrld</CompactNavTitle>
@@ -142,7 +153,11 @@ const WahrldPage = (): JSX.Element => {
                 <i className="fa fa-chevron-right" aria-hidden="true" />
               </EdgeArrow>
               {dragging && <CarouselCenterMark />}
-              <GalleryScroller ref={containerRef} {...containerHandlers}>
+              <GalleryScroller
+                ref={containerRef}
+                $dragging={dragging}
+                {...containerHandlers}
+              >
                 {filtered.map((entry, i) => {
                   const isPivot = i === pivotIndex;
                   const showBig = isPivot && !dragging;

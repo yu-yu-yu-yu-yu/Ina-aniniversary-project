@@ -62,7 +62,7 @@ export const EdgeArrow = styled.button<{ $side: "left" | "right" }>`
   }
 `;
 
-export const GalleryScroller = styled.div`
+export const GalleryScroller = styled.div<{ $dragging: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -80,8 +80,10 @@ export const GalleryScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: min(1700px, calc(100% - 280px));
+  --pivot-w: min(1700px, max(320px, calc(100% - 280px)));
   --neighbor-w: clamp(160px, 10vw, 240px);
+  --edge-w: ${({ $dragging }) =>
+    $dragging ? "var(--neighbor-w)" : "var(--pivot-w)"};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -89,7 +91,7 @@ export const GalleryScroller = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50% - var(--pivot-w) / 2));
+    flex: 0 0 max(0px, calc(50% - var(--edge-w) / 2));
   }
 `;
 
@@ -234,9 +236,9 @@ export const ExhibitCounter = styled.span`
   bottom: 24px;
   right: 24px;
   z-index: 1001;
-  background: rgba(255, 255, 255, 0.8);
-  color: var(--ink-black);
-  border: var(--ink-black) 2px solid;
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid var(--light-highlight);
   border-radius: 24px;
   height: 48px;
   min-width: 48px;
@@ -246,7 +248,7 @@ export const ExhibitCounter = styled.span`
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  opacity: 0.45;
+  opacity: 0.9;
   transition: opacity 0.2s;
   &:hover {
     opacity: 1;
@@ -285,9 +287,11 @@ export const ExhibitStageColumn = styled.div`
 
 export const Frame = styled.div`
   position: relative;
-  flex-shrink: 0;
-  width: min(100%, calc(min(720px, calc(100vh - 320px)) * 16 / 9));
-  height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 720px;
+  width: auto;
+  max-width: 100%;
   aspect-ratio: 16 / 9;
   box-sizing: border-box;
   border: 10px solid var(--light-highlight);

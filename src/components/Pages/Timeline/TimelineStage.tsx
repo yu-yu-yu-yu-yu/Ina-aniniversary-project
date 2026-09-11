@@ -356,7 +356,11 @@ export const TimelineStage = ({
         <i className="fa fa-chevron-right" aria-hidden="true" />
       </EdgeArrow>
       {dragging && <CarouselCenterMark />}
-      <StageScroller ref={containerRef} {...containerHandlers}>
+      <StageScroller
+        ref={containerRef}
+        $dragging={dragging}
+        {...containerHandlers}
+      >
         {prevMonthEntry && onNavigate && (
           <MonthNavItem
             entry={prevMonthEntry}

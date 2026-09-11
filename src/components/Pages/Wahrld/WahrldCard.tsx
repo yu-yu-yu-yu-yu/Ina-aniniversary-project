@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { WahrldEntry } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { getFlagSrc, VOID_BADGE } from "../../../utils/flags";
@@ -33,6 +33,11 @@ const WahrldCard = ({
   slug: string;
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
+
+  useEffect(() => {
+    if (entry.kind !== "video") return;
+    return () => reportVideoPlaying(false);
+  }, [entry.kind, entry.file, reportVideoPlaying]);
 
   return (
     <EntryCardWrapper>

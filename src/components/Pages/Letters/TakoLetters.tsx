@@ -57,7 +57,7 @@ const LS_KEY = (index: number) => `letter_read_${index}`;
 export const letterSlug = (image: string): string =>
   image.replace(/\.[^.]+$/, "");
 
-const CenterAnimOverlay = ({ submission }: { submission: LetterEntry }) => {
+const CenterAnimOverlay = () => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -429,7 +429,7 @@ const TakoLetters = ({
       )}
 
       {animIndex !== null && (
-        <CenterAnimOverlay submission={submissions[animIndex]} />
+        <CenterAnimOverlay />
       )}
     </>
   );

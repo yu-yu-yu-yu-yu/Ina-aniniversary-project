@@ -81,13 +81,17 @@ export const useCenterCarousel = (
     programmaticRef.current = true;
     container.style.scrollSnapType = "none";
     const start = performance.now();
+    const from = container.scrollLeft;
     const step = (now: number) => {
       const target = itemRefs.current[index];
       if (target && container) {
-        container.scrollLeft =
+        const progress = Math.min((now - start) / FOLLOW_DURATION, 1);
+        const eased = 1 - (1 - progress) ** 3;
+        const dest =
           target.offsetLeft -
           container.clientWidth / 2 +
           target.offsetWidth / 2;
+        container.scrollLeft = from + (dest - from) * eased;
       }
       if (now - start < FOLLOW_DURATION) {
         followRaf.current = requestAnimationFrame(step);
@@ -164,6 +168,8 @@ export const useCenterCarousel = (
       if (Math.abs(e.clientX - dragStartX.current) < DRAG_THRESHOLD) return;
       isDragging.current = true;
       setDragging(true);
+      cancelAnimationFrame(followRaf.current);
+      programmaticRef.current = false;
       el.setPointerCapture(dragPointerId.current);
       el.style.scrollSnapType = "none";
       el.style.cursor = "grabbing";

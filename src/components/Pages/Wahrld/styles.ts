@@ -9,7 +9,7 @@ export const GalleryWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const GalleryScroller = styled.div`
+export const GalleryScroller = styled.div<{ $dragging: boolean }>`
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -25,7 +25,10 @@ export const GalleryScroller = styled.div`
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: min(760px, calc(100% - 320px));
+  --pivot-w: min(760px, max(320px, calc(100% - 320px)));
+  --neighbor-w: 200px;
+  --edge-w: ${({ $dragging }) =>
+    $dragging ? "var(--neighbor-w)" : "var(--pivot-w)"};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -33,7 +36,7 @@ export const GalleryScroller = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50% - var(--pivot-w) / 2));
+    flex: 0 0 max(0px, calc(50% - var(--edge-w) / 2));
   }
 `;
 
@@ -42,7 +45,7 @@ export const EntrySlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   flex-shrink: 0;
   height: 100%;
   width: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "var(--pivot-w)" : "200px"};
+    $isPivot && !$dragging ? "var(--pivot-w)" : "var(--neighbor-w)"};
   max-width: 90vw;
   display: flex;
   flex-direction: column;
@@ -78,7 +81,7 @@ export const EntryCardWrapper = styled.div`
   color: var(--text-color);
   border: 2px solid var(--light-highlight);
   border-radius: 20px;
-  padding: 24px;
+  padding: clamp(12px, 3vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -109,6 +112,7 @@ export const EntryHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
 `;
 

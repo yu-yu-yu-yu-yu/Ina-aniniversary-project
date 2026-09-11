@@ -70,29 +70,39 @@ const Menu = (): JSX.Element => {
               <b>Ina&apos;s milestones</b>!
             </p>
             <p>
-              This time we celebrate your <b>anniversary</b>!
+              It is <b>TAKOTIME</b> to celebrate your <b>6th anniversary</b>!!
             </p>
             <p>
-              We&apos;ve collected <b>artworks and fan letters</b> from
-              Takodachis around the world. Takos picked up pen and paper to pour
-              their hearts out and send their love directly to you, and we are
-              also keeping their letters here on the site for you to come back
-              to whenever you want. We also put together the{" "}
-              <b>ultimate Ninomae Ina&apos;nis playlist</b> with every single
-              song you have ever sung over the years. The <b>outfit timeline</b>{" "}
-              has been updated too, with even more of your huge wardrobe on
-              display across the years!
+              This time, we collected all sorts of things from all over, from
+              artwork to photos! From the world to you, takos share their
+              support!! <b>World Domination!!</b> In the{" "}
+              <b>Ina Around the WAHld</b> section, takos showed that we are
+              everywhere!! <b>WE ARE HERE!!</b>
             </p>
             <p>
-              We are so proud and extremely happy for how much you have achieved
-              and how much love you continue to share with all of us.
+              We made tributes for all the amazing and fun moments that we
+              spent over these six years. These can be found in the{" "}
+              <b>Moment Gallery</b> so we can remember them forever. Each
+              moment is like a piece of art made by you, your friends, and us,
+              and we will all cherish them always.
             </p>
             <p>
-              <b>From the bottom of our hearts, thank you so much!</b>
+              Of course, as always, there are updates to other pages of the
+              site as well! New outfits illustrated by talented takos, new
+              song entries in the playlist, a timeline that is now up to date,
+              and new tako variants registered in the <b>Takodex</b>!
+            </p>
+            <p>
+              Things have changed so much as the years have gone by, but you
+              will always have our support. We couldn&apos;t be prouder to be{" "}
+              <b>Takodachis</b>, since we have such an amazing{" "}
+              <b>priestess</b>.
+            </p>
+            <p>
+              <b>From many takos around the world, thank you so much!</b>
               <br />
               <b>With all our love, Happy Anniversary, Ina! 💜🐙</b>
             </p>
-            <sub>And Happy Anniversary, Takos!</sub>
           </div>
         </TextBoxContainer>
         <ButtonsDiv>

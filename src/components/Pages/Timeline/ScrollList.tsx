@@ -12,7 +12,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Switch } from "../../Common/Switch";
 import { entrySlug } from "../../../utils/shareLink";
 import { upperCase } from "lodash";
@@ -532,7 +532,15 @@ export const ScrollList = ({
     }
   }, [allMonthsWithEntries, currentIdx]);
 
-  const scrollToMonth = (targetMonth: Month, targetYear: Year = year) => {
+  const { hash, pathname } = useLocation();
+  const history = useHistory();
+
+  const scrollToMonth = (
+    targetMonth: Month,
+    targetYear: Year = year,
+    fromHash = false,
+  ) => {
+    if (!fromHash && hash) history.replace(pathname);
     setMonthState(targetMonth);
     setYearState(targetYear);
   };
@@ -540,12 +548,12 @@ export const ScrollList = ({
   const handleYear = (targetYear: Year) => {
     const first = allMonthsWithEntries.find((x) => x.year === targetYear);
     if (first) {
+      if (hash) history.replace(pathname);
       setMonthState(first.month);
       setYearState(first.year as Year);
     }
   };
 
-  const { hash } = useLocation();
   const hasHandledHash = useRef(false);
 
   useEffect(() => {
@@ -569,7 +577,7 @@ export const ScrollList = ({
     const targetMonth = mappedMonths[mMonth] as Month;
     const targetYear = mYear as Year;
     if (month !== targetMonth || year !== targetYear) {
-      scrollToMonth(targetMonth, targetYear);
+      scrollToMonth(targetMonth, targetYear, true);
       return;
     }
     hasHandledHash.current = true;

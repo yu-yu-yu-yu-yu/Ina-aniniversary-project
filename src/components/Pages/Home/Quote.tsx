@@ -66,6 +66,15 @@ const RARE_QUOTES = [
   },
   { text: "Oh it's a jellyfish!", year: "2021" },
   { text: "Each world has its own world", year: "2021" },
+  { text: "WARAU NA!!!", year: "2023" },
+  { text: "Takobocchi...", year: "2023" },
+  { text: "You're in denial! It's the Amazon.", year: "2021" },
+  { text: "Bears don't go to cram school. They study kuman.", year: "2021" },
+  { text: "This is unbearable. Unbelievable.", year: "2021" },
+  { text: "I'm only friends with 25 letters of the alphabet.", year: "2021" },
+  { text: "I specialize in oyaji gyagu.", year: "2021" },
+  { text: "No pun is in a mode. It's just built-in. It's permanent. You can't turn it off.", year: "2021" },
+  { text: "A dad joke is only a dad joke when it becomes apparent.", year: "2021" },
 ];
 
 const pickRareQuote = () =>
@@ -73,7 +82,6 @@ const pickRareQuote = () =>
     ? RARE_QUOTES[Math.floor(Math.random() * RARE_QUOTES.length)]
     : null;
 
-// ponytail: heuristic fit, not true auto-fit-text; revisit if quotes get much longer
 const fitFontSize = (len: number) =>
   Math.max(9, Math.min(22, 1500 / len));
 

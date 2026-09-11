@@ -40,7 +40,11 @@ const MomentCarousel = ({
   }
 
   return (
-    <GalleryScroller ref={containerRef} {...containerHandlers}>
+    <GalleryScroller
+      ref={containerRef}
+      $dragging={dragging}
+      {...containerHandlers}
+    >
       {moments.map((moment, i) => {
         const isPivot = i === pivotIndex;
         const showBig = isPivot && !dragging;

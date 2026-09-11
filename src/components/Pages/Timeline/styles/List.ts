@@ -694,7 +694,7 @@ export const StageContainer = styled.div`
   padding: 12px 0 32px;
 `;
 
-export const StageScroller = styled.div`
+export const StageScroller = styled.div<{ $dragging: boolean }>`
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -705,12 +705,15 @@ export const StageScroller = styled.div`
   gap: 40px;
   padding: 1.2rem 0;
   overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-y: visible;
   touch-action: pan-x;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  --pivot-w: min(1400px, calc(100% - 520px));
+  --pivot-w: min(1400px, max(320px, calc(100% - 520px)));
+  --neighbor-w: 220px;
+  --edge-w: ${({ $dragging }) =>
+    $dragging ? "var(--neighbor-w)" : "var(--pivot-w)"};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -718,7 +721,7 @@ export const StageScroller = styled.div`
   &::after {
     content: "";
     display: block;
-    flex: 0 0 max(0px, calc(50% - var(--pivot-w) / 2));
+    flex: 0 0 max(0px, calc(50% - var(--edge-w) / 2));
   }
 `;
 
@@ -728,7 +731,7 @@ export const StageSlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   height: 100%;
   overflow-y: auto;
   width: ${({ $isPivot, $dragging }) =>
-    $isPivot && !$dragging ? "var(--pivot-w)" : "220px"};
+    $isPivot && !$dragging ? "var(--pivot-w)" : "var(--neighbor-w)"};
   display: flex;
   flex-direction: column;
   align-items: center;
