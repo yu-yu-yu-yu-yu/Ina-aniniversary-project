@@ -67,13 +67,17 @@ const buildViews = (moment: Moment): ExhibitView[] => {
 };
 
 const MomentCard = ({ moment }: { moment: Moment }): JSX.Element => {
-  const [viewIndex, setViewIndex] = useState(0);
+  const views = buildViews(moment);
+  const hasOriginalThumbnail = views[0].kind !== "original-link";
+  const [viewIndex, setViewIndex] = useState(() =>
+    !hasOriginalThumbnail && views.length > 1 ? 1 : 0,
+  );
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const { reportVideoPlaying } = useMute();
-  const views = buildViews(moment);
   const view = views[viewIndex] ?? views[0];
   const tributeViews = views.slice(1);
   const imageBroken = failedSrc === view.src;
+  const hasVisual = views.some((v) => v.kind !== "original-link");
 
   useEffect(() => {
     if (view.kind !== "original-video") return;
@@ -100,86 +104,88 @@ const MomentCard = ({ moment }: { moment: Moment }): JSX.Element => {
 
   return (
     <ExhibitLayout>
-      <ExhibitStageColumn>
-        <Frame>
-          <FrameMedia>
-            {view.kind === "original-video" && (
-              <iframe
-                key={view.src}
-                src={view.src}
-                title={moment.sourceLabel || moment.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                onLoad={(e) => notifyPlayerReady(e.currentTarget)}
-              />
-            )}
-            {view.kind === "original-image" &&
-              (imageBroken ? (
+      {hasVisual && (
+        <ExhibitStageColumn>
+          <Frame>
+            <FrameMedia>
+              {view.kind === "original-video" && (
+                <iframe
+                  key={view.src}
+                  src={view.src}
+                  title={moment.sourceLabel || moment.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  onLoad={(e) => notifyPlayerReady(e.currentTarget)}
+                />
+              )}
+              {view.kind === "original-image" &&
+                (imageBroken ? (
+                  <MomentSourceLink
+                    href={moment.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {moment.sourceLabel || "View the original"}
+                  </MomentSourceLink>
+                ) : (
+                  <img
+                    src={view.src}
+                    alt={moment.title}
+                    onError={() => setFailedSrc(view.src)}
+                  />
+                ))}
+              {view.kind === "original-link" && (
                 <MomentSourceLink
-                  href={moment.sourceUrl}
+                  href={view.src}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {moment.sourceLabel || "View the original"}
                 </MomentSourceLink>
-              ) : (
-                <img
-                  src={view.src}
-                  alt={moment.title}
-                  onError={() => setFailedSrc(view.src)}
-                />
-              ))}
-            {view.kind === "original-link" && (
-              <MomentSourceLink
-                href={view.src}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {moment.sourceLabel || "View the original"}
-              </MomentSourceLink>
-            )}
-            {view.kind === "tribute-image" &&
-              (imageBroken ? (
-                <MomentSourceLink
-                  href={view.tribute?.url || view.src}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              )}
+              {view.kind === "tribute-image" &&
+                (imageBroken ? (
+                  <MomentSourceLink
+                    href={view.tribute?.url || view.src}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View tribute by {view.tribute?.author}
+                  </MomentSourceLink>
+                ) : (
+                  <img
+                    src={view.src}
+                    alt={view.label}
+                    onError={() => setFailedSrc(view.src)}
+                  />
+                ))}
+              {view.kind === "tribute-video" && (
+                <video src={view.src} controls preload="none" />
+              )}
+            </FrameMedia>
+          </Frame>
+          {tributeViews.length > 0 && (
+            <>
+              <SwapRow>
+                <ArtworkButton
+                  onClick={() => setViewIndex(viewIndex === 0 ? 1 : 0)}
+                  title={viewIndex === 0 ? "See tributes" : "See original"}
+                  aria-label={viewIndex === 0 ? "See tributes" : "See original"}
                 >
-                  View tribute by {view.tribute?.author}
-                </MomentSourceLink>
-              ) : (
-                <img
-                  src={view.src}
-                  alt={view.label}
-                  onError={() => setFailedSrc(view.src)}
-                />
-              ))}
-            {view.kind === "tribute-video" && (
-              <video src={view.src} controls preload="none" />
-            )}
-          </FrameMedia>
-        </Frame>
-        {tributeViews.length > 0 && (
-          <>
-            <SwapRow>
-              <ArtworkButton
-                onClick={() => setViewIndex((i) => (i + 1) % views.length)}
-                title="Swap between the original and its tributes"
-                aria-label="Swap between the original and its tributes"
-              >
-                <i className="fa fa-exchange" aria-hidden="true" />
-              </ArtworkButton>
-              {view.label}
-            </SwapRow>
-            <TributeStrip
-              tributes={tributeViews.map((v) => v.tribute!)}
-              activeIndex={viewIndex}
-              onSelect={setViewIndex}
-              momentSlug={moment.slug}
-            />
-          </>
-        )}
-      </ExhibitStageColumn>
+                  <i className="fa fa-exchange" aria-hidden="true" />
+                </ArtworkButton>
+                {viewIndex === 0 ? "See tributes" : "See original"}
+              </SwapRow>
+              <TributeStrip
+                tributes={tributeViews.map((v) => v.tribute!)}
+                activeIndex={viewIndex}
+                onSelect={setViewIndex}
+                momentSlug={moment.slug}
+              />
+            </>
+          )}
+        </ExhibitStageColumn>
+      )}
       <MomentPlacard moment={moment} view={view} />
     </ExhibitLayout>
   );

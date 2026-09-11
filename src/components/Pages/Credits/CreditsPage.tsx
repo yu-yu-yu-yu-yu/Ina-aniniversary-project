@@ -35,7 +35,7 @@ const CreditsPage = (): JSX.Element => {
     >
       <audio
         ref={audioRef}
-        src={process.env.PUBLIC_URL + "/明日も晴れるといいね.mp3"}
+        src={process.env.PUBLIC_URL + "/昼寝のススメ.mp3"}
         loop
         preload="auto"
         style={{ display: "none" }}

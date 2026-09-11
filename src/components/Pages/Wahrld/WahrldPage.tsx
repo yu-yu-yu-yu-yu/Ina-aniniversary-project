@@ -96,7 +96,7 @@ const WahrldPage = (): JSX.Element => {
     >
       <audio
         ref={audioRef}
-        src={process.env.PUBLIC_URL + "/リコーダービート2.mp3"}
+        src={process.env.PUBLIC_URL + "/昼寝のススメ.mp3"}
         loop
         preload="auto"
         style={{ display: "none" }}

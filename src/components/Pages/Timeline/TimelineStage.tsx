@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Milestone, Month, Tags, Year } from "../../../types";
+import { Milestone, Month, Year } from "../../../types";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
@@ -8,7 +8,6 @@ import {
   getMediaLink,
   getMessagesForMilestone,
   getTakoAvatar,
-  tagColors,
 } from "./ScrollListUtils";
 import { MonthNavItem } from "./ScrollList";
 import { notifyPlayerReady } from "../../../utils/youtube";
@@ -18,8 +17,6 @@ import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
 import {
   BubbleColumn,
   NeighborThumb,
-  RailContainer,
-  RailNode,
   SpeechBubble,
   StageCenter,
   StageContainer,
@@ -33,31 +30,6 @@ import {
   StageSlot,
   StageVideoFrame,
 } from "./styles/List";
-
-const NODE_GAP = 110;
-const PAD = 90;
-const AMP = 26;
-const MID = 70;
-const RAIL_HEIGHT = 160;
-
-const waveY = (x: number): number => MID + AMP * Math.sin(x / 170);
-const nodeX = (i: number): number => PAD + i * NODE_GAP;
-
-const buildTentaclePath = (upToX: number): string => {
-  let d = `M 0 ${waveY(0).toFixed(1)}`;
-  for (let x = 8; x <= upToX; x += 8) {
-    d += ` L ${x} ${waveY(x).toFixed(1)}`;
-  }
-  return d;
-};
-
-const getNodeColor = (tags?: Tags): string | null => {
-  if (!tags) return null;
-  const key = (Object.keys(tagColors) as (keyof typeof tagColors)[]).find(
-    (k) => tags[k],
-  );
-  return key ? tagColors[key] : null;
-};
 
 interface TakoMsg {
   type: string;
@@ -186,109 +158,6 @@ const MilestoneStageContent = ({
   );
 };
 
-const TentacleRail = ({
-  milestones,
-  activeIndex,
-  onSelect,
-}: {
-  milestones: Milestone[];
-  activeIndex: number;
-  onSelect: (index: number) => void;
-}): JSX.Element | null => {
-  const total = milestones.length;
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const node = containerRef.current?.querySelector<HTMLButtonElement>(
-      `[data-rail-index="${activeIndex}"]`,
-    );
-    node?.scrollIntoView({
-      inline: "center",
-      block: "nearest",
-      behavior: "smooth",
-    });
-  }, [activeIndex]);
-
-  if (total === 0) return null;
-
-  const width = nodeX(total - 1) + PAD * 2;
-  const basePath = buildTentaclePath(width);
-  const progressPath = buildTentaclePath(Math.min(nodeX(activeIndex), width));
-
-  return (
-    <RailContainer ref={containerRef}>
-      <svg
-        width={width}
-        height={RAIL_HEIGHT}
-        viewBox={`0 0 ${width} ${RAIL_HEIGHT}`}
-      >
-        <defs>
-          <linearGradient id="tentacleGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="var(--dark-highlight)" />
-            <stop offset="100%" stopColor="var(--light-highlight)" />
-          </linearGradient>
-        </defs>
-        <path
-          d={basePath}
-          stroke="url(#tentacleGrad)"
-          strokeWidth={22}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <path
-          d={basePath}
-          stroke="var(--light-background)"
-          strokeWidth={6}
-          strokeLinecap="round"
-          fill="none"
-          opacity={0.35}
-          transform="translate(0,-6)"
-        />
-        <path
-          d={progressPath}
-          stroke="var(--light-highlight)"
-          strokeWidth={22}
-          strokeLinecap="round"
-          fill="none"
-        />
-        {milestones.map((m, i) => (
-          <circle
-            key={`sucker-${m.label}`}
-            cx={nodeX(i)}
-            cy={waveY(nodeX(i))}
-            r={4}
-            fill="var(--dark-highlight)"
-            opacity={0.6}
-          />
-        ))}
-      </svg>
-      {milestones.map((m, i) => {
-        const color = getNodeColor(m.tags);
-        return (
-          <RailNode
-            key={m.label}
-            data-rail-index={i}
-            $active={i === activeIndex}
-            style={{
-              left: nodeX(i),
-              top: waveY(nodeX(i)),
-              ...(color
-                ? {
-                    borderColor: color,
-                    background: i === activeIndex ? color : undefined,
-                  }
-                : {}),
-            }}
-            onClick={() => onSelect(i)}
-            title={m.label}
-          />
-        );
-      })}
-    </RailContainer>
-  );
-};
-
 export const TimelineStage = ({
   milestones,
   prevMonthEntry,
@@ -410,11 +279,6 @@ export const TimelineStage = ({
           />
         )}
       </StageScroller>
-      <TentacleRail
-        milestones={milestones}
-        activeIndex={pivotIndex}
-        onSelect={goTo}
-      />
     </StageContainer>
   );
 };

@@ -670,7 +670,7 @@ const PlaylistBoard = (): JSX.Element => {
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <audio
         ref={audioRef}
-        src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
+        src={process.env.PUBLIC_URL + "/注文の少ない喫茶店.mp3"}
         loop
         preload="auto"
         style={{ display: "none" }}

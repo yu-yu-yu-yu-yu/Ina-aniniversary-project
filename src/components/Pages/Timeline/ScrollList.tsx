@@ -21,6 +21,9 @@ import {
   DrawerContainer,
   DrawerSeparator,
   DrawerToggleI,
+  FilterMenuButton,
+  FilterMenuContainer,
+  FilterMenuPopover,
   MonthDisplay,
   MonthListContainer,
   PageArrowButton,
@@ -30,6 +33,7 @@ import {
   TagBarContainer,
   TagsContainer,
   TopControlsContainer,
+  TopControlsRow,
   YearDisplay,
   YearContainer,
   TagDropdownSelect,
@@ -138,6 +142,56 @@ const TagBar = ({
   </TagBarContainer>
 );
 
+const FilterMenu = ({
+  tags,
+  setSelectedTags,
+  mobile,
+}: {
+  tags: Tags;
+  setSelectedTags: (_tags: Tags) => void;
+  mobile?: boolean;
+}) => {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const activeCount = Object.values(tags).filter(Boolean).length;
+
+  useEffect(() => {
+    if (!open) return;
+    const handleOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, [open]);
+
+  return (
+    <FilterMenuContainer ref={containerRef}>
+      <FilterMenuButton
+        type="button"
+        $active={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <i className="fa fa-filter" aria-hidden="true" />
+        Filters{activeCount > 0 ? ` (${activeCount})` : ""}
+      </FilterMenuButton>
+      {open && (
+        <FilterMenuPopover>
+          <TagBar
+            mobile={mobile}
+            tags={tags}
+            setSelectedTags={setSelectedTags}
+          />
+        </FilterMenuPopover>
+      )}
+    </FilterMenuContainer>
+  );
+};
+
 const TopControls = ({
   searchString,
   setSearchString,
@@ -154,14 +208,12 @@ const TopControls = ({
   mobile?: boolean;
 }) => (
   <TopControlsContainer>
-    <div style={{ marginBottom: 18 }}>
+    <TopControlsRow style={mobile ? { flexWrap: "wrap" } : undefined}>
       <SearchBar
         searchString={searchString}
         setSearchString={setSearchString}
       />
-    </div>
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <TagBar
+      <FilterMenu
         mobile={mobile}
         tags={selectedTags}
         setSelectedTags={setSelectedTags}
@@ -172,7 +224,7 @@ const TopControls = ({
         setSelectedTag={setSelectedTitleTag}
         mobile={mobile}
       />
-    </div>
+    </TopControlsRow>
   </TopControlsContainer>
 );
 

@@ -108,18 +108,6 @@
     ]
   },
   {
-    "slug": "boin-boin",
-    "title": "BOIN BOIN",
-    "category": "milestone",
-    "date": "December 15, 2020",
-    "sourceUrl": "https://www.youtube.com/watch?v=Oi0W1hTnWl8",
-    "sourceLabel": "【Puyo Puyo Tetris 2】 BOIN BOIN",
-    "context": "Your very first sponsored stream! Your gaming prowess was shown to everyone this stream as you calmly destroyed your genmates! Maybe the Tetris player isn't at a slight disadvantage...",
-    "cap": 3,
-    "tributes": [],
-    "image": "https://i3.ytimg.com/vi/Oi0W1hTnWl8/maxresdefault.jpg"
-  },
-  {
     "slug": "new-years-greetings",
     "title": "New Year's Greetings",
     "category": "milestone",
@@ -188,24 +176,6 @@
     "cap": 3,
     "tributes": [],
     "image": "https://i3.ytimg.com/vi/VS4N6ZZtA-A/maxresdefault.jpg"
-  },
-  {
-    "slug": "dal-items-vol-1-draw-a-lot-art-by-ninomae-ina-nis-hololive-en-supported-by-wacom-clip-studio",
-    "title": "「DAL ITEMS Vol.1」DRAW A LOT×初音ミク Art by Ninomae Ina’nis(hololive EN) Supported by Wacom/CLIP STUDIO",
-    "category": "milestone",
-    "date": "June 16, 2021",
-    "sourceUrl": "https://www.youtube.com/watch?v=nFQhhySjLwg",
-    "sourceLabel": "「DAL ITEMS Vol.1」DRAW A LOT×初音ミク Art by Ninomae Ina’nis(hololive EN) Supported by Wacom/CLIP STUDIO",
-    "context": "DRAW A LOT and an official sponsorship from Wacom and CLIP STUDIO!! It's absolutely amazing that you were able to do something like this--we hope that there may be many more opportunities like this in the future! To think that this came to be from your Miku day illustration stream... May this stream inspire many aspiring artists to continue working hard.",
-    "cap": 3,
-    "tributes": [],
-    "image": "https://i3.ytimg.com/vi/nFQhhySjLwg/maxresdefault.jpg",
-    "reactions": [
-      {
-        "author": "Takomonty",
-        "text": "This two-part stream was one of my favorite drawing streams, just for the insight into the illustration process. This is the first time I'd ever seen a piece complete start to finish in its entirety."
-      }
-    ]
   },
   {
     "slug": "anime-expo-lite-2021",
@@ -406,18 +376,6 @@
         "text": "Tabi no Tochuu is one of my favorite songs ever. I cried so much when I heard your cover for the first time, and then again the next time, and the time after that, I still keep crying it’s just that good, so beautiful."
       }
     ]
-  },
-  {
-    "slug": "omocat-x-hololive-english",
-    "title": "OMOCAT x hololive English",
-    "category": "milestone",
-    "date": "December 3, 2021",
-    "sourceUrl": "https://www.omocat-shop.com/collections/omocat-x-hololive-en",
-    "sourceLabel": "OMOCAT x hololive English",
-    "context": "holoMyth got their own merch collaboration with OMOCAT! The merch is so cute and we even got to see an interview you participated in!",
-    "cap": 3,
-    "tributes": [],
-    "image": "https://cdn.discordapp.com/attachments/857678148048519208/1019434429413867590/unknown.png"
   },
   {
     "slug": "im-in-a-dress-inainadress",
@@ -1048,18 +1006,6 @@
     "image": "https://i.ytimg.com/vi/W168fNPUygE/hqdefault.jpg"
   },
   {
-    "slug": "takanashi-kiara-ninomae-inanis-1st-concert-drawn-to-dawn-day-2",
-    "title": "Takanashi Kiara / Ninomae Ina'nis 1st Concert \"Drawn to Dawn\"【DAY 2】",
-    "category": "milestone",
-    "date": "March 29, 2026",
-    "sourceUrl": "https://www.youtube.com/watch?v=bNMzj5NPWmI",
-    "sourceLabel": "【Free Preview】Takanashi Kiara / Ninomae Ina'nis 1st Concert \"Drawn to Dawn\"【DAY 2】",
-    "context": "Day two of Ina and Kiara's first joint concert, Drawn to Dawn.",
-    "cap": 3,
-    "tributes": [],
-    "image": "https://i3.ytimg.com/vi/bNMzj5NPWmI/maxresdefault.jpg"
-  },
-  {
     "slug": "getcha-ninomae-inanis-takanashi-kiara-cover",
     "title": "『GETCHA!』 Ninomae Ina'nis & Takanashi Kiara (Cover)",
     "category": "myth",
@@ -1557,16 +1503,6 @@
     "image": "https://i3.ytimg.com/vi/I-J11Da5ONY/maxresdefault.jpg"
   },
   {
-    "slug": "inas-drawn-to-dawn-mc-day-2",
-    "title": "Ina's Drawn to Dawn MC (Day 2)",
-    "category": "milestone",
-    "date": "March 28, 2026",
-    "sourceUrl": "",
-    "context": "A lot of tears were shed when we started to hear her cry, thanking us for all the love that we give her. I'm so glad I was able to be there to share that moment with everyone there.",
-    "cap": 5,
-    "tributes": []
-  },
-  {
     "slug": "ninomae-inanis-6th-birthday",
     "title": "Ninomae Ina'nis 6th Birthday",
     "category": "milestone",
@@ -1696,55 +1632,6 @@
         "handle": "SleepzyTofu",
         "url": "https://x.com/SleepzyTofu",
         "file": "oh-nyo-ina-finally-takover-my-desk-0.jpg",
-        "kind": "image"
-      }
-    ]
-  },
-  {
-    "slug": "a-pile-of-happy-takodachis-enjoying-dtd-live-viewing",
-    "title": "A pile of happy takodachis enjoying DTD live viewing",
-    "category": "milestone",
-    "date": "March 27, 2026",
-    "sourceUrl": "",
-    "context": "Group photo of takodachis after the Drawn To Dawn live viewing cinema in Taipei.",
-    "cap": 5,
-    "tributes": [
-      {
-        "author": "SleepzyTofu",
-        "handle": "SleepzyTofu",
-        "url": "https://x.com/SleepzyTofu",
-        "file": "a-pile-of-happy-takodachis-enjoying-dtd-live-viewing-0.jpg",
-        "kind": "image"
-      }
-    ]
-  },
-  {
-    "slug": "drawn-to-dawn",
-    "title": "Drawn To Dawn",
-    "category": "milestone",
-    "date": "March 27, 2026",
-    "sourceUrl": "https://www.youtube.com/live/bNMzj5NPWmI?is=jAN6KPDs_FLsMFVZ",
-    "sourceLabel": "Ninomae Ina'nis",
-    "context": "Ina and Kiara's first concert",
-    "cap": 5,
-    "tributes": [
-      {
-        "author": "Ast",
-        "handle": "AstIllust",
-        "url": "https://x.com/AstIllust",
-        "file": "drawn-to-dawn-0.jpg",
-        "kind": "image"
-      },
-      {
-        "author": "Lethargic ",
-        "file": "drawn-to-dawn-1.png",
-        "kind": "image"
-      },
-      {
-        "author": "WAHmaa",
-        "handle": "MuHu36949",
-        "url": "https://x.com/MuHu36949",
-        "file": "drawn-to-dawn-2.jpg",
         "kind": "image"
       }
     ]
@@ -1895,16 +1782,6 @@
       }
     ],
     "image": "https://i3.ytimg.com/vi/NIv_yYKl9tQ/maxresdefault.jpg"
-  },
-  {
-    "slug": "drawn-2-dawn",
-    "title": "Drawn 2 Dawn",
-    "category": "milestone",
-    "date": "TBD",
-    "sourceUrl": "https://www.youtube.com/live/bNMzj5NPWmI?si=UPGGqSnxRauYKoYz (I only got the link to the YT Free preview)",
-    "context": "Being able to see Ina FINALLY get a sololive/duolive with Kiara, and getting to be in the crowd for both days to cheer her on, esp. when she sung TAKO TAKOVER and Stellar Stellar on Day 2, and how the place felt like it was gonna go down",
-    "cap": 5,
-    "tributes": []
   },
   {
     "slug": "ina-catches-a-liar-and-gets-violent",
@@ -2066,22 +1943,6 @@
     ]
   },
   {
-    "slug": "drawn-to-dawn-tako-tori-triumph",
-    "title": "Drawn to Dawn - Tako Tori Triumph",
-    "category": "myth",
-    "date": "March 27, 2026",
-    "sourceUrl": "",
-    "context": "It's sort of hard to believe it was only six months ago!  Drawn to Dawn was this year, and it was incredible!  I feel like 2026 has been a huge culminating year for Ina as a performer and Drawn to Dawn showed that off with such style!  Day 1, Day 2, and \"Day 3\" after parties fill me with happy memories... thank you Ina and Kiara!",
-    "cap": 5,
-    "tributes": [
-      {
-        "author": "Corp.Shephard",
-        "file": "drawn-to-dawn-tako-tori-triumph-0.png",
-        "kind": "image"
-      }
-    ]
-  },
-  {
     "slug": "myth-together-forever",
     "title": "Myth Together Forever",
     "category": "myth",
@@ -2112,25 +1973,6 @@
     ]
   },
   {
-    "slug": "abyssal-hymn-a-vibrant-dream",
-    "title": "Abyssal Hymn: A vibrant dream",
-    "category": "milestone",
-    "date": "March 28, 2026",
-    "sourceUrl": "",
-    "sourceLabel": "Drawn 2 Dawn day 2",
-    "context": "One of many cosplayers shedding tears as they cheer on their beloved oshi singing their final solo song on day 2, amidst a sea of rainbow penlights <3",
-    "cap": 5,
-    "tributes": [
-      {
-        "author": "Astraea",
-        "handle": "Astra_ofAntares",
-        "url": "https://twitter.com/Astra_ofAntares",
-        "file": "abyssal-hymn-a-vibrant-dream-0.png",
-        "kind": "image"
-      }
-    ]
-  },
-  {
     "slug": "6th-inaversary-art",
     "title": "6th Inaversary art",
     "category": "milestone",
@@ -2150,13 +1992,54 @@
     ]
   },
   {
-    "slug": "the-takotori-concert",
-    "title": "The Takotori concert",
+    "slug": "drawn-to-dawn",
+    "title": "Takanashi Kiara / Ninomae Ina'nis 1st Concert \"Drawn to Dawn\"",
     "category": "milestone",
-    "date": "TBD",
-    "sourceUrl": "",
-    "context": "",
-    "cap": 5,
-    "tributes": []
+    "date": "March 27, 2026",
+    "sourceUrl": "https://www.youtube.com/watch?v=bNMzj5NPWmI",
+    "sourceLabel": "【Free Preview】Takanashi Kiara / Ninomae Ina'nis 1st Concert \"Drawn to Dawn\"",
+    "context": "Ina and Kiara's first joint concert, Drawn to Dawn, across two days: the live viewing cinemas, the setlist performances, and Ina's tearful Day 2 MC thanking the takodachis for their support.",
+    "cap": 6,
+    "tributes": [
+      {
+        "author": "Ast",
+        "handle": "AstIllust",
+        "url": "https://x.com/AstIllust",
+        "file": "drawn-to-dawn-0.jpg",
+        "kind": "image"
+      },
+      {
+        "author": "Lethargic ",
+        "file": "drawn-to-dawn-1.png",
+        "kind": "image"
+      },
+      {
+        "author": "WAHmaa",
+        "handle": "MuHu36949",
+        "url": "https://x.com/MuHu36949",
+        "file": "drawn-to-dawn-2.jpg",
+        "kind": "image"
+      },
+      {
+        "author": "SleepzyTofu",
+        "handle": "SleepzyTofu",
+        "url": "https://x.com/SleepzyTofu",
+        "file": "a-pile-of-happy-takodachis-enjoying-dtd-live-viewing-0.jpg",
+        "kind": "image"
+      },
+      {
+        "author": "Corp.Shephard",
+        "file": "drawn-to-dawn-tako-tori-triumph-0.png",
+        "kind": "image"
+      },
+      {
+        "author": "Astraea",
+        "handle": "Astra_ofAntares",
+        "url": "https://twitter.com/Astra_ofAntares",
+        "file": "abyssal-hymn-a-vibrant-dream-0.png",
+        "kind": "image"
+      }
+    ],
+    "image": "https://i3.ytimg.com/vi/bNMzj5NPWmI/maxresdefault.jpg"
   }
 ]

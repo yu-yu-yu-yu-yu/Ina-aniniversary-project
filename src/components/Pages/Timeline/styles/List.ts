@@ -30,13 +30,15 @@ export const ScrollListContainer = styled.div`
   }
 `;
 export const TopControlsContainer = styled.div`
-  margin: 38px 145px 0;
-  padding-bottom: 32px;
+  margin: clamp(16px, 3vh, 38px) 145px 0;
+  padding-bottom: clamp(14px, 2.5vh, 32px);
   @media (max-width: 1200px) {
-    margin: 38px auto 0;
+    margin: clamp(16px, 3vh, 38px) auto 0;
   }
 `;
 export const SearchBarContainer = styled.div`
+  flex: 1;
+  min-width: 0;
   border-bottom: 1px solid var(--dark-highlight);
 `;
 export const SearchInput = styled.input`
@@ -45,6 +47,7 @@ export const SearchInput = styled.input`
   font: normal normal normal 30px/37px Montserrat;
   letter-spacing: 0;
   opacity: 1;
+  width: 100%;
   height: 1em;
   padding: 0 0 3px;
   border: none;
@@ -55,9 +58,7 @@ export const SearchInput = styled.input`
     outline: none;
   }
 `;
-export const TagBarContainer = styled.div`
-  margin-top: 25px;
-`;
+export const TagBarContainer = styled.div``;
 
 export const TagsContainer = styled.div`
   display: flex;
@@ -173,8 +174,8 @@ export const MonthListContainer = styled.div`
   display: flex;
   flex-direction: row;
   background-color: var(--dark-highlight);
-  height: 111px;
-  padding: 19px 35px;
+  height: clamp(52px, 8vh, 111px);
+  padding: clamp(8px, 1.6vh, 19px) clamp(14px, 3vw, 35px);
   border-radius: 15px 15px 0 0;
   opacity: 1;
   flex: 0 1;
@@ -194,7 +195,7 @@ export const YearContainer = styled.div`
   border-radius: 10px;
   border: 3px solid var(--ink-black);
   padding: 0 12px;
-  margin: 0 auto 12px auto;
+  margin: 0 auto clamp(6px, 1.2vh, 12px) auto;
   width: fit-content;
   position: relative;
   z-index: 0;
@@ -210,7 +211,8 @@ export const YearDisplay = styled.div<{
   letter-spacing: 0;
   font: normal normal ${({ selected }) => (selected ? "bold" : "light")} 30px
     Roboto;
-  font-size: ${({ selected }) => (selected ? "30px" : "26px")};
+  font-size: ${({ selected }) =>
+    selected ? "clamp(16px, 2.2vh, 30px)" : "clamp(14px, 1.9vh, 26px)"};
   opacity: 1;
   margin: auto 0;
   position: relative;
@@ -253,7 +255,8 @@ export const MonthDisplay = styled.span<{
     ${({ highlight, passed }) =>
       highlight ? "bold" : passed ? "light" : "100"}
     30px/37px Roboto;
-  font-size: ${({ highlight }) => (highlight ? "30px" : "27px")};
+  font-size: ${({ highlight }) =>
+    highlight ? "clamp(15px, 2.1vh, 30px)" : "clamp(13px, 1.85vh, 27px)"};
   opacity: 1;
   margin: auto 0;
   position: relative;
@@ -607,6 +610,54 @@ export const TimelineDialogueBox = styled.div`
   overflow-wrap: anywhere;
 `;
 
+export const TopControlsRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const FilterMenuContainer = styled.div`
+  position: relative;
+  flex-shrink: 0;
+`;
+
+export const FilterMenuButton = styled.button<{ $active: boolean }>`
+  font: normal normal 700 15px/18px Montserrat;
+  letter-spacing: 0.5px;
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid
+    ${({ $active }) =>
+      $active ? "var(--light-highlight)" : "var(--dark-highlight)"};
+  border-radius: 10px;
+  padding: 9px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const FilterMenuPopover = styled.div`
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--dark-highlight);
+  border: 2px solid var(--light-highlight);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px var(--shadow);
+  padding: 16px 18px;
+  z-index: 100;
+  width: max-content;
+  max-width: min(90vw, 320px);
+  max-height: 70vh;
+  overflow-y: auto;
+`;
+
 export const TagDropdownSelect = styled.select<{ mobile?: boolean }>`
   background: var(--dark-highlight);
   color: white;
@@ -696,7 +747,7 @@ export const StageContainer = styled.div`
 
 export const StageScroller = styled.div<{ $dragging: boolean }>`
   display: flex;
-  align-items: stretch;
+  align-items: center;
   width: 100%;
   flex: 1;
   min-height: 0;
@@ -729,7 +780,7 @@ export const StageSlot = styled.div<{ $isPivot: boolean; $dragging: boolean }>`
   position: relative;
   flex-shrink: 0;
   height: 100%;
-  overflow-y: auto;
+  overflow: visible;
   width: ${({ $isPivot, $dragging }) =>
     $isPivot && !$dragging ? "var(--pivot-w)" : "var(--neighbor-w)"};
   display: flex;
@@ -801,7 +852,7 @@ export const StageVideoFrame = styled.iframe`
   aspect-ratio: 16 / 9;
   width: auto;
   max-width: min(1200px, 90vw);
-  height: min(52vh, 640px);
+  height: min(40vh, 640px);
   border: 0;
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow);
@@ -811,7 +862,7 @@ export const StageImageFrame = styled.img`
   width: auto;
   height: auto;
   max-width: min(1200px, 90vw);
-  max-height: min(52vh, 640px);
+  max-height: min(40vh, 640px);
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow);
 `;
@@ -888,34 +939,5 @@ export const SpeechBubble = styled.div`
   &.right::after {
     left: -16px;
     border-right-color: var(--dark-highlight);
-  }
-`;
-
-export const RailContainer = styled.div`
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  margin: 24px auto 0;
-  width: min(1400px, 92vw);
-  scrollbar-width: thin;
-`;
-
-export const RailNode = styled.button<{ $active: boolean }>`
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: ${({ $active }) => ($active ? "20px" : "14px")};
-  height: ${({ $active }) => ($active ? "20px" : "14px")};
-  border-radius: 50%;
-  border: 2px solid var(--light-highlight);
-  background: ${({ $active }) =>
-    $active ? "var(--light-highlight)" : "var(--dark-highlight)"};
-  cursor: pointer;
-  padding: 0;
-  transition:
-    width 0.2s,
-    height 0.2s,
-    background 0.2s;
-  &:hover {
-    filter: brightness(1.15);
   }
 `;
