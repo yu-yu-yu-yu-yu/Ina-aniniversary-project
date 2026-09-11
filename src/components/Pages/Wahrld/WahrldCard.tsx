@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { WahrldEntry } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
-import { getFlagSrc, VOID_BADGE } from "../../../utils/flags";
+import { getFlagEmoji } from "../../../utils/flags";
 import { useMute } from "../../Common/MuteButton";
 import ShareButton from "../../Common/ShareButton";
 import {
@@ -17,11 +17,12 @@ import {
 
 export const getEntryAvatar = (
   icon: string | undefined,
+  user: string,
   index: number,
 ): string =>
   icon
     ? `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(icon)}`
-    : getTakoAvatar(null, index);
+    : getTakoAvatar(user, index);
 
 const WahrldCard = ({
   entry,
@@ -64,7 +65,7 @@ const WahrldCard = ({
       </EntryMedia>
       <EntryHeader>
         <EntryAvatar
-          src={getEntryAvatar(entry.icon, index)}
+          src={getEntryAvatar(entry.icon, entry.user, index)}
           alt={entry.user}
           onError={(e) => {
             e.currentTarget.onerror = null;
@@ -72,14 +73,9 @@ const WahrldCard = ({
           }}
         />
         <EntryUser>{entry.user}</EntryUser>
-        <EntryFlag
-          src={getFlagSrc(entry.country)}
-          alt={entry.country || "The Void"}
-          onError={(e) => {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = VOID_BADGE;
-          }}
-        />
+        <EntryFlag role="img" aria-label={entry.country || "The Void"}>
+          {getFlagEmoji(entry.country)}
+        </EntryFlag>
         <ShareButton slug={slug} label="Copy link to this submission" />
       </EntryHeader>
       {entry.message && <EntryMessage>{entry.message}</EntryMessage>}

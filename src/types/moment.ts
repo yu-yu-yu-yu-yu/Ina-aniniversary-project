@@ -23,7 +23,7 @@ export interface Moment {
   sourceUrl: string;
   sourceLabel?: string;
   context: string;
-  cap: 2 | 3;
+  cap: number;
   tributes: Tribute[];
   image?: string;
   reactions?: MomentReaction[];

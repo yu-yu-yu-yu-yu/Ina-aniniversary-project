@@ -24,7 +24,7 @@ import {
 const resolveTributeSrc = (slug: string, file: string): string =>
   file.startsWith("http")
     ? file
-    : `${process.env.PUBLIC_URL}/moments/${slug}/${file}`;
+    : `${process.env.PUBLIC_URL}/momentTributes/${slug}/${file}`;
 
 const buildViews = (moment: Moment): ExhibitView[] => {
   const ytRef = parseYouTube(moment.sourceUrl);

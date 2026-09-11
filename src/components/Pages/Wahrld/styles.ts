@@ -136,11 +136,9 @@ export const EntryUser = styled.span`
   font-weight: 700;
 `;
 
-export const EntryFlag = styled.img`
-  width: 22px;
-  height: 16px;
-  object-fit: cover;
-  border-radius: 2px;
+export const EntryFlag = styled.span`
+  font-size: 20px;
+  line-height: 1;
 `;
 
 export const EntryMessage = styled.p`

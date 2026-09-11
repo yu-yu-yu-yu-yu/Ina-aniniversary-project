@@ -178,7 +178,7 @@ const WahrldPage = (): JSX.Element => {
                       ) : (
                         <NeighborCard>
                           <NeighborAvatar
-                            src={getEntryAvatar(entry.icon, i)}
+                            src={getEntryAvatar(entry.icon, entry.user, i)}
                             alt={entry.user}
                             onError={(e) => {
                               e.currentTarget.onerror = null;

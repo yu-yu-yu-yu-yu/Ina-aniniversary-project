@@ -40,7 +40,6 @@ const updateButtons = [
   "The Ultimate Ina Playlist",
   "Ina's Timeline",
   "Takodex",
-  "Artworks & Messages",
 ];
 
 const Menu = (): JSX.Element => {
@@ -80,23 +79,22 @@ const Menu = (): JSX.Element => {
               everywhere!! <b>WE ARE HERE!!</b>
             </p>
             <p>
-              We made tributes for all the amazing and fun moments that we
-              spent over these six years. These can be found in the{" "}
-              <b>Moment Gallery</b> so we can remember them forever. Each
-              moment is like a piece of art made by you, your friends, and us,
-              and we will all cherish them always.
+              We made tributes for all the amazing and fun moments that we spent
+              over these six years. These can be found in the{" "}
+              <b>Moment Gallery</b> so we can remember them forever. Each moment
+              is like a piece of art made by you, your friends, and us, and we
+              will all cherish them always.
             </p>
             <p>
-              Of course, as always, there are updates to other pages of the
-              site as well! New outfits illustrated by talented takos, new
-              song entries in the playlist, a timeline that is now up to date,
-              and new tako variants registered in the <b>Takodex</b>!
+              Of course, as always, there are updates to other pages of the site
+              as well! New outfits illustrated by talented takos, new song
+              entries in the playlist, a timeline that is now up to date, and
+              new tako variants registered in the <b>Takodex</b>!
             </p>
             <p>
               Things have changed so much as the years have gone by, but you
               will always have our support. We couldn&apos;t be prouder to be{" "}
-              <b>Takodachis</b>, since we have such an amazing{" "}
-              <b>priestess</b>.
+              <b>Takodachis</b>, since we have such an amazing <b>priestess</b>.
             </p>
             <p>
               <b>From many takos around the world, thank you so much!</b>
