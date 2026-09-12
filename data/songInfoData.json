@@ -62,7 +62,7 @@
   },
   {
     "songName": "ANIMA",
-    "songInfo": "Original: ReoNa (SAO: Alicization — War of Underworld OP2)",
+    "songInfo": "Original: ReoNa (SAO: Alicization - War of Underworld OP2)",
     "origin": "3rd Party",
     "collab": "solo",
     "performances": [
@@ -445,7 +445,7 @@
   },
   {
     "songName": "Domination! All the World Is an Ocean",
-    "songInfo": "Original song — JP-EN Ocean Unit",
+    "songInfo": "Original song - JP-EN Ocean Unit",
     "origin": "Hololive's original",
     "coverInfo": "Shirakami Fubuki, Houshou Marine, Ninomae Ina'nis, Gawr Gura",
     "collab": "group",
@@ -1203,7 +1203,7 @@
   },
   {
     "songName": "MONSTER",
-    "songInfo": "Original song — ENigmatic Recollection Chapter 2 Theme",
+    "songInfo": "Original song - ENigmatic Recollection Chapter 2 Theme",
     "origin": "Hololive's original",
     "coverInfo": "Ouro Kronii, Shiori Novella, Gigi Murin, Ninomae Ina'nis",
     "collab": "group",
@@ -1981,7 +1981,7 @@
   },
   {
     "songName": "unlasting",
-    "songInfo": "Original: LiSA (SAO: Alicization — War of Underworld ED)",
+    "songInfo": "Original: LiSA (SAO: Alicization - War of Underworld ED)",
     "origin": "3rd Party",
     "collab": "solo",
     "performances": [
@@ -2424,7 +2424,7 @@
   },
   {
     "songName": "りゅーーっときてきゅーーっ!!! (It Comes Ryuuu And It Goes Kyuuu!!!)",
-    "songInfo": "UMISEA — Camellia",
+    "songInfo": "UMISEA - Camellia",
     "origin": "Hololive's original",
     "collab": "group",
     "performances": [
@@ -2894,5 +2894,157 @@
       }
     ],
     "originalSongLink": "https://www.youtube.com/embed/YzQCNmk3YYA"
+  },
+  {
+    "songName": "Ga1ahad and Scientific Witchery",
+    "songInfo": "Original: Mili",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/d-nxW9qBtxQ"
+  },
+  {
+    "songName": "Cry Baby - Official HIGE DANdism",
+    "songInfo": "Original: Official HIGE DANdism",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/O1bhZgkC4Gw"
+  },
+  {
+    "songName": "Don't Stop Believin' - Journey",
+    "songInfo": "Original: Journey",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ]
+  },
+  {
+    "songName": "New Genesis",
+    "songInfo": "Original: Ado (One Piece Film Red)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/1FliVTcX8bQ"
+  },
+  {
+    "songName": "Lost In Thoughts All Alone",
+    "songInfo": "Original: NieR:Automata OST",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ]
+  },
+  {
+    "songName": "Bad Day - Daniel Powter",
+    "songInfo": "Original: Daniel Powter",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/gH476CxJxfg"
+  },
+  {
+    "songName": "Yoru Ni Kakeru - Yoasobi",
+    "songInfo": "Original: YOASOBI",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ]
+  },
+  {
+    "songName": "Lend Me Your Voice / Kokoro no soba ni / 心のそばに - Belle",
+    "songInfo": "Original: Belle (2021 film) soundtrack",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ]
+  },
+  {
+    "songName": "The Brave (勇者) - YOASOBI",
+    "songInfo": "Original: YOASOBI",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "concert",
+        "name": "Drawn to Dawn"
+      }
+    ]
+  },
+  {
+    "songName": "Stardust Capsule (星屑カプセル)",
+    "songInfo": "Original song by Ninomae Ina'nis",
+    "origin": "Ina's original",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "release",
+        "status": "archived"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/3amzOH63hDw"
+  },
+  {
+    "songName": "い~やい~やい~や",
+    "songInfo": "Original: Neru & z'5",
+    "origin": "3rd Party",
+    "collab": "duo",
+    "performances": [
+      {
+        "context": "cover",
+        "link": "https://www.youtube.com/embed/R5yfM_UlucY"
+      }
+    ]
+  },
+  {
+    "songName": "晴る",
+    "songInfo": "Original: ヨルシカ (Yorushika)",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ]
+  },
+  {
+    "songName": "『HYURURIRAPAPPA』",
+    "songInfo": "Original: tuki.",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "karaoke"
+      }
+    ],
+    "originalSongLink": "https://www.youtube.com/embed/AOfaWrBwo7I"
   }
 ]
