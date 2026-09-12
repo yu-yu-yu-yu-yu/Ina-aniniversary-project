@@ -5,7 +5,7 @@ import {
   QuoteContent,
   QuoteTextBox,
   GrayscaleButton,
-  GachaButton,
+   GachaButton,
   QuoteActions,
   InaImageWrapper,
   ElixirText,
