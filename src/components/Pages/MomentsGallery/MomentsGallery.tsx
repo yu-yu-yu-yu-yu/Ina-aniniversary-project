@@ -67,7 +67,7 @@ const MomentsGallery = (): JSX.Element => {
     [filtered],
   );
 
-  const carousel = useCenterCarousel(filtered.length);
+  const carousel = useCenterCarousel(filtered.length, 2, `${categoryFilter ?? "all"}-${years.join("|")}`);
   const pivotMoment = filtered[carousel.pivotIndex];
   const pivotYear = pivotMoment
     ? new Date(pivotMoment.date).getFullYear()

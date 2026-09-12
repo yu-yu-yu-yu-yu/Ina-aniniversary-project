@@ -42,7 +42,10 @@ const WahrldPage = (): JSX.Element => {
   );
   const [kindFilter, setKindFilter] = useState<WahrldKind | null>(null);
 
-  const entries = useMemo(() => data ?? [], [data]);
+  const entries = useMemo(
+    () => (data ?? []).filter((entry) => Boolean(entry.file)),
+    [data],
+  );
   const filtered = useMemo(
     () => (kindFilter ? entries.filter((e) => e.kind === kindFilter) : entries),
     [entries, kindFilter],
@@ -59,7 +62,7 @@ const WahrldPage = (): JSX.Element => {
     containerRef,
     itemRefs,
     containerHandlers,
-  } = useCenterCarousel(total);
+  } = useCenterCarousel(total, 2, kindFilter ?? "all");
 
   const wahrldSlug = (entry: WahrldEntry) =>
     entrySlug(entry.user, entry.country);

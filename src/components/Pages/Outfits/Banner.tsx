@@ -74,6 +74,10 @@ export const Banner = () => {
   const [activeTitle, activeArr] = groupedEntries[pivotIndex];
   const activeOutfit =
     activeArr.length > 1 ? activeArr[dupIdx[activeTitle] || 0] : activeArr[0];
+  const socialHandle = (
+    activeOutfit.handle?.trim() || activeOutfit.username?.trim() || ""
+  ).replace(/^@/, "");
+  const socialUrl = socialHandle ? `https://x.com/${socialHandle}` : undefined;
 
   const { hash } = useLocation();
   const hasHandledHash = useRef(false);
@@ -235,19 +239,24 @@ export const Banner = () => {
             }}
           />
           <span>
-            {"By:"} {activeOutfit.artist} (
-            <a
-              href={`https://x.com/${activeOutfit.username}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "var(--light-highlight)",
-                textDecoration: "underline",
-              }}
-            >
-              @{activeOutfit.username}
-            </a>
-            )
+            {"By:"} {activeOutfit.artist}
+            {socialUrl ? (
+              <>
+                {" "}(
+                <a
+                  href={socialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "var(--light-highlight)",
+                    textDecoration: "underline",
+                  }}
+                >
+                  @{socialHandle}
+                </a>
+                )
+              </>
+            ) : null}
           </span>
           <ShareButton
             slug={activeOutfit.filename}

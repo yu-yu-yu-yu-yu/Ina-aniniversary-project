@@ -5,6 +5,8 @@ import { useTheme } from "../../Common/ThemeProvider";
 import { ThemeName } from "../../../types";
 
 const ANIMATION_DURATION = 20000;
+const MAX_BALLOON_WIDTH_PERCENT = 18;
+const MIN_BALLOON_WIDTH_PERCENT = 8;
 
 interface BalloonDef {
   src: string;
@@ -114,7 +116,9 @@ const FloatingBalloon = styled.img<{
   height: ${({ $heightScale }) => (20 * $heightScale).toFixed(2)}vmax;
   max-height: ${({ $heightScale }) => Math.round(260 * $heightScale)}px;
   min-height: ${({ $heightScale }) => Math.round(180 * $heightScale)}px;
-  width: auto;
+  width: clamp(70px, 12vw, 160px);
+  max-width: 18vw;
+  object-fit: contain;
   z-index: 0;
   pointer-events: none;
   will-change: transform;
@@ -158,9 +162,13 @@ const FloatingBalloons = (): JSX.Element => {
       for (let i = 0; i < spawnCount; i++) {
         if (Math.random() < 0.96) {
           const def = pool[Math.floor(Math.random() * pool.length)];
+          const widthPercent =
+            Math.random() *
+              (MAX_BALLOON_WIDTH_PERCENT - MIN_BALLOON_WIDTH_PERCENT) +
+            MIN_BALLOON_WIDTH_PERCENT;
           newBalloons.push({
             key: Date.now() + Math.random() + i,
-            left: Math.random() * 88,
+            left: Math.random() * (100 - widthPercent - 6),
             src: def.src,
             bottom: Math.random() * spawnHeight,
             createdAt: Date.now(),

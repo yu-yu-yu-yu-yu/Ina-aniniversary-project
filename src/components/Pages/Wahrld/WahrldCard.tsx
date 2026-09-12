@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { WahrldEntry } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { getFlagEmoji } from "../../../utils/flags";
@@ -34,6 +34,14 @@ const WahrldCard = ({
   slug: string;
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
+  const [loadError, setLoadError] = useState(false);
+  const mediaSrc = entry.file
+    ? `${process.env.PUBLIC_URL}/wahrldSubmissions/${entry.file}`
+    : "";
+
+  useEffect(() => {
+    setLoadError(false);
+  }, [entry.file]);
 
   useEffect(() => {
     if (entry.kind !== "video") return;
@@ -50,16 +58,39 @@ const WahrldCard = ({
             onPlay={() => reportVideoPlaying(true)}
             onPause={() => reportVideoPlaying(false)}
             onEnded={() => reportVideoPlaying(false)}
+            onError={() => {
+              console.error(`WAHrld video failed to load: ${entry.file}`);
+              setLoadError(true);
+            }}
           >
-            <source
-              src={`${process.env.PUBLIC_URL}/wahrldSubmissions/${entry.file}`}
-              type="video/mp4"
-            />
+            <source src={mediaSrc} type="video/mp4" />
           </video>
+        ) : loadError || !mediaSrc ? (
+          <div
+            role="alert"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: 180,
+              padding: "1rem",
+              color: "var(--light-highlight)",
+              textAlign: "center",
+            }}
+          >
+            {entry.file
+              ? `Could not load image: ${entry.file}`
+              : "This submission is missing its file asset."}
+          </div>
         ) : (
           <img
-            src={`${process.env.PUBLIC_URL}/wahrldSubmissions/${entry.file}`}
+            src={mediaSrc}
             alt={entry.user}
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              console.error(`WAHrld image failed to load: ${entry.file}`);
+              setLoadError(true);
+            }}
           />
         )}
       </EntryMedia>

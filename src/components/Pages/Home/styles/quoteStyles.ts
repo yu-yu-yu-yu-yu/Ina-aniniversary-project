@@ -31,19 +31,20 @@ const QuoteInaImg = styled.img<{ grayscale?: boolean }>`
 
 const QuoteTextBox = styled.div`
   width: 300px;
-  aspect-ratio: 448 / 147;
+  min-height: 118px;
   border-bottom: solid 4px;
-  padding-bottom: 40px;
+  padding: 12px 12px 20px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
   filter: inherit;
   @media only screen and (max-width: 701px) {
     width: 250px;
-    padding-bottom: 10px;
-    padding-top: 20px;
+    min-height: 98px;
+    padding: 6px 10px 18px;
   }
   @media only screen and (max-width: 300px) {
     width: 200px;
@@ -55,7 +56,7 @@ const QuoteContent = styled.div`
   display: inline-block;
   vertical-align: center;
   margin-left: 40px;
-  font: normal normal normal 40px/51px Roboto;
+  font: normal normal normal 40px/1.2 Roboto;
   letter-spacing: 2.5px;
   color: #ffffff;
   color: var(--text-color);
@@ -63,32 +64,44 @@ const QuoteContent = styled.div`
     display: block;
     margin: auto;
     text-align: center;
-    font: normal normal normal 26px/32px Roboto;
+    font: normal normal normal 26px/1.2 Roboto;
     letter-spacing: 1.3px;
     margin-left: 0;
   }
   img {
     border-bottom: solid 4px;
-    padding-bottom: 40px;
+    padding-bottom: 24px;
     width: 300px;
     filter: inherit;
     @media only screen and (max-width: 701px) {
       width: 250px;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       padding-top: 20px;
     }
     @media only screen and (max-width: 300px) {
       width: 200px;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       padding-top: 20px;
     }
   }
 `;
 
-const GrayscaleButton = styled.button`
+const QuoteActions = styled.div`
   position: absolute;
-  bottom: 18px;
   right: 18px;
+  bottom: 18px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+
+  @media only screen and (max-width: 701px) {
+    position: static;
+    justify-content: center;
+    margin-top: 18px;
+  }
+`;
+
+const QuoteActionButton = styled.button`
   background: var(--light-highlight);
   color: var(--text-color);
   border: none;
@@ -102,20 +115,28 @@ const GrayscaleButton = styled.button`
   transition:
     background 0.2s,
     color 0.2s;
-  z-index: 10;
   &:hover {
     background: var(--dark-highlight);
     color: var(--light-highlight);
   }
 
   @media only screen and (max-width: 701px) {
-    position: static;
-    display: block;
-    margin: 18px auto 0;
     font-size: 0.8em;
     padding: 8px 14px;
   }
 `;
+
+const GachaButton = styled(QuoteActionButton)`
+  background: #e9d5ff;
+  color: #2a1d3a;
+
+  &:hover {
+    background: #d8b4fe;
+    color: #1f1230;
+  }
+`;
+
+const GrayscaleButton = styled(QuoteActionButton)``;
 
 const elixirFade = keyframes`
   0%   { opacity: 0; transform: translateY(8px); }
@@ -159,7 +180,9 @@ export {
   QuoteInaImg,
   QuoteContent,
   QuoteTextBox,
+  QuoteActions,
   GrayscaleButton,
+  GachaButton,
   InaImageWrapper,
   ElixirText,
 };

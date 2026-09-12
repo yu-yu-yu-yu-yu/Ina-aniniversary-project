@@ -5,6 +5,8 @@ import {
   QuoteContent,
   QuoteTextBox,
   GrayscaleButton,
+  GachaButton,
+  QuoteActions,
   InaImageWrapper,
   ElixirText,
 } from "./styles/quoteStyles";
@@ -244,7 +246,13 @@ const fitFontSize = (len: number) => Math.max(9, Math.min(22, 1500 / len));
 const Quote = (): JSX.Element => {
   const [grayscale, setGrayscale] = useState(false);
   const [elixirKey, setElixirKey] = useState<number | null>(null);
-  const [rareQuote] = useState(pickRareQuote);
+  const [rareQuote, setRareQuote] = useState(pickRareQuote);
+
+  const handleGacha = useCallback(() => {
+    if (Math.random() < 0.1) {
+      setRareQuote(pickRareQuote());
+    }
+  }, []);
 
   const handleElixir = useCallback(() => {
     setGrayscale((g) => {
@@ -287,11 +295,14 @@ const Quote = (): JSX.Element => {
         {rareQuote ? rareQuote.year : "12·09·2020"}
         <br />
       </QuoteContent>
-      <GrayscaleButton onClick={handleElixir}>
-        {grayscale
-          ? "Give her an elixir of the undying"
-          : "Ina saw this button!!"}
-      </GrayscaleButton>
+      <QuoteActions>
+        <GachaButton onClick={handleGacha}>Gacha</GachaButton>
+        <GrayscaleButton onClick={handleElixir}>
+          {grayscale
+            ? "Give her an elixir of the undying"
+            : "Ina saw this button!!"}
+        </GrayscaleButton>
+      </QuoteActions>
     </QuoteContainer>
   );
 };

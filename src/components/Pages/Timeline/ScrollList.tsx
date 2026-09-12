@@ -469,6 +469,7 @@ export const ScrollListWide = ({
   prevMonthEntry,
   nextMonthEntry,
   onNavigate,
+  sectionKey,
 }: Pick<
   IScrollListProps,
   "searchProps" | "milestones" | "monthProps" | "modalControls"
@@ -477,11 +478,13 @@ export const ScrollListWide = ({
   prevMonthEntry: { year: Year; month: Month } | null;
   nextMonthEntry: { year: Year; month: Month } | null;
   onNavigate: (month: Month, year: Year) => void;
+  sectionKey: string;
 }) => {
   return (
     <ScrollListContainer>
       {modalControls ? null : <TopControls {...searchProps} />}
       <TimelineStage
+        key={sectionKey}
         milestones={milestones}
         prevMonthEntry={prevMonthEntry}
         nextMonthEntry={nextMonthEntry}
@@ -678,6 +681,7 @@ export const ScrollList = ({
         prevMonthEntry={prevMonthEntry}
         nextMonthEntry={nextMonthEntry}
         onNavigate={scrollToMonth}
+        sectionKey={`${year}-${month}`}
       />
     </>
   );
