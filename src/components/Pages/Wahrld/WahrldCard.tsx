@@ -35,6 +35,17 @@ const WahrldCard = ({
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
   const [loadError, setLoadError] = useState(false);
+  const socialLabel = entry.socials
+    ? (() => {
+        try {
+          const url = new URL(entry.socials);
+          const handle = url.pathname.replace(/^\//, "").replace(/\/$/, "");
+          return handle ? `@${handle}` : "Social link";
+        } catch {
+          return "Social link";
+        }
+      })()
+    : "";
   const mediaSrc = entry.file
     ? `${process.env.PUBLIC_URL}/wahrldSubmissions/${entry.file}`
     : "";
@@ -116,7 +127,7 @@ const WahrldCard = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          {entry.socials}
+          {socialLabel}
         </SocialsLink>
       )}
     </EntryCardWrapper>

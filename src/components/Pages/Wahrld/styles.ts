@@ -149,8 +149,25 @@ export const EntryMessage = styled.p`
 
 export const SocialsLink = styled.a`
   align-self: center;
-  color: var(--light-highlight);
-  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--light-highlight);
+  background: var(--light-highlight);
+  color: var(--dark-highlight);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
 `;
 
 export const NoEntriesYet = styled.div`

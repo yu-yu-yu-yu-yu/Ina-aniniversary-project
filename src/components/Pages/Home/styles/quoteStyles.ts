@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   background: ${({ $grayscale }) =>
@@ -18,11 +18,11 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   }
 `;
 
-const QuoteInaImg = styled.img<{ grayscale?: boolean }>`
+const QuoteInaImg = styled.img<{ $grayscale?: boolean }>`
   display: inline-block;
   z-index: 3;
   width: 300px;
-  filter: ${({ grayscale }) => (grayscale ? "grayscale(1)" : "none")};
+  filter: ${({ $grayscale }) => ($grayscale ? "grayscale(1)" : "none")};
   transition: filter 0.2s;
   @media only screen and (max-width: 701px) {
     width: 200px;
@@ -137,12 +137,12 @@ const QuoteActionButton = styled.button`
 `;
 
 const GachaButton = styled(QuoteActionButton)<{ $active?: boolean }>`
-  background: ${({ $active }) => ($active ? "#e9d5ff" : "#e9d5ff")};
+  background: #e9d5ff;
   color: #2a1d3a;
 
   ${({ $active }) =>
     $active &&
-    `
+    css`
       animation: ${rainbowFlash} 3s ease-in-out 1;
       box-shadow: 0 0 18px rgba(255, 255, 255, 0.8), 0 0 28px rgba(128, 90, 213, 0.8);
     `}

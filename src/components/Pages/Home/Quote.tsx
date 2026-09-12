@@ -236,25 +236,63 @@ const RARE_QUOTES = [
   },
 ];
 
-const pickRareQuote = () =>
-  Math.random() < 0.1
-    ? RARE_QUOTES[Math.floor(Math.random() * RARE_QUOTES.length)]
-    : null;
+type RareQuote = {
+  text: string;
+  year: string;
+  author?: string;
+};
+
+const isSameQuote = (
+  left: RareQuote | null | undefined,
+  right: RareQuote | null | undefined,
+) =>
+  !!left &&
+  !!right &&
+  left.text === right.text &&
+  left.year === right.year &&
+  (left.author ?? "") === (right.author ?? "");
+
+const pickRareQuote = (current?: RareQuote | null): RareQuote => {
+  const pool = current
+    ? RARE_QUOTES.filter(
+        (quote) =>
+          quote.text !== current.text ||
+          quote.year !== current.year ||
+          (quote.author ?? "") !== (current.author ?? ""),
+      )
+    : RARE_QUOTES;
+
+  return pool[Math.floor(Math.random() * pool.length)] ?? current ?? RARE_QUOTES[0];
+};
+
+const maybePickRareQuote = (current?: RareQuote | null) => {
+  if (Math.random() >= 0.1) {
+    return current ?? null;
+  }
+
+  const next = pickRareQuote(current);
+  return isSameQuote(current, next) ? pickRareQuote(current) : next;
+};
 
 const fitFontSize = (len: number) => Math.max(9, Math.min(22, 1500 / len));
 
 const Quote = (): JSX.Element => {
   const [grayscale, setGrayscale] = useState(false);
   const [elixirKey, setElixirKey] = useState<number | null>(null);
-  const [rareQuote, setRareQuote] = useState(pickRareQuote);
+  const [rareQuote, setRareQuote] = useState<RareQuote | null>(null);
   const [gachaBurst, setGachaBurst] = useState(false);
 
   const handleGacha = useCallback(() => {
-    if (Math.random() < 0.1) {
-      setRareQuote(pickRareQuote());
-      setGachaBurst(true);
-      window.setTimeout(() => setGachaBurst(false), 3000);
-    }
+    setRareQuote((current) => {
+      const nextQuote = maybePickRareQuote(current);
+
+      if (nextQuote && !isSameQuote(current, nextQuote)) {
+        setGachaBurst(true);
+        window.setTimeout(() => setGachaBurst(false), 3000);
+      }
+
+      return nextQuote;
+    });
   }, []);
 
   const handleElixir = useCallback(() => {
@@ -271,7 +309,7 @@ const Quote = (): JSX.Element => {
       <InaImageWrapper>
         <QuoteInaImg
           src={`${process.env.PUBLIC_URL}/InaInaIna.png`}
-          grayscale={grayscale}
+          $grayscale={grayscale}
           alt="Ina"
         />
         {elixirKey !== null && (
