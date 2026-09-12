@@ -101,6 +101,15 @@ const QuoteActions = styled.div`
   }
 `;
 
+const rainbowFlash = keyframes`
+  0% { background: linear-gradient(90deg, #ff5f6d, #ffc371, #7ae582, #76b7ff, #d291ff, #ff5f6d); color: #1a1a1a; box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 12px rgba(255,255,255,0.9); }
+  16% { background: linear-gradient(90deg, #ffc371, #7ae582, #76b7ff, #d291ff, #ff5f6d, #ff5f6d); }
+  33% { background: linear-gradient(90deg, #7ae582, #76b7ff, #d291ff, #ff5f6d, #ff5f6d, #ffc371); }
+  50% { background: linear-gradient(90deg, #76b7ff, #d291ff, #ff5f6d, #ffc371, #7ae582, #76b7ff); }
+  66% { background: linear-gradient(90deg, #d291ff, #ff5f6d, #ffc371, #7ae582, #76b7ff, #d291ff); }
+  100% { background: linear-gradient(90deg, #ff5f6d, #ffc371, #7ae582, #76b7ff, #d291ff, #ff5f6d); color: #1a1a1a; box-shadow: 0 0 18px rgba(255,255,255,0.7); }
+`;
+
 const QuoteActionButton = styled.button`
   background: var(--light-highlight);
   color: var(--text-color);
@@ -114,7 +123,8 @@ const QuoteActionButton = styled.button`
   box-shadow: 0 2px 8px var(--shadow);
   transition:
     background 0.2s,
-    color 0.2s;
+    color 0.2s,
+    box-shadow 0.2s;
   &:hover {
     background: var(--dark-highlight);
     color: var(--light-highlight);
@@ -126,9 +136,16 @@ const QuoteActionButton = styled.button`
   }
 `;
 
-const GachaButton = styled(QuoteActionButton)`
-  background: #e9d5ff;
+const GachaButton = styled(QuoteActionButton)<{ $active?: boolean }>`
+  background: ${({ $active }) => ($active ? "#e9d5ff" : "#e9d5ff")};
   color: #2a1d3a;
+
+  ${({ $active }) =>
+    $active &&
+    `
+      animation: ${rainbowFlash} 3s ease-in-out 1;
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.8), 0 0 28px rgba(128, 90, 213, 0.8);
+    `}
 
   &:hover {
     background: #d8b4fe;

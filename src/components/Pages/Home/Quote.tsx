@@ -247,10 +247,13 @@ const Quote = (): JSX.Element => {
   const [grayscale, setGrayscale] = useState(false);
   const [elixirKey, setElixirKey] = useState<number | null>(null);
   const [rareQuote, setRareQuote] = useState(pickRareQuote);
+  const [gachaBurst, setGachaBurst] = useState(false);
 
   const handleGacha = useCallback(() => {
     if (Math.random() < 0.1) {
       setRareQuote(pickRareQuote());
+      setGachaBurst(true);
+      window.setTimeout(() => setGachaBurst(false), 3000);
     }
   }, []);
 
@@ -296,7 +299,9 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <QuoteActions>
-        <GachaButton onClick={handleGacha}>Gacha</GachaButton>
+        <GachaButton $active={gachaBurst} onClick={handleGacha}>
+          Gacha
+        </GachaButton>
         <GrayscaleButton onClick={handleElixir}>
           {grayscale
             ? "Give her an elixir of the undying"
