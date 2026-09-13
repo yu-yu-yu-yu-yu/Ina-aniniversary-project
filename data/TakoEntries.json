@@ -882,9 +882,9 @@
   {
     "author": "third12",
     "name": "third12",
-    "category": "",
-    "attributes": "",
-    "description": "",
+    "category": "Angelic",
+    "attributes": "Festive / Ethereal",
+    "description": "\"A blissful companion that descends whenever a grand milestone is reached. Wearing a striped celebratory cap topped with a radiant, shuriken-shaped star, this Tako spreads pure harmony with every blow of its party horn. It is said that their joyful presence carries a divine, gripping strength capable of lifting the spirits of everyone in the room.\"",
     "image": "third12.png"
   },
   {
@@ -918,6 +918,14 @@
     "attributes": "",
     "description": "",
     "image": "VaanTheBrainlessOne.png"
+  },
+  {
+    "author": "Vaan",
+    "name": "Baldako",
+    "category": "Cleaner",
+    "attributes": "Bald / Very Soft and Squishy",
+    "description": "Known for its perfectly smooth and bald form, this Tako prefers to glide across dusty surfaces, effortlessly absorbing messes in its path. Its incredibly soft and squishy body makes it a master of cleaning tight crevices, though it will always demand a gentle pat once the chores are done",
+    "image": "Baldako.png"
   },
   {
     "author": "Valawari ",
@@ -1050,9 +1058,9 @@
   {
     "author": "Jaboll252",
     "name": "Jabolldabaoth The Drinking One",
-    "category": "",
-    "attributes": "30 years old, magically preserved (virgin)  Has no mouth and must drink. Big fan of Inatsu. Can cast \"Manual Breathing\", \"Absorb Ethanol\" and \"Greater \"Obliderate Ikadachi\". Ph.D. in procrastodynamics and appiled introvertics. Likes to steal eyeballs from extra-dimensional cats. Spills ikadachi blood as much as he spills spaghetti.\"",
-    "description": "",
+    "category": "Wizard",
+    "attributes": "30 years old, magically preserved (virgin)",
+    "description": "\"Has no mouth and must drink. Big fan of Inatsu. Can cast \"Manual Breathing\", \"Absorb Ethanol\" and \"Greater Obliderate Ikadachi\". Ph.D. in procrastodynamics and appiled introvertics. Likes to steal eyeballs from extra-dimensional cats. Spills ikadachi blood as much as he spills spaghetti.\"",
     "image": "Jaboll252.png"
   },
   {
@@ -1154,9 +1162,9 @@
   {
     "author": "Senki",
     "name": "Takosenki",
-    "category": "",
-    "attributes": "",
-    "description": "category cook/ attributes likes to eat and is good at listening",
+    "category": "Cook",
+    "attributes": "Likes to eat and is good at listening",
+    "description": "",
     "image": "Senki.png"
   },
   {
