@@ -28,8 +28,10 @@ export const parseYouTube = (url: string): YouTubeRef | null => {
   if (parsed.hostname.includes("youtu.be")) {
     id = parsed.pathname.slice(1).split("/")[0] || null;
   } else if (parsed.hostname.includes("youtube.com")) {
-    const embedMatch = parsed.pathname.match(/\/embed\/([\w-]{6,})/);
-    id = embedMatch ? embedMatch[1] : parsed.searchParams.get("v");
+    const pathMatch = parsed.pathname.match(
+      /\/(?:embed|live|shorts)\/([\w-]{6,})/,
+    );
+    id = pathMatch ? pathMatch[1] : parsed.searchParams.get("v");
   }
   if (!id) return null;
 

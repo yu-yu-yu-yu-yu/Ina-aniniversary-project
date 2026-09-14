@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MomentReaction } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import {
@@ -8,7 +8,6 @@ import {
   CommenterBubbleWrap,
   FanSprite,
   FloorArea,
-  MoreIndicator,
   ReactionName,
 } from "./styles";
 
@@ -245,46 +244,11 @@ const GalleryFans = ({
   }, [momentKey]);
 
   const commenters = (reactions ?? []).slice(0, commenterCount);
-  const bubbleTextRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const scrollAnimRefs = useRef<Record<number, number>>({});
-  const [overflowing, setOverflowing] = useState<boolean[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const next = commenters.map((_, i) => {
-      const el = bubbleTextRefs.current[i];
-      return !!el && el.scrollHeight - el.clientHeight > 2;
-    });
-    setOverflowing(next);
-  }, [momentKey, commenters.length]);
-
-  const animateScrollTo = (i: number, target: number) => {
-    const el = bubbleTextRefs.current[i];
-    if (!el) return;
-    if (scrollAnimRefs.current[i]) {
-      cancelAnimationFrame(scrollAnimRefs.current[i]);
-    }
-    const start = el.scrollTop;
-    const distance = target - start;
-    if (Math.abs(distance) < 1) return;
-    const duration = Math.min(6000, Math.max(1200, Math.abs(distance) * 35));
-    const startTime = performance.now();
-    const step = (now: number) => {
-      const t = Math.min(1, (now - startTime) / duration);
-      el.scrollTop = start + distance * t;
-      if (t < 1) {
-        scrollAnimRefs.current[i] = requestAnimationFrame(step);
-      }
-    };
-    scrollAnimRefs.current[i] = requestAnimationFrame(step);
-  };
-
-  const revealBubble = (i: number) => {
-    const el = bubbleTextRefs.current[i];
-    if (el) animateScrollTo(i, el.scrollHeight - el.clientHeight);
-  };
-  const hideBubble = (i: number) => {
-    animateScrollTo(i, 0);
-  };
+    setHoveredIndex(null);
+  }, [momentKey]);
 
   return (
     <FloorArea>
@@ -331,30 +295,28 @@ const GalleryFans = ({
             $hidden={false}
             $delay={i * 0.2}
             $interactive
-            onMouseEnter={() => revealBubble(i)}
-            onMouseLeave={() => hideBubble(i)}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() =>
+              setHoveredIndex((cur) => (cur === i ? null : cur))
+            }
           />
         );
       })}
       {commenters.map((reaction, i) => {
         const left = commenterLefts[i] ?? 50;
+        const expanded = hoveredIndex === i;
         return (
           <CommenterBubbleWrap
             key={`bubble-${i}`}
             $left={left}
             $bottom={COMMENTER_BOTTOM + 55}
-            onMouseEnter={() => revealBubble(i)}
-            onMouseLeave={() => hideBubble(i)}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() =>
+              setHoveredIndex((cur) => (cur === i ? null : cur))
+            }
           >
-            <Bubble>
-              <BubbleText
-                ref={(el) => {
-                  bubbleTextRefs.current[i] = el;
-                }}
-              >
-                {reaction.text}
-              </BubbleText>
-              {overflowing[i] && <MoreIndicator>···</MoreIndicator>}
+            <Bubble $expanded={expanded}>
+              <BubbleText $expanded={expanded}>{reaction.text}</BubbleText>
             </Bubble>
             <ReactionName>{reaction.author}</ReactionName>
           </CommenterBubbleWrap>

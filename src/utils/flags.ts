@@ -1,14 +1,10 @@
-export const VOID_FLAG = "🐙";
+export const VOID_FLAG = "🏴";
 
-const REGIONAL_INDICATOR_OFFSET = 0x1f1e6 - "A".charCodeAt(0);
+export const isValidCountryCode = (code?: string): boolean =>
+  /^[A-Z]{2}$/.test((code || "").trim().toUpperCase());
 
-export const getFlagEmoji = (code?: string): string => {
+export const getFlagImgSrc = (code?: string): string | null => {
   const normalized = (code || "").trim().toUpperCase();
-  if (!/^[A-Z]{2}$/.test(normalized)) return VOID_FLAG;
-  return normalized
-    .split("")
-    .map((letter) =>
-      String.fromCodePoint(letter.charCodeAt(0) + REGIONAL_INDICATOR_OFFSET),
-    )
-    .join("");
+  if (!isValidCountryCode(normalized)) return null;
+  return `https://flagcdn.com/w40/${normalized.toLowerCase()}.png`;
 };

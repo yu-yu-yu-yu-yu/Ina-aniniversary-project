@@ -136,15 +136,26 @@ const QuoteActionButton = styled.button`
   }
 `;
 
+const gachaShake = keyframes`
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+`;
+
 const GachaButton = styled(QuoteActionButton)<{ $active?: boolean }>`
   background: #e9d5ff;
   color: #2a1d3a;
+  animation: ${gachaShake} 0.4s ease-in-out;
 
   ${({ $active }) =>
     $active &&
     css`
       animation: ${rainbowFlash} 3s ease-in-out 1;
-      box-shadow: 0 0 18px rgba(255, 255, 255, 0.8), 0 0 28px rgba(128, 90, 213, 0.8);
+      box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.8),
+        0 0 28px rgba(128, 90, 213, 0.8);
     `}
 
   &:hover {

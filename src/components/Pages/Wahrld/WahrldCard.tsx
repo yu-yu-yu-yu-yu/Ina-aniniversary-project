@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { SRLWrapper } from "simple-react-lightbox";
 import { WahrldEntry } from "../../../types";
 import { getTakoAvatar } from "../Timeline/ScrollListUtils";
-import { getFlagEmoji } from "../../../utils/flags";
+import { getFlagImgSrc, VOID_FLAG } from "../../../utils/flags";
 import { useMute } from "../../Common/MuteButton";
 import ShareButton from "../../Common/ShareButton";
 import {
@@ -14,6 +15,19 @@ import {
   EntryUser,
   SocialsLink,
 } from "./styles";
+
+const lightboxOptions = {
+  settings: { disablePanzoom: false },
+  buttons: {
+    showAutoplayButton: false,
+    showCloseButton: false,
+    showDownloadButton: false,
+    showFullscreenButton: false,
+    showNextButton: false,
+    showPrevButton: false,
+    showThumbnailsButton: false,
+  },
+};
 
 export const getEntryAvatar = (
   icon: string | undefined,
@@ -35,6 +49,11 @@ const WahrldCard = ({
 }): JSX.Element => {
   const { reportVideoPlaying } = useMute();
   const [loadError, setLoadError] = useState(false);
+  const [flagError, setFlagError] = useState(false);
+  const [mediaAspect, setMediaAspect] = useState<number | null>(null);
+  const flagSrc = getFlagImgSrc(entry.country);
+  const cardMaxWidth =
+    mediaAspect !== null && mediaAspect < 1 ? 480 : undefined;
   const socialLabel = entry.socials
     ? (() => {
         try {
@@ -52,6 +71,7 @@ const WahrldCard = ({
 
   useEffect(() => {
     setLoadError(false);
+    setMediaAspect(null);
   }, [entry.file]);
 
   useEffect(() => {
@@ -60,12 +80,18 @@ const WahrldCard = ({
   }, [entry.kind, entry.file, reportVideoPlaying]);
 
   return (
-    <EntryCardWrapper>
-      <EntryMedia>
+    <EntryCardWrapper $maxWidth={cardMaxWidth}>
+      <EntryMedia $aspect={!loadError ? mediaAspect : null}>
         {entry.kind === "video" ? (
           <video
             controls
             preload="none"
+            onLoadedMetadata={(event) => {
+              const { videoWidth, videoHeight } = event.currentTarget;
+              if (videoWidth && videoHeight) {
+                setMediaAspect(videoWidth / videoHeight);
+              }
+            }}
             onPlay={() => reportVideoPlaying(true)}
             onPause={() => reportVideoPlaying(false)}
             onEnded={() => reportVideoPlaying(false)}
@@ -94,15 +120,23 @@ const WahrldCard = ({
               : "This submission is missing its file asset."}
           </div>
         ) : (
-          <img
-            src={mediaSrc}
-            alt={entry.user}
-            onError={(event) => {
-              event.currentTarget.onerror = null;
-              console.error(`WAHrld image failed to load: ${entry.file}`);
-              setLoadError(true);
-            }}
-          />
+          <SRLWrapper options={lightboxOptions}>
+            <img
+              src={mediaSrc}
+              alt={entry.user}
+              onLoad={(event) => {
+                const { naturalWidth, naturalHeight } = event.currentTarget;
+                if (naturalWidth && naturalHeight) {
+                  setMediaAspect(naturalWidth / naturalHeight);
+                }
+              }}
+              onError={(event) => {
+                event.currentTarget.onerror = null;
+                console.error(`WAHrld image failed to load: ${entry.file}`);
+                setLoadError(true);
+              }}
+            />
+          </SRLWrapper>
         )}
       </EntryMedia>
       <EntryHeader>
@@ -115,9 +149,18 @@ const WahrldCard = ({
           }}
         />
         <EntryUser>{entry.user}</EntryUser>
-        <EntryFlag role="img" aria-label={entry.country || "The Void"}>
-          {getFlagEmoji(entry.country)}
-        </EntryFlag>
+        {flagSrc && !flagError ? (
+          <EntryFlag
+            as="img"
+            src={flagSrc}
+            alt={entry.country}
+            onError={() => setFlagError(true)}
+          />
+        ) : (
+          <EntryFlag role="img" aria-label={entry.country || "The Void"}>
+            {VOID_FLAG}
+          </EntryFlag>
+        )}
         <ShareButton slug={slug} label="Copy link to this submission" />
       </EntryHeader>
       {entry.message && <EntryMessage>{entry.message}</EntryMessage>}

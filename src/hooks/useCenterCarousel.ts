@@ -62,7 +62,26 @@ export const useCenterCarousel = (
   const dragStartX = useRef(0);
   const dragStartScroll = useRef(0);
   const dragMaxScroll = useRef(0);
+  const pendingAnchor = useRef<{ index: number; centerX: number } | null>(null);
   pivotRef.current = pivotIndex;
+
+  const nearestIndex = useCallback((container: HTMLElement) => {
+    const cRect = container.getBoundingClientRect();
+    const centerX = cRect.left + cRect.width / 2;
+    let bestIdx = pivotRef.current;
+    let bestDist = Infinity;
+    itemRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0) return;
+      const dist = Math.abs(rect.left + rect.width / 2 - centerX);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = i;
+      }
+    });
+    return bestIdx;
+  }, []);
 
   const expandLoad = useCallback(
     (center: number) => {
@@ -129,6 +148,25 @@ export const useCenterCarousel = (
 
   useEffect(() => () => cancelAnimationFrame(followRaf.current), []);
 
+  useLayoutEffect(() => {
+    const anchor = pendingAnchor.current;
+    if (!dragging || !anchor) return;
+    pendingAnchor.current = null;
+    const container = containerRef.current;
+    const el = itemRefs.current[anchor.index];
+    if (!container || !el) return;
+    const rect = el.getBoundingClientRect();
+    const newCenterX = rect.left + rect.width / 2;
+    const delta = newCenterX - anchor.centerX;
+    if (delta === 0) return;
+    const maxScroll = getMaxScroll(container);
+    const oldScroll = container.scrollLeft;
+    const corrected = Math.min(Math.max(oldScroll + delta, 0), maxScroll);
+    container.scrollLeft = corrected;
+    dragStartScroll.current += corrected - oldScroll;
+    dragMaxScroll.current = maxScroll;
+  }, [dragging]);
+
   useEffect(() => {
     if (total <= 0) {
       setPivotIndex(0);
@@ -152,7 +190,10 @@ export const useCenterCarousel = (
       return;
     }
     const nextLoaded = new Set(
-      Array.from({ length: Math.min(loadRadius + 1, total) }, (_, index) => index),
+      Array.from(
+        { length: Math.min(loadRadius + 1, total) },
+        (_, index) => index,
+      ),
     );
     setLoadedSet(nextLoaded);
     setPivotIndex(0);
@@ -163,7 +204,31 @@ export const useCenterCarousel = (
     dragStartX.current = 0;
     dragStartScroll.current = 0;
     scrollTargetRef.current = 0;
+    pendingAnchor.current = null;
   }, [loadRadius, resetKey, total]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      const target = e.target as HTMLElement | null;
+      if (target) {
+        const tag = target.tagName;
+        if (
+          tag === "INPUT" ||
+          tag === "TEXTAREA" ||
+          tag === "SELECT" ||
+          target.isContentEditable
+        ) {
+          return;
+        }
+      }
+      e.preventDefault();
+      goTo(pivotRef.current + (e.key === "ArrowLeft" ? -1 : 1));
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [goTo]);
 
   const onScroll = useCallback(() => {
     if (programmaticRef.current || isDragging.current) return;
@@ -171,27 +236,17 @@ export const useCenterCarousel = (
     debounceTimer.current = window.setTimeout(() => {
       const container = containerRef.current;
       if (!container) return;
-      const cRect = container.getBoundingClientRect();
-      const centerX = cRect.left + cRect.width / 2;
-      let bestIdx = pivotRef.current;
-      let bestDist = Infinity;
-      itemRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const dist = Math.abs(rect.left + rect.width / 2 - centerX);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = i;
-        }
-      });
+      const bestIdx = nearestIndex(container);
       if (bestIdx === pivotRef.current) return;
       setPivotIndex(bestIdx);
       expandLoad(bestIdx);
     }, 250);
-  }, [expandLoad]);
+  }, [expandLoad, nearestIndex]);
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).closest("button, a, video, input, textarea")) {
+    if (
+      (e.target as HTMLElement).closest("button, a, video, input, textarea")
+    ) {
       return;
     }
     const el = containerRef.current;
@@ -225,6 +280,14 @@ export const useCenterCarousel = (
           : dragStartX.current;
     if (!isDragging.current) {
       if (Math.abs(pointerX - dragStartX.current) < DRAG_THRESHOLD) return;
+      const pivotEl = itemRefs.current[pivotRef.current];
+      if (pivotEl) {
+        const pivotRect = pivotEl.getBoundingClientRect();
+        pendingAnchor.current = {
+          index: pivotRef.current,
+          centerX: pivotRect.left + pivotRect.width / 2,
+        };
+      }
       isDragging.current = true;
       setDragging(true);
       cancelAnimationFrame(followRaf.current);
@@ -238,7 +301,8 @@ export const useCenterCarousel = (
     const maxScroll = getMaxScroll(el);
     dragMaxScroll.current = maxScroll;
     e.preventDefault();
-    const nextScroll = dragStartScroll.current - (pointerX - dragStartX.current);
+    const nextScroll =
+      dragStartScroll.current - (pointerX - dragStartX.current);
     el.scrollLeft = Math.min(Math.max(nextScroll, 0), maxScroll);
   }, []);
 
@@ -258,22 +322,10 @@ export const useCenterCarousel = (
         el.releasePointerCapture(dragPointerId.current);
       }
       el.style.cursor = "";
-      const cRect = el.getBoundingClientRect();
-      const centerX = cRect.left + cRect.width / 2;
-      let bestIdx = pivotRef.current;
-      let bestDist = Infinity;
-      itemRefs.current.forEach((item, i) => {
-        if (!item) return;
-        const rect = item.getBoundingClientRect();
-        const dist = Math.abs(rect.left + rect.width / 2 - centerX);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = i;
-        }
-      });
-      goTo(bestIdx);
+      pendingAnchor.current = null;
+      goTo(nearestIndex(el));
     },
-    [goTo],
+    [goTo, nearestIndex],
   );
 
   const isLoaded = useCallback(

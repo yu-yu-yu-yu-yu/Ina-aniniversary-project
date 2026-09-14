@@ -20,6 +20,7 @@ import {
   EdgeArrow,
   ExhibitCounter,
   GalleryWall,
+  SearchInput,
   SubNavBar,
   WoodFloor,
   YearButton,
@@ -43,7 +44,9 @@ const MomentsGallery = (): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<MomentCategory | null>(
     null,
   );
+  const [tributesOnly, setTributesOnly] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const moments = useMemo(
     () =>
@@ -52,13 +55,31 @@ const MomentsGallery = (): JSX.Element => {
       ),
     [data],
   );
-  const filtered = useMemo(
+  const preSearch = useMemo(
     () =>
-      categoryFilter
-        ? moments.filter((m) => m.category === categoryFilter)
-        : moments,
-    [moments, categoryFilter],
+      moments.filter(
+        (m) =>
+          (!categoryFilter || m.category === categoryFilter) &&
+          (!tributesOnly || m.tributes.length > 0),
+      ),
+    [moments, categoryFilter, tributesOnly],
   );
+  const filtered = useMemo(() => {
+    const query = search.trim();
+    if (!query) return preSearch;
+    const quoted =
+      query.length >= 2 && query.startsWith('"') && query.endsWith('"');
+    if (quoted) {
+      const keyword = query.slice(1, -1).toLowerCase();
+      return preSearch.filter((m) => m.context.toLowerCase().includes(keyword));
+    }
+    const needle = query.toLowerCase();
+    return preSearch.filter(
+      (m) =>
+        m.title.toLowerCase().includes(needle) ||
+        m.tributes.some((t) => t.author.toLowerCase().includes(needle)),
+    );
+  }, [preSearch, search]);
   const years = useMemo(
     () =>
       Array.from(new Set(filtered.map((m) => new Date(m.date).getFullYear())))
@@ -67,7 +88,11 @@ const MomentsGallery = (): JSX.Element => {
     [filtered],
   );
 
-  const carousel = useCenterCarousel(filtered.length, 2, `${categoryFilter ?? "all"}-${years.join("|")}`);
+  const carousel = useCenterCarousel(
+    filtered.length,
+    2,
+    `${categoryFilter ?? "all"}-${tributesOnly ? "tributes" : "any"}-${search}`,
+  );
   const pivotMoment = filtered[carousel.pivotIndex];
   const pivotYear = pivotMoment
     ? new Date(pivotMoment.date).getFullYear()
@@ -94,12 +119,16 @@ const MomentsGallery = (): JSX.Element => {
       setCategoryFilter(null);
       return;
     }
-    const index = filtered.findIndex((m) => m.slug === slug);
+    if (tributesOnly && target.tributes.length === 0) {
+      setTributesOnly(false);
+      return;
+    }
+    const index = filtered.indexOf(target);
     if (index >= 0) {
       hasHandledHash.current = true;
       goTo(index);
     }
-  }, [hash, moments, filtered, categoryFilter, goTo]);
+  }, [hash, moments, filtered, categoryFilter, tributesOnly, goTo]);
 
   const goToYear = (year: number) => {
     const index = filtered.findIndex(
@@ -134,9 +163,21 @@ const MomentsGallery = (): JSX.Element => {
                 value={categoryFilter === cat}
                 onChange={setCategory(cat)}
                 labelColor="var(--text-color)"
-                mobile
               />
             ))}
+            <Switch
+              label="With Tributes"
+              value={tributesOnly}
+              onChange={setTributesOnly}
+              labelColor="var(--text-color)"
+            />
+            <SearchInput
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder='Title, tributer, or "keyword"'
+              aria-label="Search moments"
+            />
           </CategorySwitchRow>
           {years.length > 1 && (
             <YearNavRow>
@@ -207,6 +248,7 @@ const MomentsGallery = (): JSX.Element => {
       {carousel.dragging && <CarouselCenterMark />}
       <EdgeArrow
         $side="left"
+        onMouseDown={(e) => e.preventDefault()}
         onClick={() => carousel.goTo(carousel.pivotIndex - 1)}
         disabled={carousel.pivotIndex === 0}
         aria-label="Previous moment"
@@ -215,6 +257,7 @@ const MomentsGallery = (): JSX.Element => {
       </EdgeArrow>
       <EdgeArrow
         $side="right"
+        onMouseDown={(e) => e.preventDefault()}
         onClick={() => carousel.goTo(carousel.pivotIndex + 1)}
         disabled={carousel.pivotIndex >= filtered.length - 1}
         aria-label="Next moment"

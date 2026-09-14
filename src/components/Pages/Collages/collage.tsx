@@ -27,6 +27,12 @@ const collages = [
     description:
       "A collage celebrating Ina's Evermore 3D live, made out of her streams thumbnails!",
   },
+  {
+    src: process.env.PUBLIC_URL + "/inaversary6collage.png",
+    title: "Ina's 6th Anniversary Collage",
+    description:
+      "A collage shaped like a giant 6, made of moments from Ina's 6th anniversary year.",
+  },
 ];
 
 const CollagePage = () => {

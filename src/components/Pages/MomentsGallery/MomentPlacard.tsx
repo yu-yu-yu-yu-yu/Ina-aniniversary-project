@@ -9,6 +9,7 @@ import {
   PlacardCard,
   PlacardContext,
   PlacardCredit,
+  PlacardCreditLink,
   PlacardMeta,
   PlacardReactionAvatar,
   PlacardReactionList,
@@ -76,7 +77,20 @@ const MomentPlacard = ({
           {moment.date} · {CATEGORY_LABEL[moment.category]}
         </PlacardMeta>
         <PlacardContext ref={contextRef}>{moment.context}</PlacardContext>
-        <PlacardCredit>{view.credit}</PlacardCredit>
+        <PlacardCredit>
+          {view.creditPrefix}
+          {view.creditHref ? (
+            <PlacardCreditLink
+              href={view.creditHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {view.creditText}
+            </PlacardCreditLink>
+          ) : (
+            view.creditText
+          )}
+        </PlacardCredit>
         {!!moment.reactions?.length && (
           <PlacardReactionList>
             {moment.reactions.map((reaction, i) => {

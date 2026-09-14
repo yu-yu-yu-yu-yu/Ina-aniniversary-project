@@ -76,35 +76,58 @@ export const NeighborCard = styled.div`
   gap: 8px;
 `;
 
-export const EntryCardWrapper = styled.div`
+export const EntryCardWrapper = styled.div<{ $maxWidth?: number }>`
   background: var(--dark-highlight);
   color: var(--text-color);
   border: 2px solid var(--light-highlight);
   border-radius: 20px;
-  padding: clamp(12px, 3vw, 24px);
+  padding: clamp(10px, 2.5vw, 20px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  height: 100%;
+  gap: 12px;
+  max-height: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
   overflow-y: auto;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  ${({ $maxWidth }) =>
+    $maxWidth
+      ? `
+    align-self: center;
+    width: fit-content;
+    max-width: min(100%, ${$maxWidth}px);
+  `
+      : `
+    align-self: stretch;
+    width: 100%;
+  `}
 `;
 
-export const EntryMedia = styled.div`
+export const EntryMedia = styled.div<{ $aspect?: number | null }>`
   border-radius: 14px;
   overflow: hidden;
   background: #000;
-  flex: 1 1 auto;
-  min-height: 160px;
+  flex: 0 1 auto;
+  max-height: min(58vh, 520px);
   display: flex;
   align-items: center;
   justify-content: center;
+  ${({ $aspect }) =>
+    $aspect &&
+    `
+    align-self: center;
+    max-width: 100%;
+    aspect-ratio: ${$aspect};
+  `}
 
   img,
   video {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    display: block;
   }
 `;
 
@@ -117,8 +140,8 @@ export const EntryHeader = styled.div`
 `;
 
 export const EntryAvatar = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid var(--light-highlight);
   object-fit: cover;
@@ -134,15 +157,24 @@ export const NeighborAvatar = styled.img`
 
 export const EntryUser = styled.span`
   font-weight: 700;
+  font-size: 0.95em;
 `;
 
 export const EntryFlag = styled.span`
   font-size: 20px;
   line-height: 1;
+
+  &[src] {
+    width: 28px;
+    height: auto;
+    border-radius: 3px;
+  }
 `;
 
 export const EntryMessage = styled.p`
-  margin: 0;
+  margin: 0 auto;
+  max-width: 60ch;
+  font-size: clamp(13px, 1.6vw, 16px);
   line-height: 1.5;
   text-align: center;
 `;
@@ -180,6 +212,25 @@ export const KindSwitchRow = styled.div`
   display: flex;
   gap: 16px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   padding: 12px 0 0;
+`;
+
+export const SearchInput = styled.input`
+  height: 32px;
+  width: 200px;
+  max-width: 60vw;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--light-highlight);
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  font-size: 13px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+  }
 `;

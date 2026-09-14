@@ -31,6 +31,19 @@
     "originalSongLink": "https://www.youtube.com/embed/J3XlXbuHc84"
   },
   {
+    "songName": "Sherma Song",
+    "songInfo": "Original: Hollow Knight: Silksong OST",
+    "origin": "3rd Party",
+    "collab": "solo",
+    "performances": [
+      {
+        "context": "stream",
+        "link": "https://www.youtube.com/embed/IUlIoOQ5gpM",
+        "status": "unofficially archived"
+      }
+    ]
+  },
+  {
     "songName": "愛して愛して愛して (Aishite Aishite Aishite)",
     "songInfo": "Original: Kikuo feat. Hatsune Miku (Vocaloid)",
     "origin": "3rd Party",

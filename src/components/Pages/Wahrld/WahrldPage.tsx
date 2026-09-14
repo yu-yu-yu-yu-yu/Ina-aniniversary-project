@@ -25,6 +25,7 @@ import {
   NeighborAvatar,
   NeighborCard,
   NoEntriesYet,
+  SearchInput,
 } from "./styles";
 
 const KIND_LABEL: Record<WahrldKind, string> = {
@@ -41,15 +42,34 @@ const WahrldPage = (): JSX.Element => {
     `${process.env.PUBLIC_URL}/data/wahrldData.json`,
   );
   const [kindFilter, setKindFilter] = useState<WahrldKind | null>(null);
+  const [search, setSearch] = useState("");
 
   const entries = useMemo(
     () => (data ?? []).filter((entry) => Boolean(entry.file)),
     [data],
   );
-  const filtered = useMemo(
+  const kindFiltered = useMemo(
     () => (kindFilter ? entries.filter((e) => e.kind === kindFilter) : entries),
     [entries, kindFilter],
   );
+  const filtered = useMemo(() => {
+    const query = search.trim();
+    if (!query) return kindFiltered;
+    const quoted =
+      query.length >= 2 && query.startsWith('"') && query.endsWith('"');
+    if (quoted) {
+      const keyword = query.slice(1, -1).toLowerCase();
+      return kindFiltered.filter((e) =>
+        e.message?.toLowerCase().includes(keyword),
+      );
+    }
+    const needle = query.toLowerCase();
+    return kindFiltered.filter(
+      (e) =>
+        e.user.toLowerCase().includes(needle) ||
+        e.country?.toLowerCase().includes(needle),
+    );
+  }, [kindFiltered, search]);
 
   const setKind = (value: WahrldKind) => (active: boolean) =>
     setKindFilter(active ? value : null);
@@ -62,7 +82,7 @@ const WahrldPage = (): JSX.Element => {
     containerRef,
     itemRefs,
     containerHandlers,
-  } = useCenterCarousel(total, 2, kindFilter ?? "all");
+  } = useCenterCarousel(total, 2, `${kindFilter ?? "all"}|${search}`);
 
   const wahrldSlug = (entry: WahrldEntry) =>
     entrySlug(entry.user, entry.country);
@@ -131,9 +151,20 @@ const WahrldPage = (): JSX.Element => {
                 labelColor="var(--dark-highlight)"
               />
             ))}
+            <SearchInput
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder='Name, country, or "keyword"'
+              aria-label="Search submissions"
+            />
           </KindSwitchRow>
           {total === 0 ? (
-            <NoEntriesYet>No submissions yet, check back soon!</NoEntriesYet>
+            <NoEntriesYet>
+              {search.trim()
+                ? "No submissions match your search."
+                : "No submissions yet, check back soon!"}
+            </NoEntriesYet>
           ) : (
             <GalleryWrapper>
               <ExhibitCounter>

@@ -16,10 +16,10 @@ import { TextBoxContainer } from "../../../styles/globalStyles";
 import { TAKO_FILES } from "../../../constants/takos";
 
 const buttons = [
-  { to: "/inaoutfit", label: "Ina Ina Outfit!" },
   { to: "/momentsgallery", label: "Moments Gallery" },
   { to: "/wahrld", label: "Ina around the WAHrld" },
   { to: "/playlist", label: "The Ultimate Ina Playlist" },
+  { to: "/inaoutfit", label: "Ina Ina Outfit!" },
   { to: "/timeline", label: "Ina's Timeline" },
   { to: "/takodex", label: "Takodex" },
   { to: "/messages", label: "Artworks & Messages" },
@@ -40,6 +40,7 @@ const updateButtons = [
   "The Ultimate Ina Playlist",
   "Ina's Timeline",
   "Takodex",
+  "Takollages",
 ];
 
 const Menu = (): JSX.Element => {
@@ -69,7 +70,8 @@ const Menu = (): JSX.Element => {
               <b>Ina&apos;s milestones</b>!
             </p>
             <p>
-              It is <b>TAKOTIME</b> to celebrate your <b>6th anniversary</b>!!
+              It is <b>TAKOTIME</b> to celebrate your{" "}
+              <b>6th debut anniversary</b>, Ina!!
             </p>
             <p>
               This time, we collected all sorts of things from all over, from

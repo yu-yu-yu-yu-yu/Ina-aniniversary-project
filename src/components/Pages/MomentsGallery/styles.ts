@@ -112,15 +112,23 @@ export const MomentSlot = styled.div<{
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  scroll-snap-align: center;
+  scroll-snap-align: ${({ $isPivot, $dragging, $isNear }) =>
+    $isPivot || $dragging || $isNear ? "center" : "none"};
   scroll-snap-stop: always;
   opacity: ${({ $isPivot, $dragging }) => ($isPivot && !$dragging ? 1 : 0.5)};
   transform: ${({ $isPivot, $dragging }) =>
     $isPivot && !$dragging ? "scale(1)" : "scale(0.55)"};
-  transition:
-    width 0.4s ease,
-    opacity 0.35s,
-    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: ${({ $dragging }) =>
+    $dragging
+      ? css`
+          opacity 0.35s,
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
+        `
+      : css`
+          width 0.4s ease,
+          opacity 0.35s,
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
+        `};
   cursor: ${({ $isPivot }) => ($isPivot ? "default" : "pointer")};
 `;
 
@@ -182,6 +190,24 @@ export const CategorySwitchRow = styled.div`
   background: var(--dark-background);
   padding: 3px clamp(12px, 4vw, 48px);
   box-sizing: border-box;
+`;
+
+export const SearchInput = styled.input`
+  height: 32px;
+  width: 200px;
+  max-width: 60vw;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--dark-highlight);
+  background: var(--dark-background);
+  color: var(--text-color);
+  font-size: 13px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+  }
 `;
 
 export const YearNavRow = styled.div`
@@ -462,9 +488,15 @@ export const CommenterBubbleWrap = styled.div<{
   }
 `;
 
-export const Bubble = styled.div`
+const thoughtWobble = keyframes`
+  0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.82; }
+  30% { transform: rotate(-3deg) scale(1.02); opacity: 1; }
+  60% { transform: rotate(2deg) scale(0.99); opacity: 0.88; }
+`;
+
+export const Bubble = styled.div<{ $expanded: boolean }>`
   position: relative;
-  max-width: 190px;
+  max-width: ${({ $expanded }) => ($expanded ? 280 : 190)}px;
   background: color-mix(in srgb, var(--light-background) 72%, transparent);
   color: var(--ink-black);
   border-radius: 20px;
@@ -475,6 +507,14 @@ export const Bubble = styled.div`
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
   margin-bottom: 10px;
   cursor: default;
+  transform-origin: 50% 100%;
+  transition:
+    max-width 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  animation: ${({ $expanded }) => ($expanded ? "none" : thoughtWobble)} 3.6s
+    ease-in-out infinite;
+  ${({ $expanded }) => $expanded && `transform: none; opacity: 1;`}
   &::after {
     content: "";
     position: absolute;
@@ -486,28 +526,17 @@ export const Bubble = styled.div`
     border-radius: 0 0 4px 0;
     transform: translateX(-50%) rotate(45deg);
   }
-`;
 
-export const BubbleText = styled.span`
-  display: block;
-  max-height: 4.2em;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 `;
 
-export const MoreIndicator = styled.span`
-  position: absolute;
-  right: 10px;
-  bottom: 4px;
-  color: var(--dark-highlight);
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 1px;
-  pointer-events: none;
+export const BubbleText = styled.span<{ $expanded: boolean }>`
+  display: block;
+  max-height: ${({ $expanded }) => ($expanded ? "600px" : "4.2em")};
+  overflow: hidden;
+  transition: max-height 0.35s ease;
 `;
 
 export const ReactionName = styled.span`
@@ -563,7 +592,8 @@ export const PlacardContext = styled.p`
   line-height: 1.5;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
   mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
 `;
@@ -574,6 +604,14 @@ export const PlacardCredit = styled.div`
   opacity: 0.85;
   border-top: 1px solid var(--light-highlight);
   padding-top: 6px;
+`;
+
+export const PlacardCreditLink = styled.a`
+  color: var(--text-color);
+  text-decoration: underline;
+  &:hover {
+    color: var(--light-highlight);
+  }
 `;
 
 export const PlacardReactionList = styled.ul`

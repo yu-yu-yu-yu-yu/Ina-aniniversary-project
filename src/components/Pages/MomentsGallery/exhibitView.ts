@@ -11,6 +11,8 @@ export interface ExhibitView {
   kind: ExhibitViewKind;
   src: string;
   label: string;
-  credit: string;
+  creditPrefix: string;
+  creditText: string;
+  creditHref?: string;
   tribute?: Tribute;
 }

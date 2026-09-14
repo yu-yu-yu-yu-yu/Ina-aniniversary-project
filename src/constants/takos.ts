@@ -1,5 +1,6 @@
 export const TAKO_FILES = [
   "albertoe.png",
+  "Baldako.png",
   "CapSora.png",
   "cedric_alpha.png",
   "Chumbeque.png",

@@ -5,7 +5,7 @@ import {
   QuoteContent,
   QuoteTextBox,
   GrayscaleButton,
-   GachaButton,
+  GachaButton,
   QuoteActions,
   InaImageWrapper,
   ElixirText,
@@ -262,7 +262,9 @@ const pickRareQuote = (current?: RareQuote | null): RareQuote => {
       )
     : RARE_QUOTES;
 
-  return pool[Math.floor(Math.random() * pool.length)] ?? current ?? RARE_QUOTES[0];
+  return (
+    pool[Math.floor(Math.random() * pool.length)] ?? current ?? RARE_QUOTES[0]
+  );
 };
 
 const maybePickRareQuote = (current?: RareQuote | null) => {
@@ -281,19 +283,19 @@ const Quote = (): JSX.Element => {
   const [elixirKey, setElixirKey] = useState<number | null>(null);
   const [rareQuote, setRareQuote] = useState<RareQuote | null>(null);
   const [gachaBurst, setGachaBurst] = useState(false);
+  const [missTick, setMissTick] = useState(0);
 
   const handleGacha = useCallback(() => {
-    setRareQuote((current) => {
-      const nextQuote = maybePickRareQuote(current);
-
-      if (nextQuote && !isSameQuote(current, nextQuote)) {
-        setGachaBurst(true);
-        window.setTimeout(() => setGachaBurst(false), 3000);
-      }
-
-      return nextQuote;
-    });
-  }, []);
+    const nextQuote = maybePickRareQuote(rareQuote);
+    const isHit = !!nextQuote && !isSameQuote(rareQuote, nextQuote);
+    setRareQuote(nextQuote);
+    if (isHit) {
+      setGachaBurst(true);
+      window.setTimeout(() => setGachaBurst(false), 3000);
+    } else {
+      setMissTick((t) => t + 1);
+    }
+  }, [rareQuote]);
 
   const handleElixir = useCallback(() => {
     setGrayscale((g) => {
@@ -337,7 +339,7 @@ const Quote = (): JSX.Element => {
         <br />
       </QuoteContent>
       <QuoteActions>
-        <GachaButton $active={gachaBurst} onClick={handleGacha}>
+        <GachaButton key={missTick} $active={gachaBurst} onClick={handleGacha}>
           Gacha
         </GachaButton>
         <GrayscaleButton onClick={handleElixir}>

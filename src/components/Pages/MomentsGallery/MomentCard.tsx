@@ -26,28 +26,65 @@ const resolveTributeSrc = (slug: string, file: string): string =>
     ? file
     : `${process.env.PUBLIC_URL}/momentTributes/${slug}/${file}`;
 
+const asUrl = (value: string): string | null => {
+  try {
+    return new URL(value).href;
+  } catch {
+    return null;
+  }
+};
+
+const hostOf = (url: string): string => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+
+const describeSource = (
+  sourceLabel: string | undefined,
+  sourceUrl: string,
+  fallback: string,
+): { text: string; href?: string } => {
+  const labelUrl = sourceLabel ? asUrl(sourceLabel) : null;
+  if (labelUrl) return { text: hostOf(labelUrl), href: labelUrl };
+  const rawUrl = sourceUrl ? asUrl(sourceUrl) : null;
+  if (sourceLabel) return { text: sourceLabel, href: rawUrl ?? undefined };
+  return { text: fallback, href: rawUrl ?? undefined };
+};
+
 const buildViews = (moment: Moment): ExhibitView[] => {
   const ytRef = parseYouTube(moment.sourceUrl);
-  const originalCredit = `Original: ${moment.sourceLabel || moment.title}`;
+  const originalSource = describeSource(
+    moment.sourceLabel,
+    moment.sourceUrl,
+    moment.title,
+  );
+  const originalCredit = {
+    creditPrefix: "Original: ",
+    creditText: originalSource.text,
+    creditHref: originalSource.href,
+  };
   const original: ExhibitView = ytRef
     ? {
         kind: "original-video",
         src: toEmbed(moment.sourceUrl),
         label: "Original",
-        credit: originalCredit,
+        ...originalCredit,
       }
     : moment.image
       ? {
           kind: "original-image",
           src: moment.image,
           label: "Original",
-          credit: originalCredit,
+          ...originalCredit,
         }
       : {
           kind: "original-link",
           src: moment.sourceUrl,
           label: "Original",
-          credit: originalCredit,
+          ...originalCredit,
         };
 
   const tributeViews: ExhibitView[] = moment.tributes
@@ -57,9 +94,11 @@ const buildViews = (moment: Moment): ExhibitView[] => {
       kind: tribute.kind === "video" ? "tribute-video" : "tribute-image",
       src: resolveTributeSrc(moment.slug, tribute.file as string),
       label: `Tribute by ${tribute.author}`,
-      credit: `Tribute by ${tribute.author}${
+      creditPrefix: "Tribute by ",
+      creditText: `${tribute.author}${
         tribute.handle ? ` (@${tribute.handle})` : ""
       }`,
+      creditHref: tribute.url,
       tribute,
     }));
 
