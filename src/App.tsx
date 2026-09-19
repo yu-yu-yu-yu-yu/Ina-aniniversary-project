@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useLayoutEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -51,6 +51,11 @@ const scrollPositions = new Map<string, number>();
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+  useLayoutEffect(() => {
     window.scrollTo(0, scrollPositions.get(pathname) ?? 0);
     return () => {
       scrollPositions.set(pathname, window.scrollY);

@@ -27,7 +27,10 @@
       { "name": "Diana", "url": "https://twitter.com/valkyrie_illust" },
       { "name": "Applejuice", "url": "https://twitter.com/Applenotepad91" },
       { "name": "Wydken", "url": "https://twitter.com/wydken" },
-      { "name": "Astraea", "url": "https://twitter.com/Astra_ofAntares" },
+      {
+        "name": "Astra of Antares",
+        "url": "https://twitter.com/Astra_ofAntares"
+      },
       { "name": "Shf1", "url": "https://twitter.com/JemsArt" },
       { "name": "Ani", "url": "https://twitter.com/ani_019" },
       { "name": "Sock", "url": "https://twitter.com/Sock_Wanders" },
@@ -110,7 +113,7 @@
       { "name": "gathog", "url": "https://x.com/GathogOnX" },
       { "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" },
       { "name": "subisdum", "url": "https://twitter.com/subisdum" },
-      { "name": "huyk2002", "url": "https://twitter.com/huyk2002" }
+      { "name": "TinHuy", "url": "https://x.com/TinHuy57581946" }
     ]
   },
   {
@@ -149,6 +152,25 @@
       { "name": "1st Killer", "url": "https://twitter.com/wololoSensei" },
       { "name": "Ryusei", "url": "https://x.com/Ryusei_Kiiro" },
       { "name": "Uni88", "url": "https://twitter.com/YesThatUni" }
+    ]
+  },
+  {
+    "title": "Helpers",
+    "people": [
+      {
+        "name": "Astra of Antares",
+        "url": "https://twitter.com/Astra_ofAntares"
+      },
+      { "name": "subisdum", "url": "https://twitter.com/subisdum" },
+      { "name": "Gathog", "url": "https://x.com/GathogOnX" },
+      { "name": "TinHuy", "url": "https://x.com/TinHuy57581946" },
+      { "name": "laffeydict", "url": "https://twitter.com/laffeydict" },
+      { "name": "NowaruArt", "url": "https://twitter.com/NowaruArt" },
+      { "name": "Takkito", "url": "https://twitter.com/takkito_tyr" },
+      { "name": "Takomonty", "url": "https://twitter.com/takomonty" },
+      { "name": "uranimum", "url": "https://twitter.com/uranimum235" },
+      { "name": "Wydken", "url": "https://twitter.com/wydken" },
+      { "name": "eLun", "url": "https://twitter.com/Elun_00" }
     ]
   },
   {

@@ -91,6 +91,9 @@ const MomentPlacard = ({
             view.creditText
           )}
         </PlacardCredit>
+        {moment.submittedBy && (
+          <PlacardCredit>Submitted by: {moment.submittedBy}</PlacardCredit>
+        )}
         {!!moment.reactions?.length && (
           <PlacardReactionList>
             {moment.reactions.map((reaction, i) => {

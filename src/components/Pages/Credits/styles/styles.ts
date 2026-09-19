@@ -68,3 +68,81 @@ export const CreditsDivider = styled.hr`
   margin: 0 auto 40px;
   width: 60%;
 `;
+
+export const TakoCountTrigger = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--dark-highlight);
+  font: normal normal 300 clamp(18px, 1.1vw, 22px) / 1.3 Mulish;
+  text-decoration: underline dotted;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const TakoListBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+`;
+
+export const TakoListModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(700px, 90vw);
+  max-height: 80vh;
+  background: var(--background);
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #0008;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+`;
+
+export const TakoListHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+export const TakoListClose = styled.button`
+  background: none;
+  border: none;
+  color: var(--dark-highlight);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+`;
+
+export const TakoListBody = styled.div`
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-content: flex-start;
+`;
+
+export const TakoNameChip = styled.span`
+  color: var(--dark-highlight);
+  background: var(--dark-highlight-transparent, rgba(0, 0, 0, 0.06));
+  font: normal normal 300 14px/1.3 Mulish;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--dark-highlight);
+`;

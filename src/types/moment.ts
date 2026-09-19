@@ -27,4 +27,5 @@ export interface Moment {
   tributes: Tribute[];
   image?: string;
   reactions?: MomentReaction[];
+  submittedBy?: string;
 }

@@ -11,17 +11,18 @@ import {
   ElixirText,
 } from "./styles/quoteStyles";
 
-const RARE_QUOTES = [
+type RareQuote = {
+  text: string;
+  year: string;
+  author?: string;
+};
+
+const RARE_QUOTES: RareQuote[] = [
   {
     text: "We have games we win, and we have games we lose. I haven't won yet, but I haven't lost. So, I can only win, right?",
     year: "2020",
   },
   { text: "No panik. Just pizza.", year: "2020" },
-  {
-    text: "You're robbin a kid!",
-    year: "2026",
-    author: "The ghost of pokajan",
-  },
   { text: "Ina is Ina", year: "2021" },
   {
     text: "It's not the best but it does the job when you need something salty in your life",
@@ -39,7 +40,6 @@ const RARE_QUOTES = [
   { text: "Art is a sport!", year: "2023" },
   { text: "I don't go outside if i don't have to", year: "2024" },
   { text: "5 is the new 0", year: "2025" },
-  { text: "I wanted her to drop kick my face", year: "2025" },
   { text: "Whats that one famous thing", year: "2026" },
   { text: "This world requires too much thought", year: "2026" },
   { text: "YEAH", year: "2022" },
@@ -49,7 +49,6 @@ const RARE_QUOTES = [
     year: "2022",
   },
   { text: "Can I be a PNG?", year: "2022" },
-  { text: "How about I set this house on fire?", year: "2023" },
   { text: "PHYSICS, why must you exist?", year: "2023" },
   { text: "Sleep is also very important i feel", year: "2024" },
   { text: "What's the brake?", year: "2024" },
@@ -88,13 +87,7 @@ const RARE_QUOTES = [
     year: "2021",
   },
   { text: "Deja vu *giggle* nya nya nya nya nya nyaa", year: "2020" },
-  { text: "I'm not selling my friends for that low!", year: "2020" },
   { text: "It's like Blues Clues, but spookier", year: "2020" },
-  { text: "Sir, may I see your suction cups", year: "2020" },
-  {
-    text: "Sometimes violence is necessary for....entertainment",
-    year: "2020",
-  },
   { text: "be nice to your body", year: "2020" },
   { text: "Its Tuesday somewhere in the world.", year: "2020" },
   { text: "Learn to lie to yourself, it's important", year: "2020" },
@@ -103,7 +96,6 @@ const RARE_QUOTES = [
   { text: "Do eyebrows grow back?", year: "2020" },
   { text: "As long as we go down smiling, it's all worth it", year: "2020" },
   { text: "Thank goodness for TNT", year: "2020" },
-  { text: "I rode Mr Pierce until he became friendly", year: "2020" },
   { text: "I raised this chat.", year: "2020" },
   {
     text: "boing boing boing boing boing boing boing boing boing boing",
@@ -118,10 +110,8 @@ const RARE_QUOTES = [
   },
   { text: "What is right?", year: "2021" },
   { text: "jumpy boi can jump", year: "2021" },
-  { text: "Improvise - Adapt - Overcome - Die", year: "2021" },
   { text: "Those are some big beans.", year: "2021" },
   { text: "Why...?", year: "2021" },
-  { text: "Yeah die die die die die", year: "2021" },
   { text: "this whip is nice", year: "2021" },
   { text: "Is Minecraft's cake a cake?", year: "2021" },
   { text: "If it ain't broke, it ain't broken", year: "2021" },
@@ -129,27 +119,19 @@ const RARE_QUOTES = [
   { text: "The bench is the bench", year: "2021" },
   { text: "cats are liquid", year: "2021" },
   { text: "IM RICH!", year: "2021" },
-  { text: "graduate from unga bunga", year: "2021" },
-  { text: "I dont feel pain", year: "2021" },
-  { text: "OH YEAH WIGGLE THAT", year: "2021" },
   { text: "But this puts a smile on my face", year: "2021" },
   { text: "Does mask blink", year: "2021" },
   { text: "I have no social life", year: "2021" },
   { text: "saving is good", year: "2021" },
   { text: "check yourself before you wreck yourself", year: "2021" },
   { text: "How did I do that?", year: "2021" },
-  { text: "It's ok to bully", year: "2021" },
-  { text: "no, don't eat", year: "2022" },
   { text: "you sound like that one dude", year: "2022" },
-  { text: "She threw me up in the air like a bag of groceries.", year: "2022" },
-  { text: "Destroy nature", year: "2022" },
   { text: "Yes my hood please.", year: "2023" },
   { text: "I'm a good at shooting", year: "2023" },
   { text: "stuff", year: "2023" },
   { text: "I don't know what first look like", year: "2023" },
   { text: "The truth that is the truth", year: "2023" },
   { text: "You never know you know", year: "2023" },
-  { text: "THE FURRY COMMISSIONS!", year: "2023" },
   {
     text: "Do you get why the blowfish blows up? Cus it's a blowfish?",
     year: "2021",
@@ -235,12 +217,6 @@ const RARE_QUOTES = [
     year: "2023",
   },
 ];
-
-type RareQuote = {
-  text: string;
-  year: string;
-  author?: string;
-};
 
 const isSameQuote = (
   left: RareQuote | null | undefined,
