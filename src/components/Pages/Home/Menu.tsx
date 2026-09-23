@@ -26,6 +26,7 @@ const buttons = [
   { to: "/letters", label: "Letters for Ina" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
   { to: "/collages", label: "Takollages" },
+  { to: "/takonomicon", label: "Tako Lore Book" },
   { to: "/moments", label: `Ina Moments (2024)` },
   { to: "/wah", label: "WAH (2024)" },
 ];
@@ -34,6 +35,7 @@ const newButtons = [
   "Ina Ina Outfit!",
   "Moments Gallery",
   "Ina around the WAHrld",
+  "Tako Lore Book",
 ];
 
 const updateButtons = [

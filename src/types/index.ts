@@ -41,3 +41,15 @@ export type {
 } from "./moment";
 
 export type { WahrldKind, WahrldEntry } from "./wahrld";
+
+export type {
+  LoreSection,
+  LoreStatus,
+  LoreSubjectKind,
+  LoreText,
+  LoreHeading,
+  LoreQuote,
+  LoreIllustration,
+  LoreBlock,
+  LoreEntry,
+} from "./takonomicon";

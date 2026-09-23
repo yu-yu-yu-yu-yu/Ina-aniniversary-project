@@ -1,0 +1,558 @@
+[
+  {
+    "id": "song-1-theory-1",
+    "title": "Lorem Ipsum: A Song 1 Theory",
+    "section": "main",
+    "subject": "Song 1",
+    "subjectKind": "song",
+    "status": "theory",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-1-theory-1-01",
+        "alt": "Placeholder illustration slot for Lorem Ipsum: A Song 1 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      }
+    ]
+  },
+  {
+    "id": "song-1-theory-2",
+    "title": "Dolor Sit Amet: A Song 1 Theory",
+    "section": "main",
+    "subject": "Song 1",
+    "subjectKind": "song",
+    "status": "confirmed",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-1-theory-2-01",
+        "alt": "Placeholder illustration slot for Dolor Sit Amet: A Song 1 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      }
+    ]
+  },
+  {
+    "id": "song-1-theory-3",
+    "title": "Consectetur Adipiscing: A Song 1 Theory",
+    "section": "main",
+    "subject": "Song 1",
+    "subjectKind": "song",
+    "status": "implied",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-1-theory-3-01",
+        "alt": "Placeholder illustration slot for Consectetur Adipiscing: A Song 1 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      }
+    ]
+  },
+  {
+    "id": "song-2-theory-1",
+    "title": "Sed Do Eiusmod: A Song 2 Theory",
+    "section": "main",
+    "subject": "Song 2",
+    "subjectKind": "song",
+    "status": "thought",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-2-theory-1-01",
+        "alt": "Placeholder illustration slot for Sed Do Eiusmod: A Song 2 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ]
+  },
+  {
+    "id": "song-2-theory-2",
+    "title": "Tempor Incididunt: A Song 2 Theory",
+    "section": "main",
+    "subject": "Song 2",
+    "subjectKind": "song",
+    "status": "theory",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-2-theory-2-01",
+        "alt": "Placeholder illustration slot for Tempor Incididunt: A Song 2 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      }
+    ]
+  },
+  {
+    "id": "song-2-theory-3",
+    "title": "Ut Labore Et Dolore: A Song 2 Theory",
+    "section": "main",
+    "subject": "Song 2",
+    "subjectKind": "song",
+    "status": "confirmed",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-2-theory-3-01",
+        "alt": "Placeholder illustration slot for Ut Labore Et Dolore: A Song 2 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      }
+    ]
+  },
+  {
+    "id": "song-3-theory-1",
+    "title": "Lorem Ipsum: A Song 3 Theory",
+    "section": "main",
+    "subject": "Song 3",
+    "subjectKind": "song",
+    "status": "implied",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-3-theory-1-01",
+        "alt": "Placeholder illustration slot for Lorem Ipsum: A Song 3 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      }
+    ]
+  },
+  {
+    "id": "song-3-theory-2",
+    "title": "Dolor Sit Amet: A Song 3 Theory",
+    "section": "main",
+    "subject": "Song 3",
+    "subjectKind": "song",
+    "status": "thought",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-3-theory-2-01",
+        "alt": "Placeholder illustration slot for Dolor Sit Amet: A Song 3 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      }
+    ]
+  },
+  {
+    "id": "song-3-theory-3",
+    "title": "Consectetur Adipiscing: A Song 3 Theory",
+    "section": "main",
+    "subject": "Song 3",
+    "subjectKind": "song",
+    "status": "theory",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-3-theory-3-01",
+        "alt": "Placeholder illustration slot for Consectetur Adipiscing: A Song 3 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      }
+    ]
+  },
+  {
+    "id": "song-4-theory-1",
+    "title": "Sed Do Eiusmod: A Song 4 Theory",
+    "section": "main",
+    "subject": "Song 4",
+    "subjectKind": "song",
+    "status": "confirmed",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-4-theory-1-01",
+        "alt": "Placeholder illustration slot for Sed Do Eiusmod: A Song 4 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ]
+  },
+  {
+    "id": "song-4-theory-2",
+    "title": "Tempor Incididunt: A Song 4 Theory",
+    "section": "main",
+    "subject": "Song 4",
+    "subjectKind": "song",
+    "status": "implied",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-4-theory-2-01",
+        "alt": "Placeholder illustration slot for Tempor Incididunt: A Song 4 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      }
+    ]
+  },
+  {
+    "id": "song-4-theory-3",
+    "title": "Ut Labore Et Dolore: A Song 4 Theory",
+    "section": "main",
+    "subject": "Song 4",
+    "subjectKind": "song",
+    "status": "thought",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-4-theory-3-01",
+        "alt": "Placeholder illustration slot for Ut Labore Et Dolore: A Song 4 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      }
+    ]
+  },
+  {
+    "id": "song-5-theory-1",
+    "title": "Lorem Ipsum: A Song 5 Theory",
+    "section": "main",
+    "subject": "Song 5",
+    "subjectKind": "song",
+    "status": "theory",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-5-theory-1-01",
+        "alt": "Placeholder illustration slot for Lorem Ipsum: A Song 5 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      }
+    ]
+  },
+  {
+    "id": "song-5-theory-2",
+    "title": "Dolor Sit Amet: A Song 5 Theory",
+    "section": "main",
+    "subject": "Song 5",
+    "subjectKind": "song",
+    "status": "confirmed",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-5-theory-2-01",
+        "alt": "Placeholder illustration slot for Dolor Sit Amet: A Song 5 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      }
+    ]
+  },
+  {
+    "id": "song-5-theory-3",
+    "title": "Consectetur Adipiscing: A Song 5 Theory",
+    "section": "main",
+    "subject": "Song 5",
+    "subjectKind": "song",
+    "status": "implied",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-5-theory-3-01",
+        "alt": "Placeholder illustration slot for Consectetur Adipiscing: A Song 5 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      }
+    ]
+  },
+  {
+    "id": "song-6-theory-1",
+    "title": "Sed Do Eiusmod: A Song 6 Theory",
+    "section": "main",
+    "subject": "Song 6",
+    "subjectKind": "song",
+    "status": "thought",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-6-theory-1-01",
+        "alt": "Placeholder illustration slot for Sed Do Eiusmod: A Song 6 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ]
+  },
+  {
+    "id": "song-6-theory-2",
+    "title": "Tempor Incididunt: A Song 6 Theory",
+    "section": "main",
+    "subject": "Song 6",
+    "subjectKind": "song",
+    "status": "theory",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-6-theory-2-01",
+        "alt": "Placeholder illustration slot for Tempor Incididunt: A Song 6 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      }
+    ]
+  },
+  {
+    "id": "song-6-theory-3",
+    "title": "Ut Labore Et Dolore: A Song 6 Theory",
+    "section": "main",
+    "subject": "Song 6",
+    "subjectKind": "song",
+    "status": "confirmed",
+    "author": "Tentacult Theory Circle",
+    "body": [
+      {
+        "type": "text",
+        "text": "Et harum quidem rerum facilis est."
+      },
+      {
+        "type": "illustration",
+        "slot": "song-6-theory-3-01",
+        "alt": "Placeholder illustration slot for Ut Labore Et Dolore: A Song 6 Theory"
+      },
+      {
+        "type": "quote",
+        "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur.",
+        "cite": "lorem ipsum, not final copy"
+      },
+      {
+        "type": "text",
+        "text": "Sed ut perspiciatis unde omnis iste natus."
+      }
+    ]
+  },
+  {
+    "id": "standalone-mirrorlight-theory",
+    "title": "Lorem Ipsum: A Standalone Reading",
+    "section": "standalone",
+    "subject": "Song 2",
+    "subjectKind": "song",
+    "author": "a wandering tako",
+    "authorLink": "https://x.com/example",
+    "body": [
+      {
+        "type": "text",
+        "text": "Duis aute irure dolor in reprehenderit in voluptate velit."
+      }
+    ]
+  },
+  {
+    "id": "standalone-threshold-theory",
+    "title": "The Threshold Motif, Revisited",
+    "section": "standalone",
+    "subject": "Song 4",
+    "subjectKind": "mv",
+    "author": "a wandering tako",
+    "body": [
+      {
+        "type": "text",
+        "text": "At vero eos et accusamus et iusto odio dignissimos ducimus."
+      },
+      {
+        "type": "illustration",
+        "slot": "standalone-threshold-01",
+        "alt": "Placeholder illustration slot for the Threshold Motif"
+      }
+    ]
+  }
+]

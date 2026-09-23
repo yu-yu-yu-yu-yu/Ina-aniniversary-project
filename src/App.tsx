@@ -45,6 +45,9 @@ const MomentsGallery = lazy(
   () => import("./components/Pages/MomentsGallery/MomentsGallery"),
 );
 const WahrldPage = lazy(() => import("./components/Pages/Wahrld/WahrldPage"));
+const Takonomicon = lazy(
+  () => import("./components/Pages/Takonomicon/Takonomicon"),
+);
 
 const scrollPositions = new Map<string, number>();
 
@@ -109,6 +112,9 @@ const App = (): JSX.Element => (
             </Route>
             <Route path="/credits">
               <CreditsPage />
+            </Route>
+            <Route path="/takonomicon">
+              <Takonomicon />
             </Route>
           </Switch>
         </Suspense>
