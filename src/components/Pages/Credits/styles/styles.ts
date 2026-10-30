@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { zIndex } from "../../../../styles/tokens";
 
 export const CreditsBoard = styled.div`
   max-width: 900px;
@@ -92,7 +93,7 @@ export const TakoListBackdrop = styled.div`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  z-index: ${zIndex.backdrop};
 `;
 
 export const TakoListModal = styled.div`
@@ -105,7 +106,7 @@ export const TakoListModal = styled.div`
   background: var(--background);
   border-radius: 16px;
   box-shadow: 0 4px 32px #0008;
-  z-index: 1001;
+  z-index: ${zIndex.modal};
   display: flex;
   flex-direction: column;
   padding: 20px;

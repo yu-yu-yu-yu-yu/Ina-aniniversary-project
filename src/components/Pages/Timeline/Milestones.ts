@@ -4,11 +4,8 @@ import { toEmbed } from "../../../utils/youtube";
 
 const sanitizeMilestones = (milestones = milestoneJson): Milestone[] => {
   const formatDate = (string: string) => {
-    // eslint-disable-next-line prefer-const
-    let [month, day, year] = string.split(/\W/);
-    month = month.length < 2 ? "0" + month : month;
-    day = day.length < 2 ? "0" + day : day;
-    return [day, month, year].join("·");
+    const [month, day, year] = string.split(/\W/);
+    return [day.padStart(2, "0"), month.padStart(2, "0"), year].join("·");
   };
 
   return milestones.map((jmilestone) => {

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
-import ScrollArrow from "../../Common/BackToTop";
+import ScrollArrow from "../../Common/ScrollArrow";
 import { debounce } from "lodash";
 import {
   FiltersContainer,
@@ -15,6 +15,9 @@ import {
 import { Navbar, NavHome } from "../../Common/Navbar";
 import TakoVideos, { videoSlug } from "./TakoVideos";
 import { useFetch } from "../../../hooks/useFetch";
+import { toEmbed } from "../../../utils/youtube";
+import { LoadError } from "../../Common/LoadError";
+import { PageRoot } from "../../../styles/globalStyles";
 
 const LIMIT = 10;
 
@@ -36,20 +39,12 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
 
   useEffect(() => {
     if (rawData) {
-      const data = rawData.map((row) => {
+      const data = rawData.map((original) => {
+        const row = { ...original };
         const key = mode === "moments" ? "moment" : "wah";
         let link = row[key];
         if (link.includes("http") && !link.includes("clip")) {
-          const match = /(?:\/|v=)([a-z_0-9-]{6,16}).*?(?:t=(\d+))?.*$/gim.exec(
-            link,
-          );
-          const video_id = match ? match[1] : "";
-          const timestamp = match ? match[2] : "";
-          if (!video_id) console.log(link);
-          const params = timestamp
-            ? `start=${timestamp}&enablejsapi=1`
-            : "enablejsapi=1";
-          link = `https://www.youtube.com/embed/${video_id}?${params}`;
+          link = toEmbed(link);
         }
         if (mode === "wah") {
           row.sub = row.wah_sub;
@@ -109,8 +104,8 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
       if (value) {
         const resultData = currentSource.filter((row: Submission) => {
           return (
-            row.user.toLowerCase().includes(value.toLowerCase()) ||
-            row.message.toLowerCase().includes(value.toLowerCase())
+            (row.user ?? "").toLowerCase().includes(value.toLowerCase()) ||
+            (row.message ?? "").toLowerCase().includes(value.toLowerCase())
           );
         });
         setHasMore(false);
@@ -136,7 +131,7 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <PageRoot>
       <Navbar>
         <NavHome />
         <NavTitle>
@@ -148,7 +143,7 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading videos: {error.message}</div>
+        <LoadError what="videos" error={error} />
       ) : (
         <SiteBoard>
           <FiltersContainer>
@@ -171,17 +166,12 @@ const VideoBoardContainer = ({ mode }: { mode: string }): JSX.Element => {
               </p>
             }
           >
-            <TakoVideos
-              submissions={data}
-              isToggledOnlyImg={false}
-              isToggledTextOnly={false}
-              highlightSlug={highlightSlug}
-            />
+            <TakoVideos submissions={data} highlightSlug={highlightSlug} />
           </InfiniteScroll>
           <ScrollArrow />
         </SiteBoard>
       )}
-    </div>
+    </PageRoot>
   );
 };
 

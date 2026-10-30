@@ -6,8 +6,6 @@ import FloatingTakos from "../Home/FloatingTakos";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import { NavTitle } from "../../../styles/globalStyles";
 import { TAKO_COUNT } from "../../../constants/takos";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
 import {
   CreditsBoard,
   CreditsSection,
@@ -26,6 +24,7 @@ import {
   TakoListBody,
   TakoNameChip,
 } from "./styles/styles";
+import { PageBgm } from "../../Common/PageBgm";
 
 const credits = creditsData as CreditEntry[];
 
@@ -87,8 +86,6 @@ const collectNames = (
 };
 
 const CreditsPage = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
   const [takoListOpen, setTakoListOpen] = useState(false);
   const [takoNames, setTakoNames] = useState<string[] | null>(null);
   const [takoNamesError, setTakoNamesError] = useState(false);
@@ -125,13 +122,7 @@ const CreditsPage = (): JSX.Element => {
         background: "var(--background)",
       }}
     >
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/昼寝のススメ.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+      <PageBgm src="/昼寝のススメ.mp3" />
       <Navbar>
         <NavHome />
         <NavTitle>Credits</NavTitle>

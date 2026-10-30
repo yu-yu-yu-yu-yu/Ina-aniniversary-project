@@ -3,11 +3,6 @@ import { EDGE_FLIP_FRACTION } from "./assets";
 
 const canUseEdgeFlip = (): boolean => {
   if (typeof window === "undefined") return false;
-  // any-hover/any-pointer (not the bare hover/pointer, which only look at
-  // the *primary* input) so a mouse still works on a touchscreen laptop
-  // where touch is the primary pointer. No continuous animation runs here
-  // (the cursor is just repositioned on mousemove), so unlike the old SVG
-  // tentacle this doesn't need a prefers-reduced-motion check.
   return window.matchMedia("(any-hover: hover) and (any-pointer: fine)")
     .matches;
 };
@@ -20,6 +15,7 @@ interface UseEdgeFlipArgs {
   canNext: boolean;
   onPrev: () => void;
   onNext: () => void;
+  disabled?: boolean;
 }
 
 interface UseEdgeFlipResult {
@@ -30,22 +26,22 @@ interface UseEdgeFlipResult {
   onMouseMove: (e: React.MouseEvent) => void;
   onMouseLeave: () => void;
   onClick: (e: React.MouseEvent) => void;
+  onTouchStart: (e: React.TouchEvent) => void;
+  onTouchEnd: (e: React.TouchEvent) => void;
 }
 
-// Ambient page-flip affordance: the outer EDGE_FLIP_FRACTION of the book
-// on each side glows and grows a tentacle cursor when the pointer is over
-// it, and a
-// click anywhere in that strip turns the page. Disabled when no fine
-// hover-capable pointer (mouse/trackpad) is available at all.
+const SWIPE_MIN_PX = 50;
+
 export const useEdgeFlip = ({
   mobile,
   canPrev,
   canNext,
   onPrev,
   onNext,
+  disabled = false,
 }: UseEdgeFlipArgs): UseEdgeFlipResult => {
   const [enabled] = useState(canUseEdgeFlip);
-  const active = !mobile && enabled;
+  const active = !mobile && enabled && !disabled;
 
   const bookElRef = useRef<HTMLDivElement | null>(null);
   const cursorRef = useRef<HTMLImageElement | null>(null);
@@ -55,8 +51,6 @@ export const useEdgeFlip = ({
     (e: React.MouseEvent): FlipEdge => {
       const book = bookElRef.current;
       if (!book) return null;
-      // Never hijack a real control (TOC rows, credit/artist links, the
-      // bookmark ribbon, the share button) sitting inside the zone.
       if ((e.target as HTMLElement).closest("a, button")) return null;
 
       const rect = book.getBoundingClientRect();
@@ -94,7 +88,38 @@ export const useEdgeFlip = ({
     [active, resolveEdge, onPrev, onNext],
   );
 
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const onTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      const t = e.touches[0];
+      touchStart.current =
+        e.touches.length === 1 && !disabled
+          ? { x: t.clientX, y: t.clientY }
+          : null;
+    },
+    [disabled],
+  );
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const start = touchStart.current;
+      touchStart.current = null;
+      if (!start) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) < Math.abs(dy) * 1.5)
+        return;
+      if (dx < 0 && canNext) onNext();
+      else if (dx > 0 && canPrev) onPrev();
+    },
+    [canPrev, canNext, onPrev, onNext],
+  );
+
   return {
+    onTouchStart,
+    onTouchEnd,
     active,
     bookElRef,
     cursorRef,

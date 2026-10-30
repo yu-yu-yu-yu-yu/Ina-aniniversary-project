@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { MomentReaction } from "../../../types";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import {
   Bubble,
   BubbleText,
@@ -10,6 +9,7 @@ import {
   FloorArea,
   ReactionName,
 } from "./styles";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
 
 const ASSET_BASE = `${process.env.PUBLIC_URL}/gallery_assets`;
 

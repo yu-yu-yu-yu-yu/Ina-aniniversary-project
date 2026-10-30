@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
-import { PageContainer } from "../../Timeline/styles/List";
+import { buttonShadow } from "../../../../styles/tokens";
+import { PageContainer } from "../../../../styles/globalStyles";
 
 export const OutfitsPageContainer = styled(PageContainer)`
   height: 100vh;
@@ -176,29 +177,6 @@ export const OutfitSkeleton = styled.div`
   }
 `;
 
-export const ArtworkButton = styled.button`
-  background: rgba(0, 0, 0, 0.52);
-  color: var(--light-highlight);
-  border: 1px solid var(--light-highlight);
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 10px;
-  opacity: 0.72;
-  transition:
-    opacity 0.18s,
-    background 0.18s;
-  flex-shrink: 0;
-  &:hover {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.78);
-  }
-`;
-
 export const DialogueBox = styled.div`
   box-sizing: border-box;
   width: 480px;
@@ -221,7 +199,7 @@ export const OutfitNamePlate = styled.div`
   color: var(--text-color);
   border-radius: 12px;
   padding: 6px 18px;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: ${buttonShadow};
   font-size: 1.25em;
   font-weight: 600;
   text-align: center;

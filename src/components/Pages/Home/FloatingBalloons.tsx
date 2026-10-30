@@ -3,6 +3,7 @@ import styled, { keyframes, css } from "styled-components";
 import { FloatingBalloonData } from "../../../types";
 import { useTheme } from "../../Common/ThemeProvider";
 import { ThemeName } from "../../../types";
+import { GLITCH_FILE, glitchThreshold, useGlitchProgress } from "./glitch";
 
 const ANIMATION_DURATION = 20000;
 const MAX_BALLOON_WIDTH_PERCENT = 18;
@@ -84,6 +85,17 @@ const themePool: Record<ThemeName, BalloonDef[]> = {
     g("sky"),
     ...takoShapes,
   ],
+  AbyssalHymn: [
+    mv("meconopsis"),
+    mv("violet"),
+    g("blue"),
+    g("blueagain"),
+    g("sky"),
+    g("violet"),
+    g("purple"),
+    ...takoShapes,
+  ],
+  TakodachiNoUta: [g("white"), g("gray"), ...takoShapes],
 };
 
 const floatBalloon = (swayOffset: number) => keyframes`
@@ -105,14 +117,14 @@ const floatBalloon = (swayOffset: number) => keyframes`
 `;
 
 const FloatingBalloon = styled.img<{
-  left: number;
-  bottom: number;
-  swayOffset: number;
+  $left: number;
+  $bottom: number;
+  $swayOffset: number;
   $heightScale: number;
 }>`
   position: absolute;
-  left: ${({ left }) => left}vw;
-  bottom: ${({ bottom }) => bottom}px;
+  left: ${({ $left }) => $left}vw;
+  bottom: ${({ $bottom }) => $bottom}px;
   height: ${({ $heightScale }) => (20 * $heightScale).toFixed(2)}vmax;
   max-height: ${({ $heightScale }) => Math.round(260 * $heightScale)}px;
   min-height: ${({ $heightScale }) => Math.round(180 * $heightScale)}px;
@@ -122,8 +134,8 @@ const FloatingBalloon = styled.img<{
   z-index: 0;
   pointer-events: none;
   will-change: transform;
-  animation: ${({ swayOffset }) => css`
-    ${floatBalloon(swayOffset)} 12s ease-in-out forwards
+  animation: ${({ $swayOffset }) => css`
+    ${floatBalloon($swayOffset)} 12s ease-in-out forwards
   `};
 `;
 
@@ -140,10 +152,19 @@ const BalloonFloatBg = styled.div`
   overflow-x: hidden;
 `;
 
-const FloatingBalloons = (): JSX.Element => {
+const GLITCH_SHARE = 0.6;
+
+const FloatingBalloons = ({
+  glitchStartMs = 0,
+  glitchMs,
+}: {
+  glitchStartMs?: number;
+  glitchMs?: number;
+}): JSX.Element => {
   const [balloons, setBalloons] = useState<FloatingBalloonData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useTheme();
+  const glitchProgress = useGlitchProgress(glitchStartMs, glitchMs);
 
   useEffect(() => {
     themePool[theme].forEach((def) => {
@@ -212,11 +233,16 @@ const FloatingBalloons = (): JSX.Element => {
       {balloons.map((b) => (
         <FloatingBalloon
           key={b.key}
-          left={b.left}
-          bottom={b.bottom}
-          swayOffset={b.swayOffset}
+          $left={b.left}
+          $bottom={b.bottom}
+          $swayOffset={b.swayOffset}
           $heightScale={b.heightScale}
-          src={`${process.env.PUBLIC_URL}/${b.src}`}
+          src={`${process.env.PUBLIC_URL}/${
+            glitchProgress > 0 &&
+            glitchThreshold(b.key) <= glitchProgress * GLITCH_SHARE
+              ? GLITCH_FILE
+              : b.src
+          }`}
           alt="floating balloon"
         />
       ))}

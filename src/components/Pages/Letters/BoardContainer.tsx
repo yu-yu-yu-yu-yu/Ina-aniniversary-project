@@ -5,7 +5,7 @@ import TakoLetters, { letterSlug } from "./TakoLetters";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { LetterEntry } from "../../../types";
-import ScrollArrow from "../../Common/BackToTop";
+import ScrollArrow from "../../Common/ScrollArrow";
 import { debounce } from "lodash";
 import {
   FiltersContainer,
@@ -14,16 +14,16 @@ import {
   SearchBar,
   NavTitle,
 } from "./styles/styles";
-import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
+import { Navbar, NavHome, NavHelp } from "../../Common/Navbar";
 import { useFetch } from "../../../hooks/useFetch";
+import { PageBgm } from "../../Common/PageBgm";
+import { LoadError } from "../../Common/LoadError";
+import { PageRoot } from "../../../styles/globalStyles";
+import { preloadImages } from "../../../utils/preloadImages";
 
 const LIMIT = 4;
 
 const BoardContainer = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
   const {
     data: rawData,
     loading,
@@ -35,7 +35,6 @@ const BoardContainer = (): JSX.Element => {
   const [data, setData] = useState<LetterEntry[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const offsetRef = useRef(0);
-  const [hintOpen, setHintOpen] = useState(false);
   const [initialOpenIndex, setInitialOpenIndex] = useState<number | null>(null);
   const hashHandledRef = useRef(false);
   const { hash } = useLocation();
@@ -123,60 +122,32 @@ const BoardContainer = (): JSX.Element => {
     [handleFilterDebounced],
   );
 
-  const awaitImgs = async (data: LetterEntry[]) => {
-    const promises: Promise<unknown>[] = [];
-    data.forEach((row: LetterEntry) => {
-      if (row.image && !row.image.includes("youtube")) {
-        promises.push(
-          new Promise((resolve) => {
-            const img = new Image();
-            img.src = process.env.PUBLIC_URL + "/letters/" + row.image;
-            img.onerror = resolve;
-            img.onload = resolve;
-          }),
-        );
-      }
-    });
-    await Promise.allSettled(promises);
-  };
+  const awaitImgs = (data: LetterEntry[]) =>
+    preloadImages(
+      data
+        .filter((row) => row.image && !row.image.includes("youtube"))
+        .map((row) => `${process.env.PUBLIC_URL}/letters/${row.image}`),
+    );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+    <PageRoot>
+      <PageBgm src="/Vanilla.mp3" />
       <Navbar>
         <NavHome />
         <NavTitle>Letters for Ina</NavTitle>
-        <div style={{ flex: "0 0 auto", position: "relative" }}>
-          <HintButton
-            aria-label="Show letters usage hint"
-            onClick={() => setHintOpen((v) => !v)}
-            title="Show letters usage hint"
-          >
-            <i className="fa fa-question-circle" aria-hidden="true" />
-            <span className="btn-text">Help</span>
-          </HintButton>
-          {hintOpen && (
-            <HintPopover onClick={() => setHintOpen(false)}>
-              <p>
-                Hover an envelope to peek at it, click to open the full letter.
-                Inside, use the ‹ › buttons or your arrow keys to move between
-                letters, and Esc to close. The zoom controls at the bottom let
-                you read small handwriting up close.
-              </p>
-            </HintPopover>
-          )}
-        </div>
+        <NavHelp label="Show letters usage hint">
+          <p>
+            Hover an envelope to peek at it, click to open the full letter.
+            Inside, use the ‹ › buttons or your arrow keys to move between
+            letters, and Esc to close. The zoom controls at the bottom let you
+            read small handwriting up close.
+          </p>
+        </NavHelp>
       </Navbar>
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading Letters: {error.message}</div>
+        <LoadError what="letters" error={error} />
       ) : (
         <SiteBoard>
           <FiltersContainer>
@@ -210,7 +181,7 @@ const BoardContainer = (): JSX.Element => {
           <ScrollArrow />
         </SiteBoard>
       )}
-    </div>
+    </PageRoot>
   );
 };
 

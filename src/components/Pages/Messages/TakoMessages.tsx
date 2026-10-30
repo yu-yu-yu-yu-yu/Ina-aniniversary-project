@@ -1,19 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Submission } from "../../../types";
 import Masonry from "react-masonry-component";
-import { TakoIcon } from "./TakoIcon";
+import { TakoIcon } from "../../Common/TakoIcon";
 import { SRLWrapper } from "simple-react-lightbox";
 import { notifyPlayerReady } from "../../../utils/youtube";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
-import {
-  BubbleImage,
-  IFrame,
-  MessageCard,
-  MessageCardHeader,
-  MessageText,
-  SubmissionContainer,
-} from "./styles";
+import { BubbleImage, IFrame, SubmissionContainer } from "./styles";
+import { Card, CardHeader, CardText } from "../../../styles/globalStyles";
 
 export const messageSlug = (sub: Submission): string =>
   entrySlug(sub.user, sub.image || sub.message);
@@ -109,14 +103,14 @@ const TakoMessages = ({
                 : undefined
             }
           >
-            <MessageCard>
-              <MessageCardHeader>
+            <Card>
+              <CardHeader>
                 <TakoIcon id={icon} pun={pun} index={i} />
                 {user || "Anonymous Tako"}
                 <div style={{ marginLeft: "auto" }}>
                   <ShareButton slug={slug} label="Copy link to this message" />
                 </div>
-              </MessageCardHeader>
+              </CardHeader>
               <div style={{ padding: "0.75rem" }}>
                 {!isToggledTextOnly &&
                   image &&
@@ -149,7 +143,7 @@ const TakoMessages = ({
                     />
                   ))}
                 {(!isToggledOnlyImg || image.includes("mp4")) && (
-                  <MessageText>{message}</MessageText>
+                  <CardText>{message}</CardText>
                 )}
                 {event_date && (
                   <div
@@ -165,7 +159,7 @@ const TakoMessages = ({
                   </div>
                 )}
               </div>
-            </MessageCard>
+            </Card>
           </SubmissionContainer>
         );
       })}

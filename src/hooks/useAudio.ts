@@ -24,14 +24,10 @@ export const useAudio = ({
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (videoPaused) {
+    if (videoPaused || muted) {
       audio.pause();
-    } else if (!muted && !audio.paused) {
-      // already playing, nothing to do
-    } else if (!muted) {
+    } else if (audio.paused) {
       audio.play().catch(() => {});
-    } else {
-      audio.pause();
     }
   }, [muted, videoPaused]);
 

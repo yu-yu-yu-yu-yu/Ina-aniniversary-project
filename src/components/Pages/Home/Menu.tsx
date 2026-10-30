@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   NewTag,
   ButtonContainer,
+  ButtonsColumn,
   ButtonsDiv,
   CookieA,
   CookieButton,
@@ -9,9 +10,16 @@ import {
   CookieLabel,
   CookieLink,
   MenuContainer,
+  DecoBook,
   MenuFlexRow,
+  Shelf,
+  ShelfBooks,
+  ShelfPlank,
+  ShelfSpineImg,
+  ShelfSpineLink,
   TakoPeek,
 } from "./styles/menuStyles";
+import { SPINE } from "../Takonomicon/assets";
 import { TextBoxContainer } from "../../../styles/globalStyles";
 import { TAKO_FILES } from "../../../constants/takos";
 
@@ -26,7 +34,6 @@ const buttons = [
   { to: "/letters", label: "Letters for Ina" },
   { href: `${process.env.PUBLIC_URL}Ina Cookbook.pdf`, label: "Tako Cookbook" },
   { to: "/collages", label: "Takollages" },
-  { to: "/takonomicon", label: "Tako Lore Book" },
   { to: "/moments", label: `Ina Moments (2024)` },
   { to: "/wah", label: "WAH (2024)" },
 ];
@@ -35,7 +42,6 @@ const newButtons = [
   "Ina Ina Outfit!",
   "Moments Gallery",
   "Ina around the WAHrld",
-  "Tako Lore Book",
 ];
 
 const updateButtons = [
@@ -107,59 +113,85 @@ const Menu = (): JSX.Element => {
             </p>
           </div>
         </TextBoxContainer>
-        <ButtonsDiv>
-          {buttons.map((btn, i) => (
-            <ButtonContainer
-              key={btn.label}
-              onMouseEnter={() => {
-                setPeekIndex(i);
-                handleHover(i);
-              }}
-              onMouseLeave={() => setPeekIndex(null)}
-              style={{ position: "relative" }}
-            >
-              {newButtons.includes(btn.label) && <NewTag>New!</NewTag>}
-              {updateButtons.includes(btn.label) && <NewTag>Update!</NewTag>}
-              <TakoPeek
-                className="tako-peek"
-                src={peekTako}
-                alt="peeking tako"
-                active={peekIndex === i && !!peekTako}
-                style={{ visibility: peekTako ? "visible" : "hidden" }}
-              />
-              {"to" in btn ? (
-                <CookieLink to={btn.to} role="button">
-                  <CookieButton title={btn.label} $shaking={shakingIndex === i}>
-                    <CookieImg
-                      src={process.env.PUBLIC_URL + "/cookie.png"}
-                      alt="cookie"
-                    />
-                    <CookieLabel>{btn.label}</CookieLabel>
-                  </CookieButton>
-                </CookieLink>
-              ) : (
-                <CookieA
-                  href={btn.href}
-                  role="button"
-                  target={btn.label === "Takollages" ? "_blank" : undefined}
-                  rel={
-                    btn.label === "Takollages"
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                >
-                  <CookieButton title={btn.label} $shaking={shakingIndex === i}>
-                    <CookieImg
-                      src={process.env.PUBLIC_URL + "/cookie.png"}
-                      alt="cookie"
-                    />
-                    <CookieLabel>{btn.label}</CookieLabel>
-                  </CookieButton>
-                </CookieA>
-              )}
-            </ButtonContainer>
-          ))}
-        </ButtonsDiv>
+        <ButtonsColumn>
+          <Shelf>
+            <ShelfBooks>
+              <DecoBook $w={30} $h={128} $tilt={-1} />
+              <DecoBook $w={26} $h={150} />
+              <DecoBook $w={34} $h={118} />
+              <ShelfSpineLink
+                to="/takonomicon"
+                title="Tako Lore Book"
+                aria-label="Tako Lore Book"
+              >
+                <NewTag>New!</NewTag>
+                <ShelfSpineImg src={SPINE} alt="" />
+              </ShelfSpineLink>
+              <DecoBook $w={28} $h={140} />
+              <DecoBook $w={32} $h={122} $tilt={2} />
+            </ShelfBooks>
+            <ShelfPlank />
+          </Shelf>
+          <ButtonsDiv>
+            {buttons.map((btn, i) => (
+              <ButtonContainer
+                key={btn.label}
+                onMouseEnter={() => {
+                  setPeekIndex(i);
+                  handleHover(i);
+                }}
+                onMouseLeave={() => setPeekIndex(null)}
+                style={{ position: "relative" }}
+              >
+                {newButtons.includes(btn.label) && <NewTag>New!</NewTag>}
+                {updateButtons.includes(btn.label) && <NewTag>Update!</NewTag>}
+                <TakoPeek
+                  className="tako-peek"
+                  src={peekTako}
+                  alt="peeking tako"
+                  $active={peekIndex === i && !!peekTako}
+                  style={{ visibility: peekTako ? "visible" : "hidden" }}
+                />
+                {"to" in btn ? (
+                  <CookieLink to={btn.to} role="button">
+                    <CookieButton
+                      title={btn.label}
+                      $shaking={shakingIndex === i}
+                    >
+                      <CookieImg
+                        src={process.env.PUBLIC_URL + "/cookie.png"}
+                        alt="cookie"
+                      />
+                      <CookieLabel>{btn.label}</CookieLabel>
+                    </CookieButton>
+                  </CookieLink>
+                ) : (
+                  <CookieA
+                    href={btn.href}
+                    role="button"
+                    target={btn.label === "Takollages" ? "_blank" : undefined}
+                    rel={
+                      btn.label === "Takollages"
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                  >
+                    <CookieButton
+                      title={btn.label}
+                      $shaking={shakingIndex === i}
+                    >
+                      <CookieImg
+                        src={process.env.PUBLIC_URL + "/cookie.png"}
+                        alt="cookie"
+                      />
+                      <CookieLabel>{btn.label}</CookieLabel>
+                    </CookieButton>
+                  </CookieA>
+                )}
+              </ButtonContainer>
+            ))}
+          </ButtonsDiv>
+        </ButtonsColumn>
       </MenuFlexRow>
     </MenuContainer>
   );

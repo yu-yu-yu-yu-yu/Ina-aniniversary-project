@@ -15,7 +15,7 @@ import {
   PerformanceContext,
   deriveArchiveStatus,
 } from "../../../types/song";
-import ScrollArrow from "../../Common/BackToTop";
+import ScrollArrow from "../../Common/ScrollArrow";
 import { Switch } from "../../Common/Switch";
 import { debounce } from "lodash";
 import {
@@ -37,9 +37,11 @@ import {
   playlistFilterColors,
 } from "./styles/styles";
 import { Navbar, NavHome, HintButton } from "../../Common/Navbar";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
 import { useFetch } from "../../../hooks/useFetch";
+import { PageBgm } from "../../Common/PageBgm";
+import { LoadError } from "../../Common/LoadError";
+import { PageRoot } from "../../../styles/globalStyles";
+import { preloadImages } from "../../../utils/preloadImages";
 
 const LIMIT = 4;
 
@@ -176,23 +178,18 @@ const groupSongs = (
   return [];
 };
 
-const awaitImgs = async (items: SongData[]) => {
-  const promises = items
-    .filter((row) => {
-      const first = row.performances[0];
-      return first?.link && !first.link.includes("youtube");
-    })
-    .map(
-      (row) =>
-        new Promise<void>((resolve) => {
-          const img = new Image();
-          img.src = `${process.env.PUBLIC_URL}/songLinks/${row.performances[0].link}`;
-          img.onerror = () => resolve();
-          img.onload = () => resolve();
-        }),
-    );
-  await Promise.allSettled(promises);
-};
+const awaitImgs = (items: SongData[]) =>
+  preloadImages(
+    items
+      .filter((row) => {
+        const first = row.performances[0];
+        return first?.link && !first.link.includes("youtube");
+      })
+      .map(
+        (row) =>
+          `${process.env.PUBLIC_URL}/songLinks/${row.performances[0].link}`,
+      ),
+  );
 
 const DropdownPanel = ({
   label,
@@ -452,12 +449,6 @@ const HelpPanel = () => (
 );
 
 const PlaylistBoard = (): JSX.Element => {
-  const { muted, videoPlaying } = useMute();
-  const audioRef = useAudio({
-    muted,
-    autoPlay: true,
-    videoPaused: videoPlaying,
-  });
   const {
     data: rawData,
     loading,
@@ -658,7 +649,7 @@ const PlaylistBoard = (): JSX.Element => {
 
   const versionToggle = (
     <ModalButton
-      active={showOriginal}
+      $active={showOriginal}
       onClick={() => setShowOriginal((v) => !v)}
     >
       <i className="fa fa-exchange" />
@@ -667,14 +658,8 @@ const PlaylistBoard = (): JSX.Element => {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/注文の少ない喫茶店.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+    <PageRoot>
+      <PageBgm src="/注文の少ない喫茶店.mp3" pauseOnVideo />
       <Navbar>
         <NavHome />
         <NavTitle>Ultimate Ina Playlist</NavTitle>
@@ -730,7 +715,7 @@ const PlaylistBoard = (): JSX.Element => {
               <GroupPanel {...groupProps} />
               <PlaylistDrawerSeparator>Version</PlaylistDrawerSeparator>
               <ModalButton
-                active={showOriginal}
+                $active={showOriginal}
                 onClick={() => setShowOriginal((v) => !v)}
                 style={{ width: "100%" }}
               >
@@ -747,7 +732,7 @@ const PlaylistBoard = (): JSX.Element => {
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading: {error.message}</div>
+        <LoadError what="songs" error={error} />
       ) : (
         <SiteBoard>
           <SearchRow>
@@ -824,7 +809,7 @@ const PlaylistBoard = (): JSX.Element => {
           <ScrollArrow />
         </SiteBoard>
       )}
-    </div>
+    </PageRoot>
   );
 };
 

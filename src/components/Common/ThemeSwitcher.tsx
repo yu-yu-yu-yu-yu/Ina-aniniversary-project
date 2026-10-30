@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useTheme } from "./ThemeProvider";
 import { ThemeName, themes } from "./themes";
+import { buttonShadow, zIndex } from "../../styles/tokens";
 
 const themeNames: ThemeName[] = [
   "Standard",
@@ -9,27 +10,31 @@ const themeNames: ThemeName[] = [
   "Meconopsis",
   "Temari",
   "TakoTakover",
+  "AbyssalHymn",
+  "TakodachiNoUta",
 ];
 
+export const THEME_CHOSEN_KEY = "theme-user-chosen";
+
 const ThemeButton = styled.button<{
-  bg: string;
-  color: string;
-  border: string;
+  $bg: string;
+  $color: string;
+  $border: string;
 }>`
   position: fixed;
   left: 84px;
   bottom: 24px;
-  z-index: 1001;
-  background: ${({ bg }) => bg};
-  color: ${({ color }) => color};
-  border: 2px solid ${({ border }) => border};
+  z-index: ${zIndex.themeButton};
+  background: ${({ $bg }) => $bg};
+  color: ${({ $color }) => $color};
+  border: 2px solid ${({ $border }) => $border};
   border-radius: 50%;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: ${buttonShadow};
   cursor: pointer;
   font-size: 1.7rem;
   transition:
@@ -46,11 +51,14 @@ export const ThemeSwitcher = () => {
 
   return (
     <ThemeButton
-      bg={themeVars["--light-background"] || "#A198B3"}
-      color={themeVars["--light-highlight"] || "#F8BF04"}
-      border={themeVars["--dark-highlight"] || "#564F68"}
+      $bg={themeVars["--light-background"] || "#A198B3"}
+      $color={themeVars["--light-highlight"] || "#F8BF04"}
+      $border={themeVars["--dark-highlight"] || "#564F68"}
       title={`Switch theme (${theme})`}
-      onClick={() => setTheme(nextTheme)}
+      onClick={() => {
+        localStorage.setItem(THEME_CHOSEN_KEY, "1");
+        setTheme(nextTheme);
+      }}
     >
       🖌️
     </ThemeButton>

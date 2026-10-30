@@ -31,11 +31,6 @@ export interface SongData {
   coverInfo?: string;
 }
 
-export interface VideoEntry extends SongData {
-  vodtitle?: string;
-  video?: string;
-}
-
 export const deriveArchiveStatus = (
   song: SongData,
 ): "archived" | "unofficially archived" | "unarchived" => {

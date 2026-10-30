@@ -10,6 +10,8 @@ import {
 } from "./styles/logoStyles";
 import { useTheme } from "../../Common/ThemeProvider";
 import { ThemeName } from "../../../types";
+import { GLITCH_FILE, useGlitchProgress } from "./glitch";
+import { breakpoints } from "../../../styles/tokens";
 
 const themeBalloonFile: Record<ThemeName, string> = {
   Standard: "",
@@ -17,6 +19,8 @@ const themeBalloonFile: Record<ThemeName, string> = {
   Meconopsis: "meconopsis",
   Temari: "temari",
   TakoTakover: "tako8takover",
+  AbyssalHymn: "",
+  TakodachiNoUta: "",
 };
 
 const ALL_SHAPED = ["0", "1", "cookies", "uhh-i-think-she-needs-help"];
@@ -52,14 +56,14 @@ const BalloonAnchor = styled.img<{
   animation-delay: ${({ $delay }) => $delay * 0.45}s;
   pointer-events: none;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     display: none;
   }
 `;
 
 const MobileMVRow = styled.div`
   display: none;
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -81,14 +85,26 @@ const MobileMVBalloon = styled.img<{ $delay: number; $index: number }>`
   animation-delay: ${({ $delay }) => $delay * 0.45}s;
 `;
 
-const Logo = (): JSX.Element => {
+const Logo = ({
+  glitchStartMs = 0,
+  glitchMs,
+}: {
+  glitchStartMs?: number;
+  glitchMs?: number;
+}): JSX.Element => {
   const { theme } = useTheme();
+  const glitchProgress = useGlitchProgress(glitchStartMs, glitchMs);
+  const glitchAt = useMemo(
+    () => Array.from({ length: 8 }, () => Math.random()),
+    [],
+  );
+  const glitched = (i: number): boolean =>
+    glitchProgress > 0 && glitchAt[i] <= glitchProgress;
 
   const { mvFiles, shapedFiles, pos } = useMemo(() => {
-    const mv =
-      theme === "Standard"
-        ? ["meconopsis", "violet", "temari", "tako8takover"]
-        : Array(4).fill(themeBalloonFile[theme]);
+    const mv = !themeBalloonFile[theme]
+      ? ["meconopsis", "violet", "temari", "tako8takover"]
+      : Array(4).fill(themeBalloonFile[theme]);
 
     const shuffled = [...ALL_SHAPED].sort(() => Math.random() - 0.5);
 
@@ -123,10 +139,15 @@ const Logo = (): JSX.Element => {
     };
   }, [theme]);
 
-  const mvSrc = (name: string) =>
-    `${process.env.PUBLIC_URL}/balloons/mv/balloon-mv-${name}.png`;
-  const tkSrc = (name: string) =>
-    `${process.env.PUBLIC_URL}/balloons/takos/balloon-takos-${name}.png`;
+  const glitchSrc = `${process.env.PUBLIC_URL}/${GLITCH_FILE}`;
+  const mvSrc = (name: string, i: number) =>
+    glitched(i)
+      ? glitchSrc
+      : `${process.env.PUBLIC_URL}/balloons/mv/balloon-mv-${name}.png`;
+  const tkSrc = (name: string, i: number) =>
+    glitched(i)
+      ? glitchSrc
+      : `${process.env.PUBLIC_URL}/balloons/takos/balloon-takos-${name}.png`;
 
   return (
     <LogoContainer>
@@ -136,7 +157,7 @@ const Logo = (): JSX.Element => {
           {mvFiles.map((name, i) => (
             <MobileMVBalloon
               key={i}
-              src={mvSrc(name)}
+              src={mvSrc(name, i)}
               alt=""
               $delay={i}
               $index={i}
@@ -149,7 +170,7 @@ const Logo = (): JSX.Element => {
             $top={`calc(0%  + ${pos.mvLT})`}
             $gap={pos.mvGapLT}
             $delay={0}
-            src={mvSrc(mvFiles[0])}
+            src={mvSrc(mvFiles[0], 0)}
             alt=""
           />
           <BalloonAnchor
@@ -157,7 +178,7 @@ const Logo = (): JSX.Element => {
             $top={`calc(45% + ${pos.mvLB})`}
             $gap={pos.mvGapLB}
             $delay={1}
-            src={mvSrc(mvFiles[1])}
+            src={mvSrc(mvFiles[1], 1)}
             alt=""
           />
           <BalloonAnchor
@@ -165,7 +186,7 @@ const Logo = (): JSX.Element => {
             $top={`calc(5%  + ${pos.mvRT})`}
             $gap={pos.mvGapRT}
             $delay={2}
-            src={mvSrc(mvFiles[2])}
+            src={mvSrc(mvFiles[2], 2)}
             alt=""
           />
           <BalloonAnchor
@@ -173,7 +194,7 @@ const Logo = (): JSX.Element => {
             $top={`calc(40% + ${pos.mvRB})`}
             $gap={pos.mvGapRB}
             $delay={3}
-            src={mvSrc(mvFiles[3])}
+            src={mvSrc(mvFiles[3], 3)}
             alt=""
           />
 
@@ -187,7 +208,7 @@ const Logo = (): JSX.Element => {
             $top={pos.shTopLT}
             $gap={pos.shGapLT}
             $delay={4}
-            src={tkSrc(shapedFiles[0])}
+            src={tkSrc(shapedFiles[0], 4)}
             alt=""
           />
           <BalloonAnchor
@@ -195,7 +216,7 @@ const Logo = (): JSX.Element => {
             $top={pos.shTopLB}
             $gap={pos.shGapLB}
             $delay={5}
-            src={tkSrc(shapedFiles[1])}
+            src={tkSrc(shapedFiles[1], 5)}
             alt=""
           />
           <BalloonAnchor
@@ -203,7 +224,7 @@ const Logo = (): JSX.Element => {
             $top={pos.shTopRT}
             $gap={pos.shGapRT}
             $delay={6}
-            src={tkSrc(shapedFiles[2])}
+            src={tkSrc(shapedFiles[2], 6)}
             alt=""
           />
           <BalloonAnchor
@@ -211,7 +232,7 @@ const Logo = (): JSX.Element => {
             $top={pos.shTopRB}
             $gap={pos.shGapRB}
             $delay={7}
-            src={tkSrc(shapedFiles[3])}
+            src={tkSrc(shapedFiles[3], 7)}
             alt=""
           />
         </LogoImageRow>

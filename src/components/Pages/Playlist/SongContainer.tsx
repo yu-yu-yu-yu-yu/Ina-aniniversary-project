@@ -6,7 +6,7 @@ import {
   deriveArchiveStatus,
 } from "../../../types/song";
 import { useMute } from "../../Common/MuteButton";
-import { notifyPlayerReady } from "../../../utils/youtube";
+import { notifyPlayerReady, toEmbed, toWatch } from "../../../utils/youtube";
 import ShareButton from "../../Common/ShareButton";
 import {
   BubbleHeader,
@@ -28,19 +28,6 @@ interface SongContainerProps {
   SongData: SongData[];
   showOriginal?: boolean;
 }
-
-const toEmbed = (url: string): string => {
-  const match = url.match(/[?&]v=([^&]+)/);
-  return match ? `https://www.youtube.com/embed/${match[1]}` : url;
-};
-
-const toWatch = (url: string): string => {
-  const videoMatch = url.match(/youtube\.com\/embed\/([^?&#]+)/);
-  if (!videoMatch) return url;
-  const startMatch = url.match(/[?&]start=(\d+)/);
-  const base = `https://www.youtube.com/watch?v=${videoMatch[1]}`;
-  return startMatch ? `${base}&t=${startMatch[1]}` : base;
-};
 
 const CONTEXT_LABEL: Record<string, string> = {
   karaoke: "Karaoke",
@@ -142,7 +129,11 @@ const SongCardEntry = ({
   })();
 
   const withJsApi = (url: string): string =>
-    url.includes("?") ? `${url}&enablejsapi=1` : `${url}?enablejsapi=1`;
+    url.includes("enablejsapi")
+      ? url
+      : url.includes("?")
+        ? `${url}&enablejsapi=1`
+        : `${url}?enablejsapi=1`;
 
   const renderMedia = (link: string) => {
     if (!link.includes("youtube")) {
@@ -194,7 +185,7 @@ const SongCardEntry = ({
           <HeaderText>{song.songName}</HeaderText>
           {slots.length > 0 && (
             <VersionSubtitle
-              canToggle={canCycle}
+              $canToggle={canCycle}
               onClick={canCycle ? handleVersionClick : undefined}
             >
               {canCycle ? (
@@ -239,34 +230,34 @@ const SongCardEntry = ({
 
         <SongTagRow>
           {song.origin === "Ina's original" && (
-            <SongTag tagColor={playlistFilterColors["Ina's original"]}>
+            <SongTag $tagColor={playlistFilterColors["Ina's original"]}>
               Ina&apos;s Original
             </SongTag>
           )}
           {song.origin === "Hololive's original" && (
-            <SongTag tagColor={playlistFilterColors["Hololive's original"]}>
+            <SongTag $tagColor={playlistFilterColors["Hololive's original"]}>
               Hololive&apos;s Original
             </SongTag>
           )}
           {displayPerfs.map((p, i) => (
-            <SongTag key={i} tagColor={perfTagColor(p)}>
+            <SongTag key={i} $tagColor={perfTagColor(p)}>
               {perfLabel(p)}
             </SongTag>
           ))}
           {archiveStatus !== "unarchived" && (
-            <SongTag tagColor={playlistFilterColors[archiveStatus]}>
+            <SongTag $tagColor={playlistFilterColors[archiveStatus]}>
               {archiveStatus}
             </SongTag>
           )}
           {linkedPerfs.length === 0 &&
             song.origin !== "Ina's original" &&
             song.origin !== "Hololive's original" && (
-              <SongTag tagColor={playlistFilterColors["unarchived"]}>
+              <SongTag $tagColor={playlistFilterColors["unarchived"]}>
                 Unarchived
               </SongTag>
             )}
           {song.collab !== "solo" && (
-            <SongTag tagColor={playlistFilterColors[song.collab]}>
+            <SongTag $tagColor={playlistFilterColors[song.collab]}>
               {song.collab}
             </SongTag>
           )}

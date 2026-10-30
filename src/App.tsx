@@ -11,7 +11,7 @@ import { MuteProvider } from "./components/Common/MuteButton";
 import { TakoLoading } from "./components/Common/TakoLoading";
 import { DimSharedButtons } from "./styles/globalStyles";
 
-const HomeContent = lazy(() => import("./components/Pages/Home/HomeContent"));
+const HomeEntry = lazy(() => import("./components/Pages/Home/HomeEntry"));
 const MessageBoard = lazy(
   () => import("./components/Pages/Messages/MessageBoardContainer"),
 );
@@ -24,17 +24,13 @@ const PlaylistBoard = lazy(
 const VideoBoardContainer = lazy(
   () => import("./components/Pages/Messages/VideoBoardContainer"),
 );
-const Timeline = lazy(() =>
-  import("./components/Pages/Timeline/Timeline").then((m) => ({
-    default: m.Timeline,
-  })),
+const Timeline = lazy(() => import("./components/Pages/Timeline/Timeline"));
+const TakodexList = lazy(
+  () => import("./components/Pages/Takodex/TakodexList"),
 );
-const TakodexList = lazy(() =>
-  import("./components/Pages/Takodex/TakodexList").then((m) => ({
-    default: m.TakodexList,
-  })),
+const CollagePage = lazy(
+  () => import("./components/Pages/Collages/CollagePage"),
 );
-const CollagePage = lazy(() => import("./components/Pages/Collages/collage"));
 const CreditsPage = lazy(
   () => import("./components/Pages/Credits/CreditsPage"),
 );
@@ -75,7 +71,7 @@ const App = (): JSX.Element => (
         <Suspense fallback={<TakoLoading fullPage />}>
           <Switch>
             <Route exact path="/">
-              <HomeContent />
+              <HomeEntry />
             </Route>
             <Route path="/messages">
               <MessageBoard />

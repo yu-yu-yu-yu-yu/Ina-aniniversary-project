@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
+import { breakpoints, zIndex } from "../../styles/tokens";
 
 export const Navbar = styled.nav`
   background: transparent
@@ -13,26 +14,24 @@ export const Navbar = styled.nav`
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: ${zIndex.nav};
   flex: 0 1;
   padding: 0.25rem 1rem;
   text-align: left;
-  font: normal normal normal 30px/34px montserrat;
+  font: normal normal normal 30px/34px Montserrat;
   letter-spacing: 0;
   justify-content: space-between;
   align-items: center;
   &.mobile {
     font: normal normal normal 20px/25px Montserrat;
   }
-  bottom-shadow: 0px 4px 4px var(--shadow);
 
-  @media only screen and (max-width: 700px) {
-    font: normal normal normal 22px/26px montserrat;
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
+    font: normal normal normal 22px/26px Montserrat;
   }
 `;
 
-export const StyleHome = styled.button`
-  possition: fixed;
+export const StyleHome = styled(NavLink)`
   font-size: inherit;
   background: var(--dark-highlight);
   border: 2px solid var(--light-highlight);
@@ -78,7 +77,7 @@ export const HintButton = styled.button`
   gap: 6px;
   flex-shrink: 0;
   transition: opacity 0.2s;
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     padding: 8px 10px;
     gap: 0;
     .btn-text {
@@ -101,7 +100,7 @@ export const HintPopover = styled.div`
   box-shadow: 0 4px 16px var(--shadow);
   padding: 16px 20px;
   font-size: clamp(12px, 0.5em, 15px);
-  z-index: 100;
+  z-index: ${zIndex.nav};
   min-width: 260px;
   max-width: min(90vw, 460px);
   max-height: 80vh;
@@ -110,10 +109,33 @@ export const HintPopover = styled.div`
 
 export const NavHome = () => {
   return (
-    <StyleHome>
-      <NavLink exact to="/">
-        <i className="fa fa-home" />
-      </NavLink>
+    <StyleHome exact to="/">
+      <i className="fa fa-home" />
     </StyleHome>
+  );
+};
+
+export const NavHelp = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}): JSX.Element => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ flex: "0 0 auto", position: "relative" }}>
+      <HintButton
+        aria-label={label}
+        title={label}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <i className="fa fa-question-circle" aria-hidden="true" />
+        <span className="btn-text">Help</span>
+      </HintButton>
+      {open && (
+        <HintPopover onClick={() => setOpen(false)}>{children}</HintPopover>
+      )}
+    </div>
   );
 };

@@ -1,5 +1,5 @@
-import { upperCase, zipObject } from "lodash";
-import { Milestone, Tags } from "../../../types/timeline";
+import { zipObject } from "lodash";
+import { Milestone } from "../../../types/timeline";
 import milestoneJson from "../../../static/Ina Anniversary Milestones.json";
 import timelineMessages from "../../../static/TimelineMessages.json";
 
@@ -34,36 +34,10 @@ export const getDynamicYears = () => {
 
 export const years = getDynamicYears() as unknown as readonly string[];
 
-export const filterMilestones = (
-  selectedTags: Tags,
-  milestones: Milestone[],
-  searchString: string,
-) => {
-  const isAnyTag = Object.values(selectedTags).reduce(
-    (acc, val) => acc || val,
-    false,
-  );
-
-  return milestones.filter(({ tags, label }) => {
-    const searchCondition = upperCase(label).includes(upperCase(searchString));
-    let tagCondition = !isAnyTag;
-    for (const tag in tags) {
-      tagCondition =
-        tagCondition ||
-        (tags[tag as keyof Tags] && selectedTags[tag as keyof Tags]);
-    }
-    return searchCondition && tagCondition;
-  });
-};
-
 export const getMediaLink = (src: Milestone["media"]) => {
   const isUrl = src?.startsWith("http");
-  return isUrl ? src : `process.env.PUBLIC_URL/${src}`;
+  return isUrl ? src : `${process.env.PUBLIC_URL}/${src}`;
 };
-
-export const monthsWithYears = years.flatMap((year) =>
-  months.map((month) => `${year}_${month}`),
-);
 
 export const tagColors = {
   highlight: "var(--light-highlight)",
@@ -73,53 +47,6 @@ export const tagColors = {
   collab: "#00E6E6",
   song: "#FF69B4",
 };
-
-export function getMilestoneOutline(tags: {
-  highlight?: boolean;
-  important?: boolean;
-  gaming?: boolean;
-  drawing?: boolean;
-  collab?: boolean;
-  song?: boolean;
-}): string {
-  const activeColors = Object.entries(tags)
-    .filter(([, v]) => v === true)
-    .map(([k]) => tagColors[k as keyof typeof tagColors]);
-  if (activeColors.length === 0) return "transparent";
-  if (activeColors.length === 1) return activeColors[0];
-  return `linear-gradient(135deg, ${activeColors.join(", ")})`;
-}
-
-export const genericTakoIcons = [
-  "8-bit Tako.png",
-  "Hollow Tako.png",
-  "Ikadachi.png",
-  "Mori Tako.png",
-  "Robodachi.png",
-  "Tako Amelia (Takoson).png",
-  "Tako Gura (Chum Tako).png",
-  "Tako Ina.png",
-  "Tako Kiara (Tako Bell).png",
-  "Tako Ross.png",
-  "Takodachi.png",
-  "Takomfy.png",
-  "Tophat Tako.png",
-  "Violet Tako.png",
-  "Wonder Tako.png",
-  "Yuul B. Tako.png",
-];
-
-export function getTakoAvatar(
-  author: string | null,
-  index: number = 0,
-): string {
-  if (author && author.trim() !== "") {
-    const fileName = `${author.replace(/ /g, "")}.png`;
-    return `${process.env.PUBLIC_URL}/takoswentries/${fileName}`;
-  }
-  const icon = genericTakoIcons[index % genericTakoIcons.length];
-  return `${process.env.PUBLIC_URL}/icon/${icon}`;
-}
 
 export function getUniqueTitleTags(milestones: Milestone[]): string[] {
   const tags = new Set<string>();

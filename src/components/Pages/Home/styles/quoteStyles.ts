@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import { breakpoints } from "../../../../styles/tokens";
 
 const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   background: ${({ $grayscale }) =>
@@ -12,7 +13,7 @@ const QuoteContainer = styled.div<{ $grayscale?: boolean }>`
   z-index: 3;
   position: relative;
 
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     margin-top: 0;
     padding: 40px 20px 60px;
   }
@@ -24,7 +25,7 @@ const QuoteInaImg = styled.img<{ $grayscale?: boolean }>`
   width: 300px;
   filter: ${({ $grayscale }) => ($grayscale ? "grayscale(1)" : "none")};
   transition: filter 0.2s;
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     width: 200px;
   }
 `;
@@ -41,7 +42,7 @@ const QuoteTextBox = styled.div`
   text-align: center;
   overflow: visible;
   filter: inherit;
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     width: 250px;
     min-height: 98px;
     padding: 6px 10px 18px;
@@ -60,7 +61,7 @@ const QuoteContent = styled.div`
   letter-spacing: 2.5px;
   color: #ffffff;
   color: var(--text-color);
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     display: block;
     margin: auto;
     text-align: center;
@@ -73,7 +74,7 @@ const QuoteContent = styled.div`
     padding-bottom: 24px;
     width: 300px;
     filter: inherit;
-    @media only screen and (max-width: 701px) {
+    @media only screen and (max-width: ${breakpoints.mobile}px) {
       width: 250px;
       padding-bottom: 12px;
       padding-top: 20px;
@@ -94,7 +95,7 @@ const QuoteActions = styled.div`
   gap: 8px;
   z-index: 10;
 
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     position: static;
     justify-content: center;
     margin-top: 18px;
@@ -130,7 +131,7 @@ const QuoteActionButton = styled.button`
     color: var(--light-highlight);
   }
 
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     font-size: 0.8em;
     padding: 8px 14px;
   }
@@ -196,7 +197,7 @@ const ElixirText = styled.span`
     0 2px 8px rgba(0, 0, 0, 0.8);
   pointer-events: none;
   animation: ${elixirFade} 2.5s ease forwards;
-  @media only screen and (max-width: 701px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     font-size: 1.5rem;
     letter-spacing: 1px;
     width: min-content;

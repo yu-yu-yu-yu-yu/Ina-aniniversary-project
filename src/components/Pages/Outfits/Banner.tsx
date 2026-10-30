@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import outfits from "./outfits.json";
 import ShareButton from "../../Common/ShareButton";
 import {
-  ArtworkButton,
   BannerImg,
   BannerImgWrapper,
   BannerWrapper,
@@ -14,10 +13,15 @@ import {
   PivotGlow,
   VodLink,
 } from "./styles/BannerStyle";
-import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { Outfit } from "../../../types";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
+import { zIndex } from "../../../styles/tokens";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
+import {
+  EdgeArrow,
+  ExhibitCounter,
+  ArtworkButton,
+} from "../../../styles/globalStyles";
 
 const images = outfits.map((item: Outfit) => ({
   ...item,
@@ -75,7 +79,9 @@ export const Banner = () => {
   const activeOutfit =
     activeArr.length > 1 ? activeArr[dupIdx[activeTitle] || 0] : activeArr[0];
   const socialHandle = (
-    activeOutfit.handle?.trim() || activeOutfit.username?.trim() || ""
+    activeOutfit.handle?.trim() ||
+    activeOutfit.username?.trim() ||
+    ""
   ).replace(/^@/, "");
   const socialUrl = socialHandle ? `https://x.com/${socialHandle}` : undefined;
 
@@ -242,7 +248,8 @@ export const Banner = () => {
             {"By:"} {activeOutfit.artist}
             {socialUrl ? (
               <>
-                {" "}(
+                {" "}
+                (
                 <a
                   href={socialUrl}
                   target="_blank"
@@ -294,7 +301,7 @@ export const Banner = () => {
             width: "100vw",
             height: "100vh",
             background: "rgba(0,0,0,0.8)",
-            zIndex: 9999,
+            zIndex: zIndex.top,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

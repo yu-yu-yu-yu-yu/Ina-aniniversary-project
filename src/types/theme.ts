@@ -3,7 +3,9 @@ export type ThemeName =
   | "Violet"
   | "Meconopsis"
   | "Temari"
-  | "TakoTakover";
+  | "TakoTakover"
+  | "AbyssalHymn"
+  | "TakodachiNoUta";
 
 export interface ThemeContextType {
   theme: ThemeName;

@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PAGE_SKIP_SOUND, PAGE_STEP_SOUND } from "./assets";
+import { PAGE_STEP_SOUNDS } from "./assets";
 
 const SFX_MUTE_KEY = "takonomicon-sfx-muted";
 const RELATIVE_ONSET_THRESHOLD = 0.08;
 const ONSET_WINDOW_SAMPLES = 512;
 const MIN_RATE = 0.92;
 const MAX_RATE = 1.08;
-const RAPID_TURN_MS = 260;
 
 interface TrimmedBuffer {
   buffer: AudioBuffer;
@@ -65,7 +64,7 @@ const loadTrimmedBuffer = (
     .catch(() => null);
 
 export interface PageTurnSound {
-  play: (isDirectJump: boolean) => void;
+  play: () => void;
   muted: boolean;
   toggleMuted: () => void;
 }
@@ -79,9 +78,7 @@ export const usePageTurnSound = (): PageTurnSound => {
     }
   });
   const ctxRef = useRef<AudioContext | null>(null);
-  const stepBufferRef = useRef<TrimmedBuffer | null>(null);
-  const skipBufferRef = useRef<TrimmedBuffer | null>(null);
-  const lastTurnAtRef = useRef(0);
+  const stepBuffersRef = useRef<(TrimmedBuffer | null)[]>([]);
   const currentSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
   useEffect(() => {
@@ -100,11 +97,10 @@ export const usePageTurnSound = (): PageTurnSound => {
     window.addEventListener("pointerdown", unlock);
     window.addEventListener("keydown", unlock);
 
-    loadTrimmedBuffer(ctx, PAGE_STEP_SOUND).then((result) => {
-      if (!cancelled) stepBufferRef.current = result;
-    });
-    loadTrimmedBuffer(ctx, PAGE_SKIP_SOUND).then((result) => {
-      if (!cancelled) skipBufferRef.current = result;
+    Promise.all(
+      PAGE_STEP_SOUNDS.map((src) => loadTrimmedBuffer(ctx, src)),
+    ).then((results) => {
+      if (!cancelled) stepBuffersRef.current = results;
     });
 
     return () => {
@@ -123,47 +119,40 @@ export const usePageTurnSound = (): PageTurnSound => {
     }
   }, [muted]);
 
-  const play = useCallback(
-    (isDirectJump: boolean) => {
-      const ctx = ctxRef.current;
-      if (muted || !ctx) return;
+  const play = useCallback(() => {
+    const ctx = ctxRef.current;
+    if (muted || !ctx) return;
 
-      const now = performance.now();
-      const isRapidBurst = now - lastTurnAtRef.current < RAPID_TURN_MS;
-      lastTurnAtRef.current = now;
+    const buffers = stepBuffersRef.current.filter(
+      (b): b is TrimmedBuffer => b !== null,
+    );
+    const trimmed = buffers[Math.floor(Math.random() * buffers.length)];
+    if (!trimmed) return;
 
-      const trimmed =
-        isDirectJump || isRapidBurst
-          ? skipBufferRef.current
-          : stepBufferRef.current;
-      if (!trimmed) return;
+    if (ctx.state === "suspended") ctx.resume().catch(() => undefined);
 
-      if (ctx.state === "suspended") ctx.resume().catch(() => undefined);
-
-      const previous = currentSourceRef.current;
-      if (previous) {
-        try {
-          previous.stop();
-        } catch {
-          undefined;
-        }
+    const previous = currentSourceRef.current;
+    if (previous) {
+      try {
+        previous.stop();
+      } catch {
+        undefined;
       }
+    }
 
-      const source = ctx.createBufferSource();
-      source.buffer = trimmed.buffer;
-      source.playbackRate.value =
-        MIN_RATE + Math.random() * (MAX_RATE - MIN_RATE);
-      source.connect(ctx.destination);
-      source.onended = () => {
-        if (currentSourceRef.current === source) {
-          currentSourceRef.current = null;
-        }
-      };
-      currentSourceRef.current = source;
-      source.start(0, trimmed.start, trimmed.duration);
-    },
-    [muted],
-  );
+    const source = ctx.createBufferSource();
+    source.buffer = trimmed.buffer;
+    source.playbackRate.value =
+      MIN_RATE + Math.random() * (MAX_RATE - MIN_RATE);
+    source.connect(ctx.destination);
+    source.onended = () => {
+      if (currentSourceRef.current === source) {
+        currentSourceRef.current = null;
+      }
+    };
+    currentSourceRef.current = source;
+    source.start(0, trimmed.start, trimmed.duration);
+  }, [muted]);
 
   const toggleMuted = useCallback(() => setMuted((m) => !m), []);
 

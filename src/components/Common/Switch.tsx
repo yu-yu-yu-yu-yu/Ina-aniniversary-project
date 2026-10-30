@@ -10,15 +10,15 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const Bar = styled.div<{ active: boolean; color: string }>`
+const Bar = styled.div<{ $active: boolean; $color: string }>`
   position: relative;
   border-radius: 100px;
   width: 38px;
   min-width: 38px;
   height: 24px;
   flex-shrink: 0;
-  background-color: ${({ active, color }) =>
-    active ? color : "var(--dark-highlight)"};
+  background-color: ${({ $active, $color }) =>
+    $active ? $color : "var(--dark-highlight)"};
   transition: background-color 0.2s linear;
   &.mobile {
     width: 28px;
@@ -27,30 +27,30 @@ const Bar = styled.div<{ active: boolean; color: string }>`
   }
 `;
 
-const Circle = styled.div<{ active: boolean; color: string }>`
+const Circle = styled.div<{ $active: boolean; $color: string }>`
   position: absolute;
   border-radius: 50%;
   width: 18px;
   height: 18px;
   box-sizing: border-box;
   background: var(--text-color);
-  border: 2px solid ${({ color }) => color};
+  border: 2px solid ${({ $color }) => $color};
   top: 50%;
   left: 3px;
   transform: translateY(-50%)
-    translateX(${({ active }) => (active ? "14px" : "0px")});
+    translateX(${({ $active }) => ($active ? "14px" : "0px")});
   transition: transform 0.2s linear;
   &.mobile {
     width: 12px;
     height: 12px;
     left: 2px;
     transform: translateY(-50%)
-      translateX(${({ active }) => (active ? "12px" : "0px")});
+      translateX(${({ $active }) => ($active ? "12px" : "0px")});
   }
 `;
 
-const Label = styled.span<{ labelColor?: string }>`
-  color: ${({ labelColor }) => labelColor ?? "var(--text-color)"};
+const Label = styled.span<{ $labelColor?: string }>`
+  color: ${({ $labelColor }) => $labelColor ?? "var(--text-color)"};
   text-align: left;
   font: normal normal 300 25px/26px Montserrat;
   letter-spacing: 0;
@@ -77,10 +77,10 @@ export const Switch = ({
   const cls = mobile ? "mobile" : "";
   return (
     <Container onClick={() => onChange(!value)}>
-      <Bar active={value} color={color} className={cls}>
-        <Circle active={value} color={color} className={cls} />
+      <Bar $active={value} $color={color} className={cls}>
+        <Circle $active={value} $color={color} className={cls} />
       </Bar>
-      <Label labelColor={labelColor} className={cls}>
+      <Label $labelColor={labelColor} className={cls}>
         {label}
       </Label>
     </Container>

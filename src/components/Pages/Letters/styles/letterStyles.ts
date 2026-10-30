@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+import { zIndex } from "../../../../styles/tokens";
 
 export const envelopeFloat = keyframes`
   0%, 100% { transform: translateY(0px); }
@@ -230,7 +231,7 @@ export const Backdrop = styled.div`
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(3px);
-  z-index: 1000;
+  z-index: ${zIndex.backdrop};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,15 +268,6 @@ export const ModalCard = styled.div`
     background: #b66ad4;
     border-radius: 3px;
   }
-`;
-
-export const ZoomHint = styled.p`
-  font-size: 12px;
-  color: var(--ink-black);
-  text-align: center;
-  margin-top: 8px;
-  font-style: italic;
-  opacity: 0.6;
 `;
 
 export const CloseLetterButton = styled.button`

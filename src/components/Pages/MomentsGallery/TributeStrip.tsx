@@ -1,6 +1,5 @@
 import React from "react";
 import { Tribute } from "../../../types";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
 import {
@@ -9,6 +8,7 @@ import {
   TributeCard,
   TributeRow,
 } from "./styles";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
 
 const TributeStrip = ({
   tributes,

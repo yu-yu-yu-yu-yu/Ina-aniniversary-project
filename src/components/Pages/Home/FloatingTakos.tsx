@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FloatingTakoData } from "../../../types";
 import { TAKO_FILES } from "../../../constants/takos";
+import { GLITCH_FILE, glitchThreshold, useGlitchProgress } from "./glitch";
+import { useMute } from "../../Common/MuteButton";
 const ANIMATION_DURATION = 9000;
 
 const floatUp = keyframes`
@@ -35,10 +37,10 @@ const floatUp = keyframes`
   }
 `;
 
-const FloatingTako = styled.img<{ left: number; bottom: number }>`
+const FloatingTako = styled.img<{ $left: number; $bottom: number }>`
   position: absolute;
-  left: ${({ left }) => left}vw;
-  bottom: ${({ bottom }) => bottom}px;
+  left: ${({ $left }) => $left}vw;
+  bottom: ${({ $bottom }) => $bottom}px;
   height: 5vmax;
   max-height: 100px;
   min-height: 20px;
@@ -65,14 +67,20 @@ const TakoFloatBg = styled.div<{ $zIndex?: number }>`
 const FloatingTakos = ({
   freeFloat = false,
   zIndex,
+  glitchStartMs = 0,
+  glitchMs,
 }: {
   freeFloat?: boolean;
   zIndex?: number;
+  glitchStartMs?: number;
+  glitchMs?: number;
 }): JSX.Element => {
   const [floatingTakos, setFloatingTakos] = useState<FloatingTakoData[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const sfxRef = useRef<HTMLAudioElement>(null);
+  const { muted } = useMute();
   const [columnMode] = useState(!freeFloat);
+  const glitchProgress = useGlitchProgress(glitchStartMs, glitchMs);
 
   useEffect(() => {
     TAKO_FILES.forEach((file) => {
@@ -138,10 +146,10 @@ const FloatingTakos = ({
   };
 
   const handleTakoClick = () => {
-    if (sfxRef.current) {
+    if (sfxRef.current && !muted) {
       sfxRef.current.volume = 0.2;
       sfxRef.current.currentTime = 0;
-      sfxRef.current.play();
+      sfxRef.current.play().catch(() => {});
     }
   };
 
@@ -157,9 +165,13 @@ const FloatingTakos = ({
         {floatingTakos.map((tako) => (
           <FloatingTako
             key={tako.key}
-            left={tako.left}
-            bottom={tako.bottom}
-            src={`${process.env.PUBLIC_URL}/takos/${encodeURIComponent(tako.tako)}`}
+            $left={tako.left}
+            $bottom={tako.bottom}
+            src={`${process.env.PUBLIC_URL}/${
+              glitchProgress > 0 && glitchThreshold(tako.key) <= glitchProgress
+                ? GLITCH_FILE
+                : `takos/${encodeURIComponent(tako.tako)}`
+            }`}
             alt="floating takodachi"
             onClick={handleTakoClick}
             style={{ pointerEvents: "auto", cursor: "pointer" }}

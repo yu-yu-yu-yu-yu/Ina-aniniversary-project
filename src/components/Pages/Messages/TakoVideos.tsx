@@ -1,32 +1,25 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Submission } from "../../../types";
 import Masonry from "react-masonry-component";
-import { TakoIcon } from "./TakoIcon";
+import { TakoIcon } from "../../Common/TakoIcon";
 import { notifyPlayerReady } from "../../../utils/youtube";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
-import {
-  IFrame,
-  MessageCard,
-  MessageCardHeader,
-  MessageText,
-  SubmissionContainer,
-} from "./styles";
+import { IFrame, SubmissionContainer } from "./styles";
+import { Card, CardHeader, CardText } from "../../../styles/globalStyles";
 
 export const videoSlug = (sub: Submission): string =>
   entrySlug(sub.user, sub.image);
 
-interface TakoMessagesProps {
+interface TakoVideosProps {
   submissions: Submission[];
-  isToggledOnlyImg: boolean;
-  isToggledTextOnly: boolean;
   highlightSlug?: string | null;
 }
 
-const TakoMessages = ({
+const TakoVideos = ({
   submissions,
   highlightSlug,
-}: TakoMessagesProps): JSX.Element => {
+}: TakoVideosProps): JSX.Element => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -69,14 +62,14 @@ const TakoMessages = ({
                 : undefined
             }
           >
-            <MessageCard>
-              <MessageCardHeader>
+            <Card>
+              <CardHeader>
                 <TakoIcon id={icon} pun={pun} index={i} />
                 {user || "Anonymous Tako"}
                 <div style={{ marginLeft: "auto" }}>
                   <ShareButton slug={slug} label="Copy link to this video" />
                 </div>
-              </MessageCardHeader>
+              </CardHeader>
               <div style={{ padding: "0.75rem" }}>
                 {image.includes("http") ? (
                   <IFrame
@@ -90,19 +83,19 @@ const TakoMessages = ({
                   />
                 ) : (
                   <>
-                    <MessageText>{image}</MessageText>
+                    <CardText>{image}</CardText>
                     <hr />
                   </>
                 )}
                 {sub && (
                   <>
-                    <MessageText>{sub}</MessageText>
+                    <CardText>{sub}</CardText>
                     <hr />
                   </>
                 )}
-                <MessageText>{message}</MessageText>
+                <CardText>{message}</CardText>
               </div>
-            </MessageCard>
+            </Card>
           </SubmissionContainer>
         );
       })}
@@ -110,4 +103,4 @@ const TakoMessages = ({
   );
 };
 
-export default TakoMessages;
+export default TakoVideos;

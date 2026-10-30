@@ -36,8 +36,6 @@ export type Month =
 
 export type Year = string;
 
-export type MonthWithYear = `${Year}_${Month}`;
-
 export interface Outfit {
   title: string;
   artist: string;
@@ -48,19 +46,6 @@ export interface Outfit {
   video?: string;
   date?: string;
 }
-
-export interface OutfitImage extends Outfit {
-  src: string;
-  alt: string;
-}
-
-export type TimelineMessageEntry = {
-  month?: string;
-  day?: number;
-  year?: number;
-  message?: string;
-  title?: string;
-};
 
 export interface IScrollListProps {
   searchProps: {
@@ -80,37 +65,4 @@ export interface IScrollListProps {
   };
   milestones: Milestone[];
   modalControls: boolean;
-}
-
-export interface INodeProps {
-  x?: number;
-  y?: number;
-  label?: string;
-  active: boolean;
-  passed: boolean;
-  setIndex?: () => void;
-  onClick?: () => void;
-}
-
-export interface ISeekerBarProps {
-  milestones: Milestone[];
-  curIndex: number;
-  setIndex: (index: number) => void;
-  progress?: number;
-}
-
-export interface IMonthAnchorProps {
-  month: Month;
-  year: Year;
-  isActive: boolean;
-  onClick: () => void;
-}
-
-export interface EventBaseProps {
-  year: Year;
-  isActive: boolean;
-}
-
-export interface EventMobileProps extends EventBaseProps {
-  onClick: () => void;
 }

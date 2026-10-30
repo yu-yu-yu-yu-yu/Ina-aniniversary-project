@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import { breakpoints } from "../../../styles/tokens";
 
 export const FLOOR_HEIGHT = "clamp(130px, 20vh, 240px)";
 export const SUBNAV_HEIGHT = "clamp(70px, 9vh, 96px)";
@@ -24,42 +25,6 @@ export const GalleryWall = styled.div`
       var(--dark-background) 78%,
       var(--dark-highlight) 100%
     );
-`;
-
-export const EdgeArrow = styled.button<{ $side: "left" | "right" }>`
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  height: clamp(120px, 26vh, 240px);
-  ${({ $side }) => ($side === "left" ? "left: 0;" : "right: 0;")}
-  width: clamp(48px, 7vw, 120px);
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-    ${({ $side }) => ($side === "left" ? "90deg" : "270deg")},
-    rgba(0, 0, 0, 0.28),
-    transparent
-  );
-  color: var(--light-highlight);
-  font-size: clamp(1.2em, 2.4vw, 2em);
-  border: none;
-  cursor: pointer;
-  opacity: 0.25;
-  transition: opacity 0.2s;
-  &:hover:not(:disabled),
-  &:focus-visible {
-    opacity: 1;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--light-highlight);
-    outline-offset: -4px;
-  }
-  &:disabled {
-    opacity: 0.08;
-    cursor: not-allowed;
-  }
 `;
 
 export const GalleryScroller = styled.div<{ $dragging: boolean }>`
@@ -257,31 +222,6 @@ export const WoodFloor = styled.div`
   pointer-events: none;
 `;
 
-export const ExhibitCounter = styled.span`
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1001;
-  background: var(--dark-highlight);
-  color: var(--text-color);
-  border: 2px solid var(--light-highlight);
-  border-radius: 24px;
-  height: 48px;
-  min-width: 48px;
-  box-sizing: border-box;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  opacity: 0.9;
-  transition: opacity 0.2s;
-  &:hover {
-    opacity: 1;
-  }
-  box-shadow: 0 2px 8px #0002;
-`;
-
 export const ExhibitLayout = styled.div`
   display: flex;
   align-items: stretch;
@@ -289,7 +229,7 @@ export const ExhibitLayout = styled.div`
   gap: 32px;
   height: 100%;
   width: 100%;
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
@@ -305,7 +245,7 @@ export const ExhibitStageColumn = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     width: 100%;
     flex: 0 0 auto;
   }
@@ -563,7 +503,7 @@ export const PlacardCard = styled.div`
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     max-width: 90vw;
     width: 100%;
     flex: 0 0 auto;

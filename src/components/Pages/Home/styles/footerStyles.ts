@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { breakpoints } from "../../../../styles/tokens";
 
 const idleShake = keyframes`
   0%, 75%, 100% { transform: rotate(0deg); }
@@ -220,7 +221,7 @@ const CreditsModal = styled.div`
     text-shadow: 0px 0px 20px #0f0f0f;
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     width: 80%;
   }
 
@@ -237,7 +238,7 @@ const CreditsModal = styled.div`
 
   td {
     font-size: 17px;
-    @media only screen and (max-width: 700px) {
+    @media only screen and (max-width: ${breakpoints.mobile}px) {
       font-size: 15px;
     }
     @media only screen and (max-width: 320px) {

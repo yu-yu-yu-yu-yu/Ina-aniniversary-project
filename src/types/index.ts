@@ -3,16 +3,8 @@ export type {
   Tags,
   Month,
   Year,
-  MonthWithYear,
   Outfit,
-  OutfitImage,
-  TimelineMessageEntry,
   IScrollListProps,
-  INodeProps,
-  ISeekerBarProps,
-  IMonthAnchorProps,
-  EventBaseProps,
-  EventMobileProps,
 } from "./timeline";
 
 export type {
@@ -24,7 +16,7 @@ export type {
 
 export type { FloatingTakoData, FloatingBalloonData } from "./home";
 
-export type { Submission, VideoEntry, LetterEntry } from "./messages";
+export type { Submission, LetterEntry } from "./messages";
 
 export type { UseFetchOptions, UseFetchResult } from "./hooks";
 
@@ -46,10 +38,14 @@ export type {
   LoreSection,
   LoreStatus,
   LoreSubjectKind,
+  LoreDecoration,
   LoreText,
   LoreHeading,
   LoreQuote,
   LoreIllustration,
+  LorePageBreak,
   LoreBlock,
   LoreEntry,
+  LoreBookText,
+  LoreData,
 } from "./takonomicon";

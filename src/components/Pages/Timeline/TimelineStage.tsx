@@ -4,16 +4,15 @@ import { Milestone, Month, Year } from "../../../types";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
-import {
-  getMediaLink,
-  getMessagesForMilestone,
-  getTakoAvatar,
-} from "./ScrollListUtils";
-import { MonthNavItem } from "./ScrollList";
+import { getMediaLink, getMessagesForMilestone } from "./ScrollListUtils";
+import { MonthNavItem } from "./MonthNavItem";
 import { notifyPlayerReady } from "../../../utils/youtube";
 import { useMute } from "../../Common/MuteButton";
-import { CarouselCenterMark } from "../../../styles/globalStyles";
-import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
+import {
+  CarouselCenterMark,
+  EdgeArrow,
+  ExhibitCounter,
+} from "../../../styles/globalStyles";
 import {
   BubbleColumn,
   NeighborThumb,
@@ -29,7 +28,8 @@ import {
   StageSkeleton,
   StageSlot,
   StageVideoFrame,
-} from "./styles/List";
+} from "./styles";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
 
 interface TakoMsg {
   type: string;

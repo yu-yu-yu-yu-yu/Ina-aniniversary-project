@@ -3,39 +3,25 @@ import { useLocation } from "react-router-dom";
 import Masonry from "react-masonry-component";
 import {
   SubmissionContainer,
-  TakodexCard,
-  TakodexCardHeader,
-  TakodexText,
   TakodexImage,
   NavTitle,
   AddTakoButton,
 } from "./styles";
-import { SiteBoard, SearchBar as MessagesSearchBar } from "../Messages/styles";
-import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
+import { Navbar, NavHome, NavHelp } from "../../Common/Navbar";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
-
-const iconImages = [
-  "8-bit Tako.png",
-  "Hollow Tako.png",
-  "Ikadachi.png",
-  "Mori Tako.png",
-  "Robodachi.png",
-  "Tako Amelia (Takoson).png",
-  "Tako Gura (Chum Tako).png",
-  "Tako Ina.png",
-  "Tako Kiara (Tako Bell).png",
-  "Tako Ross.png",
-  "Takodachi.png",
-  "Takomfy.png",
-  "Tophat Tako.png",
-  "Violet Tako.png",
-  "Wonder Tako.png",
-  "Yuul B. Tako.png",
-];
+import { GENERIC_TAKO_ICONS } from "../../../constants/takos";
+import {
+  SearchBar,
+  SiteBoard,
+  Card,
+  CardHeader,
+  CardText,
+  PageRoot,
+} from "../../../styles/globalStyles";
 
 function getRandomIcon(index: number) {
-  return iconImages[index % iconImages.length];
+  return GENERIC_TAKO_ICONS[index % GENERIC_TAKO_ICONS.length];
 }
 
 interface TakodexEntry {
@@ -59,7 +45,6 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
     {},
   );
   const [search, setSearch] = useState("");
-  const [hintOpen, setHintOpen] = useState(false);
   const [pulseSlug, setPulseSlug] = useState<string | null>(null);
   const { hash } = useLocation();
   const hasHandledHash = useRef(false);
@@ -94,28 +79,16 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
   }, [hash, entries, search, filteredEntries]);
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <PageRoot>
       <Navbar>
         <NavHome />
         <NavTitle>Takodex</NavTitle>
-        <div style={{ flex: "0 0 auto", position: "relative" }}>
-          <HintButton
-            aria-label="Show Takodex usage hint"
-            onClick={() => setHintOpen((v) => !v)}
-            title="Show Takodex usage hint"
-          >
-            <i className="fa fa-question-circle" aria-hidden="true" />
-            <span className="btn-text">Help</span>
-          </HintButton>
-          {hintOpen && (
-            <HintPopover onClick={() => setHintOpen(false)}>
-              <p>
-                Search by name, category, or attribute. Made your own Takodachi?
-                Use &quot;Add my Tako&quot; to submit it for a future entry.
-              </p>
-            </HintPopover>
-          )}
-        </div>
+        <NavHelp label="Show Takodex usage hint">
+          <p>
+            Search by name, category, or attribute. Made your own Takodachi? Use
+            &quot;Add my Tako&quot; to submit it for a future entry.
+          </p>
+        </NavHelp>
         <div style={{ marginLeft: "auto" }}>
           <AddTakoButton
             href="https://forms.gle/qnrMrk2z6QaRHsdZ7"
@@ -127,7 +100,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
         </div>
       </Navbar>
       <SiteBoard>
-        <MessagesSearchBar
+        <SearchBar
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -160,8 +133,8 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                     : undefined
                 }
               >
-                <TakodexCard>
-                  <TakodexCardHeader
+                <Card>
+                  <CardHeader
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -172,14 +145,14 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                   >
                     <span>{displayName ? displayName : author}</span>
                     <ShareButton slug={slug} label="Copy link to this Tako" />
-                  </TakodexCardHeader>
+                  </CardHeader>
                   <div style={{ padding: "0.75rem" }}>
-                    <TakodexText>
+                    <CardText>
                       <b>Category:</b> {category ? category : "Uncategorized"}
-                    </TakodexText>
-                    <TakodexText>
+                    </CardText>
+                    <CardText>
                       <b>Attributes:</b> {attributes ? attributes : "Unknown"}
-                    </TakodexText>
+                    </CardText>
                     <hr />
                     {image && !failedImages[i] ? (
                       <TakodexImage
@@ -196,17 +169,17 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                       />
                     )}
                     <hr />
-                    <TakodexText>{description}</TakodexText>
-                    <TakodexText>
+                    <CardText>{description}</CardText>
+                    <CardText>
                       <b>by: {author}</b>
-                    </TakodexText>
+                    </CardText>
                   </div>
-                </TakodexCard>
+                </Card>
               </SubmissionContainer>
             );
           })}
         </Masonry>
       </SiteBoard>
-    </div>
+    </PageRoot>
   );
 };

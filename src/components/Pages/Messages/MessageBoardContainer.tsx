@@ -4,7 +4,7 @@ import TakoMessages, { messageSlug } from "./TakoMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TakoLoading } from "../../Common/TakoLoading";
 import { Submission } from "../../../types";
-import ScrollArrow from "../../Common/BackToTop";
+import ScrollArrow from "../../Common/ScrollArrow";
 import { Switch } from "../../Common/Switch";
 import { debounce, DebouncedFunc } from "lodash";
 import {
@@ -14,16 +14,16 @@ import {
   SearchBar,
   NavTitle,
 } from "./styles";
-import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
+import { Navbar, NavHome, NavHelp } from "../../Common/Navbar";
 import { useFetch } from "../../../hooks/useFetch";
+import { PageBgm } from "../../Common/PageBgm";
+import { LoadError } from "../../Common/LoadError";
+import { PageRoot } from "../../../styles/globalStyles";
+import { preloadImages } from "../../../utils/preloadImages";
 
 const LIMIT = 10;
 
-const MessageBoard = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
+const MessageBoardContainer = (): JSX.Element => {
   const {
     data: rawData,
     loading,
@@ -36,7 +36,6 @@ const MessageBoard = (): JSX.Element => {
   const [hasMore, setHasMore] = useState(true);
   const [isToggledOnlyImg, setIsToggledOnlyImg] = useState(false);
   const [isToggledTextOnly, setisToggledTextOnly] = useState(false);
-  const [hintOpen, setHintOpen] = useState(false);
   const [highlightSlug, setHighlightSlug] = useState<string | null>(null);
   const hashHandledRef = useRef(false);
   const { hash } = useLocation();
@@ -112,10 +111,10 @@ const MessageBoard = (): JSX.Element => {
         if (event.target.value !== "") {
           const resultData = sourceData.filter((row: Submission) => {
             return (
-              row.user
+              (row.user ?? "")
                 .toLowerCase()
                 .includes(event.target.value.toLowerCase()) ||
-              row.message
+              (row.message ?? "")
                 .toLowerCase()
                 .includes(event.target.value.toLowerCase())
             );
@@ -145,8 +144,8 @@ const MessageBoard = (): JSX.Element => {
   const applySearch = (base: Submission[], search: string) =>
     base.filter(
       (row) =>
-        row.user.toLowerCase().includes(search.toLowerCase()) ||
-        row.message.toLowerCase().includes(search.toLowerCase()),
+        (row.user ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        (row.message ?? "").toLowerCase().includes(search.toLowerCase()),
     );
 
   const OnlyImgToggle = async (value: boolean) => {
@@ -221,60 +220,32 @@ const MessageBoard = (): JSX.Element => {
     }
   };
 
-  const awaitImgs = async (data: Submission[]) => {
-    const promises: Promise<unknown>[] = [];
-    data.forEach((row: Submission) => {
-      if (row.image && !row.image.includes("youtube")) {
-        promises.push(
-          new Promise((resolve) => {
-            const img = new Image();
-            img.src = process.env.PUBLIC_URL + "/artworks/" + row.image;
-            img.onerror = resolve;
-            img.onload = resolve;
-          }),
-        );
-      }
-    });
-    await Promise.allSettled(promises);
-  };
+  const awaitImgs = (data: Submission[]) =>
+    preloadImages(
+      data
+        .filter((row) => row.image && !row.image.includes("youtube"))
+        .map((row) => `${process.env.PUBLIC_URL}/artworks/${row.image}`),
+    );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+    <PageRoot>
+      <PageBgm src="/Vanilla.mp3" />
       <Navbar>
         <NavHome />
         <NavTitle>Artworks &amp; Messages</NavTitle>
-        <div style={{ flex: "0 0 auto", position: "relative" }}>
-          <HintButton
-            aria-label="Show messages usage hint"
-            onClick={() => setHintOpen((v) => !v)}
-            title="Show messages usage hint"
-          >
-            <i className="fa fa-question-circle" aria-hidden="true" />
-            <span className="btn-text">Help</span>
-          </HintButton>
-          {hintOpen && (
-            <HintPopover onClick={() => setHintOpen(false)}>
-              <p>
-                Use the toggles to show only image submissions or only text
-                messages, or search by name. A tako icon with a speech-bubble
-                &quot;...&quot; next to it has a pun hiding underneath — click
-                it to reveal.
-              </p>
-            </HintPopover>
-          )}
-        </div>
+        <NavHelp label="Show messages usage hint">
+          <p>
+            Use the toggles to show only image submissions or only text
+            messages, or search by name. A tako icon with a speech-bubble
+            &quot;...&quot; next to it has a pun hiding underneath — click it to
+            reveal.
+          </p>
+        </NavHelp>
       </Navbar>
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading messages: {error.message}</div>
+        <LoadError what="messages" error={error} />
       ) : (
         <SiteBoard>
           <div style={{ textAlign: "center", padding: "2rem 1rem 1rem" }}>
@@ -376,8 +347,8 @@ const MessageBoard = (): JSX.Element => {
           <ScrollArrow />
         </SiteBoard>
       )}
-    </div>
+    </PageRoot>
   );
 };
 
-export default MessageBoard;
+export default MessageBoardContainer;

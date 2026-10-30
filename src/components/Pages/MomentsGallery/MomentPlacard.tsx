@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Moment, MomentCategory } from "../../../types";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
 import { ExhibitView } from "./exhibitView";
@@ -17,6 +16,7 @@ import {
   PlacardTitle,
 } from "./styles";
 import { useFitText } from "./useFitText";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
 
 const CATEGORY_LABEL: Record<MomentCategory, string> = {
   milestone: "Ina's Milestones",

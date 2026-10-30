@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { breakpoints } from "../../../../styles/tokens";
 
 const LoreContainer = styled.div`
   text-align: center;
@@ -8,7 +9,7 @@ const LoreContainer = styled.div`
   background-attachment: fixed;
   background-size: 180px;
   z-index: 3;
-  @media (max-width: 701px) {
+  @media (max-width: ${breakpoints.mobile}px) {
     padding-top: 40px;
   }
 `;
@@ -24,7 +25,7 @@ const FlexRow = styled.div`
   max-width: 1200px;
   position: relative;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -43,7 +44,7 @@ const InaVideoContainer = styled.div`
   z-index: 2;
   margin-left: -120px;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     width: 100%;
     min-width: 0;
     margin-left: 0;
@@ -91,7 +92,7 @@ const InaVideo = styled.video`
     );
   mask-composite: intersect;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     max-width: 100%;
     --video-edge-fade: 18px;
   }
@@ -171,7 +172,7 @@ const AnimationCredits = styled.p`
   align-self: center;
   margin: 0;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     font-size: 13px;
   }
 `;

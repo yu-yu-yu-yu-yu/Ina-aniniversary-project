@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { buttonShadow, zIndex } from "../../../styles/tokens";
 
 export const PageContainer = styled.div`
   min-height: 100vh;
@@ -27,7 +28,7 @@ export const Thumbnail = styled.img`
   width: min(100%, 34rem);
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: ${buttonShadow};
 `;
 
 export const CollageTitle = styled.h3`
@@ -48,7 +49,7 @@ export const ModalBackdrop = styled.div`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  z-index: ${zIndex.backdrop};
 `;
 
 export const ModalImg = styled.img`
@@ -60,5 +61,5 @@ export const ModalImg = styled.img`
   max-height: 90vh;
   border-radius: 12px;
   box-shadow: 0 4px 32px #0008;
-  z-index: 1001;
+  z-index: ${zIndex.modal};
 `;

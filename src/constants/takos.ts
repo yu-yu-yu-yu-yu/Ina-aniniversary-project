@@ -157,3 +157,22 @@ export const TAKO_FILES = [
 ];
 
 export const TAKO_COUNT = TAKO_FILES.length;
+
+export const GENERIC_TAKO_ICONS = [
+  "8-bit Tako.png",
+  "Hollow Tako.png",
+  "Ikadachi.png",
+  "Mori Tako.png",
+  "Robodachi.png",
+  "Tako Amelia (Takoson).png",
+  "Tako Gura (Chum Tako).png",
+  "Tako Ina.png",
+  "Tako Kiara (Tako Bell).png",
+  "Tako Ross.png",
+  "Takodachi.png",
+  "Takomfy.png",
+  "Tophat Tako.png",
+  "Violet Tako.png",
+  "Wonder Tako.png",
+  "Yuul B. Tako.png",
+];

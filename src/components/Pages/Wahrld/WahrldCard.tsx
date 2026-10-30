@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SRLWrapper } from "simple-react-lightbox";
 import { WahrldEntry } from "../../../types";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
 import { getFlagImgSrc, VOID_FLAG } from "../../../utils/flags";
 import { useMute } from "../../Common/MuteButton";
 import ShareButton from "../../Common/ShareButton";
@@ -15,6 +14,7 @@ import {
   EntryUser,
   SocialsLink,
 } from "./styles";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
 
 const lightboxOptions = {
   settings: { disablePanzoom: false },

@@ -8,7 +8,6 @@ import {
 } from "../../../utils/youtube";
 import { entrySlug } from "../../../utils/shareLink";
 import { useMute } from "../../Common/MuteButton";
-import { ArtworkButton } from "../Outfits/styles/BannerStyle";
 import { ExhibitView } from "./exhibitView";
 import MomentPlacard from "./MomentPlacard";
 import TributeStrip from "./TributeStrip";
@@ -20,6 +19,7 @@ import {
   MomentSourceLink,
   SwapRow,
 } from "./styles";
+import { ArtworkButton } from "../../../styles/globalStyles";
 
 const resolveTributeSrc = (slug: string, file: string): string =>
   file.startsWith("http")

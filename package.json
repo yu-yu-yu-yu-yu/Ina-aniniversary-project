@@ -4,24 +4,19 @@
   "homepage": "https://otako.fans/",
   "private": true,
   "dependencies": {
-    "gh-pages": "^6.1.1",
-    "node-fetch": "^2.7.0",
+    "lodash": "^4.18.1",
     "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-indiana-drag-scroll": "^2.0.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-masonry-component": "^6.3.0",
-    "react-papaparse": "^4.4.0",
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "simple-react-lightbox": "^3.6.9-0",
     "styled-components": "^6.1.11",
-    "typescript": "^4.3.5",
-    "web-vitals": "^1.1.2"
+    "typescript": "^4.3.5"
   },
   "scripts": {
-    "convertCSV": "node src/utils/convertCSV.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
@@ -69,6 +64,7 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.24.0",
+    "gh-pages": "^6.3.0",
     "prettier": "^3.2.5"
   }
 }

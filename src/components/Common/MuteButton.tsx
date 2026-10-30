@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import styled from "styled-components";
+import { buttonShadow, zIndex } from "../../styles/tokens";
 
 export const MuteButton = styled.button`
   position: fixed;
   left: 24px;
   bottom: 24px;
-  z-index: 1000;
+  z-index: ${zIndex.muteButton};
   background: rgba(255, 255, 255, 0.8);
   border: var(--ink-black) 2px solid;
   border-radius: 50%;
@@ -14,7 +15,7 @@ export const MuteButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: ${buttonShadow};
   cursor: pointer;
   font-size: 1.7rem;
 `;
@@ -55,7 +56,7 @@ export const MuteProvider: React.FC<{ children: React.ReactNode }> = ({
           if (typeof state === "number") setYtPlaying(state === 1);
         }
       } catch (_) {
-        /* non-YouTube messages are not valid JSON or have no event field */
+        return;
       }
     };
     window.addEventListener("message", handleMessage);

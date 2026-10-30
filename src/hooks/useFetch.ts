@@ -9,25 +9,29 @@ export const useFetch = <T = unknown>(
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = async (signal?: AbortSignal) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, { ...options, signal });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result: T = await response.json();
+      if (signal?.aborted) return;
       setData(result);
     } catch (err) {
+      if (signal?.aborted) return;
       setError(err as Error);
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    const controller = new AbortController();
+    fetchData(controller.signal);
+    return () => controller.abort();
   }, [url, JSON.stringify(options)]);
 
   const refetch = () => {

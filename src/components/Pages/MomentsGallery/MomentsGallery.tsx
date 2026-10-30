@@ -3,22 +3,20 @@ import { useLocation } from "react-router-dom";
 import { Moment, MomentCategory } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
-import { Navbar, NavHome, HintButton, HintPopover } from "../../Common/Navbar";
+import { Navbar, NavHome, NavHelp } from "../../Common/Navbar";
 import {
   CarouselCenterMark,
   CompactNavTitle,
   SiteBoard,
+  EdgeArrow,
+  ExhibitCounter,
 } from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
-import { useMute } from "../../Common/MuteButton";
-import { useAudio } from "../../../hooks/useAudio";
 import GalleryFans from "./GalleryFans";
 import MomentCarousel from "./MomentCarousel";
 import {
   CategorySwitchRow,
-  EdgeArrow,
-  ExhibitCounter,
   GalleryWall,
   SearchInput,
   SubNavBar,
@@ -26,6 +24,8 @@ import {
   YearButton,
   YearNavRow,
 } from "./styles";
+import { PageBgm } from "../../Common/PageBgm";
+import { LoadError } from "../../Common/LoadError";
 
 const CATEGORY_LABEL: Record<MomentCategory, string> = {
   milestone: "Ina's Milestones",
@@ -36,8 +36,6 @@ const CATEGORY_LABEL: Record<MomentCategory, string> = {
 const CATEGORIES = Object.keys(CATEGORY_LABEL) as MomentCategory[];
 
 const MomentsGallery = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
   const { data, loading, error } = useFetch<Moment[]>(
     `${process.env.PUBLIC_URL}/data/momentsData.json`,
   );
@@ -45,7 +43,6 @@ const MomentsGallery = (): JSX.Element => {
     null,
   );
   const [tributesOnly, setTributesOnly] = useState(false);
-  const [hintOpen, setHintOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const moments = useMemo(
@@ -144,13 +141,7 @@ const MomentsGallery = (): JSX.Element => {
         momentKey={pivotMoment?.slug ?? ""}
         reactions={pivotMoment?.reactions}
       />
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/Vanilla.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+      <PageBgm src="/Vanilla.mp3" />
       <Navbar>
         <NavHome />
         <CompactNavTitle>Moments Gallery</CompactNavTitle>
@@ -194,35 +185,22 @@ const MomentsGallery = (): JSX.Element => {
             </YearNavRow>
           )}
         </SubNavBar>
-        <div style={{ flex: "0 0 auto", position: "relative" }}>
-          <HintButton
-            aria-label="Show gallery usage hint"
-            onClick={() => setHintOpen((v) => !v)}
-            title="Show gallery usage hint"
-          >
-            <i className="fa fa-question-circle" aria-hidden="true" />
-            <span className="btn-text">Help</span>
-          </HintButton>
-          {hintOpen && (
-            <HintPopover onClick={() => setHintOpen(false)}>
-              <p>
-                Walk the wall with the arrows at either edge of the screen, or
-                drag the exhibits directly. A piece with fan tributes shows a
-                swap button underneath its frame: cycle it to compare the
-                original against every tribute, or tap a tribute&apos;s avatar
-                to jump straight to it.
-              </p>
-              <p>
-                Mascot art by <b>takomonty</b>.
-              </p>
-            </HintPopover>
-          )}
-        </div>
+        <NavHelp label="Show gallery usage hint">
+          <p>
+            Walk the wall with the arrows at either edge of the screen, or drag
+            the exhibits directly. A piece with fan tributes shows a swap button
+            underneath its frame: cycle it to compare the original against every
+            tribute, or tap a tribute&apos;s avatar to jump straight to it.
+          </p>
+          <p>
+            Mascot art by <b>takomonty</b>.
+          </p>
+        </NavHelp>
       </Navbar>
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading moments: {error.message}</div>
+        <LoadError what="moments" error={error} />
       ) : (
         <SiteBoard
           style={{

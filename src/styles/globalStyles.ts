@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
+import { breakpoints, buttonShadow, zIndex } from "./tokens";
 
 export const TextBoxContainer = styled.div`
   flex: 0 0 auto;
@@ -7,7 +8,7 @@ export const TextBoxContainer = styled.div`
   z-index: 5;
   position: relative;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: ${breakpoints.tablet}px) {
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -37,12 +38,12 @@ export const TextBoxContainer = styled.div`
       max-width: 500px;
       font-size: 20px;
     }
-    @media (max-width: 1100px) {
+    @media (max-width: ${breakpoints.tablet}px) {
       max-width: 550px;
       width: 90%;
       font-size: 17px;
     }
-    @media (max-width: 701px) {
+    @media (max-width: ${breakpoints.mobile}px) {
       padding: 25px;
       width: 90%;
       font-size: 16px;
@@ -58,36 +59,6 @@ export const SubmissionContainer = styled.div`
     width: 100%;
     padding-bottom: 5px;
   }
-`;
-
-export const TextBubbleContainer = styled.div`
-  position: relative;
-  font-family: sans-serif;
-  font-size: 18px;
-  line-height: 24px;
-  padding: 15px;
-  border: 3px solid var(--light-background);
-  background: #ffffff7bfff 0% 0% no-repeat padding-box;
-  border-radius: 15px;
-  opacity: 1;
-
-  hr {
-    height: 1px;
-    color: var(--light-background);
-    background-color: var(--light-background);
-    border: none;
-  }
-`;
-
-export const BubbleMessage = styled.div`
-  padding-top: 5px;
-  overflow-wrap: break-word;
-  color: var(--dark-highlight);
-  text-align: left;
-  font: normal normal 300 20px/25px Mulish;
-  letter-spacing: 0px;
-  opacity: 1;
-  white-space: pre-line;
 `;
 
 export const BubbleImage = styled.img`
@@ -166,11 +137,6 @@ export const Loader = styled.div`
   align-items: center;
 `;
 
-export const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 export const SearchBar = styled.input`
   display: block;
   width: 100%;
@@ -201,7 +167,6 @@ export const NavTitle = styled.h2`
     0.03em -0.03em 0 #ffffff7b,
     -0.03em 0.03em 0 #ffffff7b;
   text-align: center;
-  text-border: 2px solid var(--light-highlight);
   font: normal normal bold clamp(48px, 3vw, 64px) / 1.15 Montserrat;
   flex: 1;
   @media only screen and (max-width: 1000px) {
@@ -212,7 +177,7 @@ export const NavTitle = styled.h2`
     font: normal normal bold 24px/30px Montserrat;
     letter-spacing: 1px;
   }
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: ${breakpoints.mobile}px) {
     position: absolute;
     left: 0;
     right: 0;
@@ -240,27 +205,128 @@ export const DimSharedButtons = createGlobalStyle`
   }
 `;
 
-export const SectionTitle = styled.h2`
-  font-size: 2.5em;
-  text-align: center;
-  color: var(--dark-highlight);
-  margin: 0 0 18px 0;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+export const EdgeArrow = styled.button<{ $side: "left" | "right" }>`
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  height: clamp(120px, 26vh, 240px);
+  ${({ $side }) => ($side === "left" ? "left: 0;" : "right: 0;")}
+  width: clamp(48px, 7vw, 120px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    ${({ $side }) => ($side === "left" ? "90deg" : "270deg")},
+    rgba(0, 0, 0, 0.28),
+    transparent
+  );
+  color: var(--light-highlight);
+  font-size: clamp(1.2em, 2.4vw, 2em);
+  border: none;
+  cursor: pointer;
+  opacity: 0.25;
+  transition: opacity 0.2s;
+  &:hover:not(:disabled),
+  &:focus-visible {
+    opacity: 1;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-highlight);
+    outline-offset: -4px;
+  }
+  &:disabled {
+    opacity: 0.08;
+    cursor: not-allowed;
+  }
 `;
 
-export const Button = styled.a`
-  background: var(--light-highlight);
-  color: var(--dark-highlight);
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 500;
-  font-size: 0.5em;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-
+export const ExhibitCounter = styled.span`
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: ${zIndex.modal};
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  border: 2px solid var(--light-highlight);
+  border-radius: 24px;
+  height: 48px;
+  min-width: 48px;
+  box-sizing: border-box;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  opacity: 0.9;
+  transition: opacity 0.2s;
   &:hover {
-    opacity: 0.8;
+    opacity: 1;
   }
+  box-shadow: ${buttonShadow};
+`;
+
+export const ArtworkButton = styled.button`
+  background: rgba(0, 0, 0, 0.52);
+  color: var(--light-highlight);
+  border: 1px solid var(--light-highlight);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  opacity: 0.72;
+  transition:
+    opacity 0.18s,
+    background 0.18s;
+  flex-shrink: 0;
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.78);
+  }
+`;
+
+export const PageContainer = styled.div`
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--dark-highlight);
+`;
+
+export const Card = styled.div`
+  background: var(--light-background);
+  border: 2px solid var(--dark-background);
+  border-radius: 15px;
+  overflow: hidden;
+`;
+
+export const CardHeader = styled.div`
+  background: var(--dark-highlight);
+  color: var(--text-color);
+  font: 700 clamp(22px, 1.3vw, 28px) / 1.35 Montserrat;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--light-highlight);
+  display: flex;
+  align-items: center;
+`;
+
+export const CardText = styled.div`
+  padding-top: 5px;
+  overflow-wrap: break-word;
+  color: var(--ink-black);
+  text-align: left;
+  font: normal normal 300 clamp(20px, 1.1vw, 25px) / 1.3 Mulish;
+  letter-spacing: 0px;
+  opacity: 1;
+  white-space: pre-line;
+`;
+
+export const PageRoot = styled.div`
+  min-height: 100vh;
+  background: var(--background);
 `;

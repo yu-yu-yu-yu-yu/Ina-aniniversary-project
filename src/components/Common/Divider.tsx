@@ -34,15 +34,15 @@ const Wrapper = styled.div<{ $topGap?: string }>`
   padding-bottom: 10px;
 `;
 
-const Gif = styled.img<{ delay: number; mirror?: boolean }>`
+const Gif = styled.img<{ $delay: number; $mirror?: boolean }>`
   width: ${GIF_SIZE}px;
   height: ${GIF_SIZE}px;
   position: absolute;
   top: var(--divider-top-gap);
   left: 0;
 
-  animation: ${({ mirror }) => travel(mirror)} ${SPEED}s linear infinite;
-  animation-delay: ${({ delay }) => delay}s;
+  animation: ${({ $mirror }) => travel($mirror)} ${SPEED}s linear infinite;
+  animation-delay: ${({ $delay }) => $delay}s;
 `;
 
 const Divider: React.FC<{ mirror?: boolean; topGap?: string }> = ({
@@ -60,8 +60,8 @@ const Divider: React.FC<{ mirror?: boolean; topGap?: string }> = ({
             key={i}
             src={GIF_SRC}
             alt="gif"
-            delay={-(i * spacing)}
-            mirror={mirror}
+            $delay={-(i * spacing)}
+            $mirror={mirror}
             draggable="false"
           />
         ))}

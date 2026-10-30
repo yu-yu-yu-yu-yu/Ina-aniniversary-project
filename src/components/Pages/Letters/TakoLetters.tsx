@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import ReactDOM from "react-dom";
 import { LetterEntry } from "../../../types";
 import Masonry from "react-masonry-component";
-import { TakoIcon } from "./TakoIcon";
+import { TakoIcon } from "../../Common/TakoIcon";
 import { SRLWrapper } from "simple-react-lightbox";
 import ShareButton from "../../Common/ShareButton";
 import { BubbleHeader, BubbleImage, HeaderText } from "./styles/styles";
@@ -428,9 +428,7 @@ const TakoLetters = ({
         />
       )}
 
-      {animIndex !== null && (
-        <CenterAnimOverlay />
-      )}
+      {animIndex !== null && <CenterAnimOverlay />}
     </>
   );
 };

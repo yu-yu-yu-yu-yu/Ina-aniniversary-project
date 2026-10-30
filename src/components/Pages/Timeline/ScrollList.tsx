@@ -26,7 +26,6 @@ import {
   FilterMenuPopover,
   MonthDisplay,
   MonthListContainer,
-  PageArrowButton,
   ScrollListContainer,
   SearchBarContainer,
   SearchInput,
@@ -37,7 +36,7 @@ import {
   YearDisplay,
   YearContainer,
   TagDropdownSelect,
-} from "./styles/List";
+} from "./styles";
 import {
   mappedMonths,
   months,
@@ -245,7 +244,7 @@ const TagDropdown = ({
       <TagDropdownSelect
         value={selectedTag}
         onChange={(e) => setSelectedTag(e.target.value)}
-        mobile={mobile}
+        $mobile={mobile}
       >
         <option value="">All Tags</option>
         {tags.map((tag) => (
@@ -293,61 +292,6 @@ function filterMilestonesWithTitleTag(
   });
 }
 
-export const MonthNavItem = ({
-  entry,
-  direction,
-  onNavigate,
-  mobile,
-}: {
-  entry: { year: Year; month: Month };
-  direction: "prev" | "next";
-  onNavigate: (month: Month, year: Year) => void;
-  mobile: boolean;
-}) => {
-  const isPrev = direction === "prev";
-  const icon = mobile
-    ? isPrev
-      ? "fa fa-chevron-up"
-      : "fa fa-chevron-down"
-    : isPrev
-      ? "fa fa-chevron-left"
-      : "fa fa-chevron-right";
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: mobile ? "row" : "column",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-        padding: mobile ? "16px 0" : "0 40px",
-        gap: 8,
-        ...(mobile ? { width: "100%" } : {}),
-      }}
-    >
-      <PageArrowButton
-        onClick={() => onNavigate(entry.month, entry.year as Year)}
-      >
-        <i className={icon} aria-hidden="true" />
-      </PageArrowButton>
-      <span
-        style={{
-          color: "var(--light-highlight)",
-          fontSize: "0.85em",
-          textAlign: "center",
-          lineHeight: 1.3,
-          whiteSpace: "nowrap",
-        }}
-      >
-        {entry.month}
-        <br />
-        {entry.year}
-      </span>
-    </div>
-  );
-};
-
 function YearPicker({
   setYear,
   selected,
@@ -366,7 +310,7 @@ function YearPicker({
         <YearDisplay
           key={year}
           onClick={() => handleYearClick(year)}
-          selected={year == selected}
+          $selected={year == selected}
         >
           {year}
         </YearDisplay>
@@ -408,8 +352,8 @@ const BottomControls = ({
           const hasEntries = monthIndex !== -1;
           return (
             <MonthDisplay
-              highlight={month === selectedMonth}
-              passed={hasEntries && monthIndex < selectedIndex}
+              $highlight={month === selectedMonth}
+              $passed={hasEntries && monthIndex < selectedIndex}
               key={month}
               onClick={hasEntries ? () => setMonth(month as Month) : undefined}
               style={{

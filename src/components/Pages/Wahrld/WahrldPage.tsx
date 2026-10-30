@@ -3,19 +3,17 @@ import { useLocation } from "react-router-dom";
 import { WahrldEntry, WahrldKind } from "../../../types";
 import { useFetch } from "../../../hooks/useFetch";
 import { useCenterCarousel } from "../../../hooks/useCenterCarousel";
-import { useAudio } from "../../../hooks/useAudio";
 import { entrySlug } from "../../../utils/shareLink";
 import { Navbar, NavHome } from "../../Common/Navbar";
 import {
   CarouselCenterMark,
   CompactNavTitle,
   SiteBoard,
+  EdgeArrow,
+  ExhibitCounter,
 } from "../../../styles/globalStyles";
 import { Switch } from "../../Common/Switch";
 import { TakoLoading } from "../../Common/TakoLoading";
-import { useMute } from "../../Common/MuteButton";
-import { getTakoAvatar } from "../Timeline/ScrollListUtils";
-import { EdgeArrow, ExhibitCounter } from "../MomentsGallery/styles";
 import WahrldCard, { getEntryAvatar } from "./WahrldCard";
 import {
   EntrySlot,
@@ -27,6 +25,9 @@ import {
   NoEntriesYet,
   SearchInput,
 } from "./styles";
+import { getTakoAvatar } from "../../../utils/takoAvatar";
+import { PageBgm } from "../../Common/PageBgm";
+import { LoadError } from "../../Common/LoadError";
 
 const KIND_LABEL: Record<WahrldKind, string> = {
   image: "Images",
@@ -36,8 +37,6 @@ const KIND_LABEL: Record<WahrldKind, string> = {
 const KINDS = Object.keys(KIND_LABEL) as WahrldKind[];
 
 const WahrldPage = (): JSX.Element => {
-  const { muted } = useMute();
-  const audioRef = useAudio({ muted, autoPlay: true });
   const { data, loading, error } = useFetch<WahrldEntry[]>(
     `${process.env.PUBLIC_URL}/data/wahrldData.json`,
   );
@@ -117,13 +116,7 @@ const WahrldPage = (): JSX.Element => {
         background: "var(--background)",
       }}
     >
-      <audio
-        ref={audioRef}
-        src={process.env.PUBLIC_URL + "/昼寝のススメ.mp3"}
-        loop
-        preload="auto"
-        style={{ display: "none" }}
-      />
+      <PageBgm src="/昼寝のススメ.mp3" />
       <Navbar>
         <NavHome />
         <CompactNavTitle>Ina around the WAHrld</CompactNavTitle>
@@ -131,7 +124,7 @@ const WahrldPage = (): JSX.Element => {
       {loading ? (
         <TakoLoading />
       ) : error ? (
-        <div>Error loading submissions: {error.message}</div>
+        <LoadError what="submissions" error={error} />
       ) : (
         <SiteBoard
           style={{
