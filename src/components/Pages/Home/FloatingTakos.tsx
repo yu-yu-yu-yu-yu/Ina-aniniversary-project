@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FloatingTakoData } from "../../../types";
 import { TAKO_FILES } from "../../../constants/takos";
+import { takoSrc } from "../../../utils/takoAvatar";
 import { GLITCH_FILE, glitchThreshold, useGlitchProgress } from "./glitch";
 import { useMute } from "../../Common/MuteButton";
 const ANIMATION_DURATION = 9000;
@@ -85,7 +86,7 @@ const FloatingTakos = ({
   useEffect(() => {
     TAKO_FILES.forEach((file) => {
       const img = new Image();
-      img.src = `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`;
+      img.src = takoSrc("takos", file);
     });
   }, []);
 
@@ -167,11 +168,11 @@ const FloatingTakos = ({
             key={tako.key}
             $left={tako.left}
             $bottom={tako.bottom}
-            src={`${process.env.PUBLIC_URL}/${
+            src={
               glitchProgress > 0 && glitchThreshold(tako.key) <= glitchProgress
-                ? GLITCH_FILE
-                : `takos/${encodeURIComponent(tako.tako)}`
-            }`}
+                ? `${process.env.PUBLIC_URL}/${GLITCH_FILE}`
+                : takoSrc("takos", tako.tako)
+            }
             alt="floating takodachi"
             onClick={handleTakoClick}
             style={{ pointerEvents: "auto", cursor: "pointer" }}

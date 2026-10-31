@@ -4,7 +4,7 @@ export type InlineNode =
   | { kind: "link"; href: string; children: InlineNode[] };
 
 const TOKEN =
-  /\\([*[\]()])|\*\*([^*]+?)\*\*|\*([^*]+?)\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  /\\([*[\]()])|\*\*([^*]+?)\*\*|\*([^*]+?)\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s)\]]+[^\s)\].,;:!?])/g;
 
 export const parseInline = (source: string): InlineNode[] => {
   const nodes: InlineNode[] = [];
@@ -21,7 +21,7 @@ export const parseInline = (source: string): InlineNode[] => {
   while ((match = token.exec(source))) {
     pushText(source.slice(lastIndex, match.index));
     lastIndex = token.lastIndex;
-    const [, escaped, bold, italic, linkLabel, linkHref] = match;
+    const [, escaped, bold, italic, linkLabel, linkHref, bareUrl] = match;
     if (escaped !== undefined) pushText(escaped);
     else if (bold !== undefined)
       nodes.push({ kind: "bold", children: parseInline(bold) });
@@ -31,7 +31,15 @@ export const parseInline = (source: string): InlineNode[] => {
       nodes.push({
         kind: "link",
         href: linkHref,
-        children: parseInline(linkLabel),
+        children: /^https?:\/\//.test(linkLabel)
+          ? [{ kind: "text", text: linkLabel }]
+          : parseInline(linkLabel),
+      });
+    else if (bareUrl !== undefined)
+      nodes.push({
+        kind: "link",
+        href: bareUrl,
+        children: [{ kind: "text", text: bareUrl }],
       });
   }
   pushText(source.slice(lastIndex));
@@ -58,8 +66,10 @@ const removeFirstChar = (nodes: InlineNode[]): [InlineNode[], boolean] => {
         result.push(node);
         continue;
       }
+      const text = node.text.trimStart();
+      if (text.length === 0) continue;
       done = true;
-      const rest = node.text.slice(1);
+      const rest = text.slice(1);
       if (rest) result.push({ kind: "text", text: rest });
       continue;
     }

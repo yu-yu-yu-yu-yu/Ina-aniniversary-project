@@ -4,7 +4,6 @@ const BASE = `${process.env.PUBLIC_URL}/lorebook`;
 
 export const COVER_FRONT = `${BASE}/cover-front.jpg`;
 export const COVER_BACK = `${BASE}/cover-back.jpg`;
-export const DIVIDER = `${BASE}/divider.png`;
 export const SPINE = `${BASE}/spine.jpg`;
 
 export interface BookmarkArt {
@@ -122,6 +121,7 @@ export const seededFraction = (seed: string): number => {
 };
 
 export const BOOK_FONT_SRC = `${BASE}/fonts/Takohuyk-Regular.ttf`;
+export const DIGIT_FONT_SRC = `${BASE}/fonts/Ina_handwritning-Regular.ttf`;
 export const DROPCAP_FONT_SRC = `${BASE}/fonts/RevisonBooksFonts-Regular.ttf`;
 
 export const PAGE_STEP_SOUNDS = [
@@ -154,6 +154,10 @@ export const resolveImageSrc = (
 };
 export const iconSrc = (key: string): string =>
   `${BASE}/icons/${encodeURIComponent(key)}.png`;
+export const DEFAULT_DIVIDER = "takodachi-no-uta";
+
+export const dividerSrc = (key: string): string =>
+  `${BASE}/dividers/${encodeURIComponent(key)}.png`;
 export const PLACEHOLDER_COLORS = {
   coverFront: "#e03131",
   coverBack: "#f76707",

@@ -28,6 +28,7 @@ interface UseEdgeFlipResult {
   onClick: (e: React.MouseEvent) => void;
   onTouchStart: (e: React.TouchEvent) => void;
   onTouchEnd: (e: React.TouchEvent) => void;
+  onTouchCancel: () => void;
 }
 
 const SWIPE_MIN_PX = 50;
@@ -54,6 +55,8 @@ export const useEdgeFlip = ({
       if ((e.target as HTMLElement).closest("a, button")) return null;
 
       const rect = book.getBoundingClientRect();
+      if (e.clientX < rect.left) return canPrev ? "left" : null;
+      if (e.clientX > rect.right) return canNext ? "right" : null;
       if (e.clientY < rect.top || e.clientY > rect.bottom) return null;
       const zone = rect.width * EDGE_FLIP_FRACTION;
       if (e.clientX < rect.left + zone) return canPrev ? "left" : null;
@@ -81,6 +84,7 @@ export const useEdgeFlip = ({
   const onClick = useCallback(
     (e: React.MouseEvent) => {
       if (!active) return;
+      if (!window.getSelection()?.isCollapsed) return;
       const clicked = resolveEdge(e);
       if (clicked === "left") onPrev();
       else if (clicked === "right") onNext();
@@ -106,6 +110,7 @@ export const useEdgeFlip = ({
       const start = touchStart.current;
       touchStart.current = null;
       if (!start) return;
+      if (!window.getSelection()?.isCollapsed) return;
       const t = e.changedTouches[0];
       const dx = t.clientX - start.x;
       const dy = t.clientY - start.y;
@@ -117,9 +122,14 @@ export const useEdgeFlip = ({
     [canPrev, canNext, onPrev, onNext],
   );
 
+  const onTouchCancel = useCallback(() => {
+    touchStart.current = null;
+  }, []);
+
   return {
     onTouchStart,
     onTouchEnd,
+    onTouchCancel,
     active,
     bookElRef,
     cursorRef,

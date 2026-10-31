@@ -40,12 +40,18 @@ export interface LorePageBreak {
   type: "pagebreak";
 }
 
+export interface LoreDivider {
+  type: "divider";
+  divider?: string;
+}
+
 export type LoreBlock =
   | LoreText
   | LoreHeading
   | LoreQuote
   | LoreIllustration
-  | LorePageBreak;
+  | LorePageBreak
+  | LoreDivider;
 
 export interface LoreTakodachi {
   name: string;
@@ -60,6 +66,7 @@ export interface LoreEntry {
   subject: string;
   subjectKind: LoreSubjectKind;
   icon?: string;
+  divider?: string;
   body: LoreBlock[];
   status?: LoreStatus;
   themes?: string[];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useCenterCarousel } from "./useCenterCarousel";
 
@@ -59,9 +59,12 @@ test("resets to the beginning of a new list when the section key changes", () =>
 test("supports touch drag input without the initial scroll jump", () => {
   let api: ReturnType<typeof useCenterCarousel> | null = null;
   render(
-    <TestCarousel total={3} onReady={(value) => {
-      api = value;
-    }} />,
+    <TestCarousel
+      total={3}
+      onReady={(value) => {
+        api = value;
+      }}
+    />,
   );
 
   const container = screen.getByTestId("container");
@@ -107,7 +110,7 @@ test("supports touch drag input without the initial scroll jump", () => {
         closest: () => null,
       },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
     api!.containerHandlers.onPointerMove({
       pointerId: 7,
       pointerType: "touch",
@@ -116,7 +119,7 @@ test("supports touch drag input without the initial scroll jump", () => {
         closest: () => null,
       },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
   });
 
   expect(scrollLeftValue).toBe(160);
@@ -125,9 +128,12 @@ test("supports touch drag input without the initial scroll jump", () => {
 test("keeps the drag anchored to the starting position and clamps within valid scroll bounds", () => {
   let api: ReturnType<typeof useCenterCarousel> | null = null;
   render(
-    <TestCarousel total={5} onReady={(value) => {
-      api = value;
-    }} />,
+    <TestCarousel
+      total={5}
+      onReady={(value) => {
+        api = value;
+      }}
+    />,
   );
 
   const container = screen.getByTestId("container");
@@ -170,14 +176,14 @@ test("keeps the drag anchored to the starting position and clamps within valid s
       clientX: 200,
       target: { closest: () => null },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
     api!.containerHandlers.onPointerMove({
       pointerId: 9,
       pointerType: "mouse",
       clientX: 420,
       target: { closest: () => null },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
   });
 
   expect(scrollLeftValue).toBe(0);
@@ -189,14 +195,14 @@ test("keeps the drag anchored to the starting position and clamps within valid s
       clientX: 200,
       target: { closest: () => null },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
     api!.containerHandlers.onPointerMove({
       pointerId: 10,
       pointerType: "mouse",
       clientX: 50,
       target: { closest: () => null },
       preventDefault: jest.fn(),
-    } as any);
+    } as unknown as React.PointerEvent<HTMLDivElement>);
   });
 
   expect(scrollLeftValue).toBe(150);

@@ -22,6 +22,7 @@ import {
 import { SPINE } from "../Takonomicon/assets";
 import { TextBoxContainer } from "../../../styles/globalStyles";
 import { TAKO_FILES } from "../../../constants/takos";
+import { takoSrc } from "../../../utils/takoAvatar";
 
 const buttons = [
   { to: "/momentsgallery", label: "Moments Gallery" },
@@ -62,9 +63,7 @@ const Menu = (): JSX.Element => {
     setPeekTako("");
     setTimeout(() => {
       const file = TAKO_FILES[Math.floor(Math.random() * TAKO_FILES.length)];
-      setPeekTako(
-        `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(file)}`,
-      );
+      setPeekTako(takoSrc("takos", file));
     }, 120);
   };
 

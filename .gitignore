@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# local exports and archives
+/*.zip
+/Book Submissions*
+/takonomiconDataUpdated*
+public/data/*.xlsx
+public/data/video.csv

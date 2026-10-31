@@ -48,6 +48,7 @@ export interface PaginatedFlow {
   scale: number;
   mobile: boolean;
   measured: boolean;
+  layoutVersion: number;
   turnTo: (
     page: number,
     isUserAction?: boolean,
@@ -82,6 +83,7 @@ export const usePaginatedFlow = (
   const [pageCount, setPageCount] = useState(1);
   const [page, setPage] = useState(0);
   const [measured, setMeasured] = useState(false);
+  const [layoutVersion, setLayoutVersion] = useState(0);
   const lastCountRef = useRef(Infinity);
   const bookFontReadyRef = useRef(!document.fonts);
 
@@ -145,6 +147,7 @@ export const usePaginatedFlow = (
     setPageWidth(width);
     setPageHeight(boxHeight);
     setPageCount(count);
+    setLayoutVersion((v) => v + 1);
     const assetsPending =
       !bookFontReadyRef.current ||
       document.fonts?.status === "loading" ||
@@ -214,6 +217,7 @@ export const usePaginatedFlow = (
     };
     Promise.all([
       fonts.load('16px "Takohuyk"'),
+      fonts.load('16px "InaDigits"', "0123456789"),
       fonts.load('16px "RevisonBooks"'),
     ])
       .then(() => fonts.ready)
@@ -317,6 +321,7 @@ export const usePaginatedFlow = (
     scale,
     mobile,
     measured,
+    layoutVersion,
     turnTo,
     next,
     prev,

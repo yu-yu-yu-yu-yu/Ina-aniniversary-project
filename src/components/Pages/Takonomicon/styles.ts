@@ -2,6 +2,7 @@ import styled, { createGlobalStyle, css, keyframes } from "styled-components";
 import type { LoreTypography } from "../../../types/takonomicon";
 import {
   BOOK_FONT_SRC,
+  DIGIT_FONT_SRC,
   DROPCAP_FONT_SRC,
   EDGE_FLIP_FRACTION,
   PAGE_TEXTURES,
@@ -40,7 +41,7 @@ const typographyVars = (t?: LoreTypography): string =>
     .filter(Boolean)
     .join(" ");
 
-const BODY_FONT = '"Takohuyk", "Mulish", sans-serif';
+const BODY_FONT = '"InaDigits", "Takohuyk", "Mulish", sans-serif';
 
 export const BookRoot = styled.div`
   position: relative;
@@ -69,6 +70,13 @@ export const ChromeButtonLayout = createGlobalStyle`
   @font-face {
     font-family: "Takohuyk";
     src: url(${BOOK_FONT_SRC}) format("truetype");
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: "InaDigits";
+    src: url(${DIGIT_FONT_SRC}) format("truetype");
+    unicode-range: U+0030-0039;
     font-display: block;
   }
 
@@ -228,7 +236,7 @@ export const Book = styled.div<{
   height: 100%;
   max-width: ${({ $mobile }) => ($mobile ? "460px" : "1400px")};
   overflow: ${({ $zoomed }) => ($zoomed ? "auto" : "visible")};
-  touch-action: ${({ $zoomed }) => ($zoomed ? "pan-x pan-y" : "auto")};
+  touch-action: ${({ $zoomed }) => ($zoomed ? "pan-x pan-y" : "pan-y")};
   perspective: 1400px;
   transform: translateX(
       ${({ $mobile, $bookState, $pageWidth }) =>
@@ -344,6 +352,7 @@ export const Viewport = styled.div`
   flex: 1;
   height: 100%;
   overflow: hidden;
+  touch-action: pan-y;
 `;
 
 const PAGE_COLOR_LIGHT = [243, 236, 220];
@@ -889,7 +898,7 @@ export const IllustrationFrame = styled.figure<{
       ? css`
           float: ${$float};
           width: calc(var(--page-w) * ${$width ?? 0.4});
-          margin: 6px ${$float === "left" ? "16px 8px 0" : "0 0 8px 16px"};
+          margin: ${$float === "left" ? "6px 16px 8px 0" : "6px 0 8px 16px"};
 
           img {
             width: min(100%, calc(var(--page-h) * 0.6 * var(--ar, 100)));
@@ -910,6 +919,7 @@ export const IllustrationFrame = styled.figure<{
 
 export const PageBreak = styled.div`
   height: 0;
+  clear: both;
   break-before: column;
   -webkit-column-break-before: always;
 `;
@@ -978,6 +988,7 @@ export const EntryDivider = styled.img`
   display: block;
   width: 60%;
   height: clamp(8px, calc(var(--page-h) * 0.03), 18px);
+  object-fit: contain;
   margin: 0 auto 18px;
   break-inside: avoid;
   -webkit-column-break-inside: avoid;

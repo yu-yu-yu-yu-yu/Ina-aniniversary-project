@@ -41,7 +41,8 @@ import {
   COVER_BACK,
   COVER_FRONT,
   COVER_RATIO,
-  DIVIDER,
+  DEFAULT_DIVIDER,
+  dividerSrc,
   DOODLES,
   FLIP_CURSORS,
   iconSrc,
@@ -419,9 +420,19 @@ const renderBlock = (
   block: LoreBlock,
   key: number,
   images: Record<string, string> | undefined,
+  dividerKey: string,
   dropCapLetter?: string,
 ): JSX.Element | null => {
   switch (block.type) {
+    case "divider":
+      return (
+        <EntryDivider
+          key={key}
+          src={dividerSrc(block.divider ?? dividerKey)}
+          alt=""
+          onError={missingAssetOnError(PLACEHOLDER_COLORS.divider)}
+        />
+      );
     case "heading":
       return <Heading key={key}>{block.text}</Heading>;
     case "quote":
@@ -464,14 +475,15 @@ const EntryBlock = React.memo(function EntryBlock({
   opener?: { subject: string; tagline: string };
 }): JSX.Element {
   const firstText = entry.body.find(
-    (block): block is LoreText => block.type === "text",
+    (block): block is LoreText =>
+      block.type === "text" &&
+      /^\p{L}/u.test(plainText(parseInline(block.text)).trimStart()),
   );
-  const firstChar = firstText
-    ? plainText(parseInline(firstText.text))[0]
+  const dropCapLetter = firstText
+    ? plainText(parseInline(firstText.text)).trimStart()[0].toUpperCase()
     : undefined;
-  const dropCapLetter =
-    firstChar && /\p{L}/u.test(firstChar) ? firstChar.toUpperCase() : undefined;
 
+  const dividerKey = entry.divider ?? entry.icon ?? DEFAULT_DIVIDER;
   const frameTheme = iconTheme(entry.icon);
   const frameStyle = frameTheme
     ? ({
@@ -500,7 +512,7 @@ const EntryBlock = React.memo(function EntryBlock({
       )}
       {!first && (
         <EntryDivider
-          src={DIVIDER}
+          src={dividerSrc(dividerKey)}
           alt=""
           onError={missingAssetOnError(PLACEHOLDER_COLORS.divider)}
         />
@@ -543,6 +555,7 @@ const EntryBlock = React.memo(function EntryBlock({
           block,
           i,
           images,
+          dividerKey,
           block === firstText ? dropCapLetter : undefined,
         ),
       )}
@@ -611,6 +624,7 @@ const Takonomicon = (): JSX.Element => {
     scale,
     mobile,
     measured,
+    layoutVersion,
     next,
     prev,
     turnTo,
@@ -688,6 +702,7 @@ const Takonomicon = (): JSX.Element => {
     onClick: onBookClick,
     onTouchStart: onBookTouchStart,
     onTouchEnd: onBookTouchEnd,
+    onTouchCancel: onBookTouchCancel,
   } = useEdgeFlip({
     mobile,
     canPrev,
@@ -774,15 +789,7 @@ const Takonomicon = (): JSX.Element => {
     if (!bookmark) return;
     const saved = entryRefs.current[bookmark.id];
     if (saved) turnTo(pageOf(saved) + bookmark.offset, false);
-  }, [
-    hash,
-    pageCount,
-    measured,
-    pageOf,
-    turnTo,
-    hasUserNavigated,
-    bookmark,
-  ]);
+  }, [hash, pageCount, measured, pageOf, turnTo, hasUserNavigated, bookmark]);
 
   useEffect(() => {
     if (pageCount <= 1 || !measured) return;
@@ -792,7 +799,7 @@ const Takonomicon = (): JSX.Element => {
       if (el) resolved[entry.id] = pageOf(el);
     });
     setTocPages(resolved);
-  }, [pageCount, measured, pageOf, orderedEntries]);
+  }, [pageCount, measured, layoutVersion, pageOf, orderedEntries]);
 
   const currentEntryId = useMemo(() => {
     if (pageCount <= 1) return null;
@@ -800,7 +807,7 @@ const Takonomicon = (): JSX.Element => {
       .reverse()
       .find((entry) => pageOf(entryRefs.current[entry.id]) <= page);
     return found?.id ?? null;
-  }, [page, pageCount, pageOf, orderedEntries]);
+  }, [page, pageCount, layoutVersion, pageOf, orderedEntries]);
 
   const currentTheme = useMemo(
     () =>
@@ -832,7 +839,7 @@ const Takonomicon = (): JSX.Element => {
     const el = entryRefs.current[bookmark.id];
     if (!el) return null;
     return pageOf(el) + bookmark.offset;
-  }, [bookmark, pageCount, pageOf]);
+  }, [bookmark, pageCount, layoutVersion, pageOf]);
 
   const onBookmarkedSpread =
     bookmarkPage !== null &&
@@ -962,6 +969,7 @@ const Takonomicon = (): JSX.Element => {
           onClick={onBookClick}
           onTouchStart={onBookTouchStart}
           onTouchEnd={onBookTouchEnd}
+          onTouchCancel={onBookTouchCancel}
         >
           {!measured && (
             <LoadingOverlay>

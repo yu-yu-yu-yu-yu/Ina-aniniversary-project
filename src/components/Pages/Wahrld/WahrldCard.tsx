@@ -14,7 +14,7 @@ import {
   EntryUser,
   SocialsLink,
 } from "./styles";
-import { getTakoAvatar } from "../../../utils/takoAvatar";
+import { getTakoAvatar, takoSrc } from "../../../utils/takoAvatar";
 
 const lightboxOptions = {
   settings: { disablePanzoom: false },
@@ -33,10 +33,7 @@ export const getEntryAvatar = (
   icon: string | undefined,
   user: string,
   index: number,
-): string =>
-  icon
-    ? `${process.env.PUBLIC_URL}/takos/${encodeURIComponent(icon)}`
-    : getTakoAvatar(user, index);
+): string => (icon ? takoSrc("takos", icon) : getTakoAvatar(user, index));
 
 const WahrldCard = ({
   entry,

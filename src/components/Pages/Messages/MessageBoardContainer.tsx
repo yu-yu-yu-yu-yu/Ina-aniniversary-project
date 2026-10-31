@@ -20,6 +20,7 @@ import { PageBgm } from "../../Common/PageBgm";
 import { LoadError } from "../../Common/LoadError";
 import { PageRoot } from "../../../styles/globalStyles";
 import { preloadImages } from "../../../utils/preloadImages";
+import { artworkSrc } from "../../../utils/artworkSrc";
 
 const LIMIT = 10;
 
@@ -224,7 +225,7 @@ const MessageBoardContainer = (): JSX.Element => {
     preloadImages(
       data
         .filter((row) => row.image && !row.image.includes("youtube"))
-        .map((row) => `${process.env.PUBLIC_URL}/artworks/${row.image}`),
+        .map((row) => artworkSrc(row.image as string)),
     );
 
   return (

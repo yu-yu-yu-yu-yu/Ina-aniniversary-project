@@ -11,6 +11,7 @@ import { Navbar, NavHome, NavHelp } from "../../Common/Navbar";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
 import { GENERIC_TAKO_ICONS } from "../../../constants/takos";
+import { takoSrc } from "../../../utils/takoAvatar";
 import {
   SearchBar,
   SiteBoard,
@@ -156,7 +157,7 @@ export const TakodexMessages = ({ entries }: { entries: TakodexEntry[] }) => {
                     <hr />
                     {image && !failedImages[i] ? (
                       <TakodexImage
-                        src={process.env.PUBLIC_URL + "/takoswentries/" + image}
+                        src={takoSrc("takoswentries", image)}
                         alt={displayName}
                         onError={() => handleImgError(i)}
                       />

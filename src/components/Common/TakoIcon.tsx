@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GENERIC_TAKO_ICONS } from "../../constants/takos";
+import { takoSrc } from "../../utils/takoAvatar";
 
 const TakoImg = styled.img`
   width: 75px;
@@ -90,7 +91,7 @@ export const TakoIcon = ({ id, pun, index }: TakoIconProps): JSX.Element => {
   const useRandom = !id;
   const imgurl = useRandom
     ? `${process.env.PUBLIC_URL}/icon/${GENERIC_TAKO_ICONS[prng(index) % GENERIC_TAKO_ICONS.length]}`
-    : `${process.env.PUBLIC_URL}/takos/${id}`;
+    : takoSrc("takos", id);
   const [punVisible, setPunVisible] = useState(false);
   const togglePun = () => {
     setPunVisible(!punVisible);

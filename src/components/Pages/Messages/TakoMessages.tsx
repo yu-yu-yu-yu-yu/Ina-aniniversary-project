@@ -6,6 +6,7 @@ import { SRLWrapper } from "simple-react-lightbox";
 import { notifyPlayerReady } from "../../../utils/youtube";
 import ShareButton from "../../Common/ShareButton";
 import { entrySlug } from "../../../utils/shareLink";
+import { artworkSrc } from "../../../utils/artworkSrc";
 import { BubbleImage, IFrame, SubmissionContainer } from "./styles";
 import { Card, CardHeader, CardText } from "../../../styles/globalStyles";
 
@@ -118,14 +119,11 @@ const TakoMessages = ({
                     <SRLWrapper options={options}>
                       {image.includes("mp4") ? (
                         <video width={420} controls>
-                          <source
-                            src={process.env.PUBLIC_URL + "/artworks/" + image}
-                            type="video/mp4"
-                          />
+                          <source src={artworkSrc(image)} type="video/mp4" />
                         </video>
                       ) : (
                         <BubbleImage
-                          src={process.env.PUBLIC_URL + "/artworks/" + image}
+                          src={artworkSrc(image)}
                           loading="lazy"
                           decoding="async"
                         />
