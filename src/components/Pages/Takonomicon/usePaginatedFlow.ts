@@ -87,6 +87,7 @@ export const usePaginatedFlow = (
   const [measured, setMeasured] = useState(false);
   const [layoutVersion, setLayoutVersion] = useState(0);
   const lastCountRef = useRef(Infinity);
+  const targetLeftRef = useRef(0);
   const bookFontReadyRef = useRef(!document.fonts);
 
   const pagesPerSpread = spreadSpan(page, pageCount, !mobile);
@@ -170,7 +171,8 @@ export const usePaginatedFlow = (
       const wasAtEnd = prev >= lastCountRef.current - 1;
       lastCountRef.current = count;
       const start = wasAtEnd ? count - 1 : spreadStart(prev, count, twoUp);
-      flow.scrollLeft = start * LAYOUT_PAGE.width;
+      targetLeftRef.current = start * LAYOUT_PAGE.width;
+      flow.scrollLeft = targetLeftRef.current;
       return start;
     });
   }, [pageRatio, zoom]);
@@ -197,20 +199,28 @@ export const usePaginatedFlow = (
     [scheduleMeasure],
   );
 
+  const holdScroll = useCallback((e: Event) => {
+    const flow = e.currentTarget as HTMLElement;
+    if (Math.abs(flow.scrollLeft - targetLeftRef.current) > 1)
+      flow.scrollLeft = targetLeftRef.current;
+  }, []);
+
   const flowRef = useCallback<DivRefCallback>(
     (node) => {
       const prev = flowElRef.current;
       if (prev) {
+        prev.removeEventListener("scroll", holdScroll);
         prev.removeEventListener("load", scheduleMeasure, true);
         prev.removeEventListener("error", scheduleMeasure, true);
       }
       flowElRef.current = node;
       if (node) {
+        node.addEventListener("scroll", holdScroll);
         node.addEventListener("load", scheduleMeasure, true);
         node.addEventListener("error", scheduleMeasure, true);
       }
     },
-    [scheduleMeasure],
+    [scheduleMeasure, holdScroll],
   );
 
   useEffect(
@@ -241,7 +251,8 @@ export const usePaginatedFlow = (
 
   useLayoutEffect(() => {
     const flow = flowElRef.current;
-    if (flow) flow.scrollLeft = page * LAYOUT_PAGE.width;
+    targetLeftRef.current = page * LAYOUT_PAGE.width;
+    if (flow) flow.scrollLeft = targetLeftRef.current;
   }, [page, pageWidth, pageCount, pagesPerSpread, mobile]);
 
   const hasUserNavigated = useRef(false);
@@ -253,7 +264,8 @@ export const usePaginatedFlow = (
       if (isUserAction) hasUserNavigated.current = true;
       const start = spreadStart(target, pageCount, !mobile);
       if (isUserAction && start !== page) onTurn?.(isDirectJump);
-      flow.scrollLeft = start * LAYOUT_PAGE.width;
+      targetLeftRef.current = start * LAYOUT_PAGE.width;
+      flow.scrollLeft = targetLeftRef.current;
       lastCountRef.current = pageCount;
       setPage(start);
     },

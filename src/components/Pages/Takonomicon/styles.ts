@@ -257,7 +257,8 @@ export const FlipCursor = styled.img<{
   pointer-events: none;
   z-index: 9999;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transform: translate(-50%, -50%)
+  will-change: transform;
+  transform: translate3d(var(--x, 0px), var(--y, 0px), 0) translate(-50%, -50%)
     ${({ $side }) => ($side === "right" ? "scaleX(-1)" : "")};
 `;
 
@@ -550,6 +551,7 @@ export const PageBackdrop = styled.div<{
 `;
 
 const fullPage = css`
+  clear: both;
   height: 100%;
   box-sizing: border-box;
   padding: clamp(16px, calc(var(--page-h) * 0.07), 56px)
@@ -758,6 +760,7 @@ export const EntrySection = styled.section`
   box-sizing: border-box;
   padding: clamp(14px, calc(var(--page-h) * 0.06), 40px)
     clamp(12px, calc(var(--page-w) * 0.06), 28px);
+  clear: both;
   break-before: column;
   -webkit-column-break-before: always;
   box-decoration-break: clone;
@@ -909,7 +912,7 @@ export const DropCapLetter = styled.span`
   height: clamp(26px, calc(var(--page-h) * 0.09), 56px);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   font-family: "RevisonBooks", var(--font-heading, Montserrat, sans-serif);
   font-size: calc(
     clamp(28px, calc(var(--page-h) * 0.12), 60px) * var(--fs-heading, 1)
@@ -1039,7 +1042,7 @@ export const IllustrationFrame = styled.figure<{
             ? "6px auto 8px"
             : $float === "left"
               ? "6px 16px 8px 0"
-              : "6px 0 8px 16px"};
+              : "12px 0"};
 
           img {
             width: min(100%, calc(var(--page-h) * 0.6 * var(--ar, 100)));
@@ -1060,7 +1063,6 @@ export const IllustrationFrame = styled.figure<{
 
 export const PageBreak = styled.div`
   height: 0;
-  clear: both;
   break-before: column;
   -webkit-column-break-before: always;
 `;
@@ -1103,7 +1105,7 @@ export const PageCounter = styled.button`
   white-space: nowrap;
   color: var(--ink-black);
   font-family: ${BODY_FONT};
-  font-size: ${(CHROME_SIZE / 48) * 0.9}rem;
+  font-size: ${(CHROME_SIZE / 48) * 1.2}rem;
   box-shadow: 0 2px 8px #0002;
 `;
 

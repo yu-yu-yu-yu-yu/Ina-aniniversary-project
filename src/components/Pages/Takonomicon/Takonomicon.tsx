@@ -1011,11 +1011,6 @@ const Takonomicon = (): JSX.Element => {
     if (!chosen) setTheme("AbyssalHymn");
   }, [setTheme]);
 
-  const [cursorIndex, setCursorIndex] = useState(0);
-  useEffect(() => {
-    if (edge) setCursorIndex(Math.floor(Math.random() * FLIP_CURSORS.length));
-  }, [edge]);
-
   const [bookmarkArt, setBookmarkArt] = useState(readBookmarkArt);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [jumpOpen, setJumpOpen] = useState(false);
@@ -1330,7 +1325,7 @@ const Takonomicon = (): JSX.Element => {
             {edgeFlipActive && (
               <FlipCursor
                 ref={cursorRef}
-                src={FLIP_CURSORS[cursorIndex]}
+                src={FLIP_CURSORS[2]}
                 alt=""
                 $side={edge === "right" ? "right" : "left"}
                 $visible={!!edge}
@@ -1511,7 +1506,7 @@ const Takonomicon = (): JSX.Element => {
                                   } as React.CSSProperties
                                 }
                               >
-                                <img src={doodle.src} alt="" loading="lazy" />
+                                <img src={doodle.src} alt="" />
                               </DoodleCell>
                             );
                           })}

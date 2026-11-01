@@ -72,8 +72,8 @@ export const useEdgeFlip = ({
       const next = resolveEdge(e);
       setEdge(next);
       if (next && cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX}px`;
-        cursorRef.current.style.top = `${e.clientY}px`;
+        cursorRef.current.style.setProperty("--x", `${e.clientX}px`);
+        cursorRef.current.style.setProperty("--y", `${e.clientY}px`);
       }
     },
     [active, resolveEdge],
