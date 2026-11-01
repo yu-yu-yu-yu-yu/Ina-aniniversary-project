@@ -716,7 +716,12 @@ const EntryBlock = React.memo(function EntryBlock({
     : undefined;
 
   const dividerKey = entry.divider ?? entry.icon ?? DEFAULT_DIVIDER;
-  const hideHeaderText = !!opener && entry.subjectKind === "song";
+  const hideHeaderText =
+    !!opener && (entry.subjectKind === "song" || entry.subjectKind === "cover");
+  const openerTitle =
+    opener && /^cover \d+$/i.test(opener.subject)
+      ? entry.title
+      : opener && songTitle(opener.subject);
   const hiddenHeaderStyle: React.CSSProperties | undefined = hideHeaderText
     ? { visibility: "hidden" }
     : undefined;
@@ -751,7 +756,7 @@ const EntryBlock = React.memo(function EntryBlock({
                 onError={missingAssetOnError(PLACEHOLDER_COLORS.icon)}
               />
             )}
-            <InkText text={songTitle(opener.subject)} />
+            <InkText text={openerTitle ?? opener.subject} />
           </OpenerTitle>
           <OpenerTagline>{md(opener.tagline)}</OpenerTagline>
         </ChapterOpener>
@@ -1534,7 +1539,16 @@ const Takonomicon = (): JSX.Element => {
                                   } as React.CSSProperties
                                 }
                               >
-                                <img src={doodle.src} alt="" />
+                                <img
+                                  data-lazy-src={doodle.src}
+                                  width={doodle.width}
+                                  height={doodle.height}
+                                  alt=""
+                                  decoding="async"
+                                  onError={missingAssetOnError(
+                                    PLACEHOLDER_COLORS.art,
+                                  )}
+                                />
                               </DoodleCell>
                             );
                           })}

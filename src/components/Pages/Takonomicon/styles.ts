@@ -680,6 +680,8 @@ export const TocPage = styled.div`
     clamp(16px, calc(var(--page-w) * 0.08), 32px);
   break-before: column;
   -webkit-column-break-before: always;
+  break-after: column;
+  -webkit-column-break-after: always;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 `;
@@ -940,8 +942,10 @@ export const DropCapLetter = styled.span`
   line-height: 0.8;
   margin: 2px 8px 0 0;
   color: var(--dropcap-color, inherit);
+  transform: translateY(-0.12em);
 
   &[data-displaced] {
+    transform: none;
     float: none;
     display: inline-block;
     width: auto;
