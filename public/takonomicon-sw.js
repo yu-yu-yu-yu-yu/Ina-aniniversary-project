@@ -1,6 +1,8 @@
 const CACHE = "takonomicon-cache";
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const STAMP = "x-takonomicon-cached-at";
+let versionCheck = null;
+
 const versionRequest = () =>
   new Request(`${self.registration.scope}__takonomicon-version`);
 
@@ -29,6 +31,8 @@ const digest = async (buffer) =>
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
 
+const dataUrl = () => `${self.registration.scope}data/takonomiconData.json`;
+
 const sweepExpired = async () => {
   const cache = await caches.open(CACHE);
   const marker = versionRequest().url;
@@ -49,14 +53,29 @@ const renewIfChanged = async (response) => {
   await renewed.put(versionRequest(), new Response(version));
 };
 
+const checkVersion = async () => {
+  try {
+    const response = await fetch(dataUrl(), { cache: "no-cache" });
+    if (response.ok) await renewIfChanged(response);
+  } catch (error) {
+    return undefined;
+  }
+};
+
+const ensureVersionCheck = () => {
+  if (!versionCheck) versionCheck = checkVersion();
+  return versionCheck;
+};
+
 const handleData = async (event) => {
   const { request } = event;
   try {
     const response = await fetch(request, { cache: "no-cache" });
     if (!response.ok) throw new Error(String(response.status));
     if (/takonomiconData\.json$/.test(request.url)) {
-      await renewIfChanged(response);
+      versionCheck = renewIfChanged(response).catch(() => undefined);
     }
+    await ensureVersionCheck();
     const cache = await caches.open(CACHE);
     event.waitUntil(
       stamped(response.clone())
@@ -74,6 +93,7 @@ const handleData = async (event) => {
 
 const handleAsset = async (event) => {
   const { request } = event;
+  await ensureVersionCheck();
   const cache = await caches.open(CACHE);
   const cached = await cache.match(request);
   if (cached && isFresh(cached)) return cached;
@@ -93,8 +113,16 @@ const handleAsset = async (event) => {
 
 self.addEventListener("install", () => self.skipWaiting());
 
+const dropOldCaches = async () => {
+  for (const name of await caches.keys()) {
+    if (name.startsWith("takonomicon-") && name !== CACHE) {
+      await caches.delete(name);
+    }
+  }
+};
+
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim().then(sweepExpired));
+  event.waitUntil(self.clients.claim().then(dropOldCaches).then(sweepExpired));
 });
 
 self.addEventListener("fetch", (event) => {
