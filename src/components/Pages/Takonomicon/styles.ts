@@ -1413,7 +1413,9 @@ export const PageJumpButton = styled.button`
 
 export const DoodlePage = styled.div`
   ${fullPage}
+  height: var(--page-h);
   display: grid;
+  align-items: stretch;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 0;
