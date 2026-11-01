@@ -6,7 +6,12 @@ import FloatingTakos from "./FloatingTakos";
 import FloatingBalloons from "./FloatingBalloons";
 import { useMute } from "../../Common/MuteButton";
 import { useAudio } from "../../../hooks/useAudio";
-import { BOOK_FONT_SRC, SPINE, SPINE_RATIO } from "../Takonomicon/assets";
+import {
+  BOOK_FONT_SRC,
+  COVER_FRONT,
+  SPINE,
+  SPINE_RATIO,
+} from "../Takonomicon/assets";
 import { markIntroSeen } from "./introFlag";
 import { zIndex } from "../../../styles/tokens";
 
@@ -106,6 +111,22 @@ const Line = styled.p<{ $edge: "top" | "bottom"; $on: boolean }>`
   pointer-events: none;
 `;
 
+const preloadImage = (src: string): Promise<unknown> =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.onload = img.onerror = resolve;
+    img.src = src;
+  });
+
+const preloadBook = (): Promise<unknown> =>
+  Promise.allSettled([
+    import("../Takonomicon/Takonomicon"),
+    fetch(`${process.env.PUBLIC_URL}/data/takonomiconData.json`).then((r) =>
+      r.json(),
+    ),
+    preloadImage(COVER_FRONT),
+  ]);
+
 const isTransition = (a: Animation): boolean =>
   typeof CSSTransition !== "undefined" && a instanceof CSSTransition;
 
@@ -135,6 +156,8 @@ const BookIntro = (): JSX.Element => {
     let idleTimer = 0;
     let darkTimer = 0;
     let bgmRaf = 0;
+    let cancelled = false;
+    const bookReady = preloadBook();
 
     const applyRate = () => {
       if (rateRef.current === 1) return;
@@ -155,7 +178,9 @@ const BookIntro = (): JSX.Element => {
       bgmRaf = requestAnimationFrame(bgmTick);
     };
 
-    const toBook = () => {
+    const toBook = async () => {
+      await bookReady;
+      if (cancelled) return;
       setPhase("dark");
       darkTimer = window.setTimeout(() => {
         cancelAnimationFrame(raf);
@@ -196,6 +221,7 @@ const BookIntro = (): JSX.Element => {
     }
 
     return () => {
+      cancelled = true;
       window.clearTimeout(idleTimer);
       window.clearTimeout(darkTimer);
       cancelAnimationFrame(raf);

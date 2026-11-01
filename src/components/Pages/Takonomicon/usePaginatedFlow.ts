@@ -10,6 +10,8 @@ import {
 import { LAYOUT_PAGE } from "./assets";
 
 const MOBILE_BREAKPOINT = 768;
+export const LOAD_GROUP = 20;
+
 const BLANK_PAGE_ATTR = "data-blank-page";
 
 export const spreadStart = (
@@ -151,7 +153,18 @@ export const usePaginatedFlow = (
     const assetsPending =
       !bookFontReadyRef.current ||
       document.fonts?.status === "loading" ||
-      Array.from(flow.querySelectorAll("img")).some((img) => !img.complete);
+      Array.from(flow.querySelectorAll("img")).some((img) => {
+        let x = 0;
+        for (
+          let node: HTMLElement | null = img;
+          node && node !== flow;
+          node = node.offsetParent as HTMLElement | null
+        )
+          x += node.offsetLeft;
+        if (Math.floor(x / LAYOUT_PAGE.width + 0.02) >= LOAD_GROUP)
+          return false;
+        return !img.complete || img.hasAttribute("data-lazy-src");
+      });
     if (!assetsPending) setMeasured(true);
     setPage((prev) => {
       const wasAtEnd = prev >= lastCountRef.current - 1;

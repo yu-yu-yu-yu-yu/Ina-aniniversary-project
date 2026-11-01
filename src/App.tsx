@@ -70,7 +70,7 @@ const App = (): JSX.Element => (
       <div className="Content">
         <Suspense fallback={<TakoLoading fullPage />}>
           <Switch>
-            <Route exact path="/">
+            <Route exact path={["/", "/abyss"]}>
               <HomeEntry />
             </Route>
             <Route path="/messages">

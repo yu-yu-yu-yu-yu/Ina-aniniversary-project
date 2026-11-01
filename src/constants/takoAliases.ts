@@ -41,6 +41,7 @@ export const TAKO_ALIASES: Record<string, string> = {
   "takoswentries/Astraea.png": "takos/Astraea.png",
   "takoswentries/BreadART.png": "takos/BreadART.png",
   "takoswentries/CapSora.png": "takos/CapSora.png",
+  "takoswentries/Chuunilord.png": "takoswentries/chuunilord.png",
   "takoswentries/Chumbeque.png": "takos/Chumbeque.png",
   "takoswentries/ConcussioAmi.png": "takos/ConcussioAmi.png",
   "takoswentries/Corp.Shephard.png": "takos/Corp.Shephard.png",

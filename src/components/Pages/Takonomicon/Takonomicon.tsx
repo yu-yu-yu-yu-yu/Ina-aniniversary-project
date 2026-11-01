@@ -1,6 +1,8 @@
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
+  useContext,
   useMemo,
   useRef,
   useState,
@@ -8,6 +10,7 @@ import React, {
 import { useLocation } from "react-router-dom";
 import {
   LoreBlock,
+  LoreDividerStyle,
   LoreBookText,
   LoreData,
   LoreEntry,
@@ -23,7 +26,7 @@ import { THEME_CHOSEN_KEY } from "../../Common/ThemeSwitcher";
 import { ThemeName, themes } from "../../Common/themes";
 import { TakoLoading } from "../../Common/TakoLoading";
 import ShareButton from "../../Common/ShareButton";
-import { usePaginatedFlow } from "./usePaginatedFlow";
+import { LOAD_GROUP, usePaginatedFlow } from "./usePaginatedFlow";
 import { usePageTurnSound } from "./usePageTurnSound";
 import { useEdgeFlip } from "./useEdgeFlip";
 import { use3DTilt } from "./use3DTilt";
@@ -31,6 +34,7 @@ import {
   BellIcon,
   BellOffIcon,
   BookmarkIcon,
+  GalleryIcon,
   ZoomInIcon,
   ZoomOutIcon,
 } from "./icons";
@@ -42,14 +46,17 @@ import {
   COVER_FRONT,
   COVER_RATIO,
   DEFAULT_DIVIDER,
+  DIVIDER_NONE,
   dividerSrc,
   DOODLES,
   FLIP_CURSORS,
+  GALLERY_GROUPS,
   iconSrc,
   missingAssetOnError,
   pickSeeded,
   PLACEHOLDER_COLORS,
   resolveImageSrc,
+  SCANNED_DOODLES,
   seededFraction,
   STICKY_NOTES,
 } from "./assets";
@@ -74,6 +81,7 @@ import {
   DropCapLetter,
   EdgeGlow,
   EntryDivider,
+  EntryDividerImg,
   EntryHeader,
   EntrySection,
   EntrySubject,
@@ -108,6 +116,17 @@ import {
   RibbonPickerOption,
   SfxMuteButton,
   ZoomButton,
+  GalleryButton,
+  GalleryBackdrop,
+  GalleryPanel,
+  GalleryClose,
+  GalleryHeading,
+  GalleryGroupTitle,
+  GalleryGrid,
+  GalleryThumb,
+  GalleryFull,
+  DoodlePage,
+  DoodleCell,
   SongIcon,
   TopBar,
   SongOpenerIcon,
@@ -141,6 +160,15 @@ const ICON_THEME: Record<string, ThemeName> = {
   takotakeover: "TakoTakover",
   "abyssal-hymn": "AbyssalHymn",
   "takodachi-no-uta": "TakodachiNoUta",
+};
+
+const DROPCAP_COLOR: Partial<Record<ThemeName, string>> = {
+  Violet: "#7b2cbf",
+  Meconopsis: "#2a6fd1",
+  Temari: "#c62828",
+  TakoTakover: "#c4177f",
+  AbyssalHymn: "#3b2a78",
+  TakodachiNoUta: "#2b2b2b",
 };
 
 const iconTheme = (icon: string | undefined): ThemeName | undefined =>
@@ -257,6 +285,22 @@ const renderInline = (nodes: InlineNode[]): React.ReactNode =>
     }
   });
 
+const DOODLE_PAGE_SIZE = 6;
+const DOODLE_PAGES = (() => {
+  const pool = [...DOODLES, ...SCANNED_DOODLES]
+    .map((doodle) => ({
+      doodle,
+      order: seededFraction(`doodle-order-${doodle.src}`),
+    }))
+    .sort((a, b) => a.order - b.order)
+    .map(({ doodle }) => doodle);
+  const pages: (typeof pool)[] = [];
+  for (let i = 0; i < pool.length; i += DOODLE_PAGE_SIZE) {
+    pages.push(pool.slice(i, i + DOODLE_PAGE_SIZE));
+  }
+  return pages;
+})();
+
 const md = (text: string): React.ReactNode => renderInline(parseInline(text));
 
 const StatusPill = ({
@@ -320,12 +364,16 @@ const EntryTakodachi = ({
   images: Record<string, string> | undefined;
 }): JSX.Element | null => {
   const tako = entry.takodachi;
+  const takoSrc = resolveImageSrc(tako?.image, images);
+  const sizes = useContext(ImageSizesContext);
+  const deferred = !!(takoSrc && sizes?.[takoSrc]);
   if (!tako) return null;
   return (
     <TakodachiCard>
       {tako.image && (
         <TakodachiImg
-          src={resolveImageSrc(tako.image, images)}
+          src={deferred ? undefined : takoSrc}
+          data-lazy-src={deferred ? takoSrc : undefined}
           alt=""
           decoding="async"
           onError={missingAssetOnError(PLACEHOLDER_COLORS.art)}
@@ -365,9 +413,155 @@ const EntryDoodle = ({ entry }: { entry: LoreEntry }): JSX.Element | null => {
   );
 };
 
+const DividerArt = ({
+  src,
+  ...rest
+}: { src: string } & React.ComponentProps<
+  typeof EntryDivider
+>): JSX.Element => (
+  <EntryDivider {...rest}>
+    <EntryDividerImg
+      src={src}
+      alt=""
+      onError={missingAssetOnError(PLACEHOLDER_COLORS.divider)}
+    />
+  </EntryDivider>
+);
+
+const dividerVars = (
+  style: LoreDividerStyle | undefined,
+): React.CSSProperties | undefined =>
+  style
+    ? ({
+        "--dx": style.x,
+        "--dy": style.y,
+        "--ds": style.scale,
+        "--dr": style.rotate,
+      } as React.CSSProperties)
+    : undefined;
+
+const InkText = ({
+  text,
+  children,
+}: {
+  text?: string;
+  children?: React.ReactNode;
+}): JSX.Element => {
+  const content = children ?? text;
+  return (
+    <>
+      <span className="ink-size" aria-hidden="true">
+        {content}
+      </span>
+      <span className="ink-face">{content}</span>
+    </>
+  );
+};
+
+interface InkLine {
+  text: string;
+  left: number;
+  top: number;
+  height: number;
+}
+
+const measureInkLines = (node: Text, host: HTMLElement): InkLine[] => {
+  const hostRect = host.getBoundingClientRect();
+  const sx = host.offsetWidth ? hostRect.width / host.offsetWidth : 1;
+  const sy = host.offsetHeight ? hostRect.height / host.offsetHeight : 1;
+  const range = document.createRange();
+  const lines: InkLine[] = [];
+  const text = node.data;
+  for (let i = 0; i < text.length; i++) {
+    range.setStart(node, i);
+    range.setEnd(node, i + 1);
+    const rect = range.getClientRects()[0];
+    const last = lines[lines.length - 1];
+    if (!rect || rect.width === 0) {
+      if (last) last.text += text[i];
+      continue;
+    }
+    const top = (rect.top - hostRect.top) / sy;
+    if (last && Math.abs(top - last.top) < last.height / 2) {
+      last.text += text[i];
+    } else {
+      lines.push({
+        text: text[i],
+        left: (rect.left - hostRect.left) / sx,
+        top,
+        height: rect.height / sy,
+      });
+    }
+  }
+  return lines.map((l) => ({
+    text: l.text.trimEnd(),
+    left: Math.round(l.left * 10) / 10,
+    top: Math.round(l.top * 10) / 10,
+    height: Math.round(l.height * 10) / 10,
+  }));
+};
+
+const InkHeadingText = ({ text }: { text: string }): JSX.Element => {
+  const sizerRef = useRef<HTMLSpanElement>(null);
+  const updateRef = useRef<() => void>();
+  const [lines, setLines] = useState<InkLine[]>([]);
+
+  useLayoutEffect(() => {
+    const sizer = sizerRef.current;
+    const host = sizer?.parentElement;
+    const node = sizer?.firstChild;
+    if (!sizer || !host || !(node instanceof Text)) return undefined;
+    const update = () => {
+      const next = measureInkLines(node, host);
+      setLines((prev) =>
+        JSON.stringify(prev) === JSON.stringify(next) ? prev : next,
+      );
+    };
+    updateRef.current = update;
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(host);
+    document.fonts?.addEventListener("loadingdone", update);
+    return () => {
+      updateRef.current = undefined;
+      observer.disconnect();
+      document.fonts?.removeEventListener("loadingdone", update);
+    };
+  }, [text]);
+
+  useLayoutEffect(() => {
+    updateRef.current?.();
+  });
+
+  return (
+    <>
+      <span ref={sizerRef} className="ink-text">
+        {text}
+      </span>
+      {lines.map((line, i) => (
+        <span
+          key={i}
+          className="ink-line"
+          aria-hidden="true"
+          style={{
+            left: line.left,
+            top: line.top,
+            lineHeight: `${line.height}px`,
+          }}
+        >
+          {line.text}
+        </span>
+      ))}
+    </>
+  );
+};
+
 const DropCap = ({ letter }: { letter: string }): JSX.Element => (
   <DropCapLetter data-dropcap>{letter}</DropCapLetter>
 );
+
+type ImageSizes = Record<string, [number, number]>;
+const ImageSizesContext = React.createContext<ImageSizes | null>(null);
 
 const IllustrationBlock = ({
   block,
@@ -380,10 +574,30 @@ const IllustrationBlock = ({
     block.src ?? (block.slot ? artSrc(block.slot) : undefined),
     images,
   );
+  const sizes = useContext(ImageSizesContext);
+  const size = src ? sizes?.[src] : undefined;
+  const deferred = !!size;
   return (
-    <IllustrationFrame $float={block.float} $width={block.width}>
+    <IllustrationFrame
+      $float={block.float}
+      $width={block.width}
+      style={
+        size
+          ? ({ "--ar": size[0] / size[1] } as React.CSSProperties)
+          : undefined
+      }
+    >
       <img
-        src={src}
+        src={deferred ? undefined : src}
+        data-lazy-src={deferred ? src : undefined}
+        style={
+          size
+            ? {
+                aspectRatio: `${size[0]} / ${size[1]}`,
+                ...(block.float ? null : { width: size[0] }),
+              }
+            : undefined
+        }
         alt={block.alt ?? ""}
         decoding="async"
         onLoad={(e) => {
@@ -424,17 +638,23 @@ const renderBlock = (
   dropCapLetter?: string,
 ): JSX.Element | null => {
   switch (block.type) {
-    case "divider":
+    case "divider": {
+      const blockDivider = block.divider ?? dividerKey;
+      if (blockDivider === DIVIDER_NONE) return null;
       return (
-        <EntryDivider
+        <DividerArt
           key={key}
-          src={dividerSrc(block.divider ?? dividerKey)}
-          alt=""
-          onError={missingAssetOnError(PLACEHOLDER_COLORS.divider)}
+          src={dividerSrc(blockDivider)}
+          style={dividerVars(block)}
         />
       );
+    }
     case "heading":
-      return <Heading key={key}>{block.text}</Heading>;
+      return (
+        <Heading key={key}>
+          <InkHeadingText text={block.text} />
+        </Heading>
+      );
     case "quote":
       return (
         <QuoteBlock key={key}>
@@ -488,6 +708,7 @@ const EntryBlock = React.memo(function EntryBlock({
   const frameStyle = frameTheme
     ? ({
         "--frame-color": themes[frameTheme]["--title-stroke"],
+        "--dropcap-color": DROPCAP_COLOR[frameTheme],
       } as React.CSSProperties)
     : undefined;
 
@@ -506,15 +727,16 @@ const EntryBlock = React.memo(function EntryBlock({
               onError={missingAssetOnError(PLACEHOLDER_COLORS.icon)}
             />
           )}
-          <StandaloneDividerTitle>{opener.subject}</StandaloneDividerTitle>
+          <StandaloneDividerTitle>
+            <InkText text={opener.subject} />
+          </StandaloneDividerTitle>
           <BookSubtitle>{md(opener.tagline)}</BookSubtitle>
         </ChapterOpener>
       )}
-      {!first && (
-        <EntryDivider
+      {!first && dividerKey !== DIVIDER_NONE && (
+        <DividerArt
           src={dividerSrc(dividerKey)}
-          alt=""
-          onError={missingAssetOnError(PLACEHOLDER_COLORS.divider)}
+          style={dividerVars(entry.dividerStyle)}
         />
       )}
       <EntryHeader>
@@ -526,9 +748,13 @@ const EntryBlock = React.memo(function EntryBlock({
           />
         )}
         <EntrySubject>
-          {SUBJECT_LABEL[entry.subjectKind]}: {entry.subject}
+          <InkText
+            text={`${SUBJECT_LABEL[entry.subjectKind]}: ${entry.subject}`}
+          />
         </EntrySubject>
-        <EntryTitle>{entry.title}</EntryTitle>
+        <EntryTitle>
+          <InkText text={entry.title} />
+        </EntryTitle>
         <CreditRow>
           <CreditText>
             By{" "}
@@ -568,6 +794,10 @@ const BOOK_TILT_RANGE = 0.8;
 const Takonomicon = (): JSX.Element => {
   const { data, loading, error } = useFetch<LoreData>(
     `${process.env.PUBLIC_URL}/data/takonomiconData.json`,
+  );
+
+  const { data: sizes, loading: sizesLoading } = useFetch<ImageSizes>(
+    `${process.env.PUBLIC_URL}/data/takonomiconImageSizes.json`,
   );
 
   const bookTilt = useMemo(
@@ -610,6 +840,18 @@ const Takonomicon = (): JSX.Element => {
   } = usePageTurnSound();
 
   const [zoomed, setZoomed] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryView, setGalleryView] = useState<string | null>(null);
+  useEffect(() => {
+    if (!galleryOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (galleryView) setGalleryView(null);
+      else setGalleryOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [galleryOpen, galleryView]);
 
   const {
     frameRef,
@@ -640,6 +882,47 @@ const Takonomicon = (): JSX.Element => {
     },
     [hookFlowRef],
   );
+
+  const [loadLimit, setLoadLimit] = useState(LOAD_GROUP);
+  useEffect(() => {
+    const flow = flowNodeRef.current;
+    if (pageWidth <= 0 || !flow) return;
+    const need = Math.max(
+      loadLimit,
+      (Math.floor(page / LOAD_GROUP) + 1) * LOAD_GROUP,
+    );
+    if (need !== loadLimit) {
+      setLoadLimit(need);
+      return;
+    }
+    flow
+      .querySelectorAll<HTMLImageElement>("img[data-lazy-src]")
+      .forEach((img) => {
+        if (pageOf(img) >= loadLimit) return;
+        img.setAttribute("data-lazy-pending", "");
+        img.src = img.dataset.lazySrc ?? "";
+        img.removeAttribute("data-lazy-src");
+      });
+    const pending = Array.from(
+      flow.querySelectorAll<HTMLImageElement>("img[data-lazy-pending]"),
+    ).filter((img) => !img.complete);
+    if (loadLimit >= pageCount) return;
+    let cancelled = false;
+    Promise.all(
+      pending.map(
+        (img) =>
+          new Promise((resolve) => {
+            img.addEventListener("load", resolve, { once: true });
+            img.addEventListener("error", resolve, { once: true });
+          }),
+      ),
+    ).then(() => {
+      if (!cancelled) setLoadLimit((l) => l + LOAD_GROUP);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [pageWidth, layoutVersion, page, pageCount, loadLimit, pageOf]);
 
   const scaleRef = useRef(scale);
   scaleRef.current = scale;
@@ -768,7 +1051,7 @@ const Takonomicon = (): JSX.Element => {
     }
   };
 
-  const { hash } = useLocation();
+  const { hash, search } = useLocation();
   const entryRefs = useRef<Record<string, HTMLElement | null>>({});
   const [tocPages, setTocPages] = useState<Record<string, number>>({});
 
@@ -780,6 +1063,14 @@ const Takonomicon = (): JSX.Element => {
 
   useEffect(() => {
     if (hasUserNavigated.current || pageCount <= 1 || !measured) return;
+    const pageParam = new URLSearchParams(search).get("page");
+    if (pageParam !== null && pageParam.trim() !== "") {
+      const n = Number(pageParam);
+      if (Number.isFinite(n)) {
+        turnTo(Math.min(Math.max(Math.round(n), 0), pageCount - 1), false);
+        return;
+      }
+    }
     const slug = hash.replace("#", "");
     const target = entryRefs.current[slug] ?? null;
     if (target) {
@@ -789,7 +1080,16 @@ const Takonomicon = (): JSX.Element => {
     if (!bookmark) return;
     const saved = entryRefs.current[bookmark.id];
     if (saved) turnTo(pageOf(saved) + bookmark.offset, false);
-  }, [hash, pageCount, measured, pageOf, turnTo, hasUserNavigated, bookmark]);
+  }, [
+    hash,
+    search,
+    pageCount,
+    measured,
+    pageOf,
+    turnTo,
+    hasUserNavigated,
+    bookmark,
+  ]);
 
   useEffect(() => {
     if (pageCount <= 1 || !measured) return;
@@ -879,324 +1179,397 @@ const Takonomicon = (): JSX.Element => {
   };
 
   return (
-    <BookRoot>
-      <ChromeButtonLayout />
-      <TopBar>
-        <HomeOverlay>
-          <NavHome />
-        </HomeOverlay>
-        <SfxMuteButton
-          onClick={toggleSfxMuted}
-          title={sfxMuted ? "Unmute page sounds" : "Mute page sounds"}
-        >
-          {sfxMuted ? <BellOffIcon /> : <BellIcon />}
-        </SfxMuteButton>
-        <RibbonPicker ref={pickerRef}>
-          <RibbonPickerButton
-            onClick={() => setPickerOpen((open) => !open)}
-            title="Choose bookmark"
-            aria-haspopup="true"
-            aria-expanded={pickerOpen}
+    <ImageSizesContext.Provider value={sizes}>
+      <BookRoot>
+        <ChromeButtonLayout />
+        <TopBar>
+          <HomeOverlay>
+            <NavHome />
+          </HomeOverlay>
+          <SfxMuteButton
+            onClick={toggleSfxMuted}
+            title={sfxMuted ? "Unmute page sounds" : "Mute page sounds"}
           >
-            <BookmarkIcon />
-          </RibbonPickerButton>
-          {pickerOpen && (
-            <RibbonPickerMenu>
-              {BOOKMARKS.map((art, i) => (
-                <RibbonPickerOption
-                  key={art.src}
-                  $src={art.src}
-                  $ratio={art.ratio}
-                  $active={i === bookmarkArt}
-                  onClick={() => chooseBookmarkArt(i)}
-                  aria-label={art.label}
-                  aria-pressed={i === bookmarkArt}
-                />
-              ))}
-            </RibbonPickerMenu>
-          )}
-        </RibbonPicker>
-        <ZoomButton
-          onClick={() => setZoomed((on) => !on)}
-          title={zoomed ? "Zoom out" : "Zoom in"}
-          aria-pressed={zoomed}
-        >
-          {zoomed ? <ZoomOutIcon /> : <ZoomInIcon />}
-        </ZoomButton>
-        <PageJump ref={jumpRef}>
-          <PageCounter
-            onClick={() => setJumpOpen((open) => !open)}
-            title="Jump to page"
-            aria-haspopup="true"
-            aria-expanded={jumpOpen}
-          >
-            {page === 0 ? "Cover" : page >= pageCount - 1 ? "Back" : page} /{" "}
-            {contentPages}
-          </PageCounter>
-          {jumpOpen && (
-            <PageJumpMenu>
-              <PageJumpRow onSubmit={handleJumpSubmit}>
-                <label htmlFor="jump-page">Page</label>
-                <input
-                  id="jump-page"
-                  name="page"
-                  type="number"
-                  min={1}
-                  max={contentPages}
-                  defaultValue={Math.min(Math.max(page, 1), contentPages)}
-                  autoFocus
-                />
-                <PageJumpButton type="submit">Go</PageJumpButton>
-              </PageJumpRow>
-              <PageJumpButton type="button" onClick={handleJumpToIndex}>
-                Back to index
-              </PageJumpButton>
-            </PageJumpMenu>
-          )}
-        </PageJump>
-      </TopBar>
-      {loading ? (
-        <TakoLoading fullPage />
-      ) : error ? (
-        <StatusMessage>
-          Error loading the lore book: {error.message}
-        </StatusMessage>
-      ) : (
-        <BookStage
-          $hideCursor={!!edge}
-          onMouseMove={onBookMouseMove}
-          onMouseLeave={onBookMouseLeave}
-          onClick={onBookClick}
-          onTouchStart={onBookTouchStart}
-          onTouchEnd={onBookTouchEnd}
-          onTouchCancel={onBookTouchCancel}
-        >
-          {!measured && (
-            <LoadingOverlay>
-              <TakoLoading fullPage />
-            </LoadingOverlay>
-          )}
-          <BookGlow $width={pageWidth * pagesPerSpread} />
-          {edgeFlipActive && (
-            <FlipCursor
-              ref={cursorRef}
-              src={FLIP_CURSORS[cursorIndex]}
-              alt=""
-              $side={edge === "right" ? "right" : "left"}
-              $visible={!!edge}
-            />
-          )}
-          <Book
-            $mobile={mobile}
-            $bookState={bookState}
-            $pageWidth={pageWidth}
-            $tilt={bookTilt}
-            $zoomed={zoomed}
-            ref={frameRef}
-          >
-            <PageStackWrap
-              $tiltX={tiltX}
-              $tiltY={tiltY}
-              $zoomed={zoomed}
-              onMouseMove={onStackMouseMove}
-              onMouseLeave={onStackMouseLeave}
+            {sfxMuted ? <BellOffIcon /> : <BellIcon />}
+          </SfxMuteButton>
+          <RibbonPicker ref={pickerRef}>
+            <RibbonPickerButton
+              onClick={() => setPickerOpen((open) => !open)}
+              title="Choose bookmark"
+              aria-haspopup="true"
+              aria-expanded={pickerOpen}
             >
-              <Leaf
-                ref={bookElRef}
-                $width={pageWidth * pagesPerSpread}
-                $height={pageHeight}
-                $zoomed={zoomed}
-              >
-                {edgeFlipActive && (
-                  <>
-                    <EdgeGlow $side="left" $active={edge === "left"} />
-                    <EdgeGlow $side="right" $active={edge === "right"} />
-                  </>
-                )}
-                {pagesPerSpread === 2 && <Spine />}
-                <Viewport>
-                  <PageBackdrop
-                    $pageWidth={pageWidth}
-                    $pageHeight={pageHeight}
-                    $pageCount={pageCount}
-                    $offset={page * pageWidth}
+              <BookmarkIcon />
+            </RibbonPickerButton>
+            {pickerOpen && (
+              <RibbonPickerMenu>
+                {BOOKMARKS.map((art, i) => (
+                  <RibbonPickerOption
+                    key={art.src}
+                    $src={art.src}
+                    $ratio={art.ratio}
+                    $active={i === bookmarkArt}
+                    onClick={() => chooseBookmarkArt(i)}
+                    aria-label={art.label}
+                    aria-pressed={i === bookmarkArt}
                   />
-                  <Flow
-                    ref={flowRef}
-                    $layoutWidth={layoutWidth}
-                    $layoutHeight={layoutHeight}
-                    $spread={pagesPerSpread}
-                    $scale={scale}
-                    $typography={book.typography}
+                ))}
+              </RibbonPickerMenu>
+            )}
+          </RibbonPicker>
+          <ZoomButton
+            onClick={() => setZoomed((on) => !on)}
+            title={zoomed ? "Zoom out" : "Zoom in"}
+            aria-pressed={zoomed}
+          >
+            {zoomed ? <ZoomOutIcon /> : <ZoomInIcon />}
+          </ZoomButton>
+          <GalleryButton
+            onClick={() => setGalleryOpen(true)}
+            title="Artwork gallery"
+            aria-label="Artwork gallery"
+          >
+            <GalleryIcon />
+          </GalleryButton>
+          {galleryOpen && (
+            <GalleryBackdrop
+              onClick={() => {
+                if (galleryView) setGalleryView(null);
+                else setGalleryOpen(false);
+              }}
+            >
+              {galleryView ? (
+                <GalleryFull src={galleryView} alt="" />
+              ) : (
+                <GalleryPanel onClick={(e) => e.stopPropagation()}>
+                  <GalleryClose
+                    aria-label="Close gallery"
+                    onClick={() => setGalleryOpen(false)}
                   >
-                    <TitlePage
-                      $cover={COVER_FRONT}
-                      role="img"
-                      aria-label={book.title}
-                    />
-                    <DisclaimerPage>
-                      <DisclaimerHeading>
-                        {book.forewordHeading}
-                      </DisclaimerHeading>
-                      <DisclaimerBody>{md(book.foreword)}</DisclaimerBody>
-                    </DisclaimerPage>
-                    <DisclaimerPage>
-                      <DisclaimerHeading>
-                        {book.disclaimerHeading}
-                      </DisclaimerHeading>
-                      <DisclaimerBody>{md(book.disclaimer)}</DisclaimerBody>
-                      <DisclaimerHeading>
-                        {book.legendHeading}
-                      </DisclaimerHeading>
-                      <LegendList>
-                        {STATUS_ORDER.map((status) => (
-                          <LegendRow key={status}>
-                            <StatusPill
-                              status={status}
-                              label={book.statusLabels[status]}
+                    ×
+                  </GalleryClose>
+                  <GalleryHeading>Artwork gallery</GalleryHeading>
+                  {GALLERY_GROUPS.map((group) => (
+                    <section key={group.title}>
+                      <GalleryGroupTitle>{group.title}</GalleryGroupTitle>
+                      <GalleryGrid>
+                        {group.items.map((item) => (
+                          <GalleryThumb
+                            key={item.src}
+                            title={item.label}
+                            onClick={() => setGalleryView(item.src)}
+                          >
+                            <img
+                              src={item.src}
+                              alt={item.label}
+                              loading="lazy"
                             />
-                            <LegendText>
-                              {md(book.statusMeanings[status])}
-                            </LegendText>
-                          </LegendRow>
+                          </GalleryThumb>
                         ))}
-                      </LegendList>
-                    </DisclaimerPage>
-                    <TocPage ref={tocRef}>
-                      <DisclaimerHeading>
-                        {book.contentsHeading}
-                      </DisclaimerHeading>
-                      <TocList>
-                        {orderedEntries.map((entry) => (
-                          <TocRow
-                            key={entry.id}
-                            onClick={() =>
-                              turnTo(tocPages[entry.id] ?? 0, true, true)
-                            }
-                          >
-                            <TocTitle>{entry.title}</TocTitle>
-                            <TocPageNum>
-                              {tocPages[entry.id] !== undefined
-                                ? tocPages[entry.id]
-                                : ""}
-                            </TocPageNum>
-                          </TocRow>
-                        ))}
-                      </TocList>
-                    </TocPage>
-                    {songGroups.map(([subject, songEntries]) => (
-                      <React.Fragment key={songEntries[0].id}>
-                        {songEntries.map((entry, i) => (
-                          <EntryBlock
-                            key={entry.id}
-                            entry={entry}
-                            first={i === 0}
-                            images={images}
-                            statusLabel={
-                              book.statusLabels[entry.status ?? "thought"]
-                            }
-                            registerRef={registerRef}
-                            opener={
-                              i === 0
-                                ? {
-                                    subject,
-                                    tagline:
-                                      book.taglines?.[subject] ?? book.tagline,
-                                  }
-                                : undefined
-                            }
-                          />
-                        ))}
-                      </React.Fragment>
-                    ))}
-                    {standaloneEntries.length > 0 && (
-                      <StandaloneDivider>
-                        <StandaloneDividerTitle>
-                          {book.standaloneHeading}
-                        </StandaloneDividerTitle>
-                      </StandaloneDivider>
-                    )}
-                    {standaloneEntries.map((entry, i) => (
-                      <EntryBlock
-                        key={entry.id}
-                        entry={entry}
-                        first={i === 0}
-                        images={images}
-                        statusLabel={
-                          book.statusLabels[entry.status ?? "thought"]
-                        }
-                        registerRef={registerRef}
-                      />
-                    ))}
-                    {book.credits.split("||").map((creditPage, pageIndex) => (
-                      <DisclaimerPage key={pageIndex}>
-                        {pageIndex === 0 && (
-                          <DisclaimerHeading>
-                            {book.creditsHeading}
-                          </DisclaimerHeading>
-                        )}
-                        {creditPage.split("|").map((line, lineIndex) => (
-                          <CreditLine
-                            key={lineIndex}
-                            $heading={/^[*][*][^*]+[*][*]$/.test(line.trim())}
-                          >
-                            {md(line.trim())}
-                          </CreditLine>
-                        ))}
-                      </DisclaimerPage>
-                    ))}
-                    <BackCoverPage $src={COVER_BACK} />
-                  </Flow>
-                </Viewport>
-                {pagesPerSpread === 2 ? (
-                  <>
-                    <PageNumber $corner="left">{page}</PageNumber>
-                    <PageNumber $corner="right">{page + 1}</PageNumber>
-                  </>
-                ) : (
-                  bookState === "open" && (
-                    <PageNumber $corner="right">{page}</PageNumber>
-                  )
-                )}
-              </Leaf>
-              {showRibbon && (
-                <Ribbon
-                  $hasBookmark={!!bookmark}
-                  $revealed={onBookmarkedSpread}
-                  $justPlaced={justPlaced}
-                  $mobile={mobile}
-                  onAnimationEnd={() => setJustPlaced(false)}
-                  onClick={handleBookmarkClick}
-                  aria-label={ribbonLabel}
-                  aria-pressed={!!bookmark}
-                >
-                  <RibbonArt
-                    $src={BOOKMARKS[bookmarkArt].src}
-                    $ratio={BOOKMARKS[bookmarkArt].ratio}
-                  />
-                </Ribbon>
+                      </GalleryGrid>
+                    </section>
+                  ))}
+                </GalleryPanel>
               )}
-            </PageStackWrap>
-          </Book>
-          <CornerFlipButton
-            $side="left"
-            onClick={prev}
-            disabled={!canPrev}
-            aria-label="Previous page"
+            </GalleryBackdrop>
+          )}
+          <PageJump ref={jumpRef}>
+            <PageCounter
+              onClick={() => setJumpOpen((open) => !open)}
+              title="Jump to page"
+              aria-haspopup="true"
+              aria-expanded={jumpOpen}
+            >
+              {page === 0 ? "Cover" : page >= pageCount - 1 ? "Back" : page} /{" "}
+              {contentPages}
+            </PageCounter>
+            {jumpOpen && (
+              <PageJumpMenu>
+                <PageJumpRow onSubmit={handleJumpSubmit}>
+                  <label htmlFor="jump-page">Page</label>
+                  <input
+                    id="jump-page"
+                    name="page"
+                    type="number"
+                    min={1}
+                    max={contentPages}
+                    defaultValue={Math.min(Math.max(page, 1), contentPages)}
+                    autoFocus
+                  />
+                  <PageJumpButton type="submit">Go</PageJumpButton>
+                </PageJumpRow>
+                <PageJumpButton type="button" onClick={handleJumpToIndex}>
+                  Back to index
+                </PageJumpButton>
+              </PageJumpMenu>
+            )}
+          </PageJump>
+        </TopBar>
+        {loading || sizesLoading ? (
+          <TakoLoading fullPage />
+        ) : error ? (
+          <StatusMessage>
+            Error loading the lore book: {error.message}
+          </StatusMessage>
+        ) : (
+          <BookStage
+            $hideCursor={!!edge}
+            onMouseMove={onBookMouseMove}
+            onMouseLeave={onBookMouseLeave}
+            onClick={onBookClick}
+            onTouchStart={onBookTouchStart}
+            onTouchEnd={onBookTouchEnd}
+            onTouchCancel={onBookTouchCancel}
           >
-            <i className="fa fa-chevron-left" aria-hidden="true" />
-          </CornerFlipButton>
-          <CornerFlipButton
-            $side="right"
-            onClick={next}
-            disabled={!canNext}
-            aria-label="Next page"
-          >
-            <i className="fa fa-chevron-right" aria-hidden="true" />
-          </CornerFlipButton>
-        </BookStage>
-      )}
-    </BookRoot>
+            {!measured && (
+              <LoadingOverlay>
+                <TakoLoading fullPage />
+              </LoadingOverlay>
+            )}
+            <BookGlow $width={pageWidth * pagesPerSpread} />
+            {edgeFlipActive && (
+              <FlipCursor
+                ref={cursorRef}
+                src={FLIP_CURSORS[cursorIndex]}
+                alt=""
+                $side={edge === "right" ? "right" : "left"}
+                $visible={!!edge}
+              />
+            )}
+            <Book
+              $mobile={mobile}
+              $bookState={bookState}
+              $pageWidth={pageWidth}
+              $tilt={bookTilt}
+              $zoomed={zoomed}
+              ref={frameRef}
+            >
+              <PageStackWrap
+                $tiltX={tiltX}
+                $tiltY={tiltY}
+                $zoomed={zoomed}
+                onMouseMove={onStackMouseMove}
+                onMouseLeave={onStackMouseLeave}
+              >
+                <Leaf
+                  ref={bookElRef}
+                  $width={pageWidth * pagesPerSpread}
+                  $height={pageHeight}
+                  $zoomed={zoomed}
+                >
+                  {edgeFlipActive && (
+                    <>
+                      <EdgeGlow $side="left" $active={edge === "left"} />
+                      <EdgeGlow $side="right" $active={edge === "right"} />
+                    </>
+                  )}
+                  {pagesPerSpread === 2 && <Spine />}
+                  <Viewport>
+                    <PageBackdrop
+                      $pageWidth={pageWidth}
+                      $pageHeight={pageHeight}
+                      $pageCount={pageCount}
+                      $offset={page * pageWidth}
+                    />
+                    <Flow
+                      ref={flowRef}
+                      $layoutWidth={layoutWidth}
+                      $layoutHeight={layoutHeight}
+                      $spread={pagesPerSpread}
+                      $scale={scale}
+                      $typography={book.typography}
+                    >
+                      <TitlePage
+                        $cover={COVER_FRONT}
+                        role="img"
+                        aria-label={book.title}
+                      />
+                      <DisclaimerPage>
+                        <DisclaimerHeading>
+                          <InkText text={book.forewordHeading} />
+                        </DisclaimerHeading>
+                        <CreditLine>{md(book.foreword)}</CreditLine>
+                      </DisclaimerPage>
+                      <DisclaimerPage>
+                        <DisclaimerHeading>
+                          <InkText text={book.disclaimerHeading} />
+                        </DisclaimerHeading>
+                        <DisclaimerBody>{md(book.disclaimer)}</DisclaimerBody>
+                        <DisclaimerHeading>
+                          <InkText text={book.legendHeading} />
+                        </DisclaimerHeading>
+                        <LegendList>
+                          {STATUS_ORDER.map((status) => (
+                            <LegendRow key={status}>
+                              <StatusPill
+                                status={status}
+                                label={book.statusLabels[status]}
+                              />
+                              <LegendText>
+                                {md(book.statusMeanings[status])}
+                              </LegendText>
+                            </LegendRow>
+                          ))}
+                        </LegendList>
+                      </DisclaimerPage>
+                      <TocPage ref={tocRef}>
+                        <DisclaimerHeading>
+                          <InkText text={book.contentsHeading} />
+                        </DisclaimerHeading>
+                        <TocList>
+                          {orderedEntries.map((entry) => (
+                            <TocRow
+                              key={entry.id}
+                              onClick={() =>
+                                turnTo(tocPages[entry.id] ?? 0, true, true)
+                              }
+                            >
+                              <TocTitle>{entry.title}</TocTitle>
+                              <TocPageNum>
+                                {tocPages[entry.id] !== undefined
+                                  ? tocPages[entry.id]
+                                  : ""}
+                              </TocPageNum>
+                            </TocRow>
+                          ))}
+                        </TocList>
+                      </TocPage>
+                      {songGroups.map(([subject, songEntries]) => (
+                        <React.Fragment key={songEntries[0].id}>
+                          {songEntries.map((entry, i) => (
+                            <EntryBlock
+                              key={entry.id}
+                              entry={entry}
+                              first={i === 0}
+                              images={images}
+                              statusLabel={
+                                book.statusLabels[entry.status ?? "thought"]
+                              }
+                              registerRef={registerRef}
+                              opener={
+                                i === 0
+                                  ? {
+                                      subject,
+                                      tagline:
+                                        book.taglines?.[subject] ??
+                                        book.tagline,
+                                    }
+                                  : undefined
+                              }
+                            />
+                          ))}
+                        </React.Fragment>
+                      ))}
+                      {standaloneEntries.length > 0 && (
+                        <StandaloneDivider>
+                          <StandaloneDividerTitle>
+                            <InkText text={book.standaloneHeading} />
+                          </StandaloneDividerTitle>
+                        </StandaloneDivider>
+                      )}
+                      {standaloneEntries.map((entry, i) => (
+                        <EntryBlock
+                          key={entry.id}
+                          entry={entry}
+                          first={i === 0}
+                          images={images}
+                          statusLabel={
+                            book.statusLabels[entry.status ?? "thought"]
+                          }
+                          registerRef={registerRef}
+                        />
+                      ))}
+                      {book.credits.split("||").map((creditPage, pageIndex) => (
+                        <DisclaimerPage key={pageIndex}>
+                          {pageIndex === 0 && (
+                            <DisclaimerHeading>
+                              <InkText text={book.creditsHeading} />
+                            </DisclaimerHeading>
+                          )}
+                          {creditPage.split("|").map((line, lineIndex) => (
+                            <CreditLine
+                              key={lineIndex}
+                              $heading={/^[*][*][^*]+[*][*]$/.test(line.trim())}
+                            >
+                              {md(line.trim())}
+                            </CreditLine>
+                          ))}
+                        </DisclaimerPage>
+                      ))}
+                      {DOODLE_PAGES.map((cells, pageIndex) => (
+                        <DoodlePage key={`doodles-${pageIndex}`}>
+                          {cells.map((doodle, cellIndex) => {
+                            const seed = `doodle-page-${pageIndex}-${cellIndex}`;
+                            return (
+                              <DoodleCell
+                                key={doodle.src}
+                                style={
+                                  {
+                                    "--dx": `${(seededFraction(seed + "-x") - 0.5) * 20}%`,
+                                    "--dy": `${(seededFraction(seed + "-y") - 0.5) * 20}%`,
+                                    "--rot": `${(seededFraction(seed + "-r") - 0.5) * 30}deg`,
+                                  } as React.CSSProperties
+                                }
+                              >
+                                <img src={doodle.src} alt="" loading="lazy" />
+                              </DoodleCell>
+                            );
+                          })}
+                        </DoodlePage>
+                      ))}
+                      <BackCoverPage $src={COVER_BACK} />
+                    </Flow>
+                  </Viewport>
+                  {pagesPerSpread === 2 ? (
+                    <>
+                      <PageNumber $corner="left">{page}</PageNumber>
+                      <PageNumber $corner="right">{page + 1}</PageNumber>
+                    </>
+                  ) : (
+                    bookState === "open" && (
+                      <PageNumber $corner="right">{page}</PageNumber>
+                    )
+                  )}
+                </Leaf>
+                {showRibbon && (
+                  <Ribbon
+                    $hasBookmark={!!bookmark}
+                    $revealed={onBookmarkedSpread}
+                    $justPlaced={justPlaced}
+                    $mobile={mobile}
+                    onAnimationEnd={() => setJustPlaced(false)}
+                    onClick={handleBookmarkClick}
+                    aria-label={ribbonLabel}
+                    aria-pressed={!!bookmark}
+                  >
+                    <RibbonArt
+                      $src={BOOKMARKS[bookmarkArt].src}
+                      $ratio={BOOKMARKS[bookmarkArt].ratio}
+                    />
+                  </Ribbon>
+                )}
+              </PageStackWrap>
+            </Book>
+            <CornerFlipButton
+              $side="left"
+              onClick={prev}
+              disabled={!canPrev}
+              aria-label="Previous page"
+            >
+              <i className="fa fa-chevron-left" aria-hidden="true" />
+            </CornerFlipButton>
+            <CornerFlipButton
+              $side="right"
+              onClick={next}
+              disabled={!canNext}
+              aria-label="Next page"
+            >
+              <i className="fa fa-chevron-right" aria-hidden="true" />
+            </CornerFlipButton>
+          </BookStage>
+        )}
+      </BookRoot>
+    </ImageSizesContext.Provider>
   );
 };
 

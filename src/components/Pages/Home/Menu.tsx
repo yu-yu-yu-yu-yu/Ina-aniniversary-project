@@ -77,6 +77,29 @@ const Menu = (): JSX.Element => {
               <b>Ina&apos;s milestones</b>!
             </p>
             <p>
+              <b>Congratulations on the Abyssal Hymn MV INA!!!</b>
+            </p>
+            <p>
+              We have used the full power of the shared braincell to put
+              together the amazing story and lore you have been sharing with us.
+              The new section of the site is{" "}
+              <b>&quot;The Takodachi Lorebook: Takonomicon&quot;</b> which
+              contains the stories and secrets behind Re:Vision and your
+              extended lore, written and illustrated by takos.
+            </p>
+            <p>
+              Thank you so much for your hard work, Ninomae Ina&apos;nis you are
+              amazing!
+            </p>
+            <hr
+              style={{
+                border: 0,
+                borderTop: "2px solid currentColor",
+                opacity: 0.35,
+                margin: "20px 0",
+              }}
+            />
+            <p>
               It is <b>TAKOTIME</b> to celebrate your{" "}
               <b>6th debut anniversary</b>, Ina!!
             </p>

@@ -43,6 +43,30 @@ const typographyVars = (t?: LoreTypography): string =>
 
 const BODY_FONT = '"InaDigits", "Takohuyk", "Mulish", sans-serif';
 
+const inkTitle = css`
+  display: grid;
+  grid-template-columns: auto;
+
+  > .ink-size {
+    grid-area: 1 / 1;
+    visibility: hidden;
+  }
+
+  > .ink-face {
+    grid-area: 1 / 1;
+    align-self: start;
+    height: 0;
+    min-width: 0;
+    contain: inline-size;
+    overflow: visible;
+    font-family: var(--font-heading, "InaTitle", Montserrat, sans-serif);
+    font-size: 1.1em;
+    font-weight: 700;
+    line-height: 1;
+    -webkit-text-stroke: 0.03em currentColor;
+  }
+`;
+
 export const BookRoot = styled.div`
   position: relative;
   height: 100vh;
@@ -77,6 +101,12 @@ export const ChromeButtonLayout = createGlobalStyle`
     font-family: "InaDigits";
     src: url(${DIGIT_FONT_SRC}) format("truetype");
     unicode-range: U+0030-0039;
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: "InaTitle";
+    src: url(${DIGIT_FONT_SRC}) format("truetype");
     font-display: block;
   }
 
@@ -126,6 +156,92 @@ export const SfxMuteButton = styled.button`
 
 export const ZoomButton = styled(SfxMuteButton)`
   left: calc(${CHROME_LEFT} + ${CHROME_STEP * 5}px);
+`;
+
+export const GalleryButton = styled(SfxMuteButton)`
+  left: calc(${CHROME_LEFT} + ${CHROME_STEP * 6}px);
+`;
+
+export const GalleryBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(20, 14, 8, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+`;
+
+export const GalleryPanel = styled.div`
+  position: relative;
+  width: min(1000px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 20px 16px 24px;
+  border-radius: 12px;
+  background: #f4ead5;
+  color: #2a2118;
+`;
+
+export const GalleryClose = styled.button`
+  position: sticky;
+  top: 0;
+  float: right;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #2a2118;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2a2118;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+`;
+
+export const GalleryHeading = styled.h2`
+  margin: 0 0 12px;
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 1.4rem;
+`;
+
+export const GalleryGroupTitle = styled.h3`
+  margin: 20px 0 8px;
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 1rem;
+`;
+
+export const GalleryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+`;
+
+export const GalleryThumb = styled.button`
+  aspect-ratio: 1;
+  padding: 6px;
+  border: 1px solid #2a211833;
+  border-radius: 8px;
+  background: #fffaf0;
+  cursor: zoom-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+`;
+
+export const GalleryFull = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-out;
 `;
 
 export const FlipCursor = styled.img<{
@@ -484,6 +600,7 @@ export const DisclaimerPage = styled.div`
 
 export const DisclaimerHeading = styled.h2`
   ${proseWrap}
+  ${inkTitle}
   margin: 0;
   font-family: var(--font-heading, Montserrat, sans-serif);
   font-size: calc(
@@ -627,6 +744,7 @@ export const StandaloneDivider = styled.div`
 
 export const StandaloneDividerTitle = styled.h2`
   ${proseWrap}
+  ${inkTitle}
   margin: 0;
   font-family: var(--font-heading, Montserrat, sans-serif);
   font-size: calc(
@@ -657,6 +775,7 @@ export const EntryHeader = styled.header`
 
 export const EntryTitle = styled.h3`
   ${proseWrap}
+  ${inkTitle}
   margin: 0;
   font-family: var(--font-heading, Montserrat, sans-serif);
   font-size: calc(
@@ -666,6 +785,7 @@ export const EntryTitle = styled.h3`
 `;
 
 export const EntrySubject = styled.p`
+  ${inkTitle}
   margin: 0;
   font-family: var(--font-body, ${BODY_FONT});
   font-size: calc(
@@ -740,6 +860,23 @@ export const Pip = styled.span<{ $filled: boolean }>`
 
 export const Heading = styled.h4`
   ${proseWrap}
+  position: relative;
+
+  > .ink-text {
+    color: transparent;
+  }
+
+  > .ink-line {
+    position: absolute;
+    white-space: pre;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--font-heading, "InaTitle", Montserrat, sans-serif);
+    font-size: 1.1em;
+    font-weight: 700;
+    -webkit-text-stroke: 0.03em currentColor;
+  }
+
   margin: clamp(10px, calc(var(--page-h) * 0.03), 18px) 0 8px;
   font-family: var(--font-heading, Montserrat, sans-serif);
   font-size: calc(
@@ -779,7 +916,7 @@ export const DropCapLetter = styled.span`
   );
   line-height: 0.8;
   margin: 2px 8px 0 0;
-  color: inherit;
+  color: var(--dropcap-color, inherit);
 
   &[data-displaced] {
     float: none;
@@ -862,7 +999,7 @@ export const QuoteBlock = styled.blockquote`
 `;
 
 export const IllustrationFrame = styled.figure<{
-  $float?: "left" | "right";
+  $float?: "left" | "right" | "center";
   $width?: number;
   $editable?: boolean;
 }>`
@@ -896,9 +1033,13 @@ export const IllustrationFrame = styled.figure<{
   ${({ $float, $width }) =>
     $float
       ? css`
-          float: ${$float};
+          float: ${$float === "center" ? "none" : $float};
           width: calc(var(--page-w) * ${$width ?? 0.4});
-          margin: ${$float === "left" ? "6px 16px 8px 0" : "6px 0 8px 16px"};
+          margin: ${$float === "center"
+            ? "6px auto 8px"
+            : $float === "left"
+              ? "6px 16px 8px 0"
+              : "6px 0 8px 16px"};
 
           img {
             width: min(100%, calc(var(--page-h) * 0.6 * var(--ar, 100)));
@@ -942,8 +1083,9 @@ export const PageNumber = styled.div<{ $corner: "left" | "right" }>`
 export const PageJump = styled.div`
   position: fixed;
   top: ${CHROME_TOP};
-  left: calc(${CHROME_LEFT} + ${CHROME_STEP * 6}px);
+  left: calc(${CHROME_LEFT} + ${CHROME_STEP * 7}px);
   z-index: 1000;
+  --ink-black: #2a2118;
 `;
 
 export const PageCounter = styled.button`
@@ -984,14 +1126,30 @@ export const BackCoverPage = styled.div<{ $src: string }>`
   -webkit-column-break-before: always;
 `;
 
-export const EntryDivider = styled.img`
+export const EntryDivider = styled.div`
+  --db: clamp(8px, calc(var(--page-h) * 0.03), 18px);
   display: block;
-  width: 60%;
-  height: clamp(8px, calc(var(--page-h) * 0.03), 18px);
-  object-fit: contain;
+  box-sizing: border-box;
+  width: calc(100% / 3.2);
+  height: var(--db);
   margin: 0 auto 18px;
+  transform-origin: 50% calc(var(--db) - 14px / 2.2);
+  transform: scale(3.2);
   break-inside: avoid;
   -webkit-column-break-inside: avoid;
+  pointer-events: none;
+`;
+
+export const EntryDividerImg = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translate(
+      calc(var(--page-w) * var(--dx, 0) / 320),
+      calc(var(--page-h) * var(--dy, 0) / 320)
+    )
+    rotate(calc(var(--dr, 0) * 1deg)) scale(var(--ds, 1));
 `;
 
 const RIBBON_W = "clamp(68px, 7.2vw, 104px)";
@@ -1225,4 +1383,30 @@ export const PageJumpButton = styled.button`
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+`;
+
+export const DoodlePage = styled.div`
+  ${fullPage}
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
+  padding: clamp(10px, calc(var(--page-h) * 0.04), 28px);
+`;
+
+export const DoodleCell = styled.div`
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 88%;
+    max-height: 88%;
+    object-fit: contain;
+    transform: translate(calc(-50% + var(--dx, 0%)), calc(-50% + var(--dy, 0%)))
+      rotate(var(--rot, 0deg));
+  }
 `;

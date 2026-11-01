@@ -44,6 +44,8 @@ export type {
   LoreQuote,
   LoreIllustration,
   LorePageBreak,
+  LoreDivider,
+  LoreDividerStyle,
   LoreBlock,
   LoreEntry,
   LoreBookText,

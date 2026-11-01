@@ -8,11 +8,11 @@ export const markIntroSeen = (): void => {
   }
 };
 
-export const shouldShowIntro = (search: string): boolean => {
+export const shouldShowIntro = (pathname: string): boolean => {
   try {
     return (
       localStorage.getItem(INTRO_SEEN_KEY) !== "1" ||
-      new URLSearchParams(search).has("intro")
+      pathname.replace(/\/+$/, "") === "/abyss"
     );
   } catch {
     return false;

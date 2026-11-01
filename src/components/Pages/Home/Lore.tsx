@@ -9,28 +9,40 @@ import {
   AnimationCredits,
 } from "./styles/loreStyles";
 import { TextBoxContainer } from "../../../styles/globalStyles";
+import { useTheme } from "../../Common/ThemeProvider";
+import { ThemeName } from "../../../types";
 
-const TOTAL_VIDEOS = 47;
+const TOTAL_VIDEOS = 70;
 
 const VIDEOS = Array.from(
   { length: TOTAL_VIDEOS },
   (_, i) => `valkyrie_illust_vids/val-${i + 1}.mp4`,
 );
 
-const getRandomVideo = (currentVideo?: string) => {
+const FAVORITE_WEIGHT = 5;
+
+const THEME_FAVORITES: Partial<Record<ThemeName, number[]>> = {
+  Violet: [3, 8, 14, 54, 69],
+  Temari: [18, 29, 51],
+  Meconopsis: [6, 41, 53],
+  TakoTakover: [25, 31, 40, 42, 50],
+  AbyssalHymn: [1, 22, 32, 43, 60, 68, 70],
+};
+
+const getRandomVideo = (theme: ThemeName, currentVideo?: string) => {
   if (VIDEOS.length === 1) return VIDEOS[0];
 
-  let nextVideo = currentVideo;
-  while (nextVideo === currentVideo) {
-    const index = Math.floor(Math.random() * VIDEOS.length);
-    nextVideo = VIDEOS[index];
-  }
-
-  return nextVideo;
+  const favorites = THEME_FAVORITES[theme] ?? [];
+  const pool = VIDEOS.filter((v) => v !== currentVideo).flatMap((v) => {
+    const n = Number(v.match(/val-(\d+)\.mp4$/)?.[1]);
+    return favorites.includes(n) ? Array(FAVORITE_WEIGHT).fill(v) : [v];
+  });
+  return pool[Math.floor(Math.random() * pool.length)];
 };
 
 const Lore = (): JSX.Element => {
-  const [currentVideo, setCurrentVideo] = useState(() => getRandomVideo());
+  const { theme } = useTheme();
+  const [currentVideo, setCurrentVideo] = useState(() => getRandomVideo(theme));
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
@@ -38,8 +50,8 @@ const Lore = (): JSX.Element => {
   }, [currentVideo]);
 
   const handleChangeVideo = useCallback(() => {
-    setCurrentVideo((video) => getRandomVideo(video));
-  }, []);
+    setCurrentVideo((video) => getRandomVideo(theme, video));
+  }, [theme]);
 
   const handleCanPlay = useCallback(() => {
     setIsVideoReady(true);

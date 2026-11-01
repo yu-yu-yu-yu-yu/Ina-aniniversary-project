@@ -32,7 +32,7 @@ export interface LoreIllustration {
   alt?: string;
   artist?: string;
   artistLink?: string;
-  float?: "left" | "right";
+  float?: "left" | "right" | "center";
   width?: number;
 }
 
@@ -40,7 +40,14 @@ export interface LorePageBreak {
   type: "pagebreak";
 }
 
-export interface LoreDivider {
+export interface LoreDividerStyle {
+  x?: number;
+  y?: number;
+  scale?: number;
+  rotate?: number;
+}
+
+export interface LoreDivider extends LoreDividerStyle {
   type: "divider";
   divider?: string;
 }
@@ -67,6 +74,7 @@ export interface LoreEntry {
   subjectKind: LoreSubjectKind;
   icon?: string;
   divider?: string;
+  dividerStyle?: LoreDividerStyle;
   body: LoreBlock[];
   status?: LoreStatus;
   themes?: string[];

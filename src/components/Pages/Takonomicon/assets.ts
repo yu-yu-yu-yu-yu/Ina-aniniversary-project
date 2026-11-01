@@ -104,6 +104,23 @@ export const DOODLES: DoodleArt[] = [
   { src: `${BASE}/art/takodoodle17.png`, width: 600, height: 500 },
 ];
 
+export const SCANNED_DOODLES: DoodleArt[] = [
+  { src: `${BASE}/art/scans/IMG_7439.png`, width: 342, height: 600 },
+  {
+    src: `${BASE}/art/scans/Ina_And_The_First_Takodachi.png`,
+    width: 427,
+    height: 600,
+  },
+  { src: `${BASE}/art/scans/Poppy_flower_cage.png`, width: 441, height: 600 },
+  { src: `${BASE}/art/scans/Sad_first_Takodachi.png`, width: 600, height: 579 },
+  {
+    src: `${BASE}/art/scans/Sad_first_Takodachi_ver2.png`,
+    width: 600,
+    height: 529,
+  },
+  { src: `${BASE}/art/scans/Temari_ball_1.png`, width: 571, height: 600 },
+];
+
 export const pickSeeded = <T>(seed: string, options: T[]): T => {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
@@ -155,6 +172,7 @@ export const resolveImageSrc = (
 export const iconSrc = (key: string): string =>
   `${BASE}/icons/${encodeURIComponent(key)}.png`;
 export const DEFAULT_DIVIDER = "takodachi-no-uta";
+export const DIVIDER_NONE = "none";
 
 export const dividerSrc = (key: string): string =>
   `${BASE}/dividers/${encodeURIComponent(key)}.png`;
@@ -180,3 +198,80 @@ export const missingAssetOnError =
     img.style.background = color;
     img.src = TRANSPARENT_PIXEL;
   };
+
+export interface GalleryItem {
+  src: string;
+  label: string;
+}
+
+const DIVIDER_KEYS = [
+  "abyssal-hymn",
+  "dancin-in-the-vr-world",
+  "drawn-2-dawn",
+  "mekronopsis",
+  "nai-nai",
+  "neverland-paradox",
+  "pleiades",
+  "revision",
+  "tabi-no-tochuu",
+  "takodachi-no-uta",
+  "takotakeover",
+  "temari",
+  "violet",
+  "wahtcher",
+  "wishing-star",
+  "yuusha",
+];
+
+const ICON_KEYS = [
+  "abyssal-hymn",
+  "mekronopsis",
+  "takotakeover",
+  "temari",
+  "violet",
+];
+
+export const GALLERY_GROUPS: { title: string; items: GalleryItem[] }[] = [
+  {
+    title: "Covers",
+    items: [
+      { src: COVER_FRONT, label: "Front cover" },
+      { src: COVER_BACK, label: "Back cover" },
+      { src: SPINE, label: "Spine" },
+    ],
+  },
+  {
+    title: "Bookmarks",
+    items: BOOKMARKS.map((b) => ({ src: b.src, label: `${b.label} bookmark` })),
+  },
+  {
+    title: "Dividers",
+    items: DIVIDER_KEYS.map((k) => ({ src: dividerSrc(k), label: k })),
+  },
+  {
+    title: "Doodles",
+    items: [...DOODLES, ...SCANNED_DOODLES].map((d, i) => ({
+      src: d.src,
+      label: `Doodle ${i + 1}`,
+    })),
+  },
+  {
+    title: "Sticky notes",
+    items: STICKY_NOTES.map((s, i) => ({
+      src: s.src,
+      label: `Sticky note ${i + 1}`,
+    })),
+  },
+  {
+    title: "Song icons",
+    items: ICON_KEYS.map((k) => ({ src: iconSrc(k), label: k })),
+  },
+  {
+    title: "Cursors",
+    items: FLIP_CURSORS.map((src, i) => ({ src, label: `Cursor ${i + 1}` })),
+  },
+  {
+    title: "Paper textures",
+    items: PAGE_TEXTURES.map((src, i) => ({ src, label: `Paper ${i + 1}` })),
+  },
+];

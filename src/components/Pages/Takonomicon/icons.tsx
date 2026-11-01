@@ -53,3 +53,11 @@ export const BookmarkIcon = (): JSX.Element => (
     <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
   </Svg>
 );
+
+export const GalleryIcon = (): JSX.Element => (
+  <Svg>
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <circle cx="9" cy="9" r="2" />
+    <path d="M21 15l-5-5L5 21" />
+  </Svg>
+);

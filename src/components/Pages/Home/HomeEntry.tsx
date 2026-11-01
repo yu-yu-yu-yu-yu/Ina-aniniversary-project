@@ -7,8 +7,8 @@ const HomeContent = lazy(() => import("./HomeContent"));
 const BookIntro = lazy(() => import("./BookIntro"));
 
 const HomeEntry = (): JSX.Element => {
-  const { search } = useLocation();
-  const [showIntro] = useState(() => shouldShowIntro(search));
+  const { pathname } = useLocation();
+  const [showIntro] = useState(() => shouldShowIntro(pathname));
 
   return (
     <Suspense fallback={<TakoLoading fullPage />}>
