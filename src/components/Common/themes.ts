@@ -104,4 +104,19 @@ export const themes: Themes = {
     "--logo-filter": "grayscale(100%)",
     "--title-stroke": "#1A1A1A",
   },
+  StardustCapsule: {
+    "--lightdark": "#10162E",
+    "--light-background": "#2E3A6B",
+    "--dark-background": "#1A2148",
+    "--light-highlight": "#F4E7B0",
+    "--dark-highlight": "#8FA0D8",
+    "--ink-black": "#E6ECFF",
+    "--background-image": "none",
+    "--text-color": "#F2F5FF",
+    "--background": "#070B1D",
+    "--shadow": "#0000005C",
+    "--logo-filter":
+      "sepia(100%) hue-rotate(195deg) saturate(120%) brightness(0.95)",
+    "--title-stroke": "#F4E7B0",
+  },
 };

@@ -5,7 +5,8 @@ export type ThemeName =
   | "Temari"
   | "TakoTakover"
   | "AbyssalHymn"
-  | "TakodachiNoUta";
+  | "TakodachiNoUta"
+  | "StardustCapsule";
 
 export interface ThemeContextType {
   theme: ThemeName;

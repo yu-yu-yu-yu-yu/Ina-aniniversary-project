@@ -12,6 +12,7 @@ const themeNames: ThemeName[] = [
   "TakoTakover",
   "AbyssalHymn",
   "TakodachiNoUta",
+  "StardustCapsule",
 ];
 
 export const THEME_CHOSEN_KEY = "theme-user-chosen";

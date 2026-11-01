@@ -73,6 +73,7 @@ export interface LoreEntry {
   subject: string;
   subjectKind: LoreSubjectKind;
   icon?: string;
+  openerIcon?: string;
   divider?: string;
   dividerStyle?: LoreDividerStyle;
   body: LoreBlock[];

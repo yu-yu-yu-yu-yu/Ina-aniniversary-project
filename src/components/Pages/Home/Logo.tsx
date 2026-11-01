@@ -21,6 +21,7 @@ const themeBalloonFile: Record<ThemeName, string> = {
   TakoTakover: "tako8takover",
   AbyssalHymn: "",
   TakodachiNoUta: "",
+  StardustCapsule: "",
 };
 
 const ALL_SHAPED = ["0", "1", "cookies", "uhh-i-think-she-needs-help"];

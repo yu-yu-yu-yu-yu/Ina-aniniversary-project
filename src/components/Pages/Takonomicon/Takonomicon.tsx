@@ -26,6 +26,7 @@ import { THEME_CHOSEN_KEY } from "../../Common/ThemeSwitcher";
 import { ThemeName, themes } from "../../Common/themes";
 import { TakoLoading } from "../../Common/TakoLoading";
 import ShareButton from "../../Common/ShareButton";
+import { registerBookCache } from "./registerBookCache";
 import { LOAD_GROUP, usePaginatedFlow } from "./usePaginatedFlow";
 import { usePageTurnSound } from "./usePageTurnSound";
 import { useEdgeFlip } from "./useEdgeFlip";
@@ -67,7 +68,6 @@ import {
   BookRoot,
   BookStage,
   BookState,
-  BookSubtitle,
   ChapterOpener,
   ChromeButtonLayout,
   CornerFlipButton,
@@ -132,6 +132,9 @@ import {
   SongOpenerIcon,
   Spine,
   StandaloneDivider,
+  OpenerTagline,
+  OpenerTitle,
+  OpenerTitleIcon,
   StandaloneDividerTitle,
   StatusBadge,
   StatusMessage,
@@ -160,6 +163,11 @@ const ICON_THEME: Record<string, ThemeName> = {
   takotakeover: "TakoTakover",
   "abyssal-hymn": "AbyssalHymn",
   "takodachi-no-uta": "TakodachiNoUta",
+  "stardust-capsule": "StardustCapsule",
+};
+
+const ENTRY_THEME: Record<string, ThemeName> = {
+  "song-5-analysis-1": "TakodachiNoUta",
 };
 
 const DROPCAP_COLOR: Partial<Record<ThemeName, string>> = {
@@ -169,6 +177,7 @@ const DROPCAP_COLOR: Partial<Record<ThemeName, string>> = {
   TakoTakover: "#c4177f",
   AbyssalHymn: "#3b2a78",
   TakodachiNoUta: "#2b2b2b",
+  StardustCapsule: "#8fa0d8",
 };
 
 const iconTheme = (icon: string | undefined): ThemeName | undefined =>
@@ -320,6 +329,9 @@ const StatusPill = ({
   </StatusBadge>
 );
 
+const songTitle = (subject: string): string =>
+  subject.replace(/^Song \d+:\s*/, "");
+
 const StickyNote = ({
   entry,
   label,
@@ -347,7 +359,7 @@ const StickyNote = ({
       />
       <StickyNoteText $box={art.box}>
         <StatusPill status={entry.status} label={label} />
-        <StickyNoteLine>{entry.subject}</StickyNoteLine>
+        <StickyNoteLine>{songTitle(entry.subject)}</StickyNoteLine>
         {entry.themes && entry.themes.length > 0 && (
           <StickyNoteLine>{entry.themes.join(", ")}</StickyNoteLine>
         )}
@@ -704,6 +716,10 @@ const EntryBlock = React.memo(function EntryBlock({
     : undefined;
 
   const dividerKey = entry.divider ?? entry.icon ?? DEFAULT_DIVIDER;
+  const hideHeaderText = !!opener && entry.subjectKind === "song";
+  const hiddenHeaderStyle: React.CSSProperties | undefined = hideHeaderText
+    ? { visibility: "hidden" }
+    : undefined;
   const frameTheme = iconTheme(entry.icon);
   const frameStyle = frameTheme
     ? ({
@@ -727,10 +743,17 @@ const EntryBlock = React.memo(function EntryBlock({
               onError={missingAssetOnError(PLACEHOLDER_COLORS.icon)}
             />
           )}
-          <StandaloneDividerTitle>
-            <InkText text={opener.subject} />
-          </StandaloneDividerTitle>
-          <BookSubtitle>{md(opener.tagline)}</BookSubtitle>
+          <OpenerTitle>
+            {entry.openerIcon && (
+              <OpenerTitleIcon
+                src={iconSrc(entry.openerIcon)}
+                alt=""
+                onError={missingAssetOnError(PLACEHOLDER_COLORS.icon)}
+              />
+            )}
+            <InkText text={songTitle(opener.subject)} />
+          </OpenerTitle>
+          <OpenerTagline>{md(opener.tagline)}</OpenerTagline>
         </ChapterOpener>
       )}
       {!first && dividerKey !== DIVIDER_NONE && (
@@ -747,12 +770,12 @@ const EntryBlock = React.memo(function EntryBlock({
             onError={missingAssetOnError(PLACEHOLDER_COLORS.icon)}
           />
         )}
-        <EntrySubject>
+        <EntrySubject style={hiddenHeaderStyle} aria-hidden={hideHeaderText}>
           <InkText
             text={`${SUBJECT_LABEL[entry.subjectKind]}: ${entry.subject}`}
           />
         </EntrySubject>
-        <EntryTitle>
+        <EntryTitle style={hiddenHeaderStyle} aria-hidden={hideHeaderText}>
           <InkText text={entry.title} />
         </EntryTitle>
         <CreditRow>
@@ -792,6 +815,8 @@ const EntryBlock = React.memo(function EntryBlock({
 const BOOK_TILT_RANGE = 0.8;
 
 const Takonomicon = (): JSX.Element => {
+  useEffect(registerBookCache, []);
+
   const { data, loading, error } = useFetch<LoreData>(
     `${process.env.PUBLIC_URL}/data/takonomiconData.json`,
   );
@@ -1104,13 +1129,16 @@ const Takonomicon = (): JSX.Element => {
     return found?.id ?? null;
   }, [page, pageCount, layoutVersion, pageOf, orderedEntries]);
 
-  const currentTheme = useMemo(
-    () =>
-      iconTheme(
-        orderedEntries.find((entry) => entry.id === currentEntryId)?.icon,
-      ),
-    [currentEntryId, orderedEntries],
-  );
+  const currentTheme = useMemo(() => {
+    const at = orderedEntries.findIndex((entry) => entry.id === currentEntryId);
+    for (let i = at; i >= 0; i--) {
+      const entry = orderedEntries[i];
+      const theme =
+        ENTRY_THEME[entry.id] ?? iconTheme(entry.icon ?? entry.openerIcon);
+      if (theme) return theme;
+    }
+    return undefined;
+  }, [currentEntryId, orderedEntries]);
 
   useEffect(() => {
     if (currentTheme) setTheme(currentTheme);

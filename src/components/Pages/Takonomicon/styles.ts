@@ -593,6 +593,11 @@ export const BookSubtitle = styled.p`
   opacity: 0.75;
 `;
 
+export const OpenerTagline = styled(BookSubtitle)`
+  height: 2lh;
+  overflow: hidden;
+`;
+
 export const DisclaimerPage = styled.div`
   ${fullPage}
   align-items: stretch;
@@ -754,6 +759,21 @@ export const StandaloneDividerTitle = styled.h2`
   );
   color: var(--ink-black);
   text-align: center;
+`;
+
+export const OpenerTitle = styled(StandaloneDividerTitle)`
+  position: relative;
+`;
+
+export const OpenerTitleIcon = styled.img`
+  position: absolute;
+  right: calc(100% + 0.35em);
+  top: 50%;
+  width: 1.9em;
+  height: 1.9em;
+  object-fit: contain;
+  transform: translateY(-50%);
+  pointer-events: none;
 `;
 
 export const EntrySection = styled.section`

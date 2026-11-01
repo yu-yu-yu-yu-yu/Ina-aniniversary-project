@@ -96,6 +96,7 @@ const themePool: Record<ThemeName, BalloonDef[]> = {
     ...takoShapes,
   ],
   TakodachiNoUta: [g("white"), g("gray"), ...takoShapes],
+  StardustCapsule: [g("sky"), g("blue"), g("white"), ...takoShapes],
 };
 
 const floatBalloon = (swayOffset: number) => keyframes`
